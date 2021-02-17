@@ -1,0 +1,17 @@
+{
+  "name": "@spwashi/spw",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "tsc",
+    "build:parser": "yarn build; node scripts/generate.js; yarn build",
+    "copypackage": "cp -rf package.json dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spwashi/spw-js.git"
+  },
+  "dependencies": {
+    "@spwashi/language": "^1.2.13",
+    "minimist": "^1.2.5"
+  }
+}
