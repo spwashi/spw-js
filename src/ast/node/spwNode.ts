@@ -23,7 +23,7 @@ export class SpwNode {
         this.#_location = location;
     }
 
-    protected _nodeId: string;
+    protected _nodeId: string | undefined;
 
     get nodeId() {
         if (!this._nodeId) this.generateNodeId();
