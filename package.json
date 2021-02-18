@@ -1,12 +1,13 @@
 {
   "name": "@spwashi/spw",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A parser and runtime for the Spw language",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "build:parser": "rm -rf dist; mkdir dist; yarn build; node scripts/generate.js; yarn build",
+    "build:parser": "rm -rf dist/*; yarn build; node scripts/generate.js; yarn build",
     "copypackage": "cp -rf package.json dist",
+    "prepublish": "yarn run build:parser",
     "postpublish": "cd dist || true; cp -rf package.json ../"
   },
   "repository": {
