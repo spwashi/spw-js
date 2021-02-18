@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "build:parser": "rm -rf dist; mkdir dist; yarn build; node scripts/generate.js; yarn build",
-    "copypackage": "cp -rf package.json dist"
+    "copypackage": "cp -rf package.json dist",
+    "postpublish": "cd dist || true; cp -rf package.json ../"
   },
   "repository": {
     "type": "git",
