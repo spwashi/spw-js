@@ -23,6 +23,14 @@ export class SpwNode {
         this.#_location = location;
     }
 
+    protected _nodeId: string;
+
+    get nodeId() {
+        if (!this._nodeId) this.generateNodeId();
+
+        return this._nodeId;
+    }
+
     get props(): { [p: string]: any } {
         return this.#_props;
     }
@@ -86,6 +94,10 @@ export class SpwNode {
                      ),
             location: [formatLCO(start), formatLCO(end)].join(' '),
         }
+    }
+
+    protected generateNodeId() {
+        this._nodeId = this.key;
     }
 }
 

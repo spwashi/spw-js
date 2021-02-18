@@ -14,7 +14,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.12.13.tgz#27e19e0ed3726ccf54067ced4109501765e7e2e8"
   integrity sha512-U/hshG5R+SIoW7HVWIdmy1cB7s3ki+r3FpyEZiCgpi4tFgPnX/vynY80ZGSASOIrUM6O7VxOgCZgdt7h97bUGg==
 
-"@babel/core@^7.1.0", "@babel/core@^7.7.5":
+"@babel/core@^7.1.0", "@babel/core@^7.12.16", "@babel/core@^7.7.5":
   version "7.12.16"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.12.16.tgz#8c6ba456b23b680a6493ddcfcd9d3c3ad51cab7c"
   integrity sha512-t/hHIB504wWceOeaOoONOhu+gX+hpjfeN6YRBT209X/4sibZQfSF1I0HFRRlBe97UZZosGx5XwUg1ZgNbelmNw==
@@ -651,7 +651,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.12.13"
 
-"@babel/plugin-transform-runtime@^7.12.1":
+"@babel/plugin-transform-runtime@^7.12.1", "@babel/plugin-transform-runtime@^7.12.15":
   version "7.12.15"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-runtime/-/plugin-transform-runtime-7.12.15.tgz#4337b2507288007c2b197059301aa0af8d90c085"
   integrity sha512-OwptMSRnRWJo+tJ9v9wgAf72ydXWfYSXWhnQjZing8nGZSDFqU1MBleKM3+DriKkcbv7RagA8gVeB0A1PNlNow==
@@ -720,7 +720,7 @@
     "@babel/helper-create-regexp-features-plugin" "^7.12.13"
     "@babel/helper-plugin-utils" "^7.12.13"
 
-"@babel/preset-env@^7.12.11":
+"@babel/preset-env@^7.12.11", "@babel/preset-env@^7.12.16":
   version "7.12.16"
   resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.12.16.tgz#16710e3490e37764b2f41886de0a33bc4ae91082"
   integrity sha512-BXCAXy8RE/TzX416pD2hsVdkWo0G+tYd16pwnRV4Sc0fRwTLRS/Ssv8G5RLXUGQv7g4FG7TXkdDJxCjQ5I+Zjg==
@@ -803,7 +803,7 @@
     "@babel/types" "^7.4.4"
     esutils "^2.0.2"
 
-"@babel/preset-typescript@^7.12.7":
+"@babel/preset-typescript@^7.12.16", "@babel/preset-typescript@^7.12.7":
   version "7.12.16"
   resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.12.16.tgz#b2080ce20b7095c049db2a0410f1e39bc892f7ca"
   integrity sha512-IrYNrpDSuQfNHeqh7gsJsO35xTGyAyGkI1VxOpBEADFtxCqZ77a1RHbJqM3YJhroj7qMkNMkNtcw0lqeZUrzow==
@@ -1066,10 +1066,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@spwashi/language@^1.2.13":
-  version "1.2.13"
-  resolved "https://registry.yarnpkg.com/@spwashi/language/-/language-1.2.13.tgz#dc323ea31c1d81cc0b0ed76ffac9c236c06510e6"
-  integrity sha512-+KzR/BfiKgiB0VK+FEb4xH9+OK8FYIfs4TWF4wMOuOcOyABCjg2T5mWiRTcbxWOYwylnO5fkgNtR7Dim5wr0lg==
+"@spwashi/language@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@spwashi/language/-/language-1.3.0.tgz#7bffb8092c84dc922328c3d145617fb39f90a1e8"
+  integrity sha512-Gpu2JuYBG7elMW6AudHIUPXujVBdxco0Me1Nk2n5jGwswZb9M2CziH6xj8G7ldLqZxg7Vy1Iqd2FqMIsFsybNA==
   dependencies:
     "@babel/plugin-proposal-class-properties" "^7.12.1"
     "@babel/plugin-proposal-optional-chaining" "^7.12.1"
@@ -4170,6 +4170,11 @@ typescript@^3.9.7:
   version "3.9.9"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.9.tgz#e69905c54bc0681d0518bd4d587cc6f2d0b1a674"
   integrity sha512-kdMjTiekY+z/ubJCATUPlRDl39vXYiMV9iyeMuEuXZh2we6zz80uovNN2WlAxmmdE/Z/YQe+EbOEXB5RHEED3w==
+
+typescript@^4.1.5:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.5.tgz#123a3b214aaff3be32926f0d8f1f6e704eb89a72"
+  integrity sha512-6OSu9PTIzmn9TCDiovULTnET6BgXtDYL4Gg4szY+cGsc3JP1dQL8qvE8kShTRx1NIw4Q9IBHlwODjkjWEtMUyA==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
