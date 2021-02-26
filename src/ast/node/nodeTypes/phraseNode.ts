@@ -10,7 +10,7 @@ export class SpwPhraseNode extends SpwNode {
         switch (key) {
             case 'key':
                 let k     = (value as SpwNode[]).reduce((p: SpwNode[], c: SpwNode | SpwNode[]) => [...p, ...(Array.isArray(c) ? c : [c])], []);
-                this._key = k.map(n => n.key).join();
+                this._key = k.map(n => n.key).join(' ');
                 k.forEach(node => node.setProp('parent', this))
                 this._body = k;
                 return this;
