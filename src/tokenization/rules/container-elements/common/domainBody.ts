@@ -33,7 +33,7 @@ const pattern_containerElementBody =
           patterns.oneOrMore(
               patterns.sequence([patterns.any([
                                                   patterns.rule('Phrase'),
-                                                  patterns.rule('CompoundNode'),
+                                                  patterns.rule('complexAnchor'),
                                                   patterns.rule('Strand'),
                                                   patterns.rule('Analog'),
                                                   patterns.rule('Perspective'),

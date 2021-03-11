@@ -1,7 +1,7 @@
 import {SpwNode, SpwNodeKeyValue} from '../spwNode';
 
-export class SpwPhraseNode extends SpwNode {
-    _body: SpwNode[] = [];
+export class SpwComplexAnchorNode extends SpwNode {
+    private _body?: SpwNode[];
 
     get body(): SpwNode[] | undefined {
         return this._body;
@@ -16,16 +16,12 @@ export class SpwPhraseNode extends SpwNode {
             case 'key':
                 let nodes = this._getBodyFromRaw(value);
                 this._key = nodes.map(n => n.key).join(' ');
-                if (!this._body.length) {
-                    const body = this._getBodyFromRaw(value);
-                    body.forEach(
-                        node => {
-                            node.setProp('parent', this);
-                            this._body.push(node)
-                        },
-                    )
-                }
                 return this;
+            case 'body': {
+                this._body = this._getBodyFromRaw(value);
+                this._body.forEach(node => node.setProp('parent', this))
+                return this;
+            }
         }
         super.set(key, value);
         return this;

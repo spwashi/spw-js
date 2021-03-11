@@ -1,7 +1,7 @@
 import {SpwNode, SpwNodeKeyValue} from '../spwNode';
 import {SpwNodeNode} from './nodeNode';
 
-type SpwStrandTail = SpwNode & { node: SpwNodeNode, transport: SpwNode };
+type SpwStrandTail = SpwNode & { node: SpwNode, transport: SpwNode };
 type ConjunctionArr = Array<SpwStrandTail | SpwNode>;
 
 export class SpwStrandNode extends SpwNode {

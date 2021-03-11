@@ -11,22 +11,24 @@ import {SpwPhraseNode} from './nodeTypes/phraseNode';
 import {SpwPerspectiveNode} from './nodeTypes/perspectiveNode';
 import {SpwStrandNode} from './nodeTypes/strandNode';
 import {SpwStringNode} from './nodeTypes/stringNode';
+import {SpwComplexAnchorNode} from './nodeTypes/complexAnchorNode';
 
 export const spwNodeConstructors =
                  {
-                     anchor:      SpwAnchorNode,
-                     channel:     SpwChannelNode,
-                     concept:     SpwConceptNode,
-                     domain:      SpwDomainNode,
-                     evaluation:  SpwEvaluationNode,
-                     essence:     SpwEssenceNode,
-                     node:        SpwNodeNode,
-                     performance: SpwPerformanceNode,
-                     perspective: SpwPerspectiveNode,
-                     phrase:      SpwPhraseNode,
-                     strand:      SpwStrandNode,
-                     string:      SpwStringNode,
-                     transport:   SpwTransportNode,
+                     anchor:        SpwAnchorNode,
+                     channel:       SpwChannelNode,
+                     concept:       SpwConceptNode,
+                     complexAnchor: SpwComplexAnchorNode,
+                     domain:        SpwDomainNode,
+                     evaluation:    SpwEvaluationNode,
+                     essence:       SpwEssenceNode,
+                     node:          SpwNodeNode,
+                     performance:   SpwPerformanceNode,
+                     perspective:   SpwPerspectiveNode,
+                     phrase:        SpwPhraseNode,
+                     strand:        SpwStrandNode,
+                     string:        SpwStringNode,
+                     transport:     SpwTransportNode,
                  };
 export type SpwNodeConstructors = typeof spwNodeConstructors;
 export type SpwNodeKind = keyof SpwNodeConstructors;

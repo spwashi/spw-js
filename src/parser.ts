@@ -175,8 +175,8 @@
         peg$c28 = function(quote) {return'"';},
         peg$c29 = function(string) {return spwNode({kind:"string",key:string});},
         peg$c30 = function(anchor) {return anchor;},
-        peg$c31 = function(phrase) {return spwNode({kind:"phrase",key:phrase});},
-        peg$c32 = function(compoundNode) {return spwNode({kind:"compound-node",key:compoundNode});},
+        peg$c31 = function(phrase) {return spwNode({kind:"phrase",key:phrase,slam:phrase});},
+        peg$c32 = function(complexAnchor) {return spwNode({kind:"complexAnchor",key:complexAnchor,body:complexAnchor});},
         peg$c33 = function(head, operator, node) {return spwNode({kind:"analog-tail",node:node,operator:operator});},
         peg$c34 = function(head, tail) {return spwNode({kind:"analog",head:head,tail:tail});},
         peg$c35 = "-",
@@ -1405,7 +1405,7 @@
       return s0;
     }
 
-    function peg$parseCompoundNode() {
+    function peg$parsecomplexAnchor() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8;
 
       var key    = peg$currPos * 43 + 7,
@@ -2084,7 +2084,7 @@
       s0 = peg$currPos;
       s1 = peg$parsePhrase();
       if (s1 === peg$FAILED) {
-        s1 = peg$parseCompoundNode();
+        s1 = peg$parsecomplexAnchor();
         if (s1 === peg$FAILED) {
           s1 = peg$parseNode();
         }
@@ -2156,7 +2156,7 @@
               if (s7 !== peg$FAILED) {
                 s8 = peg$parsePhrase();
                 if (s8 === peg$FAILED) {
-                  s8 = peg$parseCompoundNode();
+                  s8 = peg$parsecomplexAnchor();
                   if (s8 === peg$FAILED) {
                     s8 = peg$parseNode();
                   }
@@ -2230,7 +2230,7 @@
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parsePhrase();
                     if (s8 === peg$FAILED) {
-                      s8 = peg$parseCompoundNode();
+                      s8 = peg$parsecomplexAnchor();
                       if (s8 === peg$FAILED) {
                         s8 = peg$parseNode();
                       }
@@ -2906,7 +2906,7 @@
       s1 = peg$currPos;
       s2 = peg$parsePhrase();
       if (s2 === peg$FAILED) {
-        s2 = peg$parseCompoundNode();
+        s2 = peg$parsecomplexAnchor();
         if (s2 === peg$FAILED) {
           s2 = peg$parseStrand();
           if (s2 === peg$FAILED) {
@@ -3165,7 +3165,7 @@
           s1 = peg$currPos;
           s2 = peg$parsePhrase();
           if (s2 === peg$FAILED) {
-            s2 = peg$parseCompoundNode();
+            s2 = peg$parsecomplexAnchor();
             if (s2 === peg$FAILED) {
               s2 = peg$parseStrand();
               if (s2 === peg$FAILED) {
@@ -3759,7 +3759,7 @@
       s1 = peg$currPos;
       s2 = peg$parsePhrase();
       if (s2 === peg$FAILED) {
-        s2 = peg$parseCompoundNode();
+        s2 = peg$parsecomplexAnchor();
         if (s2 === peg$FAILED) {
           s2 = peg$parseStrand();
           if (s2 === peg$FAILED) {
@@ -4018,7 +4018,7 @@
           s1 = peg$currPos;
           s2 = peg$parsePhrase();
           if (s2 === peg$FAILED) {
-            s2 = peg$parseCompoundNode();
+            s2 = peg$parsecomplexAnchor();
             if (s2 === peg$FAILED) {
               s2 = peg$parseStrand();
               if (s2 === peg$FAILED) {
@@ -4612,7 +4612,7 @@
       s1 = peg$currPos;
       s2 = peg$parsePhrase();
       if (s2 === peg$FAILED) {
-        s2 = peg$parseCompoundNode();
+        s2 = peg$parsecomplexAnchor();
         if (s2 === peg$FAILED) {
           s2 = peg$parseStrand();
           if (s2 === peg$FAILED) {
@@ -4871,7 +4871,7 @@
           s1 = peg$currPos;
           s2 = peg$parsePhrase();
           if (s2 === peg$FAILED) {
-            s2 = peg$parseCompoundNode();
+            s2 = peg$parsecomplexAnchor();
             if (s2 === peg$FAILED) {
               s2 = peg$parseStrand();
               if (s2 === peg$FAILED) {
@@ -5465,7 +5465,7 @@
       s1 = peg$currPos;
       s2 = peg$parsePhrase();
       if (s2 === peg$FAILED) {
-        s2 = peg$parseCompoundNode();
+        s2 = peg$parsecomplexAnchor();
         if (s2 === peg$FAILED) {
           s2 = peg$parseStrand();
           if (s2 === peg$FAILED) {
@@ -5724,7 +5724,7 @@
           s1 = peg$currPos;
           s2 = peg$parsePhrase();
           if (s2 === peg$FAILED) {
-            s2 = peg$parseCompoundNode();
+            s2 = peg$parsecomplexAnchor();
             if (s2 === peg$FAILED) {
               s2 = peg$parseStrand();
               if (s2 === peg$FAILED) {
@@ -7263,7 +7263,7 @@
         if (s2 !== peg$FAILED) {
           s3 = peg$parsePhrase();
           if (s3 === peg$FAILED) {
-            s3 = peg$parseCompoundNode();
+            s3 = peg$parsecomplexAnchor();
             if (s3 === peg$FAILED) {
               s3 = peg$parseChannel();
               if (s3 === peg$FAILED) {

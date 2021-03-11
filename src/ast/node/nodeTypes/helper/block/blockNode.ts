@@ -6,7 +6,7 @@ export interface BoundaryNode {
 }
 
 export class SpwBlockNode extends SpwNode {
-    protected _body?: Set<SpwNode> = new Set<SpwNode>();
+    protected _body?: Array<SpwNode> = new Array<SpwNode>();
 
     get body() {
         return this._body;
@@ -37,13 +37,13 @@ export class SpwBlockNode extends SpwNode {
                 this._subjective.setProp('owner', this)
                 return this;
             case 'body':
-                this._body = new Set<SpwNode>(value as Array<SpwNode>);
+                this._body = value as Array<SpwNode>;
                 this._body.forEach(node => node.setProp('parent', this))
+                this.setProp('nodes', Array.from(this._body ?? []));
                 return this;
         }
         super.set(key, value);
 
-        this.setProp('nodes', Array.from(this._body ?? []));
 
         return this;
     }

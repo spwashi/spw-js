@@ -15,7 +15,7 @@ export const perspectiveRules =
                                                         patterns.zeroOrMore(whitespace),
                                                         patterns.any([
                                                                          patterns.rule('Phrase'),
-                                                                         patterns.rule('CompoundNode'),
+                                                                         patterns.rule('complexAnchor'),
                                                                          patterns.rule('Channel'),
                                                                          patterns.rule('Node'),
                                                                      ], 'node'),

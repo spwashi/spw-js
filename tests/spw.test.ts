@@ -7,8 +7,10 @@ import {SpwDomainNode} from '../src/ast/node/nodeTypes/domainNode';
 import {SpwStrandNode} from '../src/ast/node/nodeTypes/strandNode';
 import {SpwAnchorNode} from '../src/ast/node/nodeTypes/anchorNode';
 import {SpwChannelNode} from '../src/ast/node/nodeTypes/channelNode';
-import {Parser, Runtime, SpwDocument} from '@spwashi/language';
 import {spwParser} from '../src/parser';
+import {Runtime, SpwDocument} from '../src';
+import {Parser} from '../src/runtime/runtime';
+import {SpwNodeNode} from '../src/ast/node/nodeTypes/nodeNode';
 
 function fromEntries(iterable: Iterable<any>) {
     return [...iterable].reduce((obj, [key, val]) => {
@@ -35,17 +37,9 @@ const loadConcept =
               return await runtime.module__load(moduleID)
           };
 
-// Testing standard behaviors
-test('can generate parser',
-     async function () {
-         const runtime     = initializeRuntime();
-         const conceptList =
-                   await loadConcept(
-                       {
-                           domain: 'testing',
-                           label:  'concept_1',
-                           body:
-                                   dedent`
+
+const testConcept1 =
+          dedent`
 {
     {_anchors-and-phrases
         &
@@ -60,6 +54,7 @@ test('can generate parser',
         --
         
         phrases are composed of multiple words
+        phrases are composed of multiple anchors[ sometimes having an essence ]
         
         --
         
@@ -85,13 +80,34 @@ test('can generate parser',
             objective => intermediate => subjective
         ]
     }
+    {_description
+        anchor.{
+            test
+        }
+    }
     {_channels
         #
         #_channel
         #_channel_2 => strand
     }
 }
-                                        `,
+`
+
+const testConcept2 = `this is a phrase`;
+const testConcept  = testConcept2;
+
+
+// Testing standard behaviors
+test('can generate parser',
+     async function () {
+         const runtime     = initializeRuntime();
+         const conceptList =
+                   await loadConcept(
+                       {
+                           domain: 'testing',
+                           label:  'concept_1',
+                           body:   testConcept
+                           ,
                        },
                        runtime,
                    );
@@ -110,12 +126,14 @@ test('can generate parser',
              channel: { all: SpwChannelNode[], [k: string]: any },
              anchor: { all: SpwAnchorNode[], keyed: { [key: string]: SpwNode[] }, [k: string]: any },
              strand: { all: SpwStrandNode[], [k: string]: any },
+             node: { all: SpwNodeNode[], [k: string]: any },
              phrase: { all: SpwPhraseNode[], [k: string]: any },
          }                    =
                    {
                        domain:  {all: [], objective: {}, subjective: {}},
                        anchor:  {all: [], keyed: {}},
                        channel: {all: []},
+                       node:    {all: []},
                        strand:  {all: []},
                        phrase:  {all: []},
                    }
@@ -132,8 +150,11 @@ test('can generate parser',
 
          all.forEach(
              (node: SpwNode) => {
+                 if (node.kind === 'node') {
+                     sorted.node.all.push(node as SpwNodeNode);
+                 }
                  if (node.kind === 'phrase') {
-                     sorted.phrase.all.push(node);
+                     sorted.phrase.all.push(node as SpwPhraseNode);
                  }
 
                  if (node.kind === 'domain') {
@@ -154,7 +175,7 @@ test('can generate parser',
                  }
              },
          )
-         console.log(all, sorted);
+         // console.log(all, sorted);
 
          const objectiveAnchorDomains = fromEntries(Object
                                                         .entries(sorted.domain.objective)
@@ -164,7 +185,11 @@ test('can generate parser',
          const strands     = sorted.strand.all;
          const strandNodes = strands.map(strand => strand.getProp('nodes'))
          const anchors     = sorted.anchor.keyed;
+         const nodes       = sorted.node.all;
+         const phrases     = sorted.phrase.all;
 
+         nodes;
+         phrases;
          anchors;
          strands;
          strandNodes;

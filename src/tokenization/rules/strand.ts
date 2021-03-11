@@ -7,7 +7,7 @@ export const strandRule =
                       patterns.sequence([
                                             patterns.any([
                                                              patterns.rule('Phrase'),
-                                                             patterns.rule('CompoundNode'),
+                                                             patterns.rule('complexAnchor'),
                                                              patterns.rule('Node'),
                                                          ], 'head'),
                                             patterns.zeroOrMore(patterns.regExp('\\t ')),
@@ -22,7 +22,7 @@ export const strandRule =
                                                         patterns.zeroOrMore(patterns.regExp('\\n\\t ')),
                                                         patterns.any([
                                                                          patterns.rule('Phrase'),
-                                                                         patterns.rule('CompoundNode'),
+                                                                         patterns.rule('complexAnchor'),
                                                                          patterns.rule('Node'),
                                                                      ], 'node'),
                                                     ],

@@ -70,11 +70,11 @@ string:(([\'] body:(UnicodeWithoutQuotes / [\n] / [\"])* [\'] {return body.join(
 
 Phrase = 
 phrase:(Node body:([\t ]* "\\" [\n] [\t ]* / [\t ]+ anchor:Node {return anchor;})+)
-{return spwNode({kind:"phrase",key:phrase});}
+{return spwNode({kind:"phrase",key:phrase,slam:phrase});}
 
-CompoundNode = 
-compoundNode:(Node body:([\t ]* "." [\t ]* anchor:Node {return anchor;})+)
-{return spwNode({kind:"compound-node",key:compoundNode});}
+complexAnchor = 
+complexAnchor:(Node body:([\t ]* "." [\t ]* anchor:Node {return anchor;})+)
+{return spwNode({kind:"complexAnchor",key:complexAnchor,body:complexAnchor});}
 
 Analog = 
 head:Node [\t ]* tail:([\n\t ]* operator:AnalogicalTransport [\n\t ]* node:Node {return spwNode({kind:"analog-tail",node:node,operator:operator});})+
@@ -89,7 +89,7 @@ head:Node [\t ]* tail:([\n\t ]* operator:BondOperator [\n\t ]* node:Node {return
 {return spwNode({kind:"bond",head:head,tail:tail});}
 
 Strand = 
-head:(Phrase / CompoundNode / Node) [\t ]* tail:([\n\t ]* transport:(transport:ObjectiveTransport / transport:SubjectiveTransport) [\n\t ]* node:(Phrase / CompoundNode / Node) {return spwNode({kind:"strand-tail",node:node,transport:transport});})+
+head:(Phrase / complexAnchor / Node) [\t ]* tail:([\n\t ]* transport:(transport:ObjectiveTransport / transport:SubjectiveTransport) [\n\t ]* node:(Phrase / complexAnchor / Node) {return spwNode({kind:"strand-tail",node:node,transport:transport});})+
 {return spwNode({kind:"strand",head:head,tail:tail});}
 
 ObjectiveTransport = 
@@ -115,7 +115,7 @@ DomainClose =
 (node:LabelNode "_" "}" {return node;}) / ("}" {return null;})
 
 DomainBody = 
-body:(item:(Phrase / CompoundNode / Strand / Analog / Perspective / (body:(node:Node [\t ]* channel:Channel {return[node,channel];})+ {return spwNode({kind:"complex_node",body:body.flatMap(d=>d)});}) / Node / (newlines:([\t ]* newline:[\n,] [\t ]* {return newline;})+ {{const e=newlines.length;if(1===e)return;return spwNode({kind:"space",distance:e-1})}})) {return item;})+
+body:(item:(Phrase / complexAnchor / Strand / Analog / Perspective / (body:(node:Node [\t ]* channel:Channel {return[node,channel];})+ {return spwNode({kind:"complex_node",body:body.flatMap(d=>d)});}) / Node / (newlines:([\t ]* newline:[\n,] [\t ]* {return newline;})+ {{const e=newlines.length;if(1===e)return;return spwNode({kind:"space",distance:e-1})}})) {return item;})+
 
 Domain = 
 container:((open_anchor:DomainOpen ([\t ] / newline:[\n,])* close_anchor:DomainClose {return"undefined"==typeof underscore?{objective_anchor:open_anchor,subjective_anchor:close_anchor}:{anchor:open_anchor};}) / (open_anchor:DomainOpen underscore:"_" close_anchor:DomainClose {return"undefined"==typeof underscore?{objective_anchor:open_anchor,subjective_anchor:close_anchor}:{anchor:open_anchor};}) / (open_anchor:DomainOpen [\t ]* body:DomainBody [\t ]* close_anchor:DomainClose {return{objective_anchor:open_anchor,body:body.filter(o=>void 0!==o),subjective_anchor:close_anchor};}))
@@ -128,7 +128,7 @@ AsideClose =
 (node:LabelNode "_" ")" {return node;}) / (")" {return null;})
 
 AsideBody = 
-body:(item:(Phrase / CompoundNode / Strand / Analog / Perspective / (body:(node:Node [\t ]* channel:Channel {return[node,channel];})+ {return spwNode({kind:"complex_node",body:body.flatMap(d=>d)});}) / Node / (newlines:([\t ]* newline:[\n,] [\t ]* {return newline;})+ {{const e=newlines.length;if(1===e)return;return spwNode({kind:"space",distance:e-1})}})) {return item;})+
+body:(item:(Phrase / complexAnchor / Strand / Analog / Perspective / (body:(node:Node [\t ]* channel:Channel {return[node,channel];})+ {return spwNode({kind:"complex_node",body:body.flatMap(d=>d)});}) / Node / (newlines:([\t ]* newline:[\n,] [\t ]* {return newline;})+ {{const e=newlines.length;if(1===e)return;return spwNode({kind:"space",distance:e-1})}})) {return item;})+
 
 Aside = 
 container:((open_anchor:AsideOpen ([\t ] / newline:[\n,])* close_anchor:AsideClose {return"undefined"==typeof underscore?{objective_anchor:open_anchor,subjective_anchor:close_anchor}:{anchor:open_anchor};}) / (open_anchor:AsideOpen underscore:"_" close_anchor:AsideClose {return"undefined"==typeof underscore?{objective_anchor:open_anchor,subjective_anchor:close_anchor}:{anchor:open_anchor};}) / (open_anchor:AsideOpen [\t ]* body:AsideBody [\t ]* close_anchor:AsideClose {return{objective_anchor:open_anchor,body:body.filter(o=>void 0!==o),subjective_anchor:close_anchor};}))
@@ -141,7 +141,7 @@ ConceptClose =
 (node:LabelNode "_" ">" {return node;}) / (">" {return null;})
 
 ConceptBody = 
-body:(item:(Phrase / CompoundNode / Strand / Analog / Perspective / (body:(node:Node [\t ]* channel:Channel {return[node,channel];})+ {return spwNode({kind:"complex_node",body:body.flatMap(d=>d)});}) / Node / (newlines:([\t ]* newline:[\n,] [\t ]* {return newline;})+ {{const e=newlines.length;if(1===e)return;return spwNode({kind:"space",distance:e-1})}})) {return item;})+
+body:(item:(Phrase / complexAnchor / Strand / Analog / Perspective / (body:(node:Node [\t ]* channel:Channel {return[node,channel];})+ {return spwNode({kind:"complex_node",body:body.flatMap(d=>d)});}) / Node / (newlines:([\t ]* newline:[\n,] [\t ]* {return newline;})+ {{const e=newlines.length;if(1===e)return;return spwNode({kind:"space",distance:e-1})}})) {return item;})+
 
 Concept = 
 container:((open_anchor:ConceptOpen ([\t ] / newline:[\n,])* close_anchor:ConceptClose {return"undefined"==typeof underscore?{objective_anchor:open_anchor,subjective_anchor:close_anchor}:{anchor:open_anchor};}) / (open_anchor:ConceptOpen underscore:"_" close_anchor:ConceptClose {return"undefined"==typeof underscore?{objective_anchor:open_anchor,subjective_anchor:close_anchor}:{anchor:open_anchor};}) / (open_anchor:ConceptOpen [\t ]* body:ConceptBody [\t ]* close_anchor:ConceptClose {return{objective_anchor:open_anchor,body:body.filter(o=>void 0!==o),subjective_anchor:close_anchor};}))
@@ -154,7 +154,7 @@ EssenceClose =
 (node:LabelNode "_" "]" {return node;}) / ("]" {return null;})
 
 EssenceBody = 
-body:(item:(Phrase / CompoundNode / Strand / Analog / Perspective / (body:(node:Node [\t ]* channel:Channel {return[node,channel];})+ {return spwNode({kind:"complex_node",body:body.flatMap(d=>d)});}) / Node / (newlines:([\t ]* newline:[\n,] [\t ]* {return newline;})+ {{const e=newlines.length;if(1===e)return;return spwNode({kind:"space",distance:e-1})}})) {return item;})+
+body:(item:(Phrase / complexAnchor / Strand / Analog / Perspective / (body:(node:Node [\t ]* channel:Channel {return[node,channel];})+ {return spwNode({kind:"complex_node",body:body.flatMap(d=>d)});}) / Node / (newlines:([\t ]* newline:[\n,] [\t ]* {return newline;})+ {{const e=newlines.length;if(1===e)return;return spwNode({kind:"space",distance:e-1})}})) {return item;})+
 
 Essence = 
 container:((open_anchor:EssenceOpen ([\t ] / newline:[\n,])* close_anchor:EssenceClose {return"undefined"==typeof underscore?{objective_anchor:open_anchor,subjective_anchor:close_anchor}:{anchor:open_anchor};}) / (open_anchor:EssenceOpen underscore:"_" close_anchor:EssenceClose {return"undefined"==typeof underscore?{objective_anchor:open_anchor,subjective_anchor:close_anchor}:{anchor:open_anchor};}) / (open_anchor:EssenceOpen [\t ]* body:EssenceBody [\t ]* close_anchor:EssenceClose {return{objective_anchor:open_anchor,body:body.filter(o=>void 0!==o),subjective_anchor:close_anchor};}))
@@ -193,7 +193,7 @@ label:(("@" "_" label:LabelNode {return label;}) / "@")
 {return spwNode({kind:"perspective",label:label});}
 
 Perspective = 
-(perspective:PerspectiveAnchor [\t ]* node:(Phrase / CompoundNode / Channel / Node) [\t ]* {return spwNode({kind:"selection",transport:perspective,node:node});})
+(perspective:PerspectiveAnchor [\t ]* node:(Phrase / complexAnchor / Channel / Node) [\t ]* {return spwNode({kind:"selection",transport:perspective,node:node});})
 
 Anchor = 
 anchor:((body:[-a-zA-Z_0-9]+ {return body.join("");}) / "&")

@@ -1,5 +1,5 @@
 import {SpwNodeKeyValue} from '../spwNode';
-import {SpwBlockNode} from './helper/block';
+import {SpwBlockNode} from './helper/block/blockNode';
 
 export class SpwDomainNode extends SpwBlockNode {
     get body() {

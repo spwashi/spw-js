@@ -25,6 +25,7 @@ export class SpwNodeNode extends SpwNode {
                 break
             case 'node':
                 this._node = (value as SpwNode);
+                this.setProp('parent', this)
                 return this;
             case 'essence':
                 this._essence = (value as SpwNode);
@@ -43,10 +44,17 @@ export class SpwNodeNode extends SpwNode {
         if (this._node && this._essence) {
             this._node.setProp('essence', this._essence);
             this._node.setProp('#', this._essence);
-            this._essence.setProp('parent', this._node);
             this._essence.setProp('.[', this._node);
+            this._essence.setProp('owner', this._node);
+        }
+        if (this._essence) {
+            this._essence.setProp('parent', this);
+        }
+        if (this._description) {
+            this._description.setProp('parent', this)
         }
         if (this._node && this._description) {
+            this._description.setProp('owner', this._node)
             this._node.setProp('description', this._description);
             this._node.setProp('##', this._description);
         }

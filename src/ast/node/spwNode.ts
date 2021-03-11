@@ -8,19 +8,19 @@ function formatLCO(start: LineColumnOffset) {
 
 
 export class SpwNode {
-    readonly #_location: SpwNodeLocation;
-    readonly #_props: InternalProps =
-                  {
-                      nodes: [],
-                  };
-    readonly #_node: UnhydratedSpwNode;
+    protected readonly _location: SpwNodeLocation;
+    protected readonly _props: InternalProps =
+                           {
+                               nodes: [],
+                           };
+    protected readonly _unhydrated: UnhydratedSpwNode;
 
     constructor(node: UnhydratedSpwNode) {
         const {kind, location} = node;
 
-        this.#_node     = node;
-        this.#_kind     = kind;
-        this.#_location = location;
+        this._unhydrated = node;
+        this._kind       = kind;
+        this._location   = location;
     }
 
     protected _nodeId: string | undefined;
@@ -32,17 +32,17 @@ export class SpwNode {
     }
 
     get props(): { [p: string]: any } {
-        return this.#_props;
+        return this._props;
     }
 
-    #_kind: string;
+    protected _kind: string;
 
     get kind(): string {
-        return this.#_kind;
+        return this._kind;
     }
 
     set kind(value: string) {
-        this.#_kind = value;
+        this._kind = value;
     }
 
     protected _key?: string;
@@ -53,7 +53,7 @@ export class SpwNode {
     }
 
     get location(): SpwNodeLocation {
-        return this.#_location;
+        return this._location;
     }
 
     set(key: keyof this, value: SpwNodeKeyValue): this {
@@ -68,18 +68,17 @@ export class SpwNode {
     }
 
     setProp(key: InternalPropKey, value: InternalProps[InternalPropKey]) {
-        this.#_props[key] = value;
+        this._props[key] = value;
     }
 
     getProp(key: InternalPropKey) {
-        return this.#_props[key] ?? undefined;
+        return this._props[key] ?? undefined;
     }
 
-    toJSON() {
-        const {kind, location, ...rest} = this.#_node;
-        const {start, end}              = location;
+    __json() {
+        const {kind, location, ...rest} = this._unhydrated;
+
         return {
-            kind,
             ...Object.entries(rest)
                      .map(
                          ([k, v]) => {
@@ -92,6 +91,15 @@ export class SpwNode {
                          (acc, [k, v]) => ({...acc, [k]: v}),
                          {},
                      ),
+        }
+    }
+
+    toJSON() {
+        const {kind, location, ...rest} = this._unhydrated;
+        const {start, end}              = location;
+        return {
+            kind,
+            ...this.__json(),
             location: [formatLCO(start), formatLCO(end)].join(' '),
         }
     }

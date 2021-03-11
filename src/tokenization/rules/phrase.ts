@@ -8,9 +8,7 @@ export const phraseRules =
                          'Phrase',
                          patterns.sequence(
                              [
-                                 patterns.any([
-                                                  patterns.rule('Node'),
-                                              ]),
+                                 patterns.any([patterns.rule('Node')]),
                                  patterns.oneOrMore(patterns.sequence([
                                                                           patterns.any(
                                                                               [
@@ -28,19 +26,18 @@ export const phraseRules =
                                                                                        ], 'anchor'),
                                                                       ], null,
                                                                       '{ return anchor }'),
-                                                    'body',
-                                 ),
+                                                    'body'),
                              ],
                              'phrase',
                          ),
                          // language=JavaScript
-                             `
+                         `
                              {
-
                                  return spwNode({
-                                     kind: 'phrase',
-                                     key:  phrase
-                                 });
+                                                    kind: 'phrase',
+                                                    key:  phrase,
+                                                    slam: phrase
+                                                });
                              }`,
                      ),
                  ];

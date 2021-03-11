@@ -17,7 +17,7 @@ import {topRule} from './rules/top';
 import {invocationRules} from './rules/operations/invocation';
 import {asideRules} from './rules/container-elements/aside';
 import {bondRules} from './rules/bond';
-import {compoundNodeRules} from './rules/compound-node';
+import {complexAnchorRules} from './rules/complexAnchor';
 import {transportRules} from './rules/transport';
 
 
@@ -30,7 +30,7 @@ export function init() {
                   ...nodeRules,
                   ...stringRules,
                   ...phraseRules,
-                  ...compoundNodeRules,
+                  ...complexAnchorRules,
                   ...analogRules,
                   ...bondRules,
 

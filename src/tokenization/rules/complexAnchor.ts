@@ -2,10 +2,10 @@ import patterns from '@spwashi/language/language/parser-generation/grammar/patte
 import {rule} from '@spwashi/language/language/parser-generation/grammar/rules/rule';
 
 
-export const compoundNodeRules =
+export const complexAnchorRules =
                  [
                      rule(
-                         'CompoundNode',
+                         'complexAnchor',
                          patterns.sequence(
                              [
                                  patterns.any([
@@ -29,16 +29,17 @@ export const compoundNodeRules =
                                                     'body',
                                  ),
                              ],
-                             'compoundNode',
+                             'complexAnchor',
                          ),
                          // language=JavaScript
-                             `
+                         `
                              {
 
                                  return spwNode({
-                                     kind: 'compound-node',
-                                     key:  compoundNode
-                                 });
+                                                    kind: 'complexAnchor',
+                                                    key:  complexAnchor,
+                                                    body: complexAnchor
+                                                });
                              }`,
                      ),
                  ];
