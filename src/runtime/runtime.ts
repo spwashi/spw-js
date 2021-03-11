@@ -57,26 +57,23 @@ export class Runtime implements SpwRuntime {
     static symbols = {keyed, lastAcknowledged, all, performance, evaluation};
 
     public DEBUG_MODE = 0;
-
+    _nodes = new Set;
     /**
      * The parser used to generate the un-hydrated AST
      * @private
      */
     private readonly parser: Parser;
-
     /**
      *
      * @private
      */
     private readonly syntaxTrees: Map<SpwModuleIdentifier, SyntaxTreeOption> =
         new Map<SpwModuleIdentifier, SyntaxTreeOption>()
-
     /**
      * Modules that have been loaded into this runtime
      * @private
      */
     private readonly moduleRegistry: SpwDocumentRegistry = new SpwDocumentRegistry();
-
     /**
      * Set of modules that are in the ModuleRegistry
      * @private
@@ -119,6 +116,10 @@ export class Runtime implements SpwRuntime {
      * @param node
      */
     absorb(node: SpwNode): SpwNode {
+        const location = JSON.stringify(node.location);
+
+        if (this._nodes.has(location)) return node;
+
         if (hasStaticAnchor(node)) {
             this.registerItem(keyed, node)
         }
@@ -131,6 +132,8 @@ export class Runtime implements SpwRuntime {
 
         const id = this.identify(node)
         this.registerItem(id, node)
+
+        this._nodes.add(location)
 
         return node;
     }
@@ -206,9 +209,10 @@ export class Runtime implements SpwRuntime {
             hydrated =
                 await incorporateNode(parsed,
                                       {
-                                      absorb:   this.absorb.bind(this),
-                                      location: {moduleID: spwModule.identifier},
-                                  });
+                                          absorb:   this.absorb.bind(this),
+                                          location: {moduleID: spwModule.identifier},
+                                      });
+            console.log('PARSING')
         } else {
             throw new Error('Could not parse');
         }

@@ -13,7 +13,7 @@ export class SpwNodeNode extends SpwNode {
         return this._essence;
     }
 
-    protected _description?: SpwNode;
+    protected _description?: SpwNode[];
 
     get description() {
         return this._description;
@@ -25,23 +25,26 @@ export class SpwNodeNode extends SpwNode {
                 break
             case 'node':
                 this._node = (value as SpwNode);
-                this.setProp('parent', this)
+                this._node.setProp('parent', this)
+                this.linkComponents(key);
                 return this;
             case 'essence':
                 this._essence = (value as SpwNode);
                 this.setProp('nodes', this._essence.getProp('nodes'));
+                this.linkComponents(key);
                 return this;
             case 'description':
-                this._description = (value as SpwNode);
+                this._description = (value as SpwNode[]);
+                this.linkComponents(key);
                 return this;
         }
-        this.linkComponents(key);
         super.set(key, value);
         return this;
     }
 
     private linkComponents(key: keyof this) {
         if (this._node && this._essence) {
+            this._key = this._node.key// + this._essence.key
             this._node.setProp('essence', this._essence);
             this._node.setProp('#', this._essence);
             this._essence.setProp('.[', this._node);
@@ -51,10 +54,10 @@ export class SpwNodeNode extends SpwNode {
             this._essence.setProp('parent', this);
         }
         if (this._description) {
-            this._description.setProp('parent', this)
+            this._description.forEach(d => d.setProp('parent', this))
         }
         if (this._node && this._description) {
-            this._description.setProp('owner', this._node)
+            this._description.forEach(d => d.setProp('parent', this))
             this._node.setProp('description', this._description);
             this._node.setProp('##', this._description);
         }

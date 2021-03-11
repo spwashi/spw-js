@@ -175,7 +175,7 @@
         peg$c28 = function(quote) {return'"';},
         peg$c29 = function(string) {return spwNode({kind:"string",key:string});},
         peg$c30 = function(anchor) {return anchor;},
-        peg$c31 = function(phrase) {return spwNode({kind:"phrase",key:phrase,slam:phrase});},
+        peg$c31 = function(phrase) {{const r=phrase.reduce((r,e)=>[...r,...Array.isArray(e)?e:[e]],[]);return spwNode({kind:"phrase",key:r,body:r})}},
         peg$c32 = function(complexAnchor) {return spwNode({kind:"complexAnchor",key:complexAnchor,body:complexAnchor});},
         peg$c33 = function(head, operator, node) {return spwNode({kind:"analog-tail",node:node,operator:operator});},
         peg$c34 = function(head, tail) {return spwNode({kind:"analog",head:head,tail:tail});},
@@ -7378,7 +7378,9 @@
     }
 
 
-    function normalize(node) {
+    const _cache = new Map();
+
+                  function normalize(node) {
                       return {
                           key: text().trim(),
                           ...Object
@@ -7387,13 +7389,18 @@
                                       .entries(node)
                                       .filter(([k, v]) => v !== null)
                               ),
+                          source:   text(),
                           location: location(),
                       };
                   }
 
                   function spwNode(node) {
                       if (!node.kind) throw new Error('No node kind specified')
+                      var cacheKey = JSON.stringify(location());
+                      if (_cache.has(cacheKey)) return _cache.get(cacheKey);
+
                       const out = normalize(node);
+                      _cache.set(cacheKey, out);
                       switch (out.kind) {
                           case 'node':
                           case 'channel':

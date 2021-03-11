@@ -6,6 +6,8 @@ const {generateParser} = require('@spwashi/language/language/parser-generation/r
 // language=JavaScript
 const head =
           `
+              const _cache = new Map();
+
               function normalize(node) {
                   return {
                       key: text().trim(),
@@ -15,13 +17,18 @@ const head =
                                   .entries(node)
                                   .filter(([k, v]) => v !== null)
                           ),
+                      source:   text(),
                       location: location(),
                   };
               }
 
               function spwNode(node) {
                   if (!node.kind) throw new Error('No node kind specified')
+                  var cacheKey = JSON.stringify(location());
+                  if (_cache.has(cacheKey)) return _cache.get(cacheKey);
+
                   const out = normalize(node);
+                  _cache.set(cacheKey, out);
                   switch (out.kind) {
                       case 'node':
                       case 'channel':

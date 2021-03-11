@@ -16,16 +16,15 @@ export class SpwPhraseNode extends SpwNode {
             case 'key':
                 let nodes = this._getBodyFromRaw(value);
                 this._key = nodes.map(n => n.key).join(' ');
-                if (!this._body.length) {
-                    const body = this._getBodyFromRaw(value);
-                    body.forEach(
-                        node => {
-                            node.setProp('parent', this);
-                            this._body.push(node)
-                        },
-                    )
-                }
                 return this;
+            case 'body':
+                const body = this._getBodyFromRaw(value);
+                this._body = body.map(node => {
+                    node.setProp('parent', this);
+                    return node;
+                })
+                return this;
+
         }
         super.set(key, value);
         return this;

@@ -1,4 +1,5 @@
 import {SpwNode} from './node/spwNode';
+import {SpwNodeKind} from './node';
 
 export interface LineColumnOffset {
     line: number;
@@ -12,7 +13,7 @@ export type SpwNodeLocation = {
 };
 
 export interface UnhydratedSpwNode {
-    kind: string,
+    kind: SpwNodeKind,
     location: SpwNodeLocation;
 
     [k: string]: UnhydratedSpwNode | UnhydratedSpwNode[] | string | SpwNodeLocation | any

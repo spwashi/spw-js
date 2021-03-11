@@ -8,7 +8,12 @@ interface HydrationContext {
     absorb(spwNode: SpwNode): SpwNode;
 }
 
+const _c = new Map
+
 async function hydrateNode(node: UnhydratedSpwNode, runtime: HydrationContext) {
+    if (_c.get(node.key)) {
+        return _c.get(node.key);
+    }
     const {kind, location, ...rest} = node;
 
     Object.assign(location, runtime.location)
@@ -33,16 +38,18 @@ async function hydrateNode(node: UnhydratedSpwNode, runtime: HydrationContext) {
                         },
                     )
     await Promise.all(hydrationPromises);
-
+    _c.set(node, spwNode);
     return spwNode;
 }
 
 
 type HydrationInput = UnhydratedSpwNode | UnhydratedSpwNode[] | any;
 
-export async function incorporateNode(node: HydrationInput, runtime: HydrationContext): Promise<SpwNodeKeyValue> {
+
+export async function incorporateNode(node: HydrationInput, runtime: HydrationContext, _cache = new Map()): Promise<SpwNodeKeyValue> {
+    if (_cache.has(node)) return _cache.get(node);
     if (Array.isArray(node)) {
-        const hydrateChild = (node: HydrationInput): Promise<SpwNodeKeyValue> => incorporateNode(node, runtime);
+        const hydrateChild = (node: HydrationInput): Promise<SpwNodeKeyValue> => incorporateNode(node, runtime, _cache);
 
         return Promise.all(node.map(hydrateChild));
     }
@@ -53,6 +60,6 @@ export async function incorporateNode(node: HydrationInput, runtime: HydrationCo
     }
 
     const spwNode = await hydrateNode(node, runtime);
-
+    _cache.set(node, spwNode)
     return runtime.absorb(spwNode);
 }

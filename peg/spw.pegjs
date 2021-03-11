@@ -1,5 +1,7 @@
 {
-function normalize(node) {
+const _cache = new Map();
+
+              function normalize(node) {
                   return {
                       key: text().trim(),
                       ...Object
@@ -8,13 +10,18 @@ function normalize(node) {
                                   .entries(node)
                                   .filter(([k, v]) => v !== null)
                           ),
+                      source:   text(),
                       location: location(),
                   };
               }
 
               function spwNode(node) {
                   if (!node.kind) throw new Error('No node kind specified')
+                  var cacheKey = JSON.stringify(location());
+                  if (_cache.has(cacheKey)) return _cache.get(cacheKey);
+
                   const out = normalize(node);
+                  _cache.set(cacheKey, out);
                   switch (out.kind) {
                       case 'node':
                       case 'channel':
@@ -70,7 +77,7 @@ string:(([\'] body:(UnicodeWithoutQuotes / [\n] / [\"])* [\'] {return body.join(
 
 Phrase = 
 phrase:(Node body:([\t ]* "\\" [\n] [\t ]* / [\t ]+ anchor:Node {return anchor;})+)
-{return spwNode({kind:"phrase",key:phrase,slam:phrase});}
+{{const r=phrase.reduce((r,e)=>[...r,...Array.isArray(e)?e:[e]],[]);return spwNode({kind:"phrase",key:r,body:r})}}
 
 complexAnchor = 
 complexAnchor:(Node body:([\t ]* "." [\t ]* anchor:Node {return anchor;})+)

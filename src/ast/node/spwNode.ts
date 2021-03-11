@@ -1,4 +1,5 @@
 import {InternalPropKey, InternalProps, LineColumnOffset, SpwNodeLocation, UnhydratedSpwNode} from '../types';
+import {SpwNodeKind} from './index';
 
 export type SpwNodeKeyValue = string | number | SpwNode | SpwNodeKeyValue[];
 
@@ -8,6 +9,8 @@ function formatLCO(start: LineColumnOffset) {
 
 
 export class SpwNode {
+    static _cache = new Map();
+
     protected readonly _location: SpwNodeLocation;
     protected readonly _props: InternalProps =
                            {
@@ -15,12 +18,22 @@ export class SpwNode {
                            };
     protected readonly _unhydrated: UnhydratedSpwNode;
 
-    constructor(node: UnhydratedSpwNode) {
-        const {kind, location} = node;
+    constructor(node: UnhydratedSpwNode, _cachePrefix = 'change_if_you_want') {
+        const {kind, location, source} = node;
 
+        const l          = _cachePrefix + JSON.stringify(location);
         this._unhydrated = node;
         this._kind       = kind;
         this._location   = location;
+
+
+        // hack to avoid error TS2564
+        if (SpwNode._cache.has(l)) {
+            const prev = SpwNode._cache.get(l);
+            return prev;
+        }
+
+        SpwNode._cache.set(l, this);
     }
 
     protected _nodeId: string | undefined;
@@ -35,13 +48,13 @@ export class SpwNode {
         return this._props;
     }
 
-    protected _kind: string;
+    protected _kind: SpwNodeKind;
 
-    get kind(): string {
+    get kind(): SpwNodeKind {
         return this._kind;
     }
 
-    set kind(value: string) {
+    set kind(value: SpwNodeKind) {
         this._kind = value;
     }
 

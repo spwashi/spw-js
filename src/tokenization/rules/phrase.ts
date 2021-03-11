@@ -4,39 +4,36 @@ import {rule} from '@spwashi/language/language/parser-generation/grammar/rules/r
 
 export const phraseRules =
                  [
-                     rule(
-                         'Phrase',
-                         patterns.sequence(
-                             [
-                                 patterns.any([patterns.rule('Node')]),
-                                 patterns.oneOrMore(patterns.sequence([
-                                                                          patterns.any(
-                                                                              [
-                                                                                  patterns.sequence([
-                                                                                                        patterns.zeroOrMore(patterns.regExp('\\t ')),
-                                                                                                        patterns.string('\\\\'),
-                                                                                                        patterns.regExp('\\n'),
-                                                                                                        patterns.zeroOrMore(patterns.regExp('\\t ')),
-                                                                                                    ]),
-                                                                                  patterns.oneOrMore(patterns.regExp('\\t ')),
-                                                                              ],
-                                                                          ),
-                                                                          patterns.any([
-                                                                                           patterns.rule('Node'),
-                                                                                       ], 'anchor'),
-                                                                      ], null,
-                                                                      '{ return anchor }'),
-                                                    'body'),
-                             ],
-                             'phrase',
-                         ),
-                         // language=JavaScript
+                     rule('Phrase',
+                          patterns.sequence([
+                                                patterns.any([patterns.rule('Node')]),
+                                                patterns.oneOrMore(patterns.sequence([
+                                                                                         patterns.any(
+                                                                                             [
+                                                                                                 patterns.sequence([
+                                                                                                                       patterns.zeroOrMore(patterns.regExp('\\t ')),
+                                                                                                                       patterns.string('\\\\'),
+                                                                                                                       patterns.regExp('\\n'),
+                                                                                                                       patterns.zeroOrMore(patterns.regExp('\\t ')),
+                                                                                                                   ]),
+                                                                                                 patterns.oneOrMore(patterns.regExp('\\t ')),
+                                                                                             ],
+                                                                                         ),
+                                                                                         patterns.any([
+                                                                                                          patterns.rule('Node'),
+                                                                                                      ], 'anchor'),
+                                                                                     ], null,
+                                                                                     '{ return anchor }'),
+                                                                   'body'),
+                                            ], 'phrase'),
+                          // language=JavaScript
                          `
                              {
+                                 const p = (phrase).reduce((p, c) => [...p, ...(Array.isArray(c) ? c : [c])], []);
                                  return spwNode({
                                                     kind: 'phrase',
-                                                    key:  phrase,
-                                                    slam: phrase
+                                                    key:  p,
+                                                    body: p
                                                 });
                              }`,
                      ),
