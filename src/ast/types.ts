@@ -21,8 +21,10 @@ export interface UnhydratedSpwNode {
 
 export type InternalProps =
     {
-        nodes: SpwNode[];
         parent?: SpwNode;
+        owner?: SpwNode;
+        nodes: SpwNode[];
+
         [k: string]: any;
     };
 

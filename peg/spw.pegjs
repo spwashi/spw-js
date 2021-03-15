@@ -54,7 +54,7 @@ const _cache = new Map();
 }
 
 Top = 
-body:(DomainBody / (head:([\t \n] / Strand / Node) [\t \n] tail:([\t \n] / Strand / Node)+ {return[head,...tail];}))
+body:(DomainBody / (head:([\t \n] / Strand / Node) [\t \n] tail:([\t \n] / Strand / Node)+ [\t \n]* {return[head,...tail];}))
 {{const r=Array.isArray(body)?body.map(r=>{if(r&&r.kind)return r}).filter(r=>void 0!==r):body;return 1===r.length?r[0]:r}}
 
 DescriptionSequence = 

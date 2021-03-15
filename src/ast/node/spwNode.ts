@@ -1,20 +1,21 @@
 import {InternalPropKey, InternalProps, SpwNodeLocation, UnhydratedSpwNode} from '../types';
 import {SpwNodeKind} from './index';
 import {parseLocation, stringifyLocation} from './util/location';
+import {Scope} from '../../runtime/scope/scope';
 
 export type SpwNodeKeyValue = string | number | SpwNode | SpwNodeKeyValue[];
 
 export class SpwNode {
-    static _cache = new Map();
-
+    static readonly _cache                     = new Map();
+    protected readonly _scope: Scope<any, any> = new Scope(this);
     protected readonly _location: SpwNodeLocation;
-    protected readonly _props: InternalProps = {nodes: []};
+    protected readonly _props: InternalProps   = {nodes: []};
     protected readonly _unhydrated: UnhydratedSpwNode;
-    protected _nodeId: string | undefined;
-    protected _kind: SpwNodeKind;
-    protected _key?: string;
+    protected readonly _kind: SpwNodeKind;
+    protected _key: string | false             = false;
     private readonly _src: string;
 
+    // Properties
     constructor(node: UnhydratedSpwNode, _cachePrefix = 'change_if_you_want') {
         const {kind, source} = node;
 
@@ -31,44 +32,34 @@ export class SpwNode {
 
         SpwNode._cache.set(_cacheKey, this);
     }
-
-    // Properties
-
-    get nodeId() {
-        if (!this._nodeId) this.generateNodeId();
-
-        return this._nodeId;
-    }
-    get props(): { [p: string]: any } {
-        return this._props;
-    }
     get kind(): SpwNodeKind {
         return this._kind;
     }
-    set kind(value: SpwNodeKind) {
-        this._kind = value;
-    }
-    /**
-     * string that could be used for identifying
-     */
     get key(): string {
-        if (!this._key) return '&';
-        return this._key;
+        return this._key || '';
+    }
+    get parent(): SpwNode | undefined {
+        return this.getProp('parent');
+    }
+    get owner(): SpwNode | undefined {
+        return this.getProp('owner');
+    }
+    get nodes(): SpwNode[] | undefined {
+        return this.getProp('nodes');
+    }
+    get scope() {
+        return this._scope;
     }
     get location(): SpwNodeLocation {
         return this._location;
     }
-
-    // Methods
-
     static getCacheKey(_cachePrefix: string, {location}: { location: SpwNodeLocation }) {
         return _cachePrefix + stringifyLocation(location);
     }
-
     setProp(key: InternalPropKey, value: InternalProps[InternalPropKey]) {
         this._props[key] = value;
     }
-    getProp(key: InternalPropKey) {
+    getProp<K extends InternalPropKey>(key: InternalPropKey): InternalProps[K] {
         return this._props[key] ?? undefined;
     }
     toJSON() {
@@ -79,9 +70,16 @@ export class SpwNode {
             location: stringifyLocation(location),
         }
     }
-
-    // internal methods
-
+    set(key: keyof this, value: SpwNodeKeyValue): this {
+        switch (key) {
+            case 'key':
+                this._key = (value as string);
+                return this;
+        }
+        // @ts-ignore
+        this[key] = value;
+        return this;
+    }
     protected toJSON__internal() {
         const {kind, location, ...rest} = this._unhydrated;
 
@@ -99,19 +97,6 @@ export class SpwNode {
                          {},
                      ),
         }
-    }
-    protected set(key: keyof this, value: SpwNodeKeyValue): this {
-        switch (key) {
-            case 'key':
-                this._key = (value as string);
-                return this;
-        }
-        // @ts-ignore
-        this[key] = value;
-        return this;
-    }
-    protected generateNodeId() {
-        this._nodeId = this.key;
     }
 }
 

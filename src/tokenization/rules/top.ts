@@ -8,8 +8,24 @@ export const topRule =
                      patterns.any([
                                       patterns.rule('DomainBody'),
                                       patterns.sequence([
-                                                            patterns.any([whitespace, patterns.rule('Strand'), patterns.rule('Node')], 'head'), whitespace,
-                                                            patterns.oneOrMore(patterns.any([whitespace, patterns.rule('Strand'), patterns.rule('Node')]), 'tail'),
+                                                            patterns.any(
+                                                                [
+                                                                    whitespace,
+                                                                    patterns.rule('Strand'),
+                                                                    patterns.rule('Node'),
+                                                                ],
+                                                                'head',
+                                                            ),
+                                                            whitespace,
+                                                            patterns.oneOrMore(
+                                                                patterns.any([
+                                                                                 whitespace,
+                                                                                 patterns.rule('Strand'),
+                                                                                 patterns.rule('Node'),
+                                                                             ]),
+                                                                'tail',
+                                                            ),
+                                                            patterns.zeroOrMore(whitespace),
                                                         ],
                                                         null,
                                                         '{ return [head, ...tail] }'),
@@ -17,7 +33,7 @@ export const topRule =
                                   'body',
                      ),
                      // language=JavaScript
-                         `
+                     `
                          {
                              const items = Array.isArray(body) ? body.map(item => {
                                                                          if (item && item.kind) {

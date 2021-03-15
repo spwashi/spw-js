@@ -1,16 +1,17 @@
 // @ts-ignore
 import dedent from 'dedent';
-import {isSpwNode, SpwNode} from '../src/ast/node/spwNode';
-import {getConceptId} from '../src/runtime/getConceptId';
-import {SpwPhraseNode} from '../src/ast/node/nodeTypes/phraseNode';
-import {SpwDomainNode} from '../src/ast/node/nodeTypes/domainNode';
-import {SpwStrandNode} from '../src/ast/node/nodeTypes/strandNode';
-import {SpwAnchorNode} from '../src/ast/node/nodeTypes/anchorNode';
-import {SpwChannelNode} from '../src/ast/node/nodeTypes/channelNode';
-import {spwParser} from '../src/parser';
-import {Runtime, SpwDocument} from '../src';
-import {Parser} from '../src/runtime/runtime';
-import {SpwNodeNode} from '../src/ast/node/nodeTypes/nodeNode';
+import {isSpwNode, SpwNode} from '../../ast/node/spwNode';
+import {getConceptId} from '../../runtime/getConceptId';
+import {SpwPhraseNode} from '../../ast/node/nodeTypes/phraseNode';
+import {SpwDomainNode} from '../../ast/node/nodeTypes/domainNode';
+import {SpwStrandNode} from '../../ast/node/nodeTypes/strandNode';
+import {SpwAnchorNode} from '../../ast/node/nodeTypes/anchorNode';
+import {SpwChannelNode} from '../../ast/node/nodeTypes/channelNode';
+import {spwParser} from '../../parser';
+import {Runtime, SpwDocument} from '../../index';
+import {Parser} from '../../runtime/runtime';
+import {SpwNodeNode} from '../../ast/node/nodeTypes/nodeNode';
+import {getTestInput1} from './getTestInput1';
 
 function fromEntries(iterable: Iterable<any>) {
     return [...iterable].reduce((obj, [key, val]) => {
@@ -26,73 +27,15 @@ type Concept = {
     body: string
 };
 const initializeRuntime = () => { return new Runtime(spwParser as unknown as Parser) }
-
-const loadConcept =
-          async ({domain, label, body}: Concept, runtime: Runtime) => {
-              const moduleID = getConceptId(domain, label);
-              const document = new SpwDocument(moduleID, body);
-
-              await runtime.registerDocument(document);
-
-              return await runtime.loadDocument(moduleID)
-          };
+const loadConcept       = async ({domain, label, body}: Concept, runtime: Runtime) => {
+    const moduleID = getConceptId(domain, label);
+    const document = new SpwDocument(moduleID, body);
+    await runtime.registerDocument(document);
+    return await runtime.loadDocument(moduleID)
+};
 
 
-const testConcept1 =
-          dedent`
-{
-    {_anchors-and-phrases
-        &
-        &_
-        &_placeholder
-       
-        --
-        
-        anchor
-        anchor-with-dashes
-        
-        --
-        
-        phrases are composed of multiple words
-        phrases are composed of multiple anchors[ sometimes having an essence ]
-        
-        --
-        
-        {_examples
-            & => &
-            & => &_
-            & => cat
-            & => boiled eggs are hard
-            & => &_eggs
-        }
-    }
-    {_essence
-        anchor[
-            concept
-            
-            --
-            
-            #_status
-            
-            --
-            
-            objective => subjective
-            objective => intermediate => subjective
-        ]
-    }
-    {_description
-        anchor.{
-            test
-        }
-    }
-    {_channels
-        #
-        #_channel
-        #_channel_2 => strand
-    }
-}
-`
-
+const testConcept1 = getTestInput1()
 const testConcept2 = `this is a phrase`;
 const testConcept  = testConcept2;
 

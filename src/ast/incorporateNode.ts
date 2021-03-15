@@ -8,13 +8,8 @@ interface HydrationContext {
     absorb(spwNode: SpwNode): SpwNode;
 }
 
-const _c = new Map
-
 async function hydrateNode(node: UnhydratedSpwNode, runtime: HydrationContext) {
-    if (_c.get(node.key)) {
-        return _c.get(node.key);
-    }
-    const {kind, location, ...rest} = node;
+    const {kind, location, key, ...rest} = node;
 
     Object.assign(location, runtime.location)
 
@@ -22,23 +17,19 @@ async function hydrateNode(node: UnhydratedSpwNode, runtime: HydrationContext) {
     const spwNode: SpwNode = new Constructor(node);
 
     // Hydrate and set the properties
-    const hydrationPromises =
-              Object.entries(rest)
-                    .map(
-                        async ([k, v]) => {
-                            const incorporated =
-                                      v.kind || Array.isArray(v)
-                                      ? await incorporateNode(v, runtime)
-                                      : v;
+    const hydrationPromises = Object.entries(rest).map(async ([k, v]) => {
+        const incorporated =
+                  v.kind || Array.isArray(v)
+                  ? await incorporateNode(v, runtime)
+                  : v;
 
-                            node[k] = incorporated;
+        node[k] = incorporated;
 
-                            // @ts-ignore
-                            spwNode.set(k, incorporated)
-                        },
-                    )
-    await Promise.all(hydrationPromises);
-    _c.set(node, spwNode);
+        // @ts-ignore
+        spwNode.set(k, incorporated)
+    })
+
+    await Promise.all(hydrationPromises).then(() => spwNode.set('key', key ?? false));
     return spwNode;
 }
 

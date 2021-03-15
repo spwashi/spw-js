@@ -1,6 +1,6 @@
 import {SpwNode, SpwNodeKeyValue} from '../ast/node/spwNode';
 import {SpwDocument, SpwDocumentIdentifier, SpwDocumentRegistry} from './spwDocument';
-import {RegisterMap, RuntimeRegister} from './register';
+import {RegisterMap, RegisterValue, RuntimeRegister} from './register';
 import {incorporateNode} from '../ast/incorporateNode';
 import {SpwAnchorNode} from '../ast/node/nodeTypes/anchorNode';
 import {SpwStringNode} from '../ast/node/nodeTypes/stringNode';
@@ -19,7 +19,7 @@ export type SpwNodeIdentifier = string | Symbol;
 export interface SpwRuntime {
     incorporateNode(node: SpwNode): any;
 
-    locateNode(id: SpwNodeIdentifier): Promise<any>
+    locateNode(node?: SpwNodeIdentifier): any;
 }
 
 const all: SpwNodeIdentifier              = Symbol('All');
@@ -145,23 +145,36 @@ export class Runtime implements SpwRuntime {
      * Returns a generator that lists occurrences of an identifier
      * @param node
      */
-    async locateNode(node: SpwNodeIdentifier): Promise<Generator> {
-        const id                 = this._identifier.getNodeIdentifier(node);
-        let items: Iterable<any> = [];
+    locateNode(node?: SpwNodeIdentifier): AsyncGenerator<SpwNode> {
+        const runtime = this;
+        const id      = runtime._identifier.getNodeIdentifier(node ?? null);
 
-        if (this._registers.has(id)) {
-            const register = this._registers.get(id);
-            items          = register?.items || [];
-        } else if (typeof id === 'string') {
-            const anchors = this._registers.get(keyed);
-            items         = anchors?.get(`+${id}`) as [] || [];
-        }
+        return (
+            async function* (): AsyncGenerator<SpwNode> {
+                let regItemList: Array<RegisterValue>            = [];
+                const conditions: ((curr: SpwNode) => boolean)[] = [];
 
-        return (function* () {
-            for (const item of items) {
-                yield item?.item;
+                if (!node) {
+                    regItemList = runtime.registers.get(Runtime.symbols.all)?.items ?? [];
+                } else if (runtime._registers.has(id)) {
+                    const register = runtime._registers.get(id);
+                    regItemList    = register?.items || [];
+                } else if (node === '&') {
+                    regItemList = runtime.registers.get(Runtime.symbols.all)?.items ?? [];
+                    conditions.push(node => node.kind === 'anchor');
+                } else if (typeof id === 'string') {
+                    const anchors = runtime._registers.get(keyed);
+                    regItemList   = anchors?.get(id) as [] || [];
+
+                }
+
+                for (const regItem of regItemList) {
+                    const testNode = regItem.item;
+                    if (conditions.reduce((prev, nodeIsValid) => prev && (nodeIsValid(testNode) ?? true), true))
+                        yield testNode;
+                }
             }
-        })()
+        )()
     }
 
     /**

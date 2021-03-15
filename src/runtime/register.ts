@@ -1,77 +1,82 @@
 import {SpwNode} from '../ast/node/spwNode';
 import {SpwNodeIdentifier} from './runtime';
 
-type RegisterValue = { item: SpwNode; time: number };
+export type RegisterValue = { item: SpwNode; time: number };
 
 type RegisterParameters = { memory?: number | null, index?: (node: SpwNode | any) => any };
 
 function addToLimitedArray(addition: any, prev: Iterable<any>, memory: number | null) {
-    let newItems = [addition, ...prev];
+    let items = [addition, ...prev];
     if (memory !== null) {
-        newItems = newItems.slice(0, memory)
+        items = items.slice(0, memory)
     }
-    return newItems;
+    return items;
 }
 
 export class RuntimeRegister {
     private readonly memory: number | null;
     private readonly _indexer: ((node: SpwNode) => string | string[]) | undefined;
-    private indexes = new Map<string | Symbol, RegisterValue | Array<RegisterValue>>();
-    private counter = 0;
-
+    private _map                         = new Map<string | Symbol, RegisterValue | Array<RegisterValue>>();
+    private counter                      = 0;
+    private _items: Array<RegisterValue> = [];
     constructor({memory = null, index}: RegisterParameters = {memory: null}) {
         this.memory   = memory;
         this._indexer = index;
     }
-
-    private _items?: Set<RegisterValue> | Array<RegisterValue> = [];
-
     get items() {
         return this._items;
     }
 
     add(item: SpwNode) {
-        const addition = {
-            item,
-            time:  Date.now(),
-            count: this.counter++,
-        };
-        const memory   = this.memory;
-        if (memory === 1) {
-            (this._items as Array<RegisterValue>)[0] = addition
+        const registerValue =
+                  {
+                      item,
+                      time:  Date.now(),
+                      count: this.counter++,
+                  } as RegisterValue;
+
+        if (this.memory === 1) {
+            this._items[0] = registerValue
         } else {
-            const prev   = this._items || [];
-            let newItems = addToLimitedArray(addition, prev, memory);
-            // @ts-ignore
-            this._items  = new Set<RegisterValue>(newItems)
+            const prev  = this._items || [];
+            this._items = addToLimitedArray(registerValue, prev, this.memory);
         }
 
-        if (!this._indexer) return this;
+        if (!this._indexer) {
+            return this;
+        }
 
-        const indices = this._indexer(item);
+        const indexer = this._indexer(item);
 
-        if (typeof indices === 'string' || typeof indices === 'symbol') {
-            this.setIndex(indices, addition)
-        } else if (typeof indices[Symbol.iterator] === 'function') {
-            [...indices].forEach(index => this.setIndex(index, addition))
+        if (typeof indexer === 'string' || typeof indexer === 'symbol') {
+            this.append(indexer, registerValue)
+            return this;
+        }
+
+        if (typeof indexer[Symbol.iterator] === 'function') {
+            [...indexer].forEach(index => this.append(index, registerValue))
         }
 
         return this;
     }
 
-    one() {
-        return [...this._items || []][0]
+    get(index?: number | string): RegisterValue | RegisterValue[] | undefined {
+        let item = this.normalizeIndex(index);
+        if (this._map.has(item)) {
+            return this._map.get(item);
+        }
+        let items = this.items || [];
+
+        if (typeof index === 'number') {
+            return items[index];
+        }
+
+        return items
     }
 
-    get(search: any, compare: ((i: any) => boolean) | null = null) {
-        let item = this.normalizeIndex(search);
-
-        if (this.indexes.has(item)) {
-            return this.indexes.get(item);
-        }
-        if (compare === null) return null;
-
-        return [...this.items || []].find(compare)
+    resolve(index?: number | string): SpwNode | SpwNode[] | undefined {
+        const register = this.get(index);
+        return Array.isArray(register) ? register.map(r => r.item) : register?.item;
     }
 
     private normalizeIndex(search: any) {
@@ -81,22 +86,12 @@ export class RuntimeRegister {
         return search;
     }
 
-    private setIndex(raw: string | Symbol, newItem: RegisterValue): void {
+    private append(raw: string | Symbol, newItem: RegisterValue): void {
         const index = this.normalizeIndex(raw);
-
-        if (!this.isRegisterMultiple(raw)) {
-            this.indexes.set(index, newItem);
-            return;
-        }
-
-        const prev = (this.indexes.get(index) || []) as [];
-        const arr  = addToLimitedArray(newItem, prev, this.memory);
-        this.indexes.set(index, arr);
+        const prev  = (this._map.get(index) || []) as [];
+        const arr   = addToLimitedArray(newItem, prev, this.memory);
+        this._map.set(index, arr);
         return;
-    }
-
-    private isRegisterMultiple(raw: string | Symbol) {
-        return typeof raw === 'string' && raw[0] === '+';
     }
 }
 

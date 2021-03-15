@@ -1,7 +1,9 @@
 import {SpwNodeKeyValue} from '../spwNode';
 import {SpwBlockNode} from './helper/block/blockNode';
 
-export class SpwEssenceNode extends SpwBlockNode {
+export class SpwEssenceNode extends SpwBlockNode<SpwEssenceNode> {
+    readonly keyCloser: string = '[';
+    readonly keyOpener: string = ']';
     set(key: keyof this, value: SpwNodeKeyValue): this {
         super.set(key, value);
 

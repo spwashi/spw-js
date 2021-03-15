@@ -1,7 +1,11 @@
 import {SpwNodeKeyValue} from '../spwNode';
 import {SpwBlockNode} from './helper/block/blockNode';
 
-export class SpwDomainNode extends SpwBlockNode {
+
+export class SpwDomainNode extends SpwBlockNode<SpwDomainNode> {
+    readonly keyOpener = '{';
+    readonly keyCloser = '}';
+
     get body() {
         return this._body;
     }
@@ -13,7 +17,6 @@ export class SpwDomainNode extends SpwBlockNode {
         switch (key) {
             case 'body':
                 if (!this._body) break;
-
                 this._body.forEach(node => node.setProp('domain', this))
                 return this;
         }

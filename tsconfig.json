@@ -11,7 +11,12 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "downlevelIteration": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es6",
+      "es2018.asynciterable"
+    ]
   },
   "exclude": [
     "node_modules",
