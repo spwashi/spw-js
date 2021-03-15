@@ -7,8 +7,8 @@ export class SpwPhraseNode extends SpwNode {
         return this._body;
     }
 
-    __json(): any {
-        return {...super.__json(), body: this.body};
+    toJSON__internal(): any {
+        return {...super.toJSON__internal(), body: this.body};
     }
 
     set(key: keyof this, value: SpwNodeKeyValue): this {

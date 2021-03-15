@@ -1,11 +1,12 @@
 import {SpwNode, SpwNodeKeyValue} from '../ast/node/spwNode';
-import {SpwDocument, SpwDocumentRegistry, SpwModuleIdentifier} from './spwDocument';
+import {SpwDocument, SpwDocumentIdentifier, SpwDocumentRegistry} from './spwDocument';
 import {RegisterMap, RuntimeRegister} from './register';
 import {incorporateNode} from '../ast/incorporateNode';
 import {SpwAnchorNode} from '../ast/node/nodeTypes/anchorNode';
 import {SpwStringNode} from '../ast/node/nodeTypes/stringNode';
 import {SpwNodeLocation, UnhydratedSpwNode} from '../ast/types';
 import {SpwPerformanceNode} from '../ast/node/nodeTypes/performanceNode';
+import {stringifyLocation} from '../ast/node/util/location';
 
 
 export type Parser = {
@@ -16,9 +17,9 @@ export type Parser = {
 export type SpwNodeIdentifier = string | Symbol;
 
 export interface SpwRuntime {
-    absorb(node: SpwNode): any;
+    incorporateNode(node: SpwNode): any;
 
-    locate(id: SpwNodeIdentifier): Promise<any>
+    locateNode(id: SpwNodeIdentifier): Promise<any>
 }
 
 const all: SpwNodeIdentifier              = Symbol('All');
@@ -47,6 +48,14 @@ class ParsingError implements Error {
 
 type SyntaxTreeOption = SpwNode | SpwNode[] | Error;
 
+class IdentityManager {
+    getNodeIdentifier(node: SpwNode | string | symbol | SpwNodeIdentifier | null): SpwNodeIdentifier {
+        return typeof node === 'string' || typeof node === 'symbol'
+               ? node
+               : lastAcknowledged
+    }
+}
+
 /**
  * I need to read more about what this is supposed to do.
  *
@@ -56,8 +65,9 @@ type SyntaxTreeOption = SpwNode | SpwNode[] | Error;
 export class Runtime implements SpwRuntime {
     static symbols = {keyed, lastAcknowledged, all, performance, evaluation};
 
-    public DEBUG_MODE = 0;
-    _nodes = new Set;
+    public DEBUG_MODE                                                          = 0;
+    _nodes                                                                     = new Set;
+    _identifier                                                                = new IdentityManager();
     /**
      * The parser used to generate the un-hydrated AST
      * @private
@@ -67,19 +77,19 @@ export class Runtime implements SpwRuntime {
      *
      * @private
      */
-    private readonly syntaxTrees: Map<SpwModuleIdentifier, SyntaxTreeOption> =
-        new Map<SpwModuleIdentifier, SyntaxTreeOption>()
+    private readonly syntaxTrees: Map<SpwDocumentIdentifier, SyntaxTreeOption> =
+        new Map<SpwDocumentIdentifier, SyntaxTreeOption>()
     /**
      * Modules that have been loaded into this runtime
      * @private
      */
-    private readonly moduleRegistry: SpwDocumentRegistry = new SpwDocumentRegistry();
+    private readonly moduleRegistry: SpwDocumentRegistry                       = new SpwDocumentRegistry();
     /**
      * Set of modules that are in the ModuleRegistry
      * @private
      */
-    private readonly loadedModules = new Set<SpwDocument>();
-
+    private readonly loadedDocuments                                           = new Set<SpwDocument>();
+    private _registers: RegisterMap                                            = new Map();
     /**
      *
      * @param parser
@@ -91,47 +101,40 @@ export class Runtime implements SpwRuntime {
         this.parser = parser;
         this.initializeRegisters();
     }
-
-    private _registers: RegisterMap = new Map();
-
     /**
      *
      */
     get registers(): RegisterMap {
         return this._registers;
     }
-
     /**
      * Given a node, return a symbol that can be used to reference it
      * @param node
      */
     identify(node: SpwNode | string | symbol | SpwNodeIdentifier | null): SpwNodeIdentifier {
-        return typeof node === 'string' || typeof node === 'symbol'
-               ? node
-               : lastAcknowledged;
+        return this._identifier.getNodeIdentifier(node);
     }
 
     /**
      * Add a node to the runtime
      * @param node
      */
-    absorb(node: SpwNode): SpwNode {
-        const location = JSON.stringify(node.location);
-
+    incorporateNode(node: SpwNode): SpwNode {
+        const location = stringifyLocation(node.location);
         if (this._nodes.has(location)) return node;
 
         if (hasStaticAnchor(node)) {
-            this.registerItem(keyed, node)
+            this._addNodeToRegister(keyed, node)
         }
 
         if (node instanceof SpwPerformanceNode) {
-            this.registerItem(performance, node)
+            this._addNodeToRegister(performance, node)
         }
 
-        this.registerItem(all, node);
+        this._addNodeToRegister(all, node);
 
-        const id = this.identify(node)
-        this.registerItem(id, node)
+        const id = this._identifier.getNodeIdentifier(node);
+        this._addNodeToRegister(id, node)
 
         this._nodes.add(location)
 
@@ -142,8 +145,8 @@ export class Runtime implements SpwRuntime {
      * Returns a generator that lists occurrences of an identifier
      * @param node
      */
-    async locate(node: SpwNodeIdentifier): Promise<Generator> {
-        const id                 = this.identify(node);
+    async locateNode(node: SpwNodeIdentifier): Promise<Generator> {
+        const id                 = this._identifier.getNodeIdentifier(node);
         let items: Iterable<any> = [];
 
         if (this._registers.has(id)) {
@@ -170,7 +173,7 @@ export class Runtime implements SpwRuntime {
         const loadModules = [...this.moduleRegistry.modules.values()]
             .map(async value => {
                 try {
-                    return await this.module__load(value);
+                    return await this.loadDocument(value);
                 } catch (e) {
                     return e;
                 }
@@ -182,43 +185,33 @@ export class Runtime implements SpwRuntime {
      * Mark a modules as Active
      * @param key
      */
-    async module__load(key: SpwModuleIdentifier | SpwDocument): Promise<SpwNodeKeyValue | Error> {
-        this.DEBUG_MODE && console.log('loading module')
-        const id = key instanceof SpwDocument
-                   ? key.identifier
-                   : key;
-        if (!this.moduleRegistry.modules.has(id)) throw new Error('Module has not been registered');
-
-        const spwModule = this.moduleRegistry.modules.get(id) as SpwDocument;
-        const src       = spwModule.src;
-
-        this.DEBUG_MODE && console.log('parsing module')
-
-        let parsed: any;
-        try {
-            parsed = src ? this.parser.parse(src) : null;
-        } catch (e) {
-            throw new ParsingError(e)
-        }
-        this.DEBUG_MODE && console.log('module parsed')
-
-        this.loadedModules.add(spwModule);
-
-        let hydrated: string | number | SpwNode | SpwNodeKeyValue[] | Error;
-        if (parsed) {
-            hydrated =
-                await incorporateNode(parsed,
-                                      {
-                                          absorb:   this.absorb.bind(this),
-                                          location: {moduleID: spwModule.identifier},
-                                      });
-            console.log('PARSING')
-        } else {
-            throw new Error('Could not parse');
+    async loadDocument(key: SpwDocumentIdentifier | SpwDocument): Promise<SpwNodeKeyValue | Error> {
+        const id = key instanceof SpwDocument ? key.identifier : key;
+        if (!this.moduleRegistry.modules.has(id)) {
+            throw new Error('Module has not been registered');
         }
 
-        this.syntaxTrees.set(id, hydrated as SpwNode | SpwNode[])
+        // find the module
+        const document = <SpwDocument>this.moduleRegistry.modules.get(id);
 
+        // return preloaded document
+        const wasLoaded = this.loadedDocuments.has(document);
+        if (wasLoaded) {
+            if (this.syntaxTrees.has(id)) {
+                return <SyntaxTreeOption>this.syntaxTrees.get(id);
+            }
+            throw new Error('Module is already loaded, though ')
+        }
+
+        // parse the document
+        const parsed   = this.parse(document.src);
+        const hydrated = await incorporateNode(parsed,
+                                               {
+                                                   absorb:   this.incorporateNode.bind(this),
+                                                   location: {moduleID: document.identifier},
+                                               });
+        this.loadedDocuments.add(document);
+        this.syntaxTrees.set(id, hydrated);
         return hydrated;
     }
 
@@ -226,26 +219,26 @@ export class Runtime implements SpwRuntime {
      * Register a module in this runtime
      * @param id
      */
-    async module__register(id: SpwDocument | SpwModuleIdentifier) {
-        const m: SpwDocument =
-                  !(id instanceof SpwDocument) ? await this.module__locate(id)
-                                               : id;
-        this.moduleRegistry.register(m);
+    async registerDocument(id: SpwDocument) {
+        this.moduleRegistry.register(id);
     }
 
     /**
-     * Get a module by its ID
-     * @param id
+     *
+     * @param src
+     * @private
      */
-    async module__locate(id: SpwModuleIdentifier): Promise<SpwDocument> {
-        if (!this.moduleRegistry.modules.has(id))
-            throw new Error('Not sure how to find modules');
-
-        return this.moduleRegistry.modules.get(id) as SpwDocument;
+    private parse(src: string | null) {
+        let parsed: any;
+        try {
+            return src ? this.parser.parse(src) : null;
+        } catch (e) {
+            throw new ParsingError(e)
+        }
     }
 
-    private registerItem(id: SpwNodeIdentifier, node: SpwNode) {
-        const register = this._registers.get(id) || new RuntimeRegister();
+    private _addNodeToRegister(id: SpwNodeIdentifier, node: SpwNode) {
+        const register = this._registers.get(id) ?? new RuntimeRegister();
         register.add(node)
         this._registers.set(id, register);
     }

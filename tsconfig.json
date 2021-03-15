@@ -10,6 +10,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "downlevelIteration": true,
     "forceConsistentCasingInFileNames": true
   },
   "exclude": [
@@ -17,6 +18,9 @@
     "dist",
     ".idea",
     "scripts"
+  ],
+  "lib": [
+    "es2019"
   ],
   "include": [
     "src/**/*"

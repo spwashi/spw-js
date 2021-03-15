@@ -1,5 +1,5 @@
 import {UnhydratedSpwNode} from './types';
-import {SpwNode, SpwNodeKeyValue} from './node/spwNode';
+import {SpwNode} from './node/spwNode';
 import {spwNodeConstructors, SpwNodeKind} from './node';
 
 interface HydrationContext {
@@ -45,18 +45,27 @@ async function hydrateNode(node: UnhydratedSpwNode, runtime: HydrationContext) {
 
 type HydrationInput = UnhydratedSpwNode | UnhydratedSpwNode[] | any;
 
-
-export async function incorporateNode(node: HydrationInput, runtime: HydrationContext, _cache = new Map()): Promise<SpwNodeKeyValue> {
+/**
+ *
+ * @param node
+ * @param runtime
+ * @param _cache
+ */
+export async function incorporateNode(node: HydrationInput, runtime: HydrationContext, _cache = new Map()): Promise<SpwNode | SpwNode[]> {
     if (_cache.has(node)) return _cache.get(node);
     if (Array.isArray(node)) {
-        const hydrateChild = (node: HydrationInput): Promise<SpwNodeKeyValue> => incorporateNode(node, runtime, _cache);
+        const all =
+                  await Promise.all(
+                      node.map((node) => incorporateNode(node, runtime, _cache)),
+                  );
 
-        return Promise.all(node.map(hydrateChild));
+        // flatMap
+        return all.reduce((acc: SpwNode[], val) => acc.concat(val), []);
     }
 
     if (!node?.kind) {
-        console.log(node)
-        return node;
+        console.error(node)
+        throw new Error('Cannot incorporate node');
     }
 
     const spwNode = await hydrateNode(node, runtime);

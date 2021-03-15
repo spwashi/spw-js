@@ -1,13 +1,13 @@
-export type SpwModuleIdentifier = string;
+export type SpwDocumentIdentifier = string;
 
 /**
  * Represents
  */
 export class SpwDocument {
-    private readonly _identifier: SpwModuleIdentifier;
+    private readonly _identifier: SpwDocumentIdentifier;
     private readonly _src: string | null = null;
 
-    constructor(identifier: SpwModuleIdentifier, src: string | null = null) {
+    constructor(identifier: SpwDocumentIdentifier, src: string | null = null) {
         this._identifier = identifier;
         this._src        = src;
     }
@@ -16,13 +16,13 @@ export class SpwDocument {
         return this._src;
     }
 
-    get identifier(): SpwModuleIdentifier {
+    get identifier(): SpwDocumentIdentifier {
         return this._identifier;
     }
 }
 
 export class SpwDocumentRegistry {
-    private _modules = new Map<SpwModuleIdentifier, SpwDocument>();
+    private _modules = new Map<SpwDocumentIdentifier, SpwDocument>();
 
     get modules() {
         return this._modules;

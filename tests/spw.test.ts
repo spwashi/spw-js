@@ -32,9 +32,9 @@ const loadConcept =
               const moduleID = getConceptId(domain, label);
               const document = new SpwDocument(moduleID, body);
 
-              await runtime.module__register(document);
+              await runtime.registerDocument(document);
 
-              return await runtime.module__load(moduleID)
+              return await runtime.loadDocument(moduleID)
           };
 
 
@@ -165,7 +165,7 @@ test('can generate parser',
                  }
 
                  if (node.kind === 'anchor') {
-                     sorted.anchor.all.push(node);
+                     sorted.anchor.all.push(<SpwAnchorNode>node);
                      const arr = sorted.anchor.keyed[node.key] = sorted.anchor.keyed[node.key] ?? [];
                      arr.push(node);
                  }

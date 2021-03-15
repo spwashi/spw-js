@@ -4,7 +4,7 @@ import {SpwNodeKind} from './node';
 export interface LineColumnOffset {
     line: number;
     column: number;
-    offset: number;
+    offset?: number;
 }
 
 export type SpwNodeLocation = {
