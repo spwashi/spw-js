@@ -3,9 +3,9 @@ import {SpwItem} from '../item';
 
 export type RegisterEntry = { item: SpwItem; time: number };
 
-type RegisterParameters = { memory?: number | null, index?: (node: SpwItem | any) => any };
+type RegisterParameters = { memory?: number | null };
 
-function unshift(addition: any, prev: Iterable<any>, memory: number | null) {
+function unshift<U>(addition: U, prev: Iterable<U>, memory: number | null) {
     let items = [addition, ...prev];
     if (memory !== null) {
         items = items.slice(0, memory)
@@ -15,23 +15,21 @@ function unshift(addition: any, prev: Iterable<any>, memory: number | null) {
 
 export class RuntimeRegister {
     private readonly memory: number | null;
-    private readonly _indexer: ((node: SpwItem) => string | string[]) | undefined;
     private counter                        = 0;
     private _entries: Array<RegisterEntry> = [];
 
-    constructor({memory = null, index}: RegisterParameters = {memory: null}) {
-        this.memory   = memory;
-        this._indexer = index;
+    constructor({memory = null}: RegisterParameters = {memory: null}) {
+        this.memory = memory;
     }
 
-    get entries() {
+    get entries(): RegisterEntry[] {
         return this._entries;
     }
-    get flat() {
+    get flat(): SpwItem[] {
         return this._entries.map(({item}) => item)
     }
 
-    add(item: SpwNode) {
+    add(item: SpwNode): this {
         const registerValue =
                   {
                       item,

@@ -7,7 +7,7 @@ import {getUtilityRuleList} from './utility/space';
 import {getExpressionRuleList} from './item/impl/expressions';
 
 
-export function init() {
+export function init(): Grammar {
     const rules =
               [
                   topRule,

@@ -7,8 +7,5 @@ export interface UnhydratedSpwItem {
     key?: string;
     src: string;
 
-    [k: string]: UnhydratedSpwItem | UnhydratedSpwItem[] | string | SpwNodeLocation | any
-}
-
-export interface ISpwNode {
+    [k: string]: UnhydratedSpwItem | UnhydratedSpwItem[] | string | SpwNodeLocation | unknown;
 }

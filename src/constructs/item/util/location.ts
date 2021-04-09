@@ -8,7 +8,7 @@ export type SpwNodeLocation = {
     start: LineColumnOffset;
     end: LineColumnOffset;
 };
-const lcoToString   = (start: LineColumnOffset) => [start.line, start.column, start.offset].join('|');
+const lcoToString   = (start: LineColumnOffset): string => [start.line, start.column, start.offset].join('|');
 const lcoFromString = (str: string): LineColumnOffset => {
     const start = str.split('|');
     return {
@@ -37,6 +37,6 @@ export function parseLocation(_loc: SpwNodeLocation | string): SpwNodeLocation {
  * @param start
  * @param end
  */
-export function stringifyLocation({start, end}: SpwNodeLocation) {
+export function stringifyLocation({start, end}: SpwNodeLocation): string {
     return [lcoToString(start), lcoToString(end)].join(' ');
 }

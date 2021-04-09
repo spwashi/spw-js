@@ -79,12 +79,12 @@ export class Runtime {
      */
     async loadDocument(key: SpwDocumentIdentifier | SpwDocument): Promise<SpwItem | SpwItem[] | null> {
         const id = key instanceof SpwDocument ? key.identifier : key;
-        if (!this.moduleRegistry.modules.has(id)) {
+        if (!this.moduleRegistry.documents.has(id)) {
             throw new Error('Module has not been registered');
         }
 
         // find the module
-        const document = <SpwDocument>this.moduleRegistry.modules.get(id);
+        const document = <SpwDocument>this.moduleRegistry.documents.get(id);
 
         // return preloaded document
         const wasLoaded = this.loadedDocuments.has(document);
@@ -97,38 +97,33 @@ export class Runtime {
 
         // parse the document
         const parsed = this.parse(document.src);
-        try {
-            const hydrated = await hydrate(parsed,
-                                           {
-                                               absorb:   this.incorporateNode.bind(this),
-                                               location: {moduleID: document.identifier},
-                                           });
-            this.loadedDocuments.add(document);
-            this.syntaxTrees.set(id, hydrated);
-            return hydrated;
-        } catch (e) {
-            // console.log(util.inspect(parsed, {depth: null, colors: true}));
-            throw e;
-        }
-    }
-    /**
-     * Register a module in this runtime
-     * @param id
-     */
-    async registerDocument(id: SpwDocument) {
-        this.moduleRegistry.register(id);
+        if (!parsed) return null;
+
+        const hydrated = await hydrate(parsed,
+                                       {
+                                           absorb:   this.incorporateNode.bind(this),
+                                           location: {moduleID: document.identifier},
+                                       });
+        this.loadedDocuments.add(document);
+        this.syntaxTrees.set(id, hydrated);
+        return hydrated;
     }
 
-    locateNode(search: Exclude<SpwItemKey, null> | UnhydratedSpwItem): SpwItem[] {
+    async registerDocument(id: SpwDocument): Promise<void> {
+        this.moduleRegistry.add(id);
+    }
+
+    locateNode(search: Exclude<SpwItemKey, null> | UnhydratedSpwItem | unknown): SpwItem[] {
         if (!search) return [];
 
         if (typeof search === 'string') {
             return this.registers.keys[search]?.flat ?? [];
         }
 
-        if (search.key) {
-            return this.registers.keys[search.key]?.flat ?? (
-                [this._rawNodeMap.get(search)].filter(Boolean)
+        const spwItem = search as UnhydratedSpwItem;
+        if (spwItem.key) {
+            return this.registers.keys[spwItem.key]?.flat ?? (
+                [this._rawNodeMap.get(spwItem)].filter(Boolean)
             );
         }
 
@@ -155,11 +150,6 @@ export class Runtime {
      * @private
      */
     private parse(src: string | null) {
-        try {
-            return src ? this.parser.parse(src) : null;
-        } catch (e) {
-            debugger;
-            throw e;
-        }
+        return src ? this.parser.parse(src) : null;
     }
 }

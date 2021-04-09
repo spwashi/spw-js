@@ -15,7 +15,7 @@ function getStringRulePattern() {
     const doubleQuoteBody        =
               patterns.zeroOrMore(
                   patterns.any([
-                                   patterns.sequence([backslash, double_quote], 'quote', '{ return "\\\"" }'),
+                                   patterns.sequence([backslash, double_quote], 'quote', '{ return "\\"" }'),
                                    ...standardStringPatterns,
                                    single_quote,
                                ]),

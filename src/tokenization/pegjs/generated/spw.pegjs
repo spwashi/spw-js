@@ -11,7 +11,7 @@ const _cache = new Map();
                                   .filter(([k, v]) => k === 'key' ? true : v !== undefined)
                           ),
                       src:      text(),
-                      location: location(),
+                      location: location()
                   };
               }
 
@@ -50,7 +50,6 @@ const _cache = new Map();
                           console.error('No handler for ' + out.kind);
                           out ? (out.kind = out.kind || 'unknown') : null;
                           throw new Error();
-                          return out;
                   }
               }
 }

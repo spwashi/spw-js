@@ -15,12 +15,12 @@ export abstract class SpwItem implements ISpwItemStatic {
 
     constructor(node: UnhydratedSpwItem) {
         const {key, location} = node;
-        this.#_raw            = node;
-        this.#_location       = location;
-        this.key              = key ?? null;
+        this.key        = key ?? null;
+        this.#_raw      = node;
+        this.#_location = location;
     }
 
-    get kind() {
+    get kind(): string {
         return (<typeof SpwItem>this.constructor).kind
     }
 

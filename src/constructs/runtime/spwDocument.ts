@@ -18,15 +18,17 @@ export class SpwDocument {
     }
 }
 
-export class SpwDocumentRegistry {
-    private _modules = new Map<SpwDocumentIdentifier, SpwDocument>();
+type SpwDocumentMap = Map<SpwDocumentIdentifier, SpwDocument>;
 
-    get modules() {
-        return this._modules;
+export class SpwDocumentRegistry {
+    private _documents: SpwDocumentMap = new Map<SpwDocumentIdentifier, SpwDocument>();
+
+    get documents(): SpwDocumentMap {
+        return this._documents;
     }
 
-    register(spwModule: SpwDocument) {
-        this._modules.set(spwModule.identifier, spwModule)
+    add(spwModule: SpwDocument): this {
+        this._documents.set(spwModule.identifier, spwModule)
 
         return this;
     }

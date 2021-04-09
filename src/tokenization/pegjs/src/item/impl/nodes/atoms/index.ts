@@ -5,9 +5,11 @@ import {stringNodeRule} from './pure/impl/string/string.rule';
 import labeledNodeRules from './labeled';
 import {pureAtomNodeRulePattern, pureAtomRule} from './pure';
 import {labeledAtomNodeRulePattern} from './labeled/abstract/ref';
+import { Rule } from '@spwashi/language/parsers/grammar/rules/rule';
+import { RuleReferencePattern } from '@spwashi/language/parsers/grammar/pattern/sub/rule-reference';
 
 export const getAtomRuleList =
-                 () => {
+                 (): Rule[] => {
                      return [
                          phraseNodeRule,
                          unicodeRule,
@@ -19,7 +21,7 @@ export const getAtomRuleList =
                  }
 
 export const getAtomNodePatternList =
-                 () => {
+                 (): RuleReferencePattern[] => {
                      return [
                          pureAtomNodeRulePattern,
                          labeledAtomNodeRulePattern,

@@ -1,5 +1,4 @@
 import {SpwNode} from '../../../abstract/node';
-import {IContainerNode} from '../../../types/container';
 import {staticImplements} from '../../../../../util/staticImplements';
 
 type IContainerNodeStatic =
@@ -9,7 +8,7 @@ type IContainerNodeStatic =
     };
 
 @staticImplements<IContainerNodeStatic>()
-export abstract class ContainerNode extends SpwNode implements IContainerNode {
+export abstract class ContainerNode extends SpwNode {
     static readonly openToken: string  = 'undefined';
     static readonly closeToken: string = 'undefined';
 }

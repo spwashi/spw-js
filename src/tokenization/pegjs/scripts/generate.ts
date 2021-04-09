@@ -12,12 +12,12 @@ async function run() {
 
     const parserFile =
               // language=JavaScript
-              `
-                  // @ts-nocheck
-                  // noinspection UnnecessaryLocalVariableJS
-                  const parser = ${parser};
-                  export default parser;
-                  export {parser as ${lang}Parser};
+              `/* eslint-disable */
+// @ts-nocheck
+// noinspection UnnecessaryLocalVariableJS
+const parser = ${parser};
+export default parser;
+export {parser as ${lang}Parser};
               `;
 
     const location = path.join(__dirname, '../generated/parser.ts');

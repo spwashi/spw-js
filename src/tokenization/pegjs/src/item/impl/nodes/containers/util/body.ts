@@ -1,7 +1,7 @@
 import {spaceNodeRulePattern} from '../../../../../utility/space/space';
 import {RuleReferencePattern} from '@spwashi/language/parsers/grammar/pattern/sub/rule-reference';
 import patterns from '@spwashi/language/parsers/grammar/pattern/sub';
-import {rule} from '@spwashi/language/parsers/grammar/rules/rule';
+import {Rule, rule} from '@spwashi/language/parsers/grammar/rules/rule';
 import {Pattern} from '@spwashi/language/parsers/grammar/pattern/pattern';
 import {newlinePattern, spaceTabPattern} from '../../../../../utility/space/patterns/whitespace';
 import {pureAtomNodeRulePattern} from '../../atoms/pure';
@@ -20,36 +20,36 @@ function getEmptyBlockPattern(opener: RuleReferencePattern, closer: RuleReferenc
 }
 
 
-export function createContainerBodyRules(bodyName: string) {
+export function createContainerBodyRules(bodyName: string): { rule: Rule, ref: RuleReferencePattern } {
     return {
-        rules:
-             [
-                 rule(bodyName,
-                      patterns.sequence([
-                                            patterns.oneOrMore(
-                                                patterns.any([
-                                                                 strandExpressionRulePattern,
-                                                                 labeledAtomNodeRulePattern,
-                                                                 pureAtomNodeRulePattern,
-                                                                 spaceNodeRulePattern.withAction('return null'),
-                                                             ])
-                                                        .named('item')
-                                                        .withAction('return item'),
-                                            )
-                                                    .named('items'),
-                                        ])
-                          //language=JavaScript
-                              .withAction(`return toSpwItem({
-                                                              kind:    'node-body',
-                                                              key:     items.map(i => i && i.key).filter(Boolean).join(', '),
-                                                              entries: items.filter(i => i != null)
-                                                          })`),
-                 ),
-             ],
+        rule:
+             rule(bodyName,
+                  patterns.sequence([
+                                        patterns.oneOrMore(
+                                            patterns.any([
+                                                             strandExpressionRulePattern,
+                                                             labeledAtomNodeRulePattern,
+                                                             pureAtomNodeRulePattern,
+                                                             spaceNodeRulePattern.withAction('return null'),
+                                                         ])
+                                                    .named('item')
+                                                    .withAction('return item'),
+                                        )
+                                                .named('items'),
+                                    ])
+                      //language=JavaScript
+                          .withAction(`return toSpwItem({
+                                                            kind:    'node-body',
+                                                            key:     items.map(i => i && i.key)
+                                                                          .filter(Boolean)
+                                                                          .join(', '),
+                                                            entries: items.filter(i => i != null)
+                                                        })`),
+             ),
         ref: patterns.reference(bodyName),
     };
 }
-export function getWrapperBodyPattern(body: Pattern, [_opener, _closer]: [Pattern, Pattern]) {
+export function getWrapperBodyPattern(body: Pattern, [_opener, _closer]: [Pattern, Pattern]): Pattern {
     const open  = <RuleReferencePattern>_opener;
     const close = <RuleReferencePattern>_closer;
     // language=JavaScript

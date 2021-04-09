@@ -11,12 +11,12 @@ export const strandExpressionRulePattern = patterns.reference(ruleName)
 
 //language=JavaScript
 const action                      = `return toSpwItem({kind: 'strand', head, tail})`;
-let headComponent                 = patterns.any([
+const headComponent               = patterns.any([
                                                      pureAtomNodeRulePattern,
                                                      labeledAtomNodeRulePattern,
                                                  ])
                                             .named('head');
-let tailComponents                = patterns.oneOrMore(patterns.sequence([
+const tailComponents              = patterns.oneOrMore(patterns.sequence([
                                                                              patterns.zeroOrMore(spaceNodeRulePattern),
                                                                              patterns.string('=>').named('transport'),
                                                                              patterns.zeroOrMore(spaceNodeRulePattern),

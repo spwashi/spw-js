@@ -16,12 +16,9 @@ describe('Strand Nodes',
 
                             expect(last?.kind).toEqual(StrandExpression.kind);
                             expect(all.length).toEqual(10);
-                            // console.log(util.inspect(last, {depth: null, colors: true}))
-                            debugger;
                             done();
                         } catch (e) {
                             // console.log(util.inspect(e, {depth: null, colors: true}))
-                            debugger;
                             throw new Error('Parsing Error')
                         }
                     })()

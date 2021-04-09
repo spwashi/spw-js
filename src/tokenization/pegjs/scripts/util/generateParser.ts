@@ -15,8 +15,7 @@ import {
     WordNode,
 } from '../../../../constructs';
 import {StrandExpression} from '../../../../constructs/item/impl/expressions/impl/strand';
-
-const {generateParser} = require('@spwashi/language/parsers/run');
+import {generateParser} from '@spwashi/language/parsers/run';
 
 
 // language=JavaScript
@@ -79,14 +78,14 @@ const head =
 
 const grammarInput = init();
 
-export async function initSpw() {
+export async function initSpw(): Promise<string> {
     // const head = fs.readFileSync(path.join(__dirname, 'boon.js'), 'utf-8');
     // console.log(head);
     const {parser} = await generateParser(head, grammarInput);
     return parser;
 }
 
-export async function generatePegJsFile() {
+export async function generatePegJsFile(): Promise<string> {
     const {grammar} = await generateParser(head, grammarInput);
     return grammar;
 }

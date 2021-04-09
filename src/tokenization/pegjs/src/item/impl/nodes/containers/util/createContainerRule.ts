@@ -1,11 +1,11 @@
-import {rule} from '@spwashi/language/parsers/grammar/rules/rule';
+import {Rule, rule} from '@spwashi/language/parsers/grammar/rules/rule';
 import {createDelimiterRule} from './delimiters';
 import {createContainerBodyRules, getWrapperBodyPattern} from './body';
 import patterns from '@spwashi/language/parsers/grammar/pattern/sub';
 
 
 export const createContainerRule =
-                 (tokens: [string, string], kind: string, ruleName: string) => {
+                 (tokens: [string, string], kind: string, ruleName: string): Rule[] => {
                      const opener = createDelimiterRule(`${ruleName}Open`, tokens[0]);
                      const closer = createDelimiterRule(`${ruleName}Close`, tokens[1], true);
                      const body   = createContainerBodyRules(`${ruleName}Body`);
@@ -18,7 +18,7 @@ export const createContainerRule =
                      return [
                          opener.rule,
                          closer.rule,
-                         ...body.rules,
+                         body.rule,
 
                          // language=JavaScript
                          rule(ruleName, bodyPattern, `return toSpwItem({

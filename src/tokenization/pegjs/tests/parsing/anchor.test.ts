@@ -37,7 +37,7 @@ describe('AnchorNodes',
 
              it('Must start with an alphabetic character and must end with an alphanumeric character',
                 async () => {
-                    let asyncTest =
+                    const asyncTest =
                             async (src: string, check: (runtime: Runtime) => void) => {
                                 try {
                                     const runtime = await startRuntimeWithSrc(src);
