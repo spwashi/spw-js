@@ -32,7 +32,7 @@ As it turns out, the hard part isn't finding people who want to improve educatio
 
 #### Enter Spw.
 
-Originally a content tagging scheme, Spw's syntax evolved to express nuances I felt were necessary to synchronize diverse learning objectives or strategies.
+Originally a content tagging scheme, Spw's syntax evolved to express nuances I felt were necessary to synchronize diverse learning opens or strategies.
 
 
 ## How Spw works
@@ -103,7 +103,7 @@ Also, I've been playing around with SWI-Prolog and appreciate its style of query
         - `{_context concept implementation_}`
         - ```
           {_context
-              objective => subjective 
+              open => close 
           instance_}
           ```
         - ```

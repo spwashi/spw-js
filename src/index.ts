@@ -1,5 +1,4 @@
-import {spwParser} from './parser';
-import {Runtime} from './runtime/runtime';
-import {SpwDocument} from './runtime/spwDocument';
-
+import {Runtime} from '@constructs/runtime/runtime';
+import {SpwDocument} from '@constructs/runtime/spwDocument';
+import {spwParser} from './tokenization/pegjs/generated/parser';
 export {spwParser, Runtime, SpwDocument};

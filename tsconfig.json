@@ -16,13 +16,19 @@
     "lib": [
       "es6",
       "es2018.asynciterable"
-    ]
+    ],
+    "baseUrl": "src",
+    "paths": {
+      "@constructs/*": [
+        "constructs/*"
+      ]
+    }
   },
   "exclude": [
     "node_modules",
     "dist",
     ".idea",
-    "scripts"
+    "src/tokenization/pegjs/scripts"
   ],
   "lib": [
     "es2019"
