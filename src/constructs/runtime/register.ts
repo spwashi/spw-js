@@ -1,5 +1,5 @@
-import {SpwNode} from '../item/impl/nodes/abstract/node';
-import {SpwItem} from '../item';
+import {SpwNode} from '../ast/nodes/abstract/node';
+import {SpwItem} from '../ast';
 
 export type RegisterEntry = { item: SpwItem; time: number };
 

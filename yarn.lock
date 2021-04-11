@@ -1157,10 +1157,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@spwashi/language@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@spwashi/language/-/language-1.3.1.tgz#3d2cee4881aafa8de830714bb51300c1c0f78c5a"
-  integrity sha512-KGdLyOHaKAwjq8+uA1renI8CpmBfnP8TzS0qxhnO/dcrezTTg4Gaqn4QN8/U/BVGQwgtcFLiNtSsamTS3QPIOQ==
+"@spwashi/language@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@spwashi/language/-/language-1.4.3.tgz#52103a402ea015fea847fc850856358f12862344"
+  integrity sha512-kUFqQ7Ir3RW3Ody0LDMKCMn3JRUzPsdfkN3lVo1LrsQY07CCMyQOFDnelw7LJhc5ruK6//TvsPJtRhHbklcRaA==
   dependencies:
     "@babel/plugin-proposal-class-properties" "^7.12.1"
     "@babel/plugin-proposal-optional-chaining" "^7.12.1"
@@ -1172,6 +1172,7 @@
     "@types/pegjs" "^0.10.2"
     dedent "^0.7.0"
     jest "^26.6.3"
+    lodash "^4.17.21"
     minimist "^1.2.5"
     pegjs "^0.10.0"
     terser "^4.8.0"

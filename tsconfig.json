@@ -21,14 +21,14 @@
     "paths": {
       "@constructs/*": [
         "constructs/*"
-      ]
+      ],
     }
   },
   "exclude": [
     "node_modules",
     "dist",
     ".idea",
-    "src/tokenization/pegjs/scripts"
+    "src/parser/scripts"
   ],
   "lib": [
     "es2019"

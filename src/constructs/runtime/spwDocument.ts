@@ -1,10 +1,10 @@
-export type SpwDocumentIdentifier = string;
+export type SpwDocumentID = string;
 
 export class SpwDocument {
-    private readonly _identifier: SpwDocumentIdentifier;
+    private readonly _identifier: SpwDocumentID;
     private readonly _src: string | null = null;
 
-    constructor(identifier: SpwDocumentIdentifier, src: string | null = null) {
+    constructor(identifier: SpwDocumentID, src: string | null = null) {
         this._identifier = identifier;
         this._src        = src;
     }
@@ -13,15 +13,15 @@ export class SpwDocument {
         return this._src;
     }
 
-    get identifier(): SpwDocumentIdentifier {
+    get identifier(): SpwDocumentID {
         return this._identifier;
     }
 }
 
-type SpwDocumentMap = Map<SpwDocumentIdentifier, SpwDocument>;
+type SpwDocumentMap = Map<SpwDocumentID, SpwDocument>;
 
 export class SpwDocumentRegistry {
-    private _documents: SpwDocumentMap = new Map<SpwDocumentIdentifier, SpwDocument>();
+    private _documents: SpwDocumentMap = new Map<SpwDocumentID, SpwDocument>();
 
     get documents(): SpwDocumentMap {
         return this._documents;

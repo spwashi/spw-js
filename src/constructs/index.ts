@@ -1,34 +1,44 @@
 import {
     AnchorNode,
     ChannelNode,
-    ConceptualNode,
+    PhraseExpression,
+    ConceptNode,
     DomainNode,
     EssentialNode,
     EvaluationNode,
+    GroupNode,
     InvocationNode,
     PerformanceNode,
     PerspectiveNode,
     PhraseNode,
+    StrandExpression,
     StringNode,
-} from './item';
-import {StrandExpression} from './item/impl/expressions/impl/strand';
+} from './ast';
 
-export * from './item';
-export const spwNodeConstructors =
+export const spwItemConstructors =
                  {
-                     anchor:      AnchorNode,
-                     channel:     ChannelNode,
-                     concept:     ConceptualNode,
-                     domain:      DomainNode,
+                     // pure atoms
+                     anchor: AnchorNode,
+                     phrase: PhraseNode,
+                     string: StringNode,
+
+                     // labeled nodes
                      evaluation:  EvaluationNode,
                      essence:     EssentialNode,
                      invocation:  InvocationNode,
                      performance: PerformanceNode,
                      perspective: PerspectiveNode,
-                     phrase:      PhraseNode,
-                     strand:      StrandExpression,
-                     string:      StringNode,
+
+                     // container nodes
+                     channel: ChannelNode,
+                     concept: ConceptNode,
+                     domain:  DomainNode,
+                     group:   GroupNode,
+
+                     // expressions
+                     strand:            StrandExpression,
+                     phrase_expression: PhraseExpression,
                  };
-export type SpwNodeConstructors = typeof spwNodeConstructors;
+export type SpwNodeConstructors = typeof spwItemConstructors;
 export type SpwNodeKind = keyof SpwNodeConstructors;
-export {UnhydratedSpwItem} from './item/impl/nodes/abstract/interfaces/node';
+export {UnhydratedSpwItem} from './ast/nodes/abstract/interfaces/node';

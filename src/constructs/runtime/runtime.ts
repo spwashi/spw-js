@@ -1,9 +1,9 @@
-import {SpwNode} from '../item/impl/nodes/abstract/node';
-import {SpwDocument, SpwDocumentIdentifier, SpwDocumentRegistry} from './spwDocument';
+import {SpwNode} from '../ast/nodes/abstract/node';
+import {SpwDocument, SpwDocumentID, SpwDocumentRegistry} from './spwDocument';
 import {RuntimeRegister} from './register';
-import {hydrate} from '../item/util/hydrate';
-import {UnhydratedSpwItem} from '../item/impl/nodes/abstract/interfaces/node';
-import {SpwItem, SpwItemKey} from '../item/abstract/item';
+import {hydrate} from '../ast/util/hydrate';
+import {UnhydratedSpwItem} from '../ast/nodes/abstract/interfaces/node';
+import {SpwItem, SpwItemKey} from '../ast/abstract/item';
 
 export type Parser =
     {
@@ -11,9 +11,8 @@ export type Parser =
         SyntaxError: Error
     };
 
-type SyntaxTreeOption = SpwItem | SpwItem[] | Error;
-
-type RegisterMap =
+type TopLevelNode = SpwItem | SpwItem[];
+type RuntimeRegisters =
     {
         all: RuntimeRegister;
         lastAcknowledged: RuntimeRegister;
@@ -29,29 +28,17 @@ type RegisterMap =
  *
  */
 export class Runtime {
-    _rawNodeMap                                                                = new Map<UnhydratedSpwItem, SpwItem>()
-    /**
-     * The parser used to generate the un-hydrated AST
-     * @private
-     */
+    _rawNodeMap = new Map<UnhydratedSpwItem, SpwItem>();
+
     private readonly parser: Parser;
-    /**
-     *
-     * @private
-     */
-    private readonly syntaxTrees: Map<SpwDocumentIdentifier, SyntaxTreeOption> =
-        new Map<SpwDocumentIdentifier, SyntaxTreeOption>();
-    /**
-     * Modules that have been loaded into this runtime
-     * @private
-     */
-    private readonly moduleRegistry: SpwDocumentRegistry                       = new SpwDocumentRegistry();
+    private readonly trees           = new Map<SpwDocumentID, TopLevelNode>();
+    private readonly documents       = new SpwDocumentRegistry();
     /**
      * Set of modules that are in the ModuleRegistry
      * @private
      */
-    private readonly loadedDocuments                                           = new Set<SpwDocument>();
-    private _registers                                                         =
+    private readonly loadedDocuments = new Set<SpwDocument>();
+    private _registers               =
                 {
                     all:              new RuntimeRegister(),
                     lastAcknowledged: new RuntimeRegister({memory: 1}),
@@ -67,52 +54,44 @@ export class Runtime {
         }
         this.parser = parser;
     }
-    /**
-     *
-     */
-    get registers(): RegisterMap {
+    get registers(): RuntimeRegisters {
         return this._registers;
     }
     /**
      * Mark a modules as Active
      * @param key
      */
-    async loadDocument(key: SpwDocumentIdentifier | SpwDocument): Promise<SpwItem | SpwItem[] | null> {
-        const id = key instanceof SpwDocument ? key.identifier : key;
-        if (!this.moduleRegistry.documents.has(id)) {
+    loadDocument(key: SpwDocumentID | SpwDocument): SpwItem | SpwItem[] | null {
+        const id = `${key instanceof SpwDocument ? key.identifier : key}`
+
+        // register documents
+        if (key instanceof SpwDocument) {
+            this.registerDocument(key);
+            return this.loadDocument(id);
+        }
+
+        if (!this.documents.documents.has(id)) {
             throw new Error('Module has not been registered');
         }
 
         // find the module
-        const document = <SpwDocument>this.moduleRegistry.documents.get(id);
-
-        // return preloaded document
-        const wasLoaded = this.loadedDocuments.has(document);
-        if (wasLoaded) {
-            if (this.syntaxTrees.has(id)) {
-                return <SpwItem>this.syntaxTrees.get(id);
-            }
-            throw new Error('Module is already loaded, though ')
+        const document = <SpwDocument>this.documents.documents.get(id);
+        if (this.loadedDocuments.has(document)) {
+            if (this.trees.has(id)) return <SpwItem>this.trees.get(id);
+            throw new Error('Could not load syntax tree')
         }
 
         // parse the document
         const parsed = this.parse(document.src);
         if (!parsed) return null;
-
-        const hydrated = await hydrate(parsed,
-                                       {
-                                           absorb:   this.incorporateNode.bind(this),
-                                           location: {moduleID: document.identifier},
-                                       });
+        const hydrated = this.hydrateNode(parsed, document);
         this.loadedDocuments.add(document);
-        this.syntaxTrees.set(id, hydrated);
+        this.trees.set(id, hydrated);
         return hydrated;
     }
-
-    async registerDocument(id: SpwDocument): Promise<void> {
-        this.moduleRegistry.add(id);
+    registerDocument(id: SpwDocument): void {
+        this.documents.add(id);
     }
-
     locateNode(search: Exclude<SpwItemKey, null> | UnhydratedSpwItem | unknown): SpwItem[] {
         if (!search) return [];
 
@@ -130,6 +109,12 @@ export class Runtime {
         return [];
     }
 
+    private hydrateNode(parsed: UnhydratedSpwItem, document: SpwDocument) {
+        const absorb   = this.incorporateNode.bind(this);
+        const location = {moduleID: document.identifier};
+        const hydrated = hydrate(parsed, {absorb, location});
+        return hydrated;
+    }
     /**
      * Add a node to the runtime
      * @param node
