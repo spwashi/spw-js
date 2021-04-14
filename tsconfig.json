@@ -13,6 +13,12 @@
     "downlevelIteration": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths",
+        "afterDeclarations": true
+      }
+    ],
     "lib": [
       "es6",
       "es2018.asynciterable"
@@ -21,7 +27,7 @@
     "paths": {
       "@constructs/*": [
         "constructs/*"
-      ],
+      ]
     }
   },
   "exclude": [

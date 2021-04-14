@@ -1,7 +1,6 @@
 import {
     AnchorNode,
     ChannelNode,
-    PhraseExpression,
     ConceptNode,
     DomainNode,
     EssentialNode,
@@ -10,6 +9,7 @@ import {
     InvocationNode,
     PerformanceNode,
     PerspectiveNode,
+    PhraseExpression,
     PhraseNode,
     StrandExpression,
     StringNode,
@@ -62,6 +62,7 @@ export const head =
                              case '${StrandExpression.kind}':
                              case '${PhraseExpression.kind}':
 
+                             case 'number':
                              case 'strand-tail':
                              case 'node-body':
                              case 'delimiter':

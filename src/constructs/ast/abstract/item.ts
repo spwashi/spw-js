@@ -5,7 +5,7 @@ export type ISpwItemStatic = {
     readonly kind: string;
 }
 
-export type SpwItemKey = string | null;
+export type SpwItemKey = string | number | null;
 
 export abstract class SpwItem implements ISpwItemStatic {
     static kind = 'undefined';

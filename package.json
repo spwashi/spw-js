@@ -8,7 +8,7 @@
     "test": "jest src",
     "lint": "eslint src --ext .ts",
     "prebuild": "yarn test; yarn lint; yarn run build:parser",
-    "build": "tsc",
+    "build": "node ./node_modules/ttypescript/bin/tsc && ./node_modules/@babel/cli/bin/babel.js dist -d dist",
     "build:parser": "ts-node -r tsconfig-paths/register src/parser/scripts/generate.ts;",
     "copypackage": "cp -rf package.json dist",
     "prepublish": "yarn run build",
@@ -35,12 +35,16 @@
     "typescript": "^4.2.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.13.14",
     "@types/dedent": "^0.7.0",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
+    "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "^7.23.0",
     "ts-node": "^9.1.1",
-    "tsconfig-paths": "^3.9.0"
+    "tsconfig-paths": "^3.9.0",
+    "ttypescript": "^1.5.12",
+    "typescript-transform-paths": "^2.2.3"
   },
   "jest": {
     "moduleNameMapper": {

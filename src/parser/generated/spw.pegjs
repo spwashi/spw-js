@@ -42,6 +42,7 @@ const _cache = new Map();
                              case 'strand':
                              case 'phrase_expression':
 
+                             case 'number':
                              case 'strand-tail':
                              case 'node-body':
                              case 'delimiter':
@@ -56,7 +57,7 @@ const _cache = new Map();
 }
 
 Top = 
-body:(StrandExpression / PhraseExpression / DomainNode / EssentialNode / ConceptNode / GroupNode / LabeledAtom / PureAtom / (Space {return null;}))*
+body:(Expression / ContainerNode / Atom / (Space {return null;}))*
 {const items=Array.isArray(body)?body.map(i=>i&&i.kind?i:void 0).filter(i=>void 0!==i):body;return 1===items.length?items[0]:items;}
 
 UnicodeWithoutQuotes = 
@@ -65,9 +66,16 @@ UnicodeWithoutQuotes =
 Space = 
 (newlines:(([\t ] / newline:[\n,] {return newline;})+)+ {return toSpwItem({kind:"space"});})
 
+Atom = 
+LabeledAtom / PureAtom
+
 Anchor = 
-anchor:((head:([a-zA-Z])+ tail:(line:("-" / "_") chars:[a-zA-Z0-9] {return line+chars;})+ {return[...head,...tail].join("");}) / (head:([a-zA-Z])+ tail:([a-zA-Z0-9])* {return[...head,...tail].join("");}) / "&")
+anchor:((head:([a-zA-Z])+ tail:(line:("-" / "_") chars:([a-zA-Z0-9])+ {return line+chars.join("");})+ {return[...head,...tail].join("");}) / (head:([a-zA-Z])+ tail:([a-zA-Z0-9])* {return[...head,...tail].join("");}) / "&")
 {return toSpwItem({kind:"anchor",key:anchor});}
+
+Number = 
+num:([0-9])+
+{return toSpwItem({kind:"number",key:parseInt(num.join(""))});}
 
 Phrase = 
 phrase:(head:Anchor tail:(([\t ])+ anchor:Anchor {return anchor;})+ {return[head,...tail];})
@@ -78,7 +86,10 @@ string:(([\'] body:(UnicodeWithoutQuotes / [\n] / [\"])* [\'] {return body.join(
 {return toSpwItem({kind:"string",key:string});}
 
 PureAtom = 
-Phrase / StringNode / Anchor
+Phrase / StringNode / Number / Anchor
+
+LabeledAtom = 
+ChannelNode / EvaluationNode / InvocationNode / PerformanceNode / PerspectiveNode
 
 ChannelNode = 
 components:((token:"#" "_" label:Anchor {return{token:token,label:label};}) / "#")
@@ -100,8 +111,8 @@ PerspectiveNode =
 components:((token:"@" "_" label:Anchor {return{token:token,label:label};}) / "@")
 {return toSpwItem({kind:"perspective",...components});}
 
-LabeledAtom = 
-ChannelNode / EvaluationNode / InvocationNode / PerformanceNode / PerspectiveNode
+ContainerNode = 
+DomainNode / EssentialNode / ConceptNode / GroupNode
 
 DomainNodeOpen = 
 (token:"{" "_" node:(anchor:(Anchor / DomainNode / EssentialNode / ConceptNode / GroupNode) description:(DomainNode / EssentialNode / ConceptNode / GroupNode)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toSpwItem({key:[token,node.anchor.key].join("_"),...node,kind:"delimiter"});}) / (tok:"{" {return toSpwItem({key:tok,label:null,kind:"delimiter"});})
@@ -154,6 +165,9 @@ GroupNodeBody =
 GroupNode = 
 container:((open:GroupNodeOpen (([\t ] {return null;}) / (underscore:"_" {return underscore;}) / ([\n,] {return null;}))* close:GroupNodeClose {return{open:open,close:close};}) / (open:GroupNodeOpen body:GroupNodeBody close:GroupNodeClose {return{open:open,body:body,close:close};}))
 {const key=[container.open.key+(container.open.anchor?" ":""),(container.body||{}).key||"#",container.close.key].join("");return toSpwItem({...container,key:key,kind:"group"});}
+
+Expression = 
+StrandExpression / PhraseExpression
 
 StrandExpression = 
 head:(PhraseExpression / LabeledAtom / PureAtom) (Space)* tails:((Space)* transport:"=>" (Space)* tail:(DomainNode / EssentialNode / ConceptNode / GroupNode / LabeledAtom / PureAtom) {return toSpwItem({kind:"strand-tail",tail:tail,transport:transport,key:transport+tail.key});})+

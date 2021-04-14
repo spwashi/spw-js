@@ -1,22 +1,16 @@
 import {anyOf, sequenceOf, zeroOrMoreOf} from '@spwashi/language/parsers/grammar/combinators';
 import dedent from 'dedent';
-import {expressions} from '../item/expressions/_list.ref';
-import {containerNodes} from '../item/nodes/containers/_list.ref';
 import {Rule} from '@spwashi/language/parsers/grammar';
-import {atomNodes} from '../item/nodes/atoms/list.ref';
 import {spaceNode} from '../_base/space/space.ref';
+import {containerNode} from '../nodes/containers/abstract/ref';
+import {atomNode} from '../nodes/atoms/abstract/ref';
+import {expression} from '../expressions/abstract/ref';
 
+let space     = spaceNode.withAction('return null');
 const pattern =
           sequenceOf([
                          zeroOrMoreOf(
-                             anyOf(
-                                 [
-                                     ...expressions,
-                                     ...containerNodes,
-                                     ...atomNodes,
-                                     spaceNode.withAction('return null'),
-                                 ],
-                             ),
+                             anyOf([expression, containerNode, atomNode, space]),
                          ),
                      ]);
 const action  = /* language=JavaScript */ dedent`
