@@ -5,13 +5,14 @@
   "license": "MIT",
   "scripts": {
     "linkall": "yarn link @spwashi/language",
-    "test": "jest src",
+    "test": "jest ./",
     "lint": "eslint src --ext .ts --fix",
     "tsc": "node ./node_modules/ttypescript/bin/tsc && ./node_modules/@babel/cli/bin/babel.js dist -d dist",
-    "prebuild": "yarn test && yarn lint && yarn run build:parser",
+    "prebuild": "yarn test && yarn run build:parser",
     "build": "yarn tsc",
     "build:parser": "ts-node -r tsconfig-paths/register src/parser/scripts/generate.ts;",
-    "copypackage": "cp -rf package.json dist",
+    "preenter:dist": "yarn run lint",
+    "enter:dist": "cp -rf package.json dist; cd dist",
     "prepare": "yarn run build",
     "postpublish": "cd dist || true; cp -rf package.json ../"
   },
