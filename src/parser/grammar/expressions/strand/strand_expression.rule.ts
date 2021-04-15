@@ -1,22 +1,21 @@
-import {labeledAtomNode} from '../../nodes/atoms/labeled/abstract/ref';
 import {ruleName} from './strand_expression.ref';
 import {Rule} from '@spwashi/language/parsers/grammar';
 import {anyOf, oneOrMoreOf, sequenceOf, stringLike, zeroOrMoreOf} from '@spwashi/language/parsers/grammar/combinators';
-import {pureAtomNode} from '../../nodes/atoms/pure/abstract/ref';
 import {phraseExpression} from '../phrase/phrase_expression.ref';
 import {spaceNode} from '../../_base/space/space.ref';
-import {nodes} from '../../nodes/_list.ref';
+import {StrandExpression} from '@constructs/ast';
+import {perspectiveExpression} from '@grammar/expressions/perspective/perspective_expression.ref';
+import {node} from '@grammar/nodes/abstract/ref';
 
-const head               = anyOf([phraseExpression, labeledAtomNode, pureAtomNode]);
+const head               = anyOf([
+                                     perspectiveExpression,
+                                     phraseExpression,
+                                     node,
+                                 ]);
 const transport          = stringLike('=>');
-const tailEnd            = anyOf([...nodes]);
+const tailEnd            = anyOf([node]);
 const tailSequenceAction = /* language=JavaScript */ `
-    return toSpwItem({
-                         kind: 'strand-tail',
-                         tail,
-                         transport,
-                         key:  transport + tail.key
-                     })
+    return {tail, transport}
 `;
 const tails              = sequenceOf([
                                           zeroOrMoreOf(spaceNode),
@@ -31,10 +30,9 @@ const pattern            = sequenceOf([
                                       ]);
 const action             = /* language=JavaScript */ `
     return toSpwItem({
-                         kind: 'strand',
+                         kind: '${StrandExpression.kind}',
                          head,
                          tails,
-                         key:  [head.key, tails.map(i => i.key).join('')].join('')
                      })`;
 
 export const strandExpressionRule = new Rule(ruleName, pattern, action)

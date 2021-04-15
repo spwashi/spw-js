@@ -22,10 +22,10 @@ function initLabeledAtomRule(token: StringCombinator, ruleName: string, nodeName
     const action         = /* language=JavaScript */ `return toSpwItem({kind: "${nodeName}", ...components})`;
     return new Rule(ruleName, sequenceOf([pattern.named('components')]), action);
 }
-export function getLabeledAtomReference(SpwNode: ISpwItemStatic & IUnaryTokenStatic & { name: string }): RuleReferenceCombinator {
+export function getLabeledAtomReference<T extends string>(SpwNode: ISpwItemStatic & IUnaryTokenStatic<T> & { name: string }): RuleReferenceCombinator {
     return referenceTo(SpwNode.name);
 }
-export function getLabeledAtomRule(SpwNode: ISpwItemStatic & IUnaryTokenStatic & { name: string }): Rule {
+export function getLabeledAtomRule<T extends string>(SpwNode: ISpwItemStatic & IUnaryTokenStatic<T> & { name: string }): Rule {
     const token = stringLike(SpwNode.token);
     return initLabeledAtomRule(token, SpwNode.name, SpwNode.kind);
 }

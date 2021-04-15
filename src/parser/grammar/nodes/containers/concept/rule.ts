@@ -1,4 +1,4 @@
-import {createContainerRule} from '../_util/abstract/container.rule.init';
-import {ConceptNode} from '@constructs/ast';
+import {createContainerRules} from '../_util/abstract/container.rule.init';
+import {ConceptualContainer} from '@constructs/ast';
 
-export const conceptDomainRules = createContainerRule(ConceptNode);
+export const conceptDomainRules = createContainerRules(ConceptualContainer);

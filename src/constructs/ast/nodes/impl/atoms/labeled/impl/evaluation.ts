@@ -3,8 +3,14 @@ import {ISpwItemStatic} from '@constructs/ast/abstract/item';
 import {staticImplements} from '@constructs/ast/util/staticImplements';
 import {IUnaryTokenStatic} from '../abstract/interfaces/unary';
 
-@staticImplements<ISpwItemStatic & IUnaryTokenStatic>()
-export class EvaluationNode extends LabeledAtomNode {
-    static readonly kind          = 'evaluation';
-    static readonly token: string = '?';
+type Token = '?';
+type Kind = 'evaluation';
+
+const token: Token = '?';
+const kind: Kind   = 'evaluation';
+
+@staticImplements<ISpwItemStatic<Kind> & IUnaryTokenStatic<Token>>()
+export class EvaluationAtom extends LabeledAtomNode<Kind, Token> {
+    static readonly kind: Kind   = kind;
+    static readonly token: Token = token;
 }

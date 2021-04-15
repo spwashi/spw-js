@@ -1,14 +1,14 @@
-import {channelNodeRuleCombinator} from './channel/channel.ref';
-import {evaluationNodeRuleCombinator} from './evaluation/evaluation.ref';
-import {invocationNodeRuleCombinator} from './invocation/invocation.ref';
-import {performanceNodeRuleCombinator} from './performance/performance.ref';
-import {perspectiveNodeRuleCombinator} from './perspective/perspective.ref';
+import {channelAtom} from './channel/channel.ref';
+import {evaluationAtom} from './evaluation/evaluation.ref';
+import {invocationAtom} from './invocation/invocation.ref';
+import {performanceAtom} from './performance/performance.ref';
+import {perspectiveAtom} from './perspective/perspective.ref';
 
 export const labeledNodeRuleRefs =
                  [
-                     channelNodeRuleCombinator,
-                     evaluationNodeRuleCombinator,
-                     invocationNodeRuleCombinator,
-                     performanceNodeRuleCombinator,
-                     perspectiveNodeRuleCombinator,
+                     channelAtom,
+                     evaluationAtom,
+                     invocationAtom,
+                     performanceAtom,
+                     perspectiveAtom,
                  ]

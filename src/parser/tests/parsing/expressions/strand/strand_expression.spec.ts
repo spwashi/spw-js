@@ -1,6 +1,6 @@
-import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../util';
-import {SpwItem} from '@constructs/ast';
-import {StrandExpression} from '@constructs/ast/expressions/impl/strand';
+import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../util';
+import {StrandExpression} from '@constructs/ast/expressions/impl/strand_expression';
+import {SpwItem} from '@constructs/ast/abstract/item';
 import * as util from 'util';
 
 describe('Strand Expressions',
@@ -16,7 +16,8 @@ describe('Strand Expressions',
                             all           = getAllRegisteredNodes(runtime);
 
                             expect(last?.kind).toEqual(StrandExpression.kind);
-                            expect(all.length).toEqual(9);
+                            expect(all.length).toEqual(7);
+                            expect(last?.key).toEqual('test test test=>test=>test');
                             done();
                         } catch (e) {
                             console.log(util.inspect(e, {depth: null, colors: true}))

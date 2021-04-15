@@ -1,38 +1,46 @@
 import {SpwNode} from '../nodes/abstract/node';
-import {spwItemConstructors, SpwNodeKind} from '../../index';
-import {UnhydratedSpwItem} from '../nodes/abstract/interfaces/node';
+import {spwItemConstructors, SpwItemKind} from '../../index';
+import {HydratedSpwItem, RawSpwItem, SpwItemValue} from '../abstract/interfaces/internal';
 import {SpwItem} from '../abstract/item';
 
 interface HydrationContext {
     location: unknown;
 
-    absorb(spwNode: SpwItem): SpwItem;
+    absorb(spwNode: SpwItem): SpwItem | null;
 }
 
-function _hydrateInner(node: UnhydratedSpwItem, runtime: HydrationContext) {
+type HydrationInput = RawSpwItem | RawSpwItem[] | SpwItemValue;
+type HydrationOutput = SpwItem | SpwItem[] | { [k: string]: SpwItemValue } | null;
+
+function _hydrateInner(node: RawSpwItem, runtime: HydrationContext) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const {kind, src, location, key, ...rest} = node;
+    const {kind, src, location: unhydratedLocation, key, ...rest} = node;
 
-    Object.assign(location, runtime.location)
+    const location    = unhydratedLocation ? Object.assign(unhydratedLocation, runtime.location) : null;
+    const Constructor = (spwItemConstructors[kind as SpwItemKind] || SpwNode) as unknown as typeof SpwNode;
 
-    const Constructor      = spwItemConstructors[kind as SpwNodeKind] || SpwNode;
-    const spwNode: SpwItem = new Constructor(node);
+    const hydrated: Partial<HydratedSpwItem> = {kind, location: location ?? null};
 
     // Hydrate and set the properties
     Object.entries(rest)
           .map(([k, v]) => {
-              node[k] = v && ((v as SpwItem).kind || Array.isArray(v))
-                        ? hydrate((v as HydrationInput), runtime)
-                        : v;
+              const hydrateValue =
+                        (v: SpwItem | HydrationInput | SpwItemValue) =>
+                            v && ((v as SpwItem).kind || Array.isArray(v))
+                            ? hydrate((v as HydrationInput), runtime)
+                            : (
+                                v && typeof v === 'object'
+                                ? Object.fromEntries(Object.entries(v).map(([kk, vv]) => [kk, hydrate(vv as HydrationInput, runtime)]))
+                                : v
+                            );
+              hydrated[k]        = hydrateValue(v as SpwItemValue);
           })
 
-    Object.freeze(node);
+    const spwNode: SpwItem = new Constructor(node, hydrated as HydratedSpwItem);
+    Object.freeze(spwNode.hydrated);
 
     return spwNode;
 }
-
-
-type HydrationInput = UnhydratedSpwItem | UnhydratedSpwItem[];
 
 /**
  *
@@ -40,20 +48,23 @@ type HydrationInput = UnhydratedSpwItem | UnhydratedSpwItem[];
  * @param runtime
  * @param _cache
  */
-export function hydrate(node: HydrationInput, runtime: HydrationContext, _cache = new Map()): SpwItem | SpwItem[] {
+export function hydrate(node: HydrationInput, runtime: HydrationContext, _cache = new Map()): HydrationOutput {
     if (_cache.has(node)) return _cache.get(node);
     if (Array.isArray(node)) {
         const all = node.map((node) => hydrate(node, runtime, _cache));
         return all.filter(Boolean).reduce((acc: SpwItem[], val) => acc.concat(val as SpwItem), []);
     }
 
-    if (!node?.kind) {
-        console.error('Cannot hydrate node');
-        console.error(node);
-        throw new Error('Cannot incorporate node');
+    const n = node as unknown as { [k: string]: HydrationInput };
+    if (!n?.kind) {
+        if (!n || typeof n !== 'object') return n;
+        return Object.fromEntries(
+            Object.entries(n)
+                  .map(([k, v]) => [k, hydrate(v, runtime, _cache)]),
+        ) as HydrationOutput
     }
 
-    const spwNode = _hydrateInner(node, runtime);
+    const spwNode = _hydrateInner(node as RawSpwItem, runtime);
     _cache.set(node, spwNode)
     return runtime.absorb(spwNode);
 }

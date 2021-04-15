@@ -21,12 +21,16 @@
     ],
     "lib": [
       "es6",
-      "es2018.asynciterable"
+      "es2018.asynciterable",
+      "es2019"
     ],
     "baseUrl": "src",
     "paths": {
       "@constructs/*": [
         "constructs/*"
+      ],
+      "@grammar/*": [
+        "parser/grammar/*"
       ]
     }
   },

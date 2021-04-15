@@ -1,4 +1,4 @@
-import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../util';
+import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../../util';
 
 describe('Numbers', () => {
     it('Can be parsed',
@@ -6,14 +6,12 @@ describe('Numbers', () => {
            try {
                const runtime = await startRuntimeWithSrc(`890`);
                const all     = getAllRegisteredNodes(runtime);
-               const last    = getLastRegisteredNode(runtime)
-               console.log(all)
+               const last    = getLastRegisteredNode(runtime);
                expect(all.length).toEqual(1);
                expect(last?.key).toEqual(890);
                done();
            } catch (e) {
                console.log(e);
-               debugger;
            }
        })
 

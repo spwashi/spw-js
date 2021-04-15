@@ -1,7 +1,7 @@
 import {ContainerNode} from '../abstract/container';
 
-export class GroupNode extends ContainerNode {
-    static kind                = 'group';
+export class ParentheticalContainer extends ContainerNode<'parenthetical'> {
+    static kind                = 'parenthetical';
     static readonly openToken  = '(';
     static readonly closeToken = ')';
 }

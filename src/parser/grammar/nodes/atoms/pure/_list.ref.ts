@@ -5,8 +5,8 @@ import {numberNode} from './number/number.ref';
 
 export const pureAtomNodes =
                  [
+                     numberNode,
                      phraseNode,
                      stringNode,
-                     numberNode,
                      anchorNode,
                  ];

@@ -1,22 +1,20 @@
 import {Runtime} from '@constructs/runtime/runtime';
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../util';
+import {AnchorNode} from '@constructs/ast';
 
 describe('AnchorNodes',
          () => {
              it('Can start with an character of the alphabet and consist of alphanumeric characters, underscores, and dashes',
                 async () => {
-                    const asyncTest = async () => {
-                        try {
-
-                            const runtime = await startRuntimeWithSrc(`step`);
-                            const all     = getAllRegisteredNodes(runtime);
-                            console.log(all.map(o => o.key))
-                            expect(all.length).toEqual(1);
-                        } catch (e) {
-                            throw new Error('Parsing Error')
-                        }
-                    };
-                    return expect(asyncTest()).resolves
+                    try {
+                        const runtime = await startRuntimeWithSrc(`step`);
+                        const all     = getAllRegisteredNodes(runtime);
+                        const last    = getLastRegisteredNode(runtime);
+                        expect(AnchorNode.isAnchorNode(last)).toBeTruthy();
+                        expect(all.length).toEqual(1);
+                    } catch (e) {
+                        throw new Error('Parsing Error')
+                    }
                 });
 
              it('Must start with an alphabetic character and must end with an alphanumeric character',
@@ -34,9 +32,8 @@ describe('AnchorNodes',
                               (l: number) => (runtime: Runtime, src: string) => {
                                   const all  = getAllRegisteredNodes(runtime);
                                   const last = getLastRegisteredNode(runtime);
-                                  expect(last?.kind).toEqual('anchor')
-                                  console.log(last?.key)
-                                  expect(last?.key).toEqual(src)
+                                  expect(last?.kind).toEqual('anchor');
+                                  expect(last?.key).toEqual(src);
                                   expect(all.length).toEqual(l);
                               }
                     try {

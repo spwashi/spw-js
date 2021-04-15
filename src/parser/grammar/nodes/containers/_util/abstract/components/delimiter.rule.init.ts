@@ -22,8 +22,10 @@ function opener(token: combinators.StringCombinator): combinators.SequenceCombin
                                                          ]);
     // language=JavaScript
     const action                = `return toSpwItem({
-                                                        key:  [token, node.anchor.key].join('_'), ...node,
-                                                        kind: 'delimiter'
+                                                        token:    token,
+                                                        position: 'open',
+                                                        label:    node,
+                                                        kind:     'delimiter'
                                                     })`;
     return combinator.withAction(action);
 }
@@ -31,9 +33,10 @@ function closer(token: StringCombinator): SequenceCombinator {
     const underscore = combinators.stringLike('_');
     const action     = // language=JavaScript
               `return toSpwItem({
-                                    key:    [token, node.key].join('_'),
-                                    anchor: null,
-                                    kind:   'delimiter'
+                                    token:    token,
+                                    position: 'close',
+                                    label:    node,
+                                    kind:     'delimiter'
                                 })`;
     const node       = combinators.anyOf([anchorNode]);
     const combinator = combinators.sequenceOf([node.named('node'), underscore, token.named('token')]);
@@ -45,10 +48,10 @@ export function createDelimiterRule(ruleName: string, tok_1: string, index: 'ope
     const tokenCombinator            = combinators.stringLike(tok_1);
     const plainDelimiterCombinator   = combinators.sequenceOf([tokenCombinator.named('tok')])
                                                   .withAction( // language=JavaScript
-                                                      `return toSpwItem({
-                                                                            key:   tok,
-                                                                            label: null,
-                                                                            kind:  'delimiter'
+                                                               `return toSpwItem({
+                                                                            token:    tok,
+                                                                            position: '${index}',
+                                                                            kind:     'delimiter'
                                                                         })`,
                                                   );
     const labeledDelimiterCombinator = !reverse ? opener(tokenCombinator)

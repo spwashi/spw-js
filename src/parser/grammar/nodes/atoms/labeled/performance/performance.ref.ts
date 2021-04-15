@@ -1,4 +1,4 @@
 import {getLabeledAtomReference} from '../_util/labeled_atom.rule.init';
-import {PerformanceNode} from '@constructs/ast';
+import {PerformanceAtom} from '@constructs/ast';
 
-export const performanceNodeRuleCombinator = getLabeledAtomReference(PerformanceNode);
+export const performanceAtom = getLabeledAtomReference(PerformanceAtom);

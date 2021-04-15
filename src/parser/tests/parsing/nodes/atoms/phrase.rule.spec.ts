@@ -1,17 +1,17 @@
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../util';
-import {PhraseNode, SpwItem, StringNode} from '@constructs/ast';
+import {PhraseNode} from '@constructs/ast';
+import {SpwItem} from '@constructs/ast/abstract/item';
 
-describe('String Nodes',
+describe('Phrase Nodes',
          () => {
              it('can be parsed',
                 done => {
                     (async () => {
-                        const runtime                   = await startRuntimeWithSrc(`"this is a string"`);
+                        const runtime                   = await startRuntimeWithSrc(`test test test`);
                         const last: SpwItem | undefined = getLastRegisteredNode(runtime);
                         const all: SpwItem[]            = getAllRegisteredNodes(runtime);
-                        expect(last?.kind).toEqual(StringNode.kind);
-                        expect(last?.key).toEqual("this is a string");
-                        expect(all.length).toEqual(1);
+                        expect(last?.kind).toEqual(PhraseNode.kind);
+                        expect(all.length).toEqual(4);
 
                         done();
 

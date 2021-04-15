@@ -27,7 +27,6 @@ export const phraseNodeRule =
                          const p = (phrase).reduce((p, c) => [...p, ...(Array.isArray(c) ? c : [c])], []);
                          return toSpwItem({
                                               kind: '${PhraseNode.kind}',
-                                              key:  p.map(a => a.key).join(' '),
                                               body: p
                                           });
                      `);

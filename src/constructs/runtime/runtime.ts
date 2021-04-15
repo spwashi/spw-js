@@ -2,12 +2,13 @@ import {SpwNode} from '../ast/nodes/abstract/node';
 import {SpwDocument, SpwDocumentID, SpwDocumentRegistry} from './spwDocument';
 import {RuntimeRegister} from './register';
 import {hydrate} from '../ast/util/hydrate';
-import {UnhydratedSpwItem} from '../ast/nodes/abstract/interfaces/node';
+import {RawSpwItem} from '../ast/abstract/interfaces/internal';
 import {SpwItem, SpwItemKey} from '../ast/abstract/item';
+import {SpwItemKind} from '@constructs/ast/types/kind';
 
 export type Parser =
     {
-        parse: (input: string) => UnhydratedSpwItem,
+        parse: (input: string) => RawSpwItem,
         SyntaxError: Error
     };
 
@@ -28,7 +29,7 @@ type RuntimeRegisters =
  *
  */
 export class Runtime {
-    _rawNodeMap = new Map<UnhydratedSpwItem, SpwItem>();
+    _rawNodeMap = new Map<RawSpwItem, SpwItem>();
 
     private readonly parser: Parser;
     private readonly trees           = new Map<SpwDocumentID, TopLevelNode>();
@@ -85,21 +86,22 @@ export class Runtime {
         const parsed = this.parse(document.src);
         if (!parsed) return null;
         const hydrated = this.hydrateNode(parsed, document);
+        if (!hydrated) return null;
         this.loadedDocuments.add(document);
-        this.trees.set(id, hydrated);
-        return hydrated;
+        this.trees.set(id, hydrated as SpwItem | SpwItem[]);
+        return hydrated as SpwItem | SpwItem[];
     }
     registerDocument(id: SpwDocument): void {
         this.documents.add(id);
     }
-    locateNode(search: Exclude<SpwItemKey, null> | UnhydratedSpwItem | unknown): SpwItem[] {
+    locateNode(search: Exclude<SpwItemKey, null> | RawSpwItem | unknown): SpwItem[] {
         if (!search) return [];
 
         if (typeof search === 'string') {
             return this.registers.keys[search]?.flat ?? [];
         }
 
-        const spwItem = search as UnhydratedSpwItem;
+        const spwItem = search as RawSpwItem;
         if (spwItem.key) {
             return this.registers.keys[spwItem.key]?.flat ?? (
                 [this._rawNodeMap.get(spwItem)].filter(Boolean)
@@ -109,17 +111,18 @@ export class Runtime {
         return [];
     }
 
-    private hydrateNode(parsed: UnhydratedSpwItem, document: SpwDocument) {
+    private hydrateNode(parsed: RawSpwItem, document: SpwDocument) {
         const absorb   = this.incorporateNode.bind(this);
         const location = {moduleID: document.identifier};
-        const hydrated = hydrate(parsed, {absorb, location});
-        return hydrated;
+        return hydrate(parsed, {absorb, location});
     }
     /**
      * Add a node to the runtime
      * @param node
      */
-    private incorporateNode(node: SpwNode): SpwNode {
+    private incorporateNode<K extends SpwItemKind>(node: SpwNode<K>): SpwNode<K> | null {
+        if (!node?.raw) return null;
+
         this._rawNodeMap.set(node.raw, node);
         this.registers.all.add(node);
         this.registers.lastAcknowledged.add(node);

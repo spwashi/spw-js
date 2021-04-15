@@ -1,4 +1,4 @@
 import {getLabeledAtomReference} from '../_util/labeled_atom.rule.init';
-import {PerspectiveNode} from '@constructs/ast';
+import {PerspectiveAtom} from '@constructs/ast';
 
-export const perspectiveNodeRuleCombinator = getLabeledAtomReference(PerspectiveNode);
+export const perspectiveAtom = getLabeledAtomReference(PerspectiveAtom);

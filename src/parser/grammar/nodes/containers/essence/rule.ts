@@ -1,4 +1,4 @@
-import {createContainerRule} from '../_util/abstract/container.rule.init';
-import {EssentialNode} from '@constructs/ast';
+import {createContainerRules} from '../_util/abstract/container.rule.init';
+import {EssentialContainer} from '@constructs/ast';
 
-export const essenceRules = createContainerRule(EssentialNode);
+export const essentialContainerRules = createContainerRules(EssentialContainer);

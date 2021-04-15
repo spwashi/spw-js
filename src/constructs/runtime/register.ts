@@ -1,5 +1,6 @@
 import {SpwNode} from '../ast/nodes/abstract/node';
-import {SpwItem} from '../ast';
+import {SpwItemKind} from '../ast/types/kind';
+import {SpwItem} from '../ast/abstract/item';
 
 export type RegisterEntry = { item: SpwItem; time: number };
 
@@ -29,7 +30,7 @@ export class RuntimeRegister {
         return this._entries.map(({item}) => item)
     }
 
-    add(item: SpwNode): this {
+    add<K extends SpwItemKind>(item: SpwNode<K>): this {
         const registerValue =
                   {
                       item,

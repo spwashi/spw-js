@@ -27,7 +27,7 @@ const pattern            = sequenceOf([
                                       ]);
 
 // language=JavaScript
-const action = `return toSpwItem({kind: '${StringNode.kind}', key: string});`;
+const action = `return toSpwItem({kind: '${StringNode.kind}', token: '"', chars: string});`;
 
 
 export const stringNodeRule = new Rule(ruleName, pattern, action);

@@ -1,29 +1,27 @@
-import {SpwNodeLocation} from '../util/location';
-import {UnhydratedSpwItem} from '../nodes/abstract/interfaces/node';
+import {HydratedSpwItem, RawSpwItem} from './interfaces/internal';
+import {SpwItemKind} from '../types/kind';
 
-export type ISpwItemStatic = {
-    readonly kind: string;
+export interface ISpwItemStatic<K extends SpwItemKind = SpwItemKind> {
+    readonly kind: K;
 }
 
 export type SpwItemKey = string | number | null;
 
-export abstract class SpwItem implements ISpwItemStatic {
-    static kind = 'undefined';
-    readonly key: SpwItemKey;
-    readonly #_raw: UnhydratedSpwItem;
-    readonly #_location: SpwNodeLocation;
-    constructor(node: UnhydratedSpwItem) {
-        const {key, location} = node;
-        this.key              = key ?? null;
-        this.#_raw            = node;
-        this.#_location       = location;
+export abstract class SpwItem<K extends SpwItemKind = SpwItemKind, H extends HydratedSpwItem = HydratedSpwItem, U extends RawSpwItem = RawSpwItem> {
+    readonly kind: K;
+    abstract readonly key: SpwItemKey;
+    readonly #_hydrated: H | undefined;
+    readonly #_raw: U | null;
+    constructor(node?: U, hydrated?: H) {
+        const constructor = <typeof SpwItem>this.constructor as unknown as ISpwItemStatic<K>;
+        this.kind         = (node?.kind ?? constructor.kind) as K;
+        this.#_raw        = node || null;
+        this.#_hydrated   = hydrated;
     }
-
-    get kind(): string {
-        return (<typeof SpwItem>this.constructor).kind
-    }
-
-    get raw(): UnhydratedSpwItem {
+    get raw(): U | null {
         return this.#_raw;
+    }
+    get hydrated(): H | undefined {
+        return this.#_hydrated;
     }
 }

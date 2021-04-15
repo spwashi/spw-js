@@ -1,34 +1,32 @@
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../util';
-import {DomainNode, SpwItem} from '@constructs/ast';
+import {DomainContainer} from '@constructs/ast';
 import {Runtime} from '@constructs/runtime/runtime';
-import {SpwNode} from '@constructs/ast/nodes/abstract/node';
-import * as util from 'util';
+import {SpwItem} from '@constructs/ast/abstract/item';
 
 describe('Domain Node Parsing',
          () => {
              it('can parse: Standard Domains',
-                done => {
-                    (async () => {
-                        {
-                            const runtime: Runtime = await startRuntimeWithSrc(`{one => two => three}`);
-                            const all: SpwItem[]   = getAllRegisteredNodes(runtime);
-                            expect(all.length).toEqual(9);
-                        }
-                        {
-                            const runtime: Runtime          = await startRuntimeWithSrc(`
+                async done => {
+                    {
+                        const runtime: Runtime = await startRuntimeWithSrc(`{one => two => three}`);
+                        const all: SpwItem[]   = getAllRegisteredNodes(runtime);
+                        expect(all.length).toEqual(7);
+                    }
+                    {
+                        const runtime: Runtime          = await startRuntimeWithSrc(`
                                 {
                                     one 
                                     two 
                                     three
                                 }
                             `);
-                            const last: SpwItem | undefined = getLastRegisteredNode(runtime);
-                            const all: SpwItem[]            = getAllRegisteredNodes(runtime);
-                            expect(last?.kind).toEqual(DomainNode.kind)
-                            expect(all.length).toEqual(7);
-                        }
-                        {
-                            const runtime: Runtime          = await startRuntimeWithSrc(`
+                        const last: SpwItem | undefined = getLastRegisteredNode(runtime);
+                        const all: SpwItem[]            = getAllRegisteredNodes(runtime);
+                        expect(last?.kind).toEqual(DomainContainer.kind)
+                        expect(all.length).toEqual(6);
+                    }
+                    {
+                        const runtime: Runtime          = await startRuntimeWithSrc(`
                                 {_todo
                                          &  => checkout "origin/main"
                                          &  => run yarn install
@@ -36,27 +34,23 @@ describe('Domain Node Parsing',
                                             => check "./dist" for the output of < the build step >
                                     }
                             `);
-                            const last: SpwItem | undefined = getLastRegisteredNode(runtime);
-                            const all: SpwItem[]            = getAllRegisteredNodes(runtime);
-                            expect(last?.kind).toEqual(DomainNode.kind)
-                            expect(all.length).toEqual(41);
-                        }
+                        const last: SpwItem | undefined = getLastRegisteredNode(runtime);
+                        const all: SpwItem[]            = getAllRegisteredNodes(runtime);
+                        expect(last?.kind).toEqual(DomainContainer.kind)
+                        expect(all.length).toEqual(34);
+                    }
 
-                        {
-                            const runtime: Runtime          = await startRuntimeWithSrc(`{_< boon > ~one => two => three}`);
-                            const last: SpwItem | undefined = getLastRegisteredNode(runtime);
-                            const all: SpwItem[]            = getAllRegisteredNodes(runtime);
-                            expect(last?.kind).toEqual(DomainNode.kind);
-                            expect(last?.key).toEqual('{_<boon> ~ one=>two=>three}');
-                            expect(all.length).toEqual(16);
-                            const indexedDelimiter = runtime.locateNode('{_<boon>')[0]
-                            const locatedDelimiter = runtime.locateNode((last as SpwItem)?.raw.open)[0];
-                            expect(indexedDelimiter).toBeInstanceOf(SpwNode);
-                            expect(indexedDelimiter).toEqual(locatedDelimiter);
-                        }
-                        done();
-                    })().catch(e => {
-                        console.log(util.inspect(e, {depth: null, colors: true}))
-                    })
+                    {
+                        const runtime: Runtime          = await startRuntimeWithSrc(`{_< boon > ~one => two => three}`);
+                        const last: SpwItem | undefined = getLastRegisteredNode(runtime);
+                        const all: SpwItem[]            = getAllRegisteredNodes(runtime);
+                        expect(last?.kind).toEqual(DomainContainer.kind);
+                        expect(last?.key).toEqual('{_<boon> ~ one=>two=>three}');
+                        expect(all.length).toEqual(13);
+                        const indexedDelimiter = runtime.locateNode('{_<boon>')[0]
+                        const locatedDelimiter = runtime.locateNode((last as SpwItem)?.raw?.open)[0];
+                        expect(indexedDelimiter).toEqual(locatedDelimiter);
+                    }
+                    done();
                 });
          })

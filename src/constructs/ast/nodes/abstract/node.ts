@@ -1,7 +1,13 @@
-import {ISpwItemStatic, SpwItem} from '../../abstract/item';
-import {staticImplements} from '../../util/staticImplements';
+import {SpwItemKind} from '@constructs/ast/types/kind';
+import {HydratedSpwItem, RawSpwItem} from '@constructs/ast/abstract/interfaces/internal';
+import {SpwItem, SpwItemKey} from '@constructs/ast/abstract/item';
 
-@staticImplements<ISpwItemStatic>()
-export abstract class SpwNode extends SpwItem {
-    static readonly kind: string = 'undefined';
+export class SpwNode<K extends SpwItemKind,
+    H extends HydratedSpwItem = HydratedSpwItem,
+    U extends RawSpwItem = RawSpwItem> extends SpwItem<K, H, U> {
+    get key(): SpwItemKey {
+        const error = new Error('Nothing for ' + JSON.stringify(this.raw));
+        return this.kind;
+        throw error;
+    }
 }

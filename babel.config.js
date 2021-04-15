@@ -18,7 +18,8 @@ module.exports = {
                             {
                                 "root":  ["./dist"],
                                 "alias": {
-                                    "@constructs": "./dist/constructs"
+                                    "@constructs": "./dist/constructs",
+                                    "@grammar":    "./dist/parser/grammar"
                                 }
                             }
                         ]

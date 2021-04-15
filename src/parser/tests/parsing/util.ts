@@ -1,6 +1,6 @@
-import {Parser, Runtime} from '@constructs/runtime/runtime';
-import {SpwDocument} from '@constructs/runtime/spwDocument';
-import {SpwItem} from '@constructs/ast';
+import {SpwItem} from '../../../constructs/ast/abstract/item';
+import {Parser, Runtime} from '../../../constructs/runtime/runtime';
+import {SpwDocument} from '../../../constructs/runtime/spwDocument';
 import generatedParser from '../../scripts/generate';
 
 export function getAllRegisteredNodes(runtime: Runtime): SpwItem[] {

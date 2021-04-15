@@ -7,13 +7,10 @@ import {
     zeroOrMoreOf,
 } from '@spwashi/language/parsers/grammar/combinators';
 import {Rule} from '@spwashi/language/parsers/grammar';
-import {newlineCombinator, spaceTab} from '../../../../../_base/space/whitespace.patterns';
-import {expressions} from '../../../../../expressions/_list.ref';
-import {containerNodes} from '../../../_list.ref';
+import {newlineCombinator, spaceTab} from '@grammar/_base/space/whitespace.patterns';
 import {Combinator} from '@spwashi/language/parsers/grammar/combinators/abstract';
 import {getContainerNodeComponentReferences} from '../container.ref.init';
-import {atomNodes} from '../../../../atoms/_list.ref';
-import {spaceNode} from '../../../../../_base/space/space.ref';
+import {top} from '@grammar/top/top.ref';
 
 function getEmptyBlockCombinator(opener: RuleReferenceCombinator, closer: RuleReferenceCombinator) {
     const innerPattern = zeroOrMoreOf(anyOf([
@@ -28,15 +25,8 @@ function getEmptyBlockCombinator(opener: RuleReferenceCombinator, closer: RuleRe
 
 export function createContainerBodyRules(ruleName: string): Rule[] {
     const bodyName      = getContainerNodeComponentReferences(ruleName).body.name;
-    const linebreak     = spaceNode.withAction('return null');
-    const listOfAnyNode = oneOrMoreOf(anyOf([...expressions, ...atomNodes, ...containerNodes, linebreak]));
-    const pattern       = sequenceOf([listOfAnyNode.named('items')]);
-    const action        = /* language=JavaScript */ `
-        const entries = items.filter(i => i != null);
-        const key     = items.map(i => i && i.key).filter(Boolean).join(', ');
-        return toSpwItem({kind: 'node-body', key: key, entries: entries})
-    `;
-    return [new Rule(bodyName, pattern.withAction(action))];
+    const listOfAnyNode = oneOrMoreOf(top);
+    return [new Rule(bodyName, listOfAnyNode)];
 }
 
 export function createContainerPattern(ruleName: string): Combinator {
@@ -44,8 +34,7 @@ export function createContainerPattern(ruleName: string): Combinator {
     const open       = references.open.ref;
     const body       = references.body.ref;
     const close      = references.close.ref;
-    // language=JavaScript
-    const action     = `return {open: open, body: body, close: close} `;
+    const action     = /* language=JavaScript */ `return {open: open, body: body, close: close} `;
     return anyOf([
                      getEmptyBlockCombinator(open, close),
                      sequenceOf([

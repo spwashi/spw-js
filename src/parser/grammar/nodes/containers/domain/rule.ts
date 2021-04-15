@@ -1,4 +1,4 @@
-import {createContainerRule} from '../_util/abstract/container.rule.init';
-import {DomainNode} from '@constructs/ast';
+import {createContainerRules} from '../_util/abstract/container.rule.init';
+import {DomainContainer} from '@constructs/ast';
 
-export const domainRules = createContainerRule(DomainNode);
+export const domainRules = createContainerRules(DomainContainer);

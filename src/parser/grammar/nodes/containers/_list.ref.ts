@@ -1,12 +1,12 @@
-import {domainRule} from './domain/ref';
-import {essenceRule} from './essence/ref';
+import {domainContainer} from './domain/ref';
+import {essentialContainer} from './essence/ref';
 import {conceptRule} from './concept/ref';
 import {groupRule} from './group/ref';
 
 export const containerNodes =
                  [
-                     domainRule,
-                     essenceRule,
+                     domainContainer,
+                     essentialContainer,
                      conceptRule,
                      groupRule,
                  ]

@@ -1,5 +1,5 @@
-import {DomainNode} from '@constructs/ast';
+import {DomainContainer} from '@constructs/ast';
 import * as combinators from '@spwashi/language/parsers/grammar/combinators';
 
-export const ruleName   = DomainNode.name;
-export const domainRule = combinators.referenceTo(ruleName);
+export const ruleName        = DomainContainer.name;
+export const domainContainer = combinators.referenceTo(ruleName);

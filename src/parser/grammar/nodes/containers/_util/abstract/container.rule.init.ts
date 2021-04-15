@@ -4,7 +4,7 @@ import {createContainerBodyRules, createContainerPattern} from './components/bod
 import {sequenceOf} from '@spwashi/language/parsers/grammar/combinators';
 
 
-export const createContainerRule =
+export const createContainerRules =
                  ({
                       name: ruleName,
                       kind,
@@ -21,13 +21,12 @@ export const createContainerRule =
                      const body    = createContainerBodyRules(ruleName);
                      const pattern = sequenceOf([createContainerPattern(ruleName).named('container')]);
                      const action  = /* language=JavaScript */ `
-                         const key =
-                                   [
-                                       container.open.key + (container.open.anchor ? ' ' : ''),
-                                       (container.body || {}).key || '#',
-                                       container.close.key
-                                   ].join('');
-                         return toSpwItem({...container, key: key, kind: '${kind}'})
+                         return toSpwItem({
+                                              kind:  '${kind}',
+                                              open:  container.open,
+                                              body:  container.body,
+                                              close: container.close,
+                                          })
                      `;
                      return [
                          opener,

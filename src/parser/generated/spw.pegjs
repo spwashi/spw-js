@@ -31,19 +31,19 @@ const _cache = new Map();
 
                              case 'string':
                              case 'anchor':
-                             case 'anchor':
                              case 'phrase':
 
                              case 'domain':
-                             case 'group':
+                             case 'parenthetical':
                              case 'essence':
                              case 'concept':
 
-                             case 'strand':
+                             case 'perspective_expression':
+                             case 'strand_expression':
                              case 'phrase_expression':
 
                              case 'number':
-                             case 'strand-tail':
+                             case 'lens':
                              case 'node-body':
                              case 'delimiter':
                              case 'space':
@@ -56,123 +56,130 @@ const _cache = new Map();
                      }
 }
 
-Top = 
-body:(Expression / ContainerNode / Atom / (Space {return null;}))*
+Top "Top"= 
+body:(StrandExpression / PerspectiveExpression / DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer / LabeledAtom / PureAtom / PhraseExpression / DomainContainerOpen / (Space {return null;}))+
 {const items=Array.isArray(body)?body.map(i=>i&&i.kind?i:void 0).filter(i=>void 0!==i):body;return 1===items.length?items[0]:items;}
 
-UnicodeWithoutQuotes = 
+UnicodeWithoutQuotes "UnicodeWithoutQuotes"= 
 [-a-zA-Z \t\'] / [\u0020-\u0021,\u0023-\u26FF]
 
-Space = 
+Space "Space"= 
 (newlines:(([\t ] / newline:[\n,] {return newline;})+)+ {return toSpwItem({kind:"space"});})
 
-Atom = 
+Node "Node"= 
+DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer / LabeledAtom / PureAtom
+
+Atom "Atom"= 
 LabeledAtom / PureAtom
 
-Anchor = 
+Anchor "Anchor"= 
 anchor:((head:([a-zA-Z])+ tail:(line:("-" / "_") chars:([a-zA-Z0-9])+ {return line+chars.join("");})+ {return[...head,...tail].join("");}) / (head:([a-zA-Z])+ tail:([a-zA-Z0-9])* {return[...head,...tail].join("");}) / "&")
-{return toSpwItem({kind:"anchor",key:anchor});}
+{return toSpwItem({kind:"anchor",label:anchor});}
 
-Number = 
+Number "Number"= 
 num:([0-9])+
-{return toSpwItem({kind:"number",key:parseInt(num.join(""))});}
+{return toSpwItem({kind:"number",value:parseInt(num.join(""))});}
 
-Phrase = 
+Phrase "Phrase"= 
 phrase:(head:Anchor tail:(([\t ])+ anchor:Anchor {return anchor;})+ {return[head,...tail];})
-{const p=phrase.reduce((r,e)=>[...r,...Array.isArray(e)?e:[e]],[]);return toSpwItem({kind:"phrase",key:p.map(r=>r.key).join(" "),body:p});}
+{const p=phrase.reduce((r,e)=>[...r,...Array.isArray(e)?e:[e]],[]);return toSpwItem({kind:"phrase",body:p});}
 
-StringNode = 
+StringNode "StringNode"= 
 string:(([\'] body:(UnicodeWithoutQuotes / [\n] / [\"])* [\'] {return body.join("");}) / ([\"] body:(("\\" [\"] {return'"';}) / UnicodeWithoutQuotes / [\n] / [\'])* [\"] {return body.join("");}))
-{return toSpwItem({kind:"string",key:string});}
+{return toSpwItem({kind:"string",token:'"',chars:string});}
 
-PureAtom = 
-Phrase / StringNode / Number / Anchor
+PureAtom "PureAtom"= 
+Phrase / Number / (node:(Anchor / StringNode) spec:(ContainerNode)* description:("." Space container:ContainerNode {return container;})* {return"undefined"!=typeof spec&&(node.key+=spec.map(e=>e.key),node.spec=spec),node;})
 
-LabeledAtom = 
-ChannelNode / EvaluationNode / InvocationNode / PerformanceNode / PerspectiveNode
+LabeledAtom "LabeledAtom"= 
+ChannelAtom / EvaluationAtom / InvocationAtom / PerformanceAtom / PerspectiveAtom
 
-ChannelNode = 
+ChannelAtom "ChannelAtom"= 
 components:((token:"#" "_" label:Anchor {return{token:token,label:label};}) / "#")
 {return toSpwItem({kind:"channel",...components});}
 
-EvaluationNode = 
+EvaluationAtom "EvaluationAtom"= 
 components:((token:"?" "_" label:Anchor {return{token:token,label:label};}) / "?")
 {return toSpwItem({kind:"evaluation",...components});}
 
-InvocationNode = 
+InvocationAtom "InvocationAtom"= 
 components:((token:"~" "_" label:Anchor {return{token:token,label:label};}) / "~")
 {return toSpwItem({kind:"invocation",...components});}
 
-PerformanceNode = 
+PerformanceAtom "PerformanceAtom"= 
 components:((token:"!" "_" label:Anchor {return{token:token,label:label};}) / "!")
 {return toSpwItem({kind:"performance",...components});}
 
-PerspectiveNode = 
+PerspectiveAtom "PerspectiveAtom"= 
 components:((token:"@" "_" label:Anchor {return{token:token,label:label};}) / "@")
 {return toSpwItem({kind:"perspective",...components});}
 
-ContainerNode = 
-DomainNode / EssentialNode / ConceptNode / GroupNode
+ContainerNode "ContainerNode"= 
+DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer
 
-DomainNodeOpen = 
-(token:"{" "_" node:(anchor:(Anchor / DomainNode / EssentialNode / ConceptNode / GroupNode) description:(DomainNode / EssentialNode / ConceptNode / GroupNode)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toSpwItem({key:[token,node.anchor.key].join("_"),...node,kind:"delimiter"});}) / (tok:"{" {return toSpwItem({key:tok,label:null,kind:"delimiter"});})
+DomainContainerOpen "DomainContainerOpen"= 
+(token:"{" "_" node:(anchor:(Anchor / DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer) description:(DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toSpwItem({token:token,position:"open",label:node,kind:"delimiter"});}) / (tok:"{" {return toSpwItem({token:tok,position:"open",kind:"delimiter"});})
 
-DomainNodeClose = 
-(node:Anchor "_" token:"}" {return toSpwItem({key:[token,node.key].join("_"),anchor:null,kind:"delimiter"});}) / (tok:"}" {return toSpwItem({key:tok,label:null,kind:"delimiter"});})
+DomainContainerClose "DomainContainerClose"= 
+(node:Anchor "_" token:"}" {return toSpwItem({token:token,position:"close",label:node,kind:"delimiter"});}) / (tok:"}" {return toSpwItem({token:tok,position:"close",kind:"delimiter"});})
 
-DomainNodeBody = 
-(items:(StrandExpression / PhraseExpression / LabeledAtom / PureAtom / DomainNode / EssentialNode / ConceptNode / GroupNode / (Space {return null;}))+ {const entries=items.filter(e=>null!=e),key=items.map(e=>e&&e.key).filter(Boolean).join(", ");return toSpwItem({kind:"node-body",key:key,entries:entries});})
+DomainContainerBody "DomainContainerBody"= 
+(Top)+
 
-DomainNode = 
-container:((open:DomainNodeOpen (([\t ] {return null;}) / (underscore:"_" {return underscore;}) / ([\n,] {return null;}))* close:DomainNodeClose {return{open:open,close:close};}) / (open:DomainNodeOpen body:DomainNodeBody close:DomainNodeClose {return{open:open,body:body,close:close};}))
-{const key=[container.open.key+(container.open.anchor?" ":""),(container.body||{}).key||"#",container.close.key].join("");return toSpwItem({...container,key:key,kind:"domain"});}
+DomainContainer "DomainContainer"= 
+container:((open:DomainContainerOpen (([\t ] {return null;}) / (underscore:"_" {return underscore;}) / ([\n,] {return null;}))* close:DomainContainerClose {return{open:open,close:close};}) / (open:DomainContainerOpen body:DomainContainerBody close:DomainContainerClose {return{open:open,body:body,close:close};}))
+{return toSpwItem({kind:"domain",open:container.open,body:container.body,close:container.close});}
 
-EssentialNodeOpen = 
-(token:"[" "_" node:(anchor:(Anchor / DomainNode / EssentialNode / ConceptNode / GroupNode) description:(DomainNode / EssentialNode / ConceptNode / GroupNode)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toSpwItem({key:[token,node.anchor.key].join("_"),...node,kind:"delimiter"});}) / (tok:"[" {return toSpwItem({key:tok,label:null,kind:"delimiter"});})
+EssentialContainerOpen "EssentialContainerOpen"= 
+(token:"[" "_" node:(anchor:(Anchor / DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer) description:(DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toSpwItem({token:token,position:"open",label:node,kind:"delimiter"});}) / (tok:"[" {return toSpwItem({token:tok,position:"open",kind:"delimiter"});})
 
-EssentialNodeClose = 
-(node:Anchor "_" token:"]" {return toSpwItem({key:[token,node.key].join("_"),anchor:null,kind:"delimiter"});}) / (tok:"]" {return toSpwItem({key:tok,label:null,kind:"delimiter"});})
+EssentialContainerClose "EssentialContainerClose"= 
+(node:Anchor "_" token:"]" {return toSpwItem({token:token,position:"close",label:node,kind:"delimiter"});}) / (tok:"]" {return toSpwItem({token:tok,position:"close",kind:"delimiter"});})
 
-EssentialNodeBody = 
-(items:(StrandExpression / PhraseExpression / LabeledAtom / PureAtom / DomainNode / EssentialNode / ConceptNode / GroupNode / (Space {return null;}))+ {const entries=items.filter(e=>null!=e),key=items.map(e=>e&&e.key).filter(Boolean).join(", ");return toSpwItem({kind:"node-body",key:key,entries:entries});})
+EssentialContainerBody "EssentialContainerBody"= 
+(Top)+
 
-EssentialNode = 
-container:((open:EssentialNodeOpen (([\t ] {return null;}) / (underscore:"_" {return underscore;}) / ([\n,] {return null;}))* close:EssentialNodeClose {return{open:open,close:close};}) / (open:EssentialNodeOpen body:EssentialNodeBody close:EssentialNodeClose {return{open:open,body:body,close:close};}))
-{const key=[container.open.key+(container.open.anchor?" ":""),(container.body||{}).key||"#",container.close.key].join("");return toSpwItem({...container,key:key,kind:"essence"});}
+EssentialContainer "EssentialContainer"= 
+container:((open:EssentialContainerOpen (([\t ] {return null;}) / (underscore:"_" {return underscore;}) / ([\n,] {return null;}))* close:EssentialContainerClose {return{open:open,close:close};}) / (open:EssentialContainerOpen body:EssentialContainerBody close:EssentialContainerClose {return{open:open,body:body,close:close};}))
+{return toSpwItem({kind:"essence",open:container.open,body:container.body,close:container.close});}
 
-ConceptNodeOpen = 
-(token:"<" "_" node:(anchor:(Anchor / DomainNode / EssentialNode / ConceptNode / GroupNode) description:(DomainNode / EssentialNode / ConceptNode / GroupNode)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toSpwItem({key:[token,node.anchor.key].join("_"),...node,kind:"delimiter"});}) / (tok:"<" {return toSpwItem({key:tok,label:null,kind:"delimiter"});})
+ConceptualContainerOpen "ConceptualContainerOpen"= 
+(token:"<" "_" node:(anchor:(Anchor / DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer) description:(DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toSpwItem({token:token,position:"open",label:node,kind:"delimiter"});}) / (tok:"<" {return toSpwItem({token:tok,position:"open",kind:"delimiter"});})
 
-ConceptNodeClose = 
-(node:Anchor "_" token:">" {return toSpwItem({key:[token,node.key].join("_"),anchor:null,kind:"delimiter"});}) / (tok:">" {return toSpwItem({key:tok,label:null,kind:"delimiter"});})
+ConceptualContainerClose "ConceptualContainerClose"= 
+(node:Anchor "_" token:">" {return toSpwItem({token:token,position:"close",label:node,kind:"delimiter"});}) / (tok:">" {return toSpwItem({token:tok,position:"close",kind:"delimiter"});})
 
-ConceptNodeBody = 
-(items:(StrandExpression / PhraseExpression / LabeledAtom / PureAtom / DomainNode / EssentialNode / ConceptNode / GroupNode / (Space {return null;}))+ {const entries=items.filter(e=>null!=e),key=items.map(e=>e&&e.key).filter(Boolean).join(", ");return toSpwItem({kind:"node-body",key:key,entries:entries});})
+ConceptualContainerBody "ConceptualContainerBody"= 
+(Top)+
 
-ConceptNode = 
-container:((open:ConceptNodeOpen (([\t ] {return null;}) / (underscore:"_" {return underscore;}) / ([\n,] {return null;}))* close:ConceptNodeClose {return{open:open,close:close};}) / (open:ConceptNodeOpen body:ConceptNodeBody close:ConceptNodeClose {return{open:open,body:body,close:close};}))
-{const key=[container.open.key+(container.open.anchor?" ":""),(container.body||{}).key||"#",container.close.key].join("");return toSpwItem({...container,key:key,kind:"concept"});}
+ConceptualContainer "ConceptualContainer"= 
+container:((open:ConceptualContainerOpen (([\t ] {return null;}) / (underscore:"_" {return underscore;}) / ([\n,] {return null;}))* close:ConceptualContainerClose {return{open:open,close:close};}) / (open:ConceptualContainerOpen body:ConceptualContainerBody close:ConceptualContainerClose {return{open:open,body:body,close:close};}))
+{return toSpwItem({kind:"concept",open:container.open,body:container.body,close:container.close});}
 
-GroupNodeOpen = 
-(token:"(" "_" node:(anchor:(Anchor / DomainNode / EssentialNode / ConceptNode / GroupNode) description:(DomainNode / EssentialNode / ConceptNode / GroupNode)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toSpwItem({key:[token,node.anchor.key].join("_"),...node,kind:"delimiter"});}) / (tok:"(" {return toSpwItem({key:tok,label:null,kind:"delimiter"});})
+ParentheticalContainerOpen "ParentheticalContainerOpen"= 
+(token:"(" "_" node:(anchor:(Anchor / DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer) description:(DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toSpwItem({token:token,position:"open",label:node,kind:"delimiter"});}) / (tok:"(" {return toSpwItem({token:tok,position:"open",kind:"delimiter"});})
 
-GroupNodeClose = 
-(node:Anchor "_" token:")" {return toSpwItem({key:[token,node.key].join("_"),anchor:null,kind:"delimiter"});}) / (tok:")" {return toSpwItem({key:tok,label:null,kind:"delimiter"});})
+ParentheticalContainerClose "ParentheticalContainerClose"= 
+(node:Anchor "_" token:")" {return toSpwItem({token:token,position:"close",label:node,kind:"delimiter"});}) / (tok:")" {return toSpwItem({token:tok,position:"close",kind:"delimiter"});})
 
-GroupNodeBody = 
-(items:(StrandExpression / PhraseExpression / LabeledAtom / PureAtom / DomainNode / EssentialNode / ConceptNode / GroupNode / (Space {return null;}))+ {const entries=items.filter(e=>null!=e),key=items.map(e=>e&&e.key).filter(Boolean).join(", ");return toSpwItem({kind:"node-body",key:key,entries:entries});})
+ParentheticalContainerBody "ParentheticalContainerBody"= 
+(Top)+
 
-GroupNode = 
-container:((open:GroupNodeOpen (([\t ] {return null;}) / (underscore:"_" {return underscore;}) / ([\n,] {return null;}))* close:GroupNodeClose {return{open:open,close:close};}) / (open:GroupNodeOpen body:GroupNodeBody close:GroupNodeClose {return{open:open,body:body,close:close};}))
-{const key=[container.open.key+(container.open.anchor?" ":""),(container.body||{}).key||"#",container.close.key].join("");return toSpwItem({...container,key:key,kind:"group"});}
+ParentheticalContainer "ParentheticalContainer"= 
+container:((open:ParentheticalContainerOpen (([\t ] {return null;}) / (underscore:"_" {return underscore;}) / ([\n,] {return null;}))* close:ParentheticalContainerClose {return{open:open,close:close};}) / (open:ParentheticalContainerOpen body:ParentheticalContainerBody close:ParentheticalContainerClose {return{open:open,body:body,close:close};}))
+{return toSpwItem({kind:"parenthetical",open:container.open,body:container.body,close:container.close});}
 
-Expression = 
-StrandExpression / PhraseExpression
+Expression "Expression"= 
+StrandExpression / PhraseExpression / PerspectiveExpression
 
-StrandExpression = 
-head:(PhraseExpression / LabeledAtom / PureAtom) (Space)* tails:((Space)* transport:"=>" (Space)* tail:(DomainNode / EssentialNode / ConceptNode / GroupNode / LabeledAtom / PureAtom) {return toSpwItem({kind:"strand-tail",tail:tail,transport:transport,key:transport+tail.key});})+
-{return toSpwItem({kind:"strand",head:head,tails:tails,key:[head.key,tails.map(a=>a.key).join("")].join("")});}
+PerspectiveExpression "PerspectiveExpression"= 
+source:Node (Space)* lens:((atom:PerspectiveAtom spec:EssentialContainer {return{atom:atom,spec:spec};}) / (atom:PerspectiveAtom {return{atom:atom};})) (Space)* target:Node
+{return toSpwItem({kind:"perspective_expression",source:source,lens:lens,target:target});}
 
-PhraseExpression = 
-head:(DomainNode / EssentialNode / ConceptNode / GroupNode / LabeledAtom / PureAtom) tail:(([\t ])* tail:(DomainNode / EssentialNode / ConceptNode / GroupNode / LabeledAtom / PureAtom) {return tail;})+
-{var items=[head,...tail];return toSpwItem({kind:"phrase_expression",items:items,key:items.map(e=>e&&e.key||!1).filter(Boolean).join(" ")});}
+StrandExpression "StrandExpression"= 
+head:(PerspectiveExpression / PhraseExpression / Node) (Space)* tails:((Space)* transport:"=>" (Space)* tail:Node {return{tail:tail,transport:transport};})+
+{return toSpwItem({kind:"strand_expression",head:head,tails:tails});}
+
+PhraseExpression "PhraseExpression"= 
+head:(PerspectiveExpression / Node) tail:(([\t ])* tail:(DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer / LabeledAtom / PureAtom) {return tail;})+
+{var items=[head,...tail];return toSpwItem({kind:"phrase_expression",items:items});}

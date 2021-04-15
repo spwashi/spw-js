@@ -1,6 +1,6 @@
 import {ContainerNode} from '../abstract/container';
 
-export class DomainNode extends ContainerNode {
+export class DomainContainer extends ContainerNode<'domain'> {
     static kind                = 'domain'
     static readonly openToken  = '{';
     static readonly closeToken = '}';

@@ -1,19 +1,26 @@
+import {SpwItemKind} from '@constructs/ast/types/kind';
 import {
     AnchorNode,
-    ChannelNode,
+    ChannelAtom,
+    ConceptualContainer,
+    DomainContainer,
+    EssentialContainer,
+    EvaluationAtom,
+    InvocationAtom,
+    ParentheticalContainer,
+    PerformanceAtom,
+    PerspectiveAtom,
+    PerspectiveExpression,
     PhraseExpression,
-    ConceptNode,
-    DomainNode,
-    EssentialNode,
-    EvaluationNode,
-    GroupNode,
-    InvocationNode,
-    PerformanceNode,
-    PerspectiveNode,
     PhraseNode,
     StrandExpression,
     StringNode,
 } from './ast';
+import {ISpwItemStatic, SpwItem} from '@constructs/ast/abstract/item';
+import {NumberNode} from '@constructs/ast/nodes/impl/atoms/pure/number';
+import {Delimiter} from '@constructs/ast/nodes/impl/delimiters/delimiter';
+
+type SpwItemConstructorObj = { [K in SpwItemKind]: typeof SpwItem & ISpwItemStatic<K> };
 
 export const spwItemConstructors =
                  {
@@ -21,24 +28,27 @@ export const spwItemConstructors =
                      anchor: AnchorNode,
                      phrase: PhraseNode,
                      string: StringNode,
+                     number: NumberNode,
 
                      // labeled nodes
-                     evaluation:  EvaluationNode,
-                     essence:     EssentialNode,
-                     invocation:  InvocationNode,
-                     performance: PerformanceNode,
-                     perspective: PerspectiveNode,
+                     channel:     ChannelAtom,
+                     evaluation:  EvaluationAtom,
+                     invocation:  InvocationAtom,
+                     performance: PerformanceAtom,
+                     perspective: PerspectiveAtom,
 
                      // container nodes
-                     channel: ChannelNode,
-                     concept: ConceptNode,
-                     domain:  DomainNode,
-                     group:   GroupNode,
+                     delimiter:     Delimiter,
+                     essence:       EssentialContainer,
+                     concept:       ConceptualContainer,
+                     domain:        DomainContainer,
+                     parenthetical: ParentheticalContainer,
 
                      // expressions
-                     strand:            StrandExpression,
-                     phrase_expression: PhraseExpression,
-                 };
+                     strand_expression:      StrandExpression,
+                     phrase_expression:      PhraseExpression,
+                     perspective_expression: PerspectiveExpression,
+                 } as SpwItemConstructorObj;
+
+export {SpwItemKind} from '@constructs/ast/types/kind';
 export type SpwNodeConstructors = typeof spwItemConstructors;
-export type SpwNodeKind = keyof SpwNodeConstructors;
-export {UnhydratedSpwItem} from './ast/nodes/abstract/interfaces/node';

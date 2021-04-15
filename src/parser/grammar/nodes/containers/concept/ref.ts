@@ -1,5 +1,5 @@
 import * as combinators from '@spwashi/language/parsers/grammar/combinators';
-import {ConceptNode} from '@constructs/ast';
+import {ConceptualContainer} from '@constructs/ast';
 
-export const ruleName    = ConceptNode.name;
+export const ruleName    = ConceptualContainer.name;
 export const conceptRule = combinators.referenceTo(ruleName);

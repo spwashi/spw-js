@@ -1,4 +1,4 @@
-import {labeledAtomNode} from './labeled/abstract/ref';
-import {pureAtomNode} from './pure/abstract/ref';
+import {labeledAtom} from './labeled/abstract/ref';
+import {pureAtom} from './pure/abstract/ref';
 
-export const atomNodes = [labeledAtomNode, pureAtomNode];
+export const atomNodes = [labeledAtom, pureAtom];

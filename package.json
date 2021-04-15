@@ -6,9 +6,10 @@
   "scripts": {
     "linkall": "yarn link @spwashi/language",
     "test": "jest src",
-    "lint": "eslint src --ext .ts",
-    "prebuild": "yarn test; yarn lint; yarn run build:parser",
-    "build": "node ./node_modules/ttypescript/bin/tsc && ./node_modules/@babel/cli/bin/babel.js dist -d dist",
+    "lint": "eslint src --ext .ts --fix",
+    "tsc": "node ./node_modules/ttypescript/bin/tsc && ./node_modules/@babel/cli/bin/babel.js dist -d dist",
+    "prebuild": "yarn test && yarn lint && yarn run build:parser",
+    "build": "yarn tsc",
     "build:parser": "ts-node -r tsconfig-paths/register src/parser/scripts/generate.ts;",
     "copypackage": "cp -rf package.json dist",
     "prepublish": "yarn run build",
@@ -27,7 +28,7 @@
     "@babel/plugin-transform-runtime": "^7.12.15",
     "@babel/preset-env": "^7.12.16",
     "@babel/preset-typescript": "^7.12.16",
-    "@spwashi/language": "^1.4.3",
+    "@spwashi/language": "^1.4.4",
     "@types/jest": "^26.0.20",
     "dedent": "^0.7.0",
     "jest": "^26.6.3",
@@ -37,10 +38,12 @@
   "devDependencies": {
     "@babel/cli": "^7.13.14",
     "@types/dedent": "^0.7.0",
+    "@types/lodash": "^4.14.168",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "^7.23.0",
+    "lodash": "^4.17.21",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0",
     "ttypescript": "^1.5.12",
@@ -48,7 +51,8 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "@constructs/(.*)": "<rootDir>/src/constructs/$1"
+      "@constructs/(.*)": "<rootDir>/src/constructs/$1",
+      "@grammar/(.*)": "<rootDir>/src/parser/grammar/$1"
     }
   }
 }
