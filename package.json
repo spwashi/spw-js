@@ -12,7 +12,7 @@
     "build": "yarn tsc",
     "build:parser": "ts-node -r tsconfig-paths/register src/parser/scripts/generate.ts;",
     "copypackage": "cp -rf package.json dist",
-    "prepublish": "yarn run build",
+    "prepare": "yarn run build",
     "postpublish": "cd dist || true; cp -rf package.json ../"
   },
   "repository": {
