@@ -1,6 +1,6 @@
 {
   "name": "@spwashi/spw",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A parser and runtime for the Spw language",
   "license": "MIT",
   "scripts": {
@@ -9,9 +9,8 @@
     "src:build:parser": "ts-node -r tsconfig-paths/register src/parser/scripts/generate.ts;",
     "presrc:prepublish": "yarn run src:lint && yarn src:test",
     "src:prepublish": "cp -rf package.json dist",
-    "prepare": "yarn run build",
     "tsc": "tsc",
-    "build": "yarn tsc",
+    "build": "node ./node_modules/ttypescript/bin/tsc && ./node_modules/@babel/cli/bin/babel.js dist -d dist",
     "postpublish": "cd dist || true; cp -rf package.json ../"
   },
   "repository": {
@@ -35,6 +34,7 @@
     "typescript": "^4.2.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.13.14",
     "@types/dedent": "^0.7.0",
     "@types/lodash": "^4.14.168",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
@@ -45,6 +45,7 @@
     "ts-jest": "^26.5.5",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0",
+    "ttypescript": "^1.5.12",
     "typescript-transform-paths": "^2.2.3"
   }
 }

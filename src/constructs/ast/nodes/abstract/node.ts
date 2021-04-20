@@ -6,8 +6,6 @@ export class SpwNode<K extends SpwItemKind,
     H extends HydratedSpwItem = HydratedSpwItem,
     U extends RawSpwItem = RawSpwItem> extends SpwItem<K, H, U> {
     get key(): SpwItemKey {
-        const error = new Error('Nothing for ' + JSON.stringify(this.raw));
-        return this.kind;
-        throw error;
+        return null;
     }
 }
