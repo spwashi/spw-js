@@ -1,12 +1,10 @@
 import {PhraseExpression, StrandExpression} from '@constructs/ast';
-import {Rule} from '@spwashi/language/parsers/grammar';
 import {phraseExpressionRule} from '@grammar/expressions/phrase/phrase_expression.rule';
 import {SpwItem} from '@constructs/ast/abstract/item';
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../util';
 
 describe('Rule', () => {
     it('should exist', function () {
-        expect(phraseExpressionRule).toBeInstanceOf(Rule);
         expect(phraseExpressionRule.ruleName)
             .toEqual(PhraseExpression.name);
     });

@@ -1,11 +1,9 @@
 import {PerspectiveExpression} from '@constructs/ast';
 import {perspectiveExpressionRule} from '@grammar/expressions/perspective/perspective_expression.rule';
-import {Rule} from '@spwashi/language/parsers/grammar/rules/rule';
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../util';
 
 describe('Rule', () => {
     it('should exist', function () {
-        expect(perspectiveExpressionRule).toBeInstanceOf(Rule);
         expect(perspectiveExpressionRule.ruleName)
             .toEqual(PerspectiveExpression.name);
     });
