@@ -14,7 +14,6 @@ describe('Strand Expressions',
                             const runtime = await startRuntimeWithSrc(`test test test => test => test`);
                             last          = getLastRegisteredNode(runtime);
                             all           = getAllRegisteredNodes(runtime);
-
                             expect(last?.kind).toEqual(StrandExpression.kind);
                             expect(all.length).toEqual(7);
                             expect(last?.key).toEqual('test test test=>test=>test');

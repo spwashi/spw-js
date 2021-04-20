@@ -27,7 +27,7 @@ const pattern   =
                                        ...nodes,
                                        phraseExpression,
                                        ...fragments,
-                                       space,
+                                       space
                                    ]),
                          ),
                      ]);

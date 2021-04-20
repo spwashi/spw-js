@@ -89,7 +89,7 @@ string:(([\'] body:(UnicodeWithoutQuotes / [\n] / [\"])* [\'] {return body.join(
 {return toSpwItem({kind:"string",token:'"',chars:string});}
 
 PureAtom "PureAtom"= 
-Phrase / Number / (node:(Anchor / StringNode) spec:(ContainerNode)* description:("." Space container:ContainerNode {return container;})* {return"undefined"!=typeof spec&&(node.key+=spec.map(e=>e.key),node.spec=spec),node;})
+Phrase / Number / (node:(Anchor / StringNode) spec:(ContainerNode)* description:("." (Space {return null;}) container:ContainerNode {return container;})* {return"undefined"!=typeof spec&&(node.key+=spec.map(e=>e.key),node.spec=spec),node;})
 
 LabeledAtom "LabeledAtom"= 
 ChannelAtom / EvaluationAtom / InvocationAtom / PerformanceAtom / PerspectiveAtom
@@ -173,11 +173,11 @@ Expression "Expression"=
 StrandExpression / PhraseExpression / PerspectiveExpression
 
 PerspectiveExpression "PerspectiveExpression"= 
-source:Node (Space)* lens:((atom:PerspectiveAtom spec:EssentialContainer {return{atom:atom,spec:spec};}) / (atom:PerspectiveAtom {return{atom:atom};})) (Space)* target:Node
+source:Node (Space {return null;})* lens:((atom:PerspectiveAtom spec:EssentialContainer {return{atom:atom,spec:spec};}) / (atom:PerspectiveAtom {return{atom:atom};})) (Space {return null;})* target:Node
 {return toSpwItem({kind:"perspective_expression",source:source,lens:lens,target:target});}
 
 StrandExpression "StrandExpression"= 
-head:(PerspectiveExpression / PhraseExpression / Node) (Space)* tails:((Space)* transport:"=>" (Space)* tail:Node {return{tail:tail,transport:transport};})+
+head:(PerspectiveExpression / PhraseExpression / Node) (Space {return null;})* tails:((Space {return null;})* transport:"=>" (Space {return null;})* tail:Node {return{tail:tail,transport:transport};})+
 {return toSpwItem({kind:"strand_expression",head:head,tails:tails});}
 
 PhraseExpression "PhraseExpression"= 

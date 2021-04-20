@@ -1,7 +1,7 @@
-import {SpwItem} from '../../../constructs/ast/abstract/item';
-import {Parser, Runtime} from '../../../constructs/runtime/runtime';
-import {SpwDocument} from '../../../constructs/runtime/spwDocument';
-import generatedParser from '../../scripts/generate';
+import generatedParser from 'parser/generated';
+import {SpwItem} from '@constructs/ast/abstract/item';
+import {Parser, Runtime} from '@constructs/runtime/runtime';
+import {SpwDocument} from '@constructs/runtime/spwDocument';
 
 export function getAllRegisteredNodes(runtime: Runtime): SpwItem[] {
     const registerValues = runtime.registers.all.entries ?? [];
@@ -14,7 +14,7 @@ export function getLastRegisteredNode(runtime: Runtime): SpwItem | undefined {
 
 export async function startRuntimeWithSrc(src: string): Promise<Runtime> {
     const moduleID  = 'test';
-    const spwParser = await generatedParser;
+    const spwParser = generatedParser;
     const runtime   = new Runtime(spwParser as unknown as Parser);
     runtime.loadDocument(new SpwDocument(moduleID, src))
     return runtime;

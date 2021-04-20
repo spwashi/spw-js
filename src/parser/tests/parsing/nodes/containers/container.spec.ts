@@ -10,6 +10,7 @@ describe('Domain Node Parsing',
                     {
                         const runtime: Runtime = await startRuntimeWithSrc(`{one => two => three}`);
                         const all: SpwItem[]   = getAllRegisteredNodes(runtime);
+                        console.log(all)
                         expect(all.length).toEqual(7);
                     }
                     {
