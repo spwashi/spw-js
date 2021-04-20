@@ -1,7 +1,7 @@
-import generatedParser from 'parser/generated';
 import {SpwItem} from '@constructs/ast/abstract/item';
 import {Parser, Runtime} from '@constructs/runtime/runtime';
 import {SpwDocument} from '@constructs/runtime/spwDocument';
+import generatedParser from '../../generated';
 
 export function getAllRegisteredNodes(runtime: Runtime): SpwItem[] {
     const registerValues = runtime.registers.all.entries ?? [];
