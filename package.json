@@ -1,6 +1,6 @@
 {
   "name": "@spwashi/spw",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A parser and runtime for the Spw language",
   "license": "MIT",
   "scripts": {
@@ -8,7 +8,7 @@
     "src:lint": "eslint src --ext .ts --fix",
     "src:build:parser": "ts-node -r tsconfig-paths/register src/parser/scripts/generate.ts;",
     "presrc:prepublish": "yarn run src:lint && yarn src:test",
-    "src:prepublish": "cp -rf package.json dist",
+    "src:prepublish": "cp -rf package.json dist; cp -rf babel.config.js dist",
     "tsc": "tsc",
     "build": "node ./node_modules/ttypescript/bin/tsc && ./node_modules/@babel/cli/bin/babel.js dist -d dist",
     "postpublish": "cd dist || true; cp -rf package.json ../"
@@ -18,14 +18,14 @@
     "url": "git+https://github.com/spwashi/spw-js.git"
   },
   "dependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/plugin-proposal-class-properties": "^7.12.13",
-    "@babel/plugin-proposal-decorators": "^7.13.5",
-    "@babel/plugin-proposal-optional-chaining": "^7.12.16",
-    "@babel/plugin-proposal-private-methods": "^7.12.13",
-    "@babel/plugin-transform-runtime": "^7.12.15",
-    "@babel/preset-env": "^7.12.16",
-    "@babel/preset-typescript": "^7.12.16",
+    "@babel/core": "^7.13.16",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-decorators": "^7.13.15",
+    "@babel/plugin-proposal-optional-chaining": "^7.13.12",
+    "@babel/plugin-proposal-private-methods": "^7.13.0",
+    "@babel/plugin-transform-runtime": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-typescript": "^7.13.0",
     "@spwashi/language": "^1.4.4",
     "@types/jest": "^26.0.20",
     "dedent": "^0.7.0",
@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
+    "@babel/preset-flow": "^7.13.13",
     "@types/dedent": "^0.7.0",
     "@types/lodash": "^4.14.168",
     "@typescript-eslint/eslint-plugin": "^4.21.0",

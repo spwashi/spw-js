@@ -1,6 +1,6 @@
 import LabeledAtomNode from '../abstract';
-import {ISpwItemStatic} from '../../../../../abstract/item';
-import {staticImplements} from '../../../../../util/staticImplements';
+import {ISpwItemStatic} from '../../../../../../abstract/item';
+import {staticImplements} from '../../../../../../util/staticImplements';
 import {IUnaryTokenStatic} from '../abstract/interfaces/unary';
 
 type Token = '#';

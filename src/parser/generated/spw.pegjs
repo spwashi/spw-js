@@ -57,7 +57,7 @@ const _cache = new Map();
 }
 
 Top "Top"= 
-body:(StrandExpression / PerspectiveExpression / DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer / LabeledAtom / PureAtom / PhraseExpression / DomainContainerOpen / (Space {return null;}))+
+body:(Number / StrandExpression / PerspectiveExpression / DomainContainer / EssentialContainer / ConceptualContainer / ParentheticalContainer / LabeledAtom / PureAtom / PhraseExpression / DomainContainerOpen / (Space {return null;}))+
 {const items=Array.isArray(body)?body.map(i=>i&&i.kind?i:void 0).filter(i=>void 0!==i):body;return 1===items.length?items[0]:items;}
 
 UnicodeWithoutQuotes "UnicodeWithoutQuotes"= 
@@ -173,7 +173,7 @@ Expression "Expression"=
 StrandExpression / PhraseExpression / PerspectiveExpression
 
 PerspectiveExpression "PerspectiveExpression"= 
-source:Node (Space {return null;})* lens:((atom:PerspectiveAtom spec:EssentialContainer {return{atom:atom,spec:spec};}) / (atom:PerspectiveAtom {return{atom:atom};})) (Space {return null;})* target:Node
+source:Node (Space {return null;})* lens:((atom:PerspectiveAtom spec:EssentialContainer {return{atom:atom,spec:spec};}) / (atom:PerspectiveAtom {return{atom:atom};})) (Space {return null;})* "->"? (Space {return null;})* target:Node
 {return toSpwItem({kind:"perspective_expression",source:source,lens:lens,target:target});}
 
 StrandExpression "StrandExpression"= 

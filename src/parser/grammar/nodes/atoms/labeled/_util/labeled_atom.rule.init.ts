@@ -9,7 +9,7 @@ import {
 } from '@spwashi/language/parsers/grammar/combinators';
 import {anchorNode} from '../../pure/anchor/anchor.ref';
 import {ISpwItemStatic} from '@constructs/ast/abstract/item';
-import {IUnaryTokenStatic} from '@constructs/ast/nodes/impl/atoms/labeled/abstract/interfaces/unary';
+import {IUnaryTokenStatic} from '@constructs/ast/nodes/impl/atoms/operators/labeled/abstract/interfaces/unary';
 
 function initLabeledAtomRule(token: StringCombinator, ruleName: string, nodeName: string): Rule {
     const tokenThenLabel = sequenceOf([

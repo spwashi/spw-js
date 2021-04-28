@@ -1,31 +1,34 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import {Parser} from '@constructs/runtime/runtime';
 import {head} from './util/parser-head.js';
 import spwGrammar from '../grammar';
 import {generateParser} from '@spwashi/language/parsers/scripts/generateParser';
+import {topRuleNames} from '../grammar/top/top';
+import {Parser} from '../../constructs/runtime/runtime';
 
 
 async function getGeneratedParser(): Promise<Parser> {
-    const {grammar, parser: parserContentString} = await generateParser(head, spwGrammar);
-    const varName                                = 'generatedParser';
-    fs.writeFileSync(
-        path.join(__dirname, '../generated', `spw.pegjs`),
-        grammar,
-    );
-    fs.writeFileSync(
-        path.join(__dirname, '../generated/index.ts'),
-        [
-            `// language=JavaScript`,
-            `/* eslint-disable */`,
-            `// @ts-nocheck`,
-            `// noinspection UnnecessaryLocalVariableJS`,
-            `const ${varName} = ${parserContentString};`,
-            `export default ${varName};`,
-            `export {${varName} as spwParser};`,
-        ]
-            .join('\n'),
-    );
+    const options   = {allowedStartRules: topRuleNames};
+    const generated = await generateParser(head, spwGrammar, options);
+    const varName   = 'generatedParser';
+
+    // string
+    const pegjs_path = path.join(__dirname, '../generated', `spw.pegjs`);
+    fs.writeFileSync(pegjs_path, generated.grammar);
+
+    // parser
+    const parser_ts_path = path.join(__dirname, '../generated/index.ts');
+    const parserString   = [
+        `// language=JavaScript`,
+        `/* eslint-disable */`,
+        `// @ts-nocheck`,
+        `// noinspection UnnecessaryLocalVariableJS`,
+        `const ${varName} = ${(generated.parser)};`,
+        `export default ${varName};`,
+        `export {${varName} as spwParser};`,
+    ]
+        .join('\n');
+    fs.writeFileSync(parser_ts_path, parserString);
 
     return import('../generated')
         .then(({spwParser}) => spwParser as unknown as Parser);

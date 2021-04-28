@@ -1,6 +1,6 @@
 import {ruleName} from './perspective_expression.ref';
 import {Rule} from '@spwashi/language/parsers/grammar';
-import {anyOf, sequenceOf, zeroOrMoreOf} from '@spwashi/language/parsers/grammar/combinators';
+import {anyOf, optionally, sequenceOf, stringLike, zeroOrMoreOf} from '@spwashi/language/parsers/grammar/combinators';
 import {spaceNode} from '../../_base/space/space.ref';
 import {PerspectiveExpression} from '@constructs/ast';
 import {node} from '@grammar/nodes/abstract/ref';
@@ -34,6 +34,8 @@ const pattern      =
                                    lensWithSpec,
                                    lens,
                                ]).named('lens'),
+                         zeroOrMoreOf(spaceNode),
+                         optionally(stringLike('->')),
                          zeroOrMoreOf(spaceNode),
                          node.named('target'),
                      ])

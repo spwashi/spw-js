@@ -11,27 +11,26 @@ import _ from 'lodash';
 import {strandExpression} from '@grammar/expressions/strand/strand_expression.ref';
 import {phraseExpression} from '@grammar/expressions/phrase/phrase_expression.ref';
 import {perspectiveExpression} from '@grammar/expressions/perspective/perspective_expression.ref';
+import {numberNode} from '@grammar/nodes/atoms/pure/number/number.ref';
 
-const space     = spaceNode.withAction('return null');
-const fragments = _.flatten(
+const space               = spaceNode.withAction('return null');
+const fragments           = _.flatten(
     ([DomainContainer] as typeof ContainerNode[]).map((Comp) => {
         const components = getContainerNodeComponentReferences(Comp.name);
         return components.open.ref;
     }));
-const pattern   =
-          sequenceOf([
-                         oneOrMoreOf(
-                             anyOf([
-                                       strandExpression,
-                                       perspectiveExpression,
-                                       ...nodes,
-                                       phraseExpression,
-                                       ...fragments,
-                                       space
-                                   ]),
-                         ),
-                     ]);
-const action    = /* language=JavaScript */ dedent`
+const topRuleOptions        = [
+    numberNode,
+    strandExpression,
+    perspectiveExpression,
+    ...nodes,
+    phraseExpression,
+    ...fragments,
+    space,
+];
+const pattern             =
+          sequenceOf([oneOrMoreOf(anyOf(topRuleOptions))]);
+const action              = /* language=JavaScript */ dedent`
     const items = Array.isArray(body)
                   ? body
                       .map(item => item && item.kind ? item : undefined)
@@ -39,5 +38,6 @@ const action    = /* language=JavaScript */ dedent`
                   : body;
     return items.length === 1 ? items [0] : items;
 `;
+export const topRuleNames = [ruleName]
 
 export const topRule = new Rule(ruleName, pattern.named('body'), action);

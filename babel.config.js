@@ -24,7 +24,7 @@ module.exports = {
                             }
                         ]
                     ],
-    exclude:        [],
+    ignore:        [/node_modules/],
     compact:        false,
     retainLines:    true,
     minified:       false,

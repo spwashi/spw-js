@@ -4,7 +4,6 @@ import {baseRules} from './_base/_list.rules';
 import {expressionRules} from './expressions/_list.rule';
 import nodeRules from './nodes/_list.rule';
 
-
 export default new Grammar([
                                topRule,
                                ...baseRules,

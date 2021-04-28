@@ -1,7 +1,7 @@
-import {SpwNode} from '../../../../abstract/node';
-import {SpwItemKind} from '../../../../../types/kind';
-import {HydratedSpwItem, RawSpwItem} from '../../../../../abstract/interfaces/internal';
-import {SpwItem, SpwItemKey} from '../../../../../abstract/item';
+import {SpwNode} from '../../../../../abstract/node';
+import {SpwItemKind} from '../../../../../../types/kind';
+import {HydratedSpwItem, RawSpwItem} from '../../../../../../abstract/interfaces/internal';
+import {SpwItem, SpwItemKey} from '../../../../../../abstract/item';
 
 export default abstract class LabeledAtomNode<K extends SpwItemKind,
     T extends string,
