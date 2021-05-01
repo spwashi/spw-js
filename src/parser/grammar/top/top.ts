@@ -17,7 +17,7 @@ const space               = spaceNode.withAction('return null');
 const fragments           = _.flatten(
     ([DomainContainer] as typeof ContainerNode[]).map((Comp) => {
         const components = getContainerNodeComponentReferences(Comp.name);
-        return components.open.ref;
+        return components.open;
     }));
 const topRuleOptions        = [
     numberNode,

@@ -24,16 +24,16 @@ function getEmptyBlockCombinator(opener: RuleReferenceCombinator, closer: RuleRe
 }
 
 export function createContainerBodyRules(ruleName: string): Rule[] {
-    const bodyName      = getContainerNodeComponentReferences(ruleName).body.name;
+    const bodyName      = getContainerNodeComponentReferences(ruleName).body.ruleName;
     const listOfAnyNode = oneOrMoreOf(top);
     return [new Rule(bodyName, listOfAnyNode)];
 }
 
 export function createContainerPattern(ruleName: string): Combinator {
     const references = getContainerNodeComponentReferences(ruleName);
-    const open       = references.open.ref;
-    const body       = references.body.ref;
-    const close      = references.close.ref;
+    const open       = references.open;
+    const body       = references.body;
+    const close      = references.close;
     const action     = /* language=JavaScript */ `return {open: open, body: body, close: close} `;
     return anyOf([
                      getEmptyBlockCombinator(open, close),

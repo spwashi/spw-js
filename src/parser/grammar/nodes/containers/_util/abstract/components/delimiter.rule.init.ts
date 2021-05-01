@@ -44,11 +44,11 @@ function closer(token: StringCombinator): SequenceCombinator {
 }
 export function createDelimiterRule(ruleName: string, tok_1: string, index: 'open' | 'close' = 'open'): Rule {
     const reverse                    = index !== 'open';
-    const {name}                     = getContainerNodeComponentReferences(ruleName)[index];
+    const {ruleName: name}           = getContainerNodeComponentReferences(ruleName)[index];
     const tokenCombinator            = combinators.stringLike(tok_1);
     const plainDelimiterCombinator   = combinators.sequenceOf([tokenCombinator.named('tok')])
                                                   .withAction( // language=JavaScript
-                                                               `return toSpwItem({
+                                                      `return toSpwItem({
                                                                             token:    tok,
                                                                             position: '${index}',
                                                                             kind:     'delimiter'
