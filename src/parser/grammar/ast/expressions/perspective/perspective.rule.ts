@@ -5,11 +5,11 @@ import {spaceNode} from '../../../base/space/space.ref';
 import {PerspectiveExpression} from '@constructs/ast';
 import {node} from '@grammar/ast/nodes/_abstract/node.ref';
 import {essentialContainer} from '@grammar/ast/nodes/containers/essence/essence.container.ref';
-import {perspectiveAtom} from '@grammar/ast/nodes/atoms/operators/operators';
+import {perspectiveOperator} from '@grammar/ast/nodes/atoms/operators/operators';
 
 const lensWithSpec =
           sequenceOf([
-                         perspectiveAtom.named('atom'),
+                         perspectiveOperator.named('atom'),
                          anyOf([essentialContainer]).named('spec'),
                      ])
               .withAction(
@@ -20,7 +20,7 @@ const lensWithSpec =
               );
 const lens         =
           sequenceOf([
-                         perspectiveAtom.named('atom'),
+                         perspectiveOperator.named('atom'),
                      ])
               .withAction(
                   /* language=JavaScript */ `return {

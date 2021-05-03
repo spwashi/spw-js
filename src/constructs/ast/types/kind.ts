@@ -6,11 +6,22 @@ type PureAtomKind =
     ;
 
 type LabeledAtomKind =
-    'channel' |
-    'evaluation' |
-    'invocation' |
-    'performance' |
-    'perspective'
+    'channel'
+    | 'evaluation'
+    | 'invocation'
+    | 'performance'
+    | 'perspective'
+    | 'reference'
+    | 'aggregation'
+    | 'reduction'
+    | 'transformation'
+    | 'direction'
+    | 'branch'
+    | 'value'
+    | 'spread'
+    | 'range'
+    | 'descent'
+    | 'ascent'
     ;
 
 type ContainerNodeKind =

@@ -1,17 +1,40 @@
 import {labeledAtomNodeRule} from '../operator.rule';
 import {
+    aggregationOperatorRule,
+    branchOperatorRule,
     channelOperatorRule,
+    directionOperatorRule,
+    descentOperatorRule,
     evaluationOperatorRule,
     invocationOperatorRule,
     performanceOperatorRule,
-    recognitionOperatorRule,
+    perspectiveOperatorRule,
+    rangeOperatorRule,
+    reductionOperatorRule,
+    spreadOperatorRule,
+    transformationOperatorRule,
+    valueOperatorRule,
+    ascentOperatorRule,
+    referenceOperatorRule,
 } from '@grammar/ast/nodes/atoms/operators/operators';
 
 export default [
     labeledAtomNodeRule,
+    //
+    aggregationOperatorRule,
+    ascentOperatorRule,
+    branchOperatorRule,
     channelOperatorRule,
+    descentOperatorRule,
+    directionOperatorRule,
     evaluationOperatorRule,
     invocationOperatorRule,
     performanceOperatorRule,
-    recognitionOperatorRule,
+    perspectiveOperatorRule,
+    rangeOperatorRule,
+    reductionOperatorRule,
+    referenceOperatorRule,
+    spreadOperatorRule,
+    transformationOperatorRule,
+    valueOperatorRule,
 ]

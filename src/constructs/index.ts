@@ -1,20 +1,31 @@
 import {SpwItemKind} from '@constructs/ast/types/kind';
 import {
+    AggregationOperator,
     AnchorNode,
+    AscentOperator,
+    BranchOperator,
     ChannelOperator,
     Concept,
+    DescentOperator,
+    DirectionOperator,
     Domain,
     Essence,
     EvaluationOperator,
-    InvocationOperator,
     Group,
+    InvocationOperator,
     PerformanceOperator,
-    PerspectiveOperator,
     PerspectiveExpression,
+    PerspectiveOperator,
     PhraseExpression,
     PhraseNode,
+    RangeOperator,
+    ReductionOperator,
+    ReferenceOperator,
+    SpreadOperator,
     StrandExpression,
     StringNode,
+    TransformationOperator,
+    ValueOperator,
 } from './ast';
 import {ISpwItemStatic, SpwItem} from '@constructs/ast/abstract/item';
 import {NumberNode} from '@constructs/ast/nodes/impl/atoms/pure/number';
@@ -30,12 +41,23 @@ export const spwItemConstructors =
                      string: StringNode,
                      number: NumberNode,
 
-                     // labeled nodes
-                     channel:     ChannelOperator,
-                     evaluation:  EvaluationOperator,
-                     invocation:  InvocationOperator,
-                     performance: PerformanceOperator,
-                     perspective: PerspectiveOperator,
+                     // operators
+                     aggregation:    AggregationOperator,
+                     ascent:         AscentOperator,
+                     branch:         BranchOperator,
+                     channel:        ChannelOperator,
+                     descent:        DescentOperator,
+                     direction:      DirectionOperator,
+                     evaluation:     EvaluationOperator,
+                     invocation:     InvocationOperator,
+                     performance:    PerformanceOperator,
+                     perspective:    PerspectiveOperator,
+                     range:          RangeOperator,
+                     reduction:      ReductionOperator,
+                     reference:      ReferenceOperator,
+                     spread:         SpreadOperator,
+                     transformation: TransformationOperator,
+                     value:          ValueOperator,
 
                      // container nodes
                      delimiter:     Delimiter,

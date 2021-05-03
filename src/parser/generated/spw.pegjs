@@ -94,9 +94,29 @@ Phrase / Number / (node:(Anchor / StringNode) spec:(ContainerNode)* description:
 LabeledAtom "LabeledAtom"= 
 ChannelOperator / EvaluationOperator / InvocationOperator / PerformanceOperator / PerspectiveOperator
 
+AggregationOperator "AggregationOperator"= 
+components:((token:"+" "_" label:Anchor {return{token:token,label:label};}) / "+")
+{return toSpwItem({kind:"aggregation",...components});}
+
+AscentOperator "AscentOperator"= 
+components:((token:"^" "_" label:Anchor {return{token:token,label:label};}) / "^")
+{return toSpwItem({kind:"ascent",...components});}
+
+BranchOperator "BranchOperator"= 
+components:((token:"|" "_" label:Anchor {return{token:token,label:label};}) / "|")
+{return toSpwItem({kind:"branch",...components});}
+
 ChannelOperator "ChannelOperator"= 
 components:((token:"#" "_" label:Anchor {return{token:token,label:label};}) / "#")
 {return toSpwItem({kind:"channel",...components});}
+
+DescentOperator "DescentOperator"= 
+components:((token:"." "_" label:Anchor {return{token:token,label:label};}) / ".")
+{return toSpwItem({kind:"descent",...components});}
+
+DirectionOperator "DirectionOperator"= 
+components:((token:"->" "_" label:Anchor {return{token:token,label:label};}) / "->")
+{return toSpwItem({kind:"direction",...components});}
 
 EvaluationOperator "EvaluationOperator"= 
 components:((token:"?" "_" label:Anchor {return{token:token,label:label};}) / "?")
@@ -113,6 +133,30 @@ components:((token:"!" "_" label:Anchor {return{token:token,label:label};}) / "!
 PerspectiveOperator "PerspectiveOperator"= 
 components:((token:"@" "_" label:Anchor {return{token:token,label:label};}) / "@")
 {return toSpwItem({kind:"perspective",...components});}
+
+RangeOperator "RangeOperator"= 
+components:((token:".." "_" label:Anchor {return{token:token,label:label};}) / "..")
+{return toSpwItem({kind:"range",...components});}
+
+ReductionOperator "ReductionOperator"= 
+components:((token:"-" "_" label:Anchor {return{token:token,label:label};}) / "-")
+{return toSpwItem({kind:"reduction",...components});}
+
+ReferenceOperator "ReferenceOperator"= 
+components:((token:"&" "_" label:Anchor {return{token:token,label:label};}) / "&")
+{return toSpwItem({kind:"reference",...components});}
+
+SpreadOperator "SpreadOperator"= 
+components:((token:"..." "_" label:Anchor {return{token:token,label:label};}) / "...")
+{return toSpwItem({kind:"spread",...components});}
+
+TransformationOperator "TransformationOperator"= 
+components:((token:"=>" "_" label:Anchor {return{token:token,label:label};}) / "=>")
+{return toSpwItem({kind:"transformation",...components});}
+
+ValueOperator "ValueOperator"= 
+components:((token:"*" "_" label:Anchor {return{token:token,label:label};}) / "*")
+{return toSpwItem({kind:"value",...components});}
 
 ContainerNode "ContainerNode"= 
 Domain / Essence / Concept / Group
