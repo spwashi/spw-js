@@ -1,6 +1,7 @@
 import {SpwNode} from '../../../abstract/node';
-import {ISpwItemStatic, SpwItemKey} from '../../../../abstract/item';
+import {ISpwItemStatic} from '../../../../abstract/item';
 import {staticImplements} from '../../../../util/staticImplements';
+import {SpwItemKey} from '@constructs/ast/abstract/types';
 
 type Kind = 'number';
 

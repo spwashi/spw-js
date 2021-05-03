@@ -2,12 +2,12 @@ import {SpwItemKind} from '@constructs/ast/types/kind';
 import {
     AnchorNode,
     ChannelAtom,
-    ConceptualContainer,
-    DomainContainer,
-    EssentialContainer,
+    Concept,
+    Domain,
+    Essence,
     EvaluationAtom,
     InvocationAtom,
-    ParentheticalContainer,
+    Group,
     PerformanceAtom,
     PerspectiveAtom,
     PerspectiveExpression,
@@ -39,10 +39,10 @@ export const spwItemConstructors =
 
                      // container nodes
                      delimiter:     Delimiter,
-                     essence:       EssentialContainer,
-                     concept:       ConceptualContainer,
-                     domain:        DomainContainer,
-                     parenthetical: ParentheticalContainer,
+                     essence:       Essence,
+                     concept:       Concept,
+                     domain:        Domain,
+                     parenthetical: Group,
 
                      // expressions
                      strand_expression:      StrandExpression,

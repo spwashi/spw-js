@@ -1,11 +1,8 @@
 import {SpwItemKind} from '@constructs/ast/types/kind';
-import {HydratedSpwItem, RawSpwItem} from '@constructs/ast/abstract/interfaces/internal';
-import {SpwItem, SpwItemKey} from '@constructs/ast/abstract/item';
+import {SpwItem} from '@constructs/ast/abstract/item';
+import {SpwItemJunction} from '@constructs/ast/abstract/types';
 
-export class SpwNode<K extends SpwItemKind,
-    H extends HydratedSpwItem = HydratedSpwItem,
-    U extends RawSpwItem = RawSpwItem> extends SpwItem<K, H, U> {
-    get key(): SpwItemKey {
-        return null;
-    }
+export class SpwNode<Kind extends SpwItemKind, Junction extends SpwItemJunction = SpwItemJunction> extends SpwItem<Kind, Junction> {
+
+
 }

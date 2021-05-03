@@ -1,9 +1,7 @@
 import {SpwItemKind} from '../../types/kind';
-import {HydratedSpwItem, RawSpwItem} from '../../abstract/interfaces/internal';
 import {SpwItem} from '../../abstract/item';
+import {SpwItemJunction} from '@constructs/ast/abstract/types';
 
-export abstract class SpwExpression<K extends SpwItemKind,
-    H extends HydratedSpwItem = HydratedSpwItem,
-    U extends RawSpwItem = RawSpwItem> extends SpwItem<K, H, U> {
+export abstract class SpwExpression<Kind extends SpwItemKind, Junction extends SpwItemJunction = SpwItemJunction> extends SpwItem<Kind, Junction> {
 
 }

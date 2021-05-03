@@ -1,21 +1,21 @@
 import {anyOf, oneOrMoreOf, sequenceOf} from '@spwashi/language/parsers/grammar/combinators';
 import dedent from 'dedent';
 import {Rule} from '@spwashi/language/parsers/grammar';
-import {spaceNode} from '../_base/space/space.ref';
+import {spaceNode} from '../base/space/space.ref';
 import {ruleName} from '@grammar/top/top.ref';
-import {nodes} from '@grammar/nodes/_list.ref';
-import {getContainerNodeComponentReferences} from '@grammar/nodes/containers/_util/abstract/container.ref.init';
-import {DomainContainer} from '@constructs/ast';
+import {nodes} from '@grammar/ast/nodes/_abstract/_list/node.list.ref';
+import {getContainerNodeComponentReferences} from '@grammar/ast/nodes/containers/_abstract/_util/container.ref.init';
+import {Domain} from '@constructs/ast';
 import {ContainerNode} from '@constructs/ast/nodes/impl/containers/abstract/container';
 import _ from 'lodash';
-import {strandExpression} from '@grammar/expressions/strand/strand_expression.ref';
-import {phraseExpression} from '@grammar/expressions/phrase/phrase_expression.ref';
-import {perspectiveExpression} from '@grammar/expressions/perspective/perspective_expression.ref';
-import {numberNode} from '@grammar/nodes/atoms/pure/number/number.ref';
+import {strandExpression} from '@grammar/ast/expressions/strand/strand.expression.ref';
+import {phraseExpression} from '@grammar/ast/expressions/phrase/phrase.expression.ref';
+import {perspectiveExpression} from '@grammar/ast/expressions/perspective/perspective.expression.ref';
+import {numberNode} from '@grammar/ast/nodes/atoms/pure/number/number.ref';
 
 const space               = spaceNode.withAction('return null');
 const fragments           = _.flatten(
-    ([DomainContainer] as typeof ContainerNode[]).map((Comp) => {
+    ([Domain] as typeof ContainerNode[]).map((Comp) => {
         const components = getContainerNodeComponentReferences(Comp.name);
         return components.open;
     }));

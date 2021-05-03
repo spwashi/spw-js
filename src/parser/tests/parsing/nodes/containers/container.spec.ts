@@ -1,5 +1,5 @@
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../util';
-import {DomainContainer} from '@constructs/ast';
+import {Domain} from '@constructs/ast';
 import {Runtime} from '@constructs/runtime/runtime';
 import {SpwItem} from '@constructs/ast/abstract/item';
 
@@ -22,7 +22,7 @@ describe('Domain Node Parsing',
                             `);
                         const last: SpwItem | undefined = getLastRegisteredNode(runtime);
                         const all: SpwItem[]            = getAllRegisteredNodes(runtime);
-                        expect(last?.kind).toEqual(DomainContainer.kind)
+                        expect(last?.kind).toEqual(Domain.kind)
                         expect(all.length).toEqual(6);
                     }
                     {
@@ -36,7 +36,7 @@ describe('Domain Node Parsing',
                             `);
                         const last: SpwItem | undefined = getLastRegisteredNode(runtime);
                         const all: SpwItem[]            = getAllRegisteredNodes(runtime);
-                        expect(last?.kind).toEqual(DomainContainer.kind)
+                        expect(last?.kind).toEqual(Domain.kind)
                         expect(all.length).toEqual(34);
                     }
 
@@ -44,7 +44,7 @@ describe('Domain Node Parsing',
                         const runtime: Runtime          = await startRuntimeWithSrc(`{_< boon > ~one => two => three}`);
                         const last: SpwItem | undefined = getLastRegisteredNode(runtime);
                         const all: SpwItem[]            = getAllRegisteredNodes(runtime);
-                        expect(last?.kind).toEqual(DomainContainer.kind);
+                        expect(last?.kind).toEqual(Domain.kind);
                         expect(last?.key).toEqual('{_<boon> ~ one=>two=>three}');
                         expect(all.length).toEqual(13);
                         const indexedDelimiter = runtime.locateNode('{_<boon>')[0]

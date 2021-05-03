@@ -30,7 +30,7 @@ export class RuntimeRegister {
         return this._entries.map(({item}) => item)
     }
 
-    add<K extends SpwItemKind>(item: SpwNode<K>): this {
+    add<Kind extends SpwItemKind>(item: SpwNode<Kind>): this {
         const registerValue =
                   {
                       item,

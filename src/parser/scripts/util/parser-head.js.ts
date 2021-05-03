@@ -1,12 +1,12 @@
 import {
     AnchorNode,
     ChannelAtom,
-    ConceptualContainer,
-    DomainContainer,
-    EssentialContainer,
+    Concept,
+    Domain,
+    Essence,
     EvaluationAtom,
     InvocationAtom,
-    ParentheticalContainer,
+    Group,
     PerformanceAtom,
     PerspectiveAtom,
     PhraseExpression,
@@ -53,10 +53,10 @@ export const head =
                              case '${AnchorNode.kind}':
                              case '${PhraseNode.kind}':
 
-                             case '${DomainContainer.kind}':
-                             case '${ParentheticalContainer.kind}':
-                             case '${EssentialContainer.kind}':
-                             case '${ConceptualContainer.kind}':
+                             case '${Domain.kind}':
+                             case '${Group.kind}':
+                             case '${Essence.kind}':
+                             case '${Concept.kind}':
 
                              case '${PerspectiveExpression.kind}':
                              case '${StrandExpression.kind}':

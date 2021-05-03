@@ -1,5 +1,5 @@
 import {PhraseExpression, StrandExpression} from '@constructs/ast';
-import {phraseExpressionRule} from '@grammar/expressions/phrase/phrase_expression.rule';
+import {phraseExpressionRule} from '@grammar/ast/expressions/phrase/phrase.expression.rule';
 import {SpwItem} from '@constructs/ast/abstract/item';
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../util';
 

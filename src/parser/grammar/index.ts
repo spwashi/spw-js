@@ -1,8 +1,8 @@
 import {Grammar} from '@spwashi/language/parsers/grammar';
 import {topRule} from './top/top';
-import {baseRules} from './_base/_list.rules';
-import {expressionRules} from './expressions/_list.rule';
-import nodeRules from './nodes/_list.rule';
+import {baseRules} from './base/_list.rules';
+import {expressionRules} from './ast/expressions/_abstract/_list/expressions.list.rule';
+import nodeRules from './ast/nodes/_abstract/_list/node.list.rule';
 
 export default new Grammar([
                                topRule,

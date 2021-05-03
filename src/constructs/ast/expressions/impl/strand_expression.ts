@@ -1,7 +1,8 @@
 import {SpwExpression} from '@constructs/ast/expressions/abstract/expression';
 import {staticImplements} from '@constructs/ast/util/staticImplements';
-import {ISpwItemStatic, SpwItem, SpwItemKey} from '@constructs/ast/abstract/item';
+import {ISpwItemStatic, SpwItem} from '@constructs/ast/abstract/item';
 import {HydratedSpwItem} from '@constructs/ast/abstract/interfaces/internal';
+import {SpwItemKey} from '@constructs/ast/abstract/types';
 
 type Kind = 'strand_expression';
 

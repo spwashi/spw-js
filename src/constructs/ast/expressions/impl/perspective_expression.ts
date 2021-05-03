@@ -1,6 +1,7 @@
 import {SpwExpression} from '../abstract/expression';
 import {staticImplements} from '../../util/staticImplements';
-import {ISpwItemStatic, SpwItem, SpwItemKey} from '../../abstract/item';
+import {ISpwItemStatic, SpwItem} from '../../abstract/item';
+import {SpwItemKey} from '@constructs/ast/abstract/types';
 
 type Kind = 'perspective_expression';
 

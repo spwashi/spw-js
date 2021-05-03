@@ -1,6 +1,7 @@
-import {ISpwItemStatic, SpwItemKey} from '../../../../abstract/item';
+import {ISpwItemStatic} from '../../../../abstract/item';
 import {staticImplements} from '../../../../util/staticImplements';
 import {SpwNode} from '@constructs/ast/nodes/abstract/node';
+import {SpwItemKey} from '@constructs/ast/abstract/types';
 
 type Kind = 'anchor';
 

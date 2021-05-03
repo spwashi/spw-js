@@ -1,5 +1,6 @@
-import {ISpwItemStatic, SpwItem, SpwItemKey} from '@constructs/ast/abstract/item';
+import {ISpwItemStatic, SpwItem} from '@constructs/ast/abstract/item';
 import {staticImplements} from '@constructs/ast/util/staticImplements';
+import {SpwItemKey} from '@constructs/ast/abstract/types';
 
 @staticImplements<ISpwItemStatic<'delimiter'>>()
 export class Delimiter extends SpwItem {
