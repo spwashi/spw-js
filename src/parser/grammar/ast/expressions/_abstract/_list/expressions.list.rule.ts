@@ -1,12 +1,12 @@
-import {strandExpressionRule} from '../../strand/strand.expression.rule';
-import {phraseExpressionRule} from '../../phrase/phrase.expression.rule';
+import {strandRule} from '../../strand/strand.rule';
+import {phraseExpressionRule} from '../../phrase/phrase.rule';
 import {expressionRule} from '../expression.rule';
-import {perspectiveExpressionRule} from '../../perspective/perspective.expression.rule';
+import {perspectiveExpressionRule} from '../../perspective/perspective.rule';
 
 export const expressionRules =
                  [
                      expressionRule,
                      perspectiveExpressionRule,
-                     strandExpressionRule,
+                     strandRule,
                      phraseExpressionRule,
                  ]

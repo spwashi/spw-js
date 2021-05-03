@@ -4,7 +4,7 @@
   "description": "A parser and runtime for the Spw language",
   "license": "MIT",
   "scripts": {
-    "src:test": "yarn src:build:parser &&  jest ./src",
+    "src:test": "yarn src:build:parser && yarn tsc &&  jest ./src",
     "src:lint": "eslint src --ext .ts --fix",
     "src:build:parser": "ts-node -r tsconfig-paths/register src/parser/scripts/generate.ts;",
     "presrc:prepublish": "yarn run src:lint && yarn src:test",

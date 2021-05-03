@@ -1,7 +1,7 @@
 import * as combinators from '@spwashi/language/parsers/grammar/combinators';
 import {SequenceCombinator, StringCombinator} from '@spwashi/language/parsers/grammar/combinators';
 import {Rule} from '@spwashi/language/parsers/grammar';
-import {anchorNode} from '../../../../atoms/pure/anchor/anchor.ref';
+import {anchorNode} from '../../../../atoms/scalar/anchor/anchor.ref';
 import {containerNodes} from '../../_list/container.list.ref';
 import {getContainerNodeComponentReferences} from '../container.ref.init';
 import {spaceNode} from '../../../../../../base/space/space.ref';

@@ -1,0 +1,1 @@
+A SpwAtom is a SpwItem with no implicit behavior.

@@ -14,7 +14,7 @@ export interface ISpwItemStatic<K extends SpwItemKind = SpwItemKind> {
     readonly kind: K;
 }
 
-const defaultKeyFn = (s: SpwShape) => s.key;
+const defaultKeyFn = (s: SpwShape) => s?.key;
 
 /**
  * Represents the most abstract item in a Spw syntax tree

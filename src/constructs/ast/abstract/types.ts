@@ -32,6 +32,7 @@ export type SerializationReducer<Output, SerializationContext extends SpwShape =
 export type Component<T extends SpwShape = SpwShape,
     Output = SpwShape,
     InteractionContext extends SpwShape | undefined = null> = {
+    toString?: () => string;
     select: (s: SpwShape) => T;
     generate: InteractionGenerator<T, Output, InteractionContext>;
     normalize?: {

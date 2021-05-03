@@ -1,5 +1,5 @@
 import {PerspectiveExpression} from '@constructs/ast';
-import {perspectiveExpressionRule} from '@grammar/ast/expressions/perspective/perspective.expression.rule';
+import {perspectiveExpressionRule} from '@grammar/ast/expressions/perspective/perspective.rule';
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../util';
 
 describe('Rule', () => {

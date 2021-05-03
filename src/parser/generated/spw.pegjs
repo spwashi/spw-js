@@ -92,25 +92,25 @@ PureAtom "PureAtom"=
 Phrase / Number / (node:(Anchor / StringNode) spec:(ContainerNode)* description:("." (Space {return null;}) container:ContainerNode {return container;})* {return"undefined"!=typeof spec&&(node.key+=spec.map(e=>e.key),node.spec=spec),node;})
 
 LabeledAtom "LabeledAtom"= 
-ChannelAtom / EvaluationAtom / InvocationAtom / PerformanceAtom / PerspectiveAtom
+ChannelOperator / EvaluationOperator / InvocationOperator / PerformanceOperator / PerspectiveOperator
 
-ChannelAtom "ChannelAtom"= 
+ChannelOperator "ChannelOperator"= 
 components:((token:"#" "_" label:Anchor {return{token:token,label:label};}) / "#")
 {return toSpwItem({kind:"channel",...components});}
 
-EvaluationAtom "EvaluationAtom"= 
+EvaluationOperator "EvaluationOperator"= 
 components:((token:"?" "_" label:Anchor {return{token:token,label:label};}) / "?")
 {return toSpwItem({kind:"evaluation",...components});}
 
-InvocationAtom "InvocationAtom"= 
+InvocationOperator "InvocationOperator"= 
 components:((token:"~" "_" label:Anchor {return{token:token,label:label};}) / "~")
 {return toSpwItem({kind:"invocation",...components});}
 
-PerformanceAtom "PerformanceAtom"= 
+PerformanceOperator "PerformanceOperator"= 
 components:((token:"!" "_" label:Anchor {return{token:token,label:label};}) / "!")
 {return toSpwItem({kind:"performance",...components});}
 
-PerspectiveAtom "PerspectiveAtom"= 
+PerspectiveOperator "PerspectiveOperator"= 
 components:((token:"@" "_" label:Anchor {return{token:token,label:label};}) / "@")
 {return toSpwItem({kind:"perspective",...components});}
 
@@ -173,7 +173,7 @@ Expression "Expression"=
 StrandExpression / PhraseExpression / PerspectiveExpression
 
 PerspectiveExpression "PerspectiveExpression"= 
-source:Node (Space {return null;})* lens:((atom:PerspectiveAtom spec:Essence {return{atom:atom,spec:spec};}) / (atom:PerspectiveAtom {return{atom:atom};})) (Space {return null;})* "->"? (Space {return null;})* target:Node
+source:Node (Space {return null;})* lens:((atom:PerspectiveOperator spec:Essence {return{atom:atom,spec:spec};}) / (atom:PerspectiveOperator {return{atom:atom};})) (Space {return null;})* "->"? (Space {return null;})* target:Node
 {return toSpwItem({kind:"perspective_expression",source:source,lens:lens,target:target});}
 
 StrandExpression "StrandExpression"= 

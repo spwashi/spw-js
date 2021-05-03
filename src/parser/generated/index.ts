@@ -203,24 +203,24 @@ const generatedParser = /*
         peg$c55 = function(node, spec, container) {return container;},
         peg$c56 = function(node, spec, description) {return"undefined"!=typeof spec&&(node.key+=spec.map(e=>e.key),node.spec=spec),node;},
         peg$c57 = peg$otherExpectation("LabeledAtom"),
-        peg$c58 = peg$otherExpectation("ChannelAtom"),
+        peg$c58 = peg$otherExpectation("ChannelOperator"),
         peg$c59 = "#",
         peg$c60 = peg$literalExpectation("#", false),
         peg$c61 = function(token, label) {return{token:token,label:label};},
         peg$c62 = function(components) {return toSpwItem({kind:"channel",...components});},
-        peg$c63 = peg$otherExpectation("EvaluationAtom"),
+        peg$c63 = peg$otherExpectation("EvaluationOperator"),
         peg$c64 = "?",
         peg$c65 = peg$literalExpectation("?", false),
         peg$c66 = function(components) {return toSpwItem({kind:"evaluation",...components});},
-        peg$c67 = peg$otherExpectation("InvocationAtom"),
+        peg$c67 = peg$otherExpectation("InvocationOperator"),
         peg$c68 = "~",
         peg$c69 = peg$literalExpectation("~", false),
         peg$c70 = function(components) {return toSpwItem({kind:"invocation",...components});},
-        peg$c71 = peg$otherExpectation("PerformanceAtom"),
+        peg$c71 = peg$otherExpectation("PerformanceOperator"),
         peg$c72 = "!",
         peg$c73 = peg$literalExpectation("!", false),
         peg$c74 = function(components) {return toSpwItem({kind:"performance",...components});},
-        peg$c75 = peg$otherExpectation("PerspectiveAtom"),
+        peg$c75 = peg$otherExpectation("PerspectiveOperator"),
         peg$c76 = "@",
         peg$c77 = peg$literalExpectation("@", false),
         peg$c78 = function(components) {return toSpwItem({kind:"perspective",...components});},
@@ -1605,15 +1605,15 @@ const generatedParser = /*
       }
 
       peg$silentFails++;
-      s0 = peg$parseChannelAtom();
+      s0 = peg$parseChannelOperator();
       if (s0 === peg$FAILED) {
-        s0 = peg$parseEvaluationAtom();
+        s0 = peg$parseEvaluationOperator();
         if (s0 === peg$FAILED) {
-          s0 = peg$parseInvocationAtom();
+          s0 = peg$parseInvocationOperator();
           if (s0 === peg$FAILED) {
-            s0 = peg$parsePerformanceAtom();
+            s0 = peg$parsePerformanceOperator();
             if (s0 === peg$FAILED) {
-              s0 = peg$parsePerspectiveAtom();
+              s0 = peg$parsePerspectiveOperator();
             }
           }
         }
@@ -1629,7 +1629,7 @@ const generatedParser = /*
       return s0;
     }
 
-    function peg$parseChannelAtom() {
+    function peg$parseChannelOperator() {
       var s0, s1, s2, s3, s4;
 
       var key    = peg$currPos * 37 + 11,
@@ -1702,7 +1702,7 @@ const generatedParser = /*
       return s0;
     }
 
-    function peg$parseEvaluationAtom() {
+    function peg$parseEvaluationOperator() {
       var s0, s1, s2, s3, s4;
 
       var key    = peg$currPos * 37 + 12,
@@ -1775,7 +1775,7 @@ const generatedParser = /*
       return s0;
     }
 
-    function peg$parseInvocationAtom() {
+    function peg$parseInvocationOperator() {
       var s0, s1, s2, s3, s4;
 
       var key    = peg$currPos * 37 + 13,
@@ -1848,7 +1848,7 @@ const generatedParser = /*
       return s0;
     }
 
-    function peg$parsePerformanceAtom() {
+    function peg$parsePerformanceOperator() {
       var s0, s1, s2, s3, s4;
 
       var key    = peg$currPos * 37 + 14,
@@ -1921,7 +1921,7 @@ const generatedParser = /*
       return s0;
     }
 
-    function peg$parsePerspectiveAtom() {
+    function peg$parsePerspectiveOperator() {
       var s0, s1, s2, s3, s4;
 
       var key    = peg$currPos * 37 + 15,
@@ -3679,7 +3679,7 @@ const generatedParser = /*
         }
         if (s2 !== peg$FAILED) {
           s3 = peg$currPos;
-          s4 = peg$parsePerspectiveAtom();
+          s4 = peg$parsePerspectiveOperator();
           if (s4 !== peg$FAILED) {
             s5 = peg$parseEssence();
             if (s5 !== peg$FAILED) {
@@ -3696,7 +3696,7 @@ const generatedParser = /*
           }
           if (s3 === peg$FAILED) {
             s3 = peg$currPos;
-            s4 = peg$parsePerspectiveAtom();
+            s4 = peg$parsePerspectiveOperator();
             if (s4 !== peg$FAILED) {
               peg$savedPos = s3;
               s4 = peg$c130(s1, s4);

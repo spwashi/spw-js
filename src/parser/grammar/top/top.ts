@@ -8,10 +8,10 @@ import {getContainerNodeComponentReferences} from '@grammar/ast/nodes/containers
 import {Domain} from '@constructs/ast';
 import {ContainerNode} from '@constructs/ast/nodes/impl/containers/abstract/container';
 import _ from 'lodash';
-import {strandExpression} from '@grammar/ast/expressions/strand/strand.expression.ref';
-import {phraseExpression} from '@grammar/ast/expressions/phrase/phrase.expression.ref';
-import {perspectiveExpression} from '@grammar/ast/expressions/perspective/perspective.expression.ref';
-import {numberNode} from '@grammar/ast/nodes/atoms/pure/number/number.ref';
+import {strandExpression} from '@grammar/ast/expressions/strand/strand.ref';
+import {phraseExpression} from '@grammar/ast/expressions/phrase/phrase.ref';
+import {perspectiveExpression} from '@grammar/ast/expressions/perspective/perspective.ref';
+import {numberNode} from '@grammar/ast/nodes/atoms/scalar/number/number.ref';
 
 const space               = spaceNode.withAction('return null');
 const fragments           = _.flatten(

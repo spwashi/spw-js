@@ -1,14 +1,14 @@
 import {
     AnchorNode,
-    ChannelAtom,
+    ChannelOperator,
     Concept,
     Domain,
     Essence,
-    EvaluationAtom,
-    InvocationAtom,
+    EvaluationOperator,
+    InvocationOperator,
     Group,
-    PerformanceAtom,
-    PerspectiveAtom,
+    PerformanceOperator,
+    PerspectiveOperator,
     PhraseExpression,
     PhraseNode,
     StrandExpression,
@@ -43,11 +43,11 @@ export const head =
                          const out = normalize(node);
                          _cache.set(cacheKey, out);
                          switch (out.kind) {
-                             case '${ChannelAtom.kind}':
-                             case '${EvaluationAtom.kind}':
-                             case '${InvocationAtom.kind}':
-                             case '${PerformanceAtom.kind}':
-                             case '${PerspectiveAtom.kind}':
+                             case '${ChannelOperator.kind}':
+                             case '${EvaluationOperator.kind}':
+                             case '${InvocationOperator.kind}':
+                             case '${PerformanceOperator.kind}':
+                             case '${PerspectiveOperator.kind}':
 
                              case '${StringNode.kind}':
                              case '${AnchorNode.kind}':

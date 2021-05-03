@@ -1,15 +1,15 @@
 import {SpwItemKind} from '@constructs/ast/types/kind';
 import {
     AnchorNode,
-    ChannelAtom,
+    ChannelOperator,
     Concept,
     Domain,
     Essence,
-    EvaluationAtom,
-    InvocationAtom,
+    EvaluationOperator,
+    InvocationOperator,
     Group,
-    PerformanceAtom,
-    PerspectiveAtom,
+    PerformanceOperator,
+    PerspectiveOperator,
     PerspectiveExpression,
     PhraseExpression,
     PhraseNode,
@@ -31,11 +31,11 @@ export const spwItemConstructors =
                      number: NumberNode,
 
                      // labeled nodes
-                     channel:     ChannelAtom,
-                     evaluation:  EvaluationAtom,
-                     invocation:  InvocationAtom,
-                     performance: PerformanceAtom,
-                     perspective: PerspectiveAtom,
+                     channel:     ChannelOperator,
+                     evaluation:  EvaluationOperator,
+                     invocation:  InvocationOperator,
+                     performance: PerformanceOperator,
+                     perspective: PerspectiveOperator,
 
                      // container nodes
                      delimiter:     Delimiter,
