@@ -3,12 +3,12 @@ import * as path from 'path';
 import {head} from './util/parser-head.js';
 import spwGrammar from '../grammar';
 import {generateParser} from '@spwashi/language/parsers/scripts/generateParser';
-import {topRuleNames} from '../grammar/top/top';
+import {allowedStartRules} from '../grammar/top/top';
 import {Parser} from '../../constructs/runtime/runtime';
 
 
 async function getGeneratedParser(): Promise<Parser> {
-    const options   = {allowedStartRules: topRuleNames};
+    const options   = {allowedStartRules: allowedStartRules};
     const generated = await generateParser(head, spwGrammar, options);
     const varName   = 'generatedParser';
 

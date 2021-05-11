@@ -1,21 +1,3 @@
-import {
-    AnchorNode,
-    ChannelOperator,
-    Concept,
-    Domain,
-    Essence,
-    EvaluationOperator,
-    InvocationOperator,
-    Group,
-    PerformanceOperator,
-    PerspectiveOperator,
-    PhraseExpression,
-    PhraseNode,
-    StrandExpression,
-    StringNode,
-} from '../../../constructs/ast';
-import {PerspectiveExpression} from '@constructs/ast/expressions/impl/perspective_expression';
-
 // language=JavaScript
 export const head =
                  `
@@ -42,36 +24,6 @@ export const head =
 
                          const out = normalize(node);
                          _cache.set(cacheKey, out);
-                         switch (out.kind) {
-                             case '${ChannelOperator.kind}':
-                             case '${EvaluationOperator.kind}':
-                             case '${InvocationOperator.kind}':
-                             case '${PerformanceOperator.kind}':
-                             case '${PerspectiveOperator.kind}':
-
-                             case '${StringNode.kind}':
-                             case '${AnchorNode.kind}':
-                             case '${PhraseNode.kind}':
-
-                             case '${Domain.kind}':
-                             case '${Group.kind}':
-                             case '${Essence.kind}':
-                             case '${Concept.kind}':
-
-                             case '${PerspectiveExpression.kind}':
-                             case '${StrandExpression.kind}':
-                             case '${PhraseExpression.kind}':
-
-                             case 'number':
-                             case 'lens':
-                             case 'node-body':
-                             case 'delimiter':
-                             case 'space':
-                                 return out;
-                             default:
-                                 console.error('No handler for ' + out.kind);
-                                 out ? (out.kind = out.kind || 'unknown') : null;
-                                 throw new Error();
-                         }
+                         return out;
                      }
                  `;

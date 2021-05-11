@@ -1,12 +1,26 @@
-import {domainContainer} from '../../domain/domain.container.ref';
-import {essentialContainer} from '../../essence/essence.container.ref';
-import {conceptRule} from '../../concept/concept.container.ref';
-import {groupRule} from '../../group/group.container.ref';
+import {domain, domainComponents} from '../../domain/ref';
+import {essence, essenceComponents} from '../../essence/ref';
+import {concept, conceptComponents} from '../../concept/ref';
+import {group, groupComponents} from '../../group/ref';
 
-export const containerNodes =
+export const containers =
                  [
-                     domainContainer,
-                     essentialContainer,
-                     conceptRule,
-                     groupRule,
-                 ]
+                     domain,
+                     essence,
+                     concept,
+                     group,
+                 ];
+
+export const containerComponents =
+                 [
+                     domainComponents,
+                     essenceComponents,
+                     conceptComponents,
+                     groupComponents,
+                 ];
+
+export const containerDelimiters =
+                 containerComponents.flatMap(item => ([
+                     item.open,
+                     item.close,
+                 ]));

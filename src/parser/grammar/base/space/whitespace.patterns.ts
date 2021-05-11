@@ -1,11 +1,15 @@
 import {anyOf, oneOrMoreOf, regExpLike, zeroOrMoreOf} from '@spwashi/language/parsers/grammar/combinators';
 
-export const spaceTab          = regExpLike('\\t ');
-export const newlineCombinator = regExpLike('\\n,');
+export const spaceTab = regExpLike('\\t ');
+export const newline  = regExpLike('\\n');
 
-const _patterns = [spaceTab, newlineCombinator.named('newline')];
+const patterns =
+          [
+              spaceTab,
+              newline.named('newline'),
+          ];
 
 // language=JavaScript
-const action                              = 'return newline';
-export const optionalWhitespaceCombinator = zeroOrMoreOf(anyOf(_patterns).withAction(action));
-export const whitespaceCombinator         = oneOrMoreOf(anyOf(_patterns).withAction(action));
+const _action                   = 'return newline';
+export const optionalWhitespace = zeroOrMoreOf(anyOf(patterns).withAction(_action));
+export const whitespace         = oneOrMoreOf(anyOf(patterns).withAction(_action));

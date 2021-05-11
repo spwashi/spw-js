@@ -1,0 +1,1 @@
+An operational expression is an expression centered around a particular set of operations.

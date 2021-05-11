@@ -10,6 +10,7 @@
     "presrc:prepublish": "yarn run src:lint && yarn src:test",
     "src:prepublish": "cp -rf package.json dist; cp -rf babel.config.js dist",
     "tsc": "tsc",
+    "prebuild": "yarn src:build:parser",
     "build": "node ./node_modules/ttypescript/bin/tsc && ./node_modules/@babel/cli/bin/babel.js dist -d dist",
     "postpublish": "cd dist || true; cp -rf package.json ../"
   },

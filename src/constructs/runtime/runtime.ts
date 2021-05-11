@@ -1,11 +1,11 @@
-import {SpwNode} from '../ast/nodes/abstract/node';
+import {SpwNode} from '../ast/nodes/_abstract/node';
 import {SpwDocument, SpwDocumentID, SpwDocumentRegistry} from './spwDocument';
 import {RuntimeRegister} from './register';
-import {hydrate} from '../ast/util/hydrate';
-import {RawSpwItem} from '../ast/abstract/interfaces/internal';
-import {SpwItem} from '../ast/abstract/item';
-import {SpwItemKind} from '@constructs/ast/types/kind';
-import {SpwItemKey} from '@constructs/ast/abstract/types';
+import {hydrate} from '../ast/_util/hydrate';
+import {RawSpwItem} from '../ast/_abstract/interfaces/internal';
+import {SpwItem} from '../ast/_abstract/item';
+import {SpwItemKind} from '@constructs/ast/_types/kind';
+import {SpwItemKey} from '@constructs/ast/_abstract/types';
 
 export type Parser =
     {

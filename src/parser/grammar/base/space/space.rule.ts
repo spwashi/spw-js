@@ -1,10 +1,15 @@
-import * as combinators from '@spwashi/language/parsers/grammar/combinators';
 import {Rule} from '@spwashi/language/parsers/grammar';
-import {whitespaceCombinator} from './whitespace.patterns';
-import {nodeName} from './space.ref';
+import {whitespace} from './whitespace.patterns';
+import {ruleName} from './space.ref';
+import {oneOrMoreOf, sequenceOf} from '@spwashi/language/parsers/grammar/combinators';
 
 
-const action = /* language=JavaScript */ `return toSpwItem({kind: 'space'});`;
+const _action =
+          // language=JavaScript
+          `
+              return toSpwItem({
+                                   kind: 'space',
+                               });
+          `;
 
-export const spaceNodeRule = new Rule(nodeName, combinators.sequenceOf([combinators.oneOrMoreOf(whitespaceCombinator).named('newlines')])
-                                                           .withAction(action));
+export const spaceNodeRule = new Rule(ruleName, sequenceOf([oneOrMoreOf(whitespace).named('newlines')]).withAction(_action));

@@ -1,6 +1,8 @@
+// eslint-disable-next-line no-undef
 module.exports = {
-    'moduleNameMapper': {
-        '@constructs/(.*)': '<rootDir>/dist/constructs/$1',
-        '@grammar/(.*)':    '<rootDir>/dist/parser/grammar/$1',
+    preset:           'ts-jest',
+    moduleNameMapper: {
+        '@constructs/(.*)': '<rootDir>/src/constructs/$1',
+        '@grammar/(.*)':    '<rootDir>/src/parser/grammar/$1',
     },
 }

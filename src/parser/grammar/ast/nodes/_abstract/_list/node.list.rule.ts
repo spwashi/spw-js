@@ -4,7 +4,7 @@ import {nodeRule} from '@grammar/ast/nodes/_abstract/node.rule';
 
 const nodeRules = [
     nodeRule,
-    ...atomNodeRules,
     ...containerNodeRules,
+    ...atomNodeRules,
 ];
 export default nodeRules

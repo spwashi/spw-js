@@ -1,6 +1,6 @@
-import {strandExpression} from '../../strand/strand.ref';
-import {phraseExpression} from '../../phrase/phrase.ref';
-import {perspectiveExpression} from '../../perspective/perspective.ref';
+import {strandExpression} from '../../relational/strand/ref';
+import {phraseExpression} from '../../relational/phrase/ref';
+import {perspectiveExpression} from '../../operational/perspective/ref';
 
 export const expressions =
                  [

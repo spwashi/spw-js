@@ -1,4 +1,4 @@
 import * as combinators from '@spwashi/language/parsers/grammar/combinators';
 
-export const ruleName = 'PureAtom';
-export const pureAtom = combinators.referenceTo(ruleName);
+export const ruleName = 'Scalar';
+export const scalar   = combinators.referenceTo(ruleName);
