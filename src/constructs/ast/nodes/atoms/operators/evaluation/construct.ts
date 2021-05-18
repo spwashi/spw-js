@@ -10,7 +10,8 @@ const token: Token = '?';
 const kind: Kind   = 'evaluation';
 
 @staticImplements<ISpwItemStatic<'evaluation'> & IAtomicSpwOperatorStatic<'?'>>()
-export class EvaluationOperator extends SpwOperator<Kind, Token> {
+export class EvaluationOperator extends SpwOperator<Kind> {
     static readonly kind: Kind   = kind;
+
     static readonly token: Token = token;
 }

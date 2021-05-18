@@ -1,43 +1,10 @@
 import {SpwItemKind} from '@constructs/ast/_types/kind';
-import {
-    AggregationOperator,
-    AnchorNode,
-    AscentOperator,
-    BranchOperator,
-    ChannelOperator,
-    Concept,
-    DescentOperator,
-    DirectionOperator,
-    Domain,
-    Essence,
-    EvaluationOperator,
-    Group,
-    InvocationOperator,
-    PerformanceOperator,
-    PerspectiveExpression,
-    PerspectiveOperator,
-    PhraseExpression,
-    PhraseNode,
-    RangeOperator,
-    ReductionOperator,
-    ReferenceOperator,
-    SpreadOperator,
-    StrandExpression,
-    StringNode,
-    TransformationOperator,
-    ValueOperator,
-} from './ast';
+import {AggregationOperator, AnchorNode, AscentOperator, BranchOperator, ChannelOperator, Concept, DescentOperator, DirectionOperator, Domain, Essence, EvaluationOperator, Group, InvocationOperator, PerformanceOperator, PerspectiveExpression, PerspectiveOperator, PhraseExpression, PhraseNode, RangeOperator, ReductionOperator, ReferenceOperator, SpreadOperator, StrandExpression, StringNode, TransformationOperator, ValueOperator} from './ast';
 import {ISpwItemStatic, SpwItem} from '@constructs/ast/_abstract/item';
 import {NumberNode} from '@constructs/ast/nodes/atoms/scalars/number/construct';
-import {
-    ConceptObjectiveDelimiter,
-    ConceptSubjectiveDelimiter,
-} from '@constructs/ast/nodes/containers/concept/delimiters';
+import {ConceptObjectiveDelimiter, ConceptSubjectiveDelimiter} from '@constructs/ast/nodes/containers/concept/delimiters';
 import {DomainObjectiveDelimiter, DomainSubjectiveDelimiter} from '@constructs/ast/nodes/containers/domain/delimiters';
-import {
-    EssenceObjectiveDelimiter,
-    EssenceSubjectiveDelimiter,
-} from '@constructs/ast/nodes/containers/essence/delimiters';
+import {EssenceObjectiveDelimiter, EssenceSubjectiveDelimiter} from '@constructs/ast/nodes/containers/essence/delimiters';
 import {GroupObjectiveDelimiter, GroupSubjectiveDelimiter} from '@constructs/ast/nodes/containers/group/delimiters';
 import {BlockDelimiter} from '@constructs/ast/nodes/atoms/delimiters/block/delimiter';
 import {CommonDelimiter} from '@constructs/ast/nodes/atoms/delimiters/common/delimiter';
@@ -46,6 +13,7 @@ type SpwItemConstructorObj = { [K in SpwItemKind]: typeof SpwItem & ISpwItemStat
 
 export const spwItemConstructors =
                  {
+                     unknown: SpwItem,
                      // scalars
 
                      anchor: AnchorNode,

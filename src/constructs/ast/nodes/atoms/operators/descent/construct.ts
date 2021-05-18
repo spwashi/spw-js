@@ -6,7 +6,7 @@ import SpwOperator from '@constructs/ast/nodes/atoms/operators/_abstract/operato
 type DescentToken = '.';
 
 @staticImplements<ISpwItemStatic<'descent'> & IAtomicSpwOperatorStatic<'.'>>()
-export class DescentOperator extends SpwOperator<'descent', '.'> {
+export class DescentOperator extends SpwOperator<'descent'> {
     static kind: 'descent'     = 'descent';
     static token: DescentToken = '.';
 }

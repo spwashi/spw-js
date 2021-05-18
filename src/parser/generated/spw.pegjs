@@ -107,7 +107,7 @@ num:([0-9])+
 
 PhraseNode "PhraseNode"= 
 phrase:(head:(AnchorNode / NumberNode) tail:(([\t ])+ anchor:(AnchorNode / NumberNode) {return anchor;})+ {const items=[head,...tail];return items;})
-{function makeArray(r){return Array.isArray(r)?r:[r]}const p=phrase.reduce((r,e)=>[...r,...makeArray(e)],[]);return toSpwItem({kind:"phrase",body:p});}
+{function makeArray(r){return Array.isArray(r)?r:[r]}const _phrase=phrase,p=_phrase.reduce((r,e)=>[...r,...makeArray(e)],[]);return toSpwItem({kind:"phrase",body:p});}
 
 StringNode "StringNode"= 
 string:(([\'] body:(UnicodeWithoutQuotes / [\n] / [\"])* [\'] {return body.join("");}) / ([\"] body:(("\\" [\"] {return'"';}) / UnicodeWithoutQuotes / [\n] / [\'])* [\"] {return body.join("");}))

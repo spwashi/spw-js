@@ -13,7 +13,9 @@ export type Parser =
         SyntaxError: Error
     };
 
-type TopLevelNode = SpwItem | SpwItem[];
+type TopLevelNode =
+    SpwItem
+    | SpwItem[];
 type RuntimeRegisters =
     {
         all: RuntimeRegister;
@@ -33,19 +35,24 @@ export class Runtime {
     _rawNodeMap = new Map<RawSpwItem, SpwItem>();
 
     private readonly parser: Parser;
+
     private readonly trees           = new Map<SpwDocumentID, TopLevelNode>();
+
     private readonly documents       = new SpwDocumentRegistry();
+
     /**
      * Set of modules that are in the ModuleRegistry
      * @private
      */
     private readonly loadedDocuments = new Set<SpwDocument>();
+
     private _registers               =
                 {
                     all:              new RuntimeRegister(),
                     lastAcknowledged: new RuntimeRegister({memory: 1}),
                     keys:             {},
                 };
+
     /**
      *
      * @param parser
@@ -56,9 +63,11 @@ export class Runtime {
         }
         this.parser = parser;
     }
+
     get registers(): RuntimeRegisters {
         return this._registers;
     }
+
     /**
      * Mark a modules as Active
      * @param key
@@ -92,9 +101,11 @@ export class Runtime {
         this.trees.set(id, hydrated as SpwItem | SpwItem[]);
         return hydrated as SpwItem | SpwItem[];
     }
+
     registerDocument(id: SpwDocument): void {
         this.documents.add(id);
     }
+
     locateNode(search: Exclude<SpwItemKey, null> | RawSpwItem | unknown): SpwItem[] {
         if (!search) return [];
 
@@ -103,7 +114,7 @@ export class Runtime {
         }
 
         const spwItem = search as RawSpwItem;
-        if (spwItem.key) {
+        if (typeof spwItem.key === 'string') {
             return this.registers.keys[spwItem.key]?.flat ?? (
                 [this._rawNodeMap.get(spwItem)].filter(Boolean)
             );
@@ -117,14 +128,15 @@ export class Runtime {
         const location = {moduleID: document.identifier};
         return hydrate(parsed, {absorb, location});
     }
+
     /**
      * Add a node to the runtime
      * @param node
      */
     private incorporateNode<K extends SpwItemKind>(node: SpwNode<K>): SpwNode<K> | null {
-        if (!node?.raw) return null;
+        if (!node?.internal) return null;
 
-        this._rawNodeMap.set(node.raw, node);
+        this._rawNodeMap.set(node.internal, node);
         this.registers.all.add(node);
         this.registers.lastAcknowledged.add(node);
         if (node.key) {
@@ -133,6 +145,7 @@ export class Runtime {
 
         return node;
     }
+
     /**
      *
      * @param src

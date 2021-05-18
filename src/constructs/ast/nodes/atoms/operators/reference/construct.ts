@@ -6,7 +6,8 @@ import SpwOperator from '@constructs/ast/nodes/atoms/operators/_abstract/operato
 type ReferenceToken = '&';
 
 @staticImplements<ISpwItemStatic<'reference'> & IAtomicSpwOperatorStatic<'&'>>()
-export class ReferenceOperator extends SpwOperator<'reference', '&'> {
-    static kind: 'reference'     = 'reference';
+export class ReferenceOperator extends SpwOperator<'reference'> {
+    static kind: 'reference' = 'reference';
+
     static token: ReferenceToken = '&';
 }

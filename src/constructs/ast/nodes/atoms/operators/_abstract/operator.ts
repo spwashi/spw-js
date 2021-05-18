@@ -1,41 +1,44 @@
 import {SpwNode} from '../../../_abstract/node';
 import {SpwItemKind} from '../../../../_types/kind';
-import {Component, SpwItemJunction, SpwShape} from '@constructs/ast/_abstract/types';
+import {ComponentPrototype, SpwItemJunction, SpwShape} from '@constructs/ast/_abstract/types';
 
 /**
  * Operators have "side effects" in that they represent the invocation of
  * some semantic order that extends beyond the Operation's constituent parts
  */
 export default abstract class SpwOperator<Kind extends SpwItemKind = SpwShape,
-    TokenSequence extends string = SpwShape,
     Junction extends SpwItemJunction = SpwItemJunction> extends SpwNode<Kind, Junction> {
 
     protected static token: string | undefined = undefined;
 
-    get token(): Component<TokenSequence, string> {
-        const constructor = <typeof SpwOperator>this.constructor;
-        const select      = (subject: SpwShape) => { return subject.token ?? constructor.token; };
+    static get tokenComponent(): ComponentPrototype {
+        const constructor = <typeof SpwOperator>this;
         return {
-            select:   select,
-            generate: function* (mut, item, ctxt) {
-                yield mut(item, ctxt) ?? constructor.token;
+            componentName: 'token',
+            selector(subject: SpwShape) {
+                return subject?.token ?? constructor.token;
+            },
+            generator: function* (item, key, ctxt, mut) {
+                yield mut(item || constructor.token, key, ctxt);
                 yield ctxt;
+                return;
             },
         }
     }
 
-    get label(): Component<TokenSequence, string> {
-        const select = (subject: SpwShape) => {
-            return subject.label;
-        };
+    static get label(): ComponentPrototype {
         return {
-            select:    select,
-            generate:  function* (mut, item, ctxt) {
-                yield mut(item, ctxt);
-                yield ctxt;
+            componentName: 'label',
+            selector(subject: SpwShape) {
+                return subject?.label;
             },
-            normalize: {
-                string: function ([...l]) {
+            generator: function* (item, key, ctxt, mut) {
+                yield mut(item, key, ctxt);
+                yield ctxt;
+                return;
+            },
+            evaluator: {
+                stringify: function ([...l] = []) {
                     const label = l.join('');
                     return label.length ? `_${label}` : label;
                 },
@@ -43,9 +46,9 @@ export default abstract class SpwOperator<Kind extends SpwItemKind = SpwShape,
         }
     }
 
-    serialize(): Component[] {
+    static getComponentPrototypes(): ComponentPrototype[] {
         return [
-            this.token,
+            this.tokenComponent,
             this.label,
         ]
     }

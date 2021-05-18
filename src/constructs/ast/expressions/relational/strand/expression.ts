@@ -2,7 +2,7 @@ import {SpwExpression} from '@constructs/ast/expressions/_abstract/expression';
 import {staticImplements} from '@constructs/ast/_util/staticImplements';
 import {ISpwItemStatic} from '@constructs/ast/_abstract/item';
 import {HydratedSpwItem} from '@constructs/ast/_abstract/interfaces/internal';
-import {Component, SpwShape} from '@constructs/ast/_abstract/types';
+import {ComponentPrototype, SpwShape} from '@constructs/ast/_abstract/types';
 import {SpwNode} from '@constructs/ast/nodes/_abstract/node';
 import SpwOperator from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
 
@@ -17,34 +17,47 @@ type Tail = {
 export class StrandExpression extends SpwExpression<Kind> {
     static readonly kind = 'strand_expression';
 
-    get items(): Component<[SpwNode, ...Tail[]]> {
+    static get items(): ComponentPrototype<[SpwNode, ...Tail[]]> {
         return {
-            select(subject: SpwShape) {
-                return [
-                    subject.head,
-                    ...subject.tails,
+            componentName: 'items',
+            selector:      (subject: SpwShape) => {
+                return subject?.items ?? [
+                    subject?.head,
+                    ...subject?.tails,
                 ];
             },
-            generate:  function* (mut, [head, ...tails], ctxt) {
-                yield mut(head, ctxt);
+            generator:     function* (items, key, ctxt, mut) {
+                const [head, ...tails] = items;
+                yield mut(head, key, ctxt);
 
-                if (!tails || !(Symbol.iterator in Object(tails))) return ctxt;
-                for (const {operator, item} of tails) {
-                    yield mut(operator, ctxt);
-                    yield mut(item, ctxt)
+                if (!tails || !(Symbol.iterator in Object(tails))) {
+                    yield ctxt;
+                    return;
+                }
+
+                for (const tail of tails) {
+                    const {operator, item} = tail;
+                    if (operator && item) {
+                        // todo: when hydrating from a raw node, the tail is in a {item, operator} form. afterwards, it's flattened
+                        yield mut(operator, key, ctxt);
+                        yield mut(item, key, ctxt)
+                    } else {
+                        yield mut(tail, key, ctxt);
+                    }
                 }
 
                 yield ctxt;
+                return;
             },
-            normalize: {
-                string: function (items) {
-                    return Array.from(items).join('');
+            evaluator:     {
+                stringify: function (items) {
+                    return Array.from(items ?? []).join('');
                 },
             },
         }
     }
 
-    serialize(): Component[] {
+    static getComponentPrototypes(): ComponentPrototype[] {
         return [this.items];
     }
 }

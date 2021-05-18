@@ -6,7 +6,8 @@ import SpwOperator from '@constructs/ast/nodes/atoms/operators/_abstract/operato
 type BranchToken = '|';
 
 @staticImplements<ISpwItemStatic<'branch'> & IAtomicSpwOperatorStatic<'|'>>()
-export class BranchOperator extends SpwOperator<'branch', '|'> {
+export class BranchOperator extends SpwOperator<'branch'> {
     static kind: 'branch'     = 'branch';
+
     static token: BranchToken = '|';
 }

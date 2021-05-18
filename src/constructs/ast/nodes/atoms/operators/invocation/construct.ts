@@ -10,7 +10,8 @@ const token: Token = '~';
 const kind: Kind   = 'invocation';
 
 @staticImplements<ISpwItemStatic<'invocation'> & IAtomicSpwOperatorStatic<'~'>>()
-export class InvocationOperator extends SpwOperator<Kind, Token> {
+export class InvocationOperator extends SpwOperator<Kind> {
     static readonly kind: Kind   = kind;
+
     static readonly token: Token = token;
 }

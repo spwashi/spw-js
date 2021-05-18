@@ -47,7 +47,7 @@ export function createContainerBodyRules(ruleName: string): Rule[] {
     const listOfAnyNode = oneOrMoreOf(anyOf([
                                                 ...expressions,
                                                 ...nodes,
-                                                spaceNode
+                                                spaceNode,
                                             ]));
     return [new Rule(bodyName, listOfAnyNode)];
 }

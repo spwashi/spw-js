@@ -6,7 +6,8 @@ import SpwOperator from '@constructs/ast/nodes/atoms/operators/_abstract/operato
 type AggregationToken = '+';
 
 @staticImplements<ISpwItemStatic<'aggregation'> & IAtomicSpwOperatorStatic<'+'>>()
-export class AggregationOperator extends SpwOperator<'aggregation', '+'> {
+export class AggregationOperator extends SpwOperator<'aggregation'> {
     static kind: 'aggregation'     = 'aggregation';
+
     static token: AggregationToken = '+';
 }

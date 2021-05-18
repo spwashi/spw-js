@@ -10,7 +10,7 @@ const token: Token = '#';
 const kind: Kind   = 'channel';
 
 @staticImplements<ISpwItemStatic<'channel'> & IAtomicSpwOperatorStatic<'#'>>()
-export class ChannelOperator extends SpwOperator<Kind, Token> {
+export class ChannelOperator extends SpwOperator<Kind> {
     static readonly kind: Kind   = kind;
     static readonly token: Token = token;
 }

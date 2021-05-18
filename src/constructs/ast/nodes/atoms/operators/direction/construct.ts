@@ -6,7 +6,8 @@ import SpwOperator from '@constructs/ast/nodes/atoms/operators/_abstract/operato
 type DirectionToken = '->';
 
 @staticImplements<ISpwItemStatic<'direction'> & IAtomicSpwOperatorStatic<'->'>>()
-export class DirectionOperator extends SpwOperator<'direction', '->'> {
+export class DirectionOperator extends SpwOperator<'direction'> {
     static kind: 'direction'     = 'direction';
+
     static token: DirectionToken = '->';
 }

@@ -6,7 +6,7 @@ import SpwOperator from '@constructs/ast/nodes/atoms/operators/_abstract/operato
 type TransformationToken = '=>';
 
 @staticImplements<ISpwItemStatic<'transformation'> & IAtomicSpwOperatorStatic<'=>'>>()
-export class TransformationOperator extends SpwOperator<'transformation', '=>'> {
+export class TransformationOperator extends SpwOperator<'transformation'> {
     static kind: 'transformation'     = 'transformation';
     static token: TransformationToken = '=>';
 }

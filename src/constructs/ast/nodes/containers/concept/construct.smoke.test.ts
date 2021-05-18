@@ -53,7 +53,7 @@ describe('Domain:SmokeTest',
                         expect(last?.key).toEqual('{_<boon> ~; one=>two=>three}');
                         expect(all.length).toEqual(14);
                         const indexedDelimiter = runtime.locateNode('{_<boon>')[0]
-                        const locatedDelimiter = runtime.locateNode((last as SpwItem)?.raw?.open)[0];
+                        const locatedDelimiter = runtime.locateNode((last as SpwItem)?.internal?.open)[0];
                         expect(indexedDelimiter).toEqual(locatedDelimiter);
                     }
 

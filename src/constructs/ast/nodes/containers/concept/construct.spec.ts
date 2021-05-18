@@ -12,6 +12,7 @@ describe('Domain',
                     expect(all.length).toEqual(5);
                     done();
                 });
+
              it('can have a Labeled Subjective Delimiter',
                 async done => {
                     const runtime: Runtime = await startRuntimeWithSrc(`{ test }_boon`);

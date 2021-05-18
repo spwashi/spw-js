@@ -65,8 +65,10 @@ const _ruleAction =
                   return Array.isArray(c) ? c : [c];
               }
 
-              const p =
-                        phrase
+              /** @var {Array} phrase*/
+              const _phrase = phrase;
+              const p       =
+                        _phrase
                             .reduce((p, c) =>
                                         [
                                             ...p,

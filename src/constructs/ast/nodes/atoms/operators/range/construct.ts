@@ -6,7 +6,7 @@ import SpwOperator from '@constructs/ast/nodes/atoms/operators/_abstract/operato
 type RangeToken = '..';
 
 @staticImplements<ISpwItemStatic<'range'> & IAtomicSpwOperatorStatic<'..'>>()
-export class RangeOperator extends SpwOperator<'range', '..'> {
+export class RangeOperator extends SpwOperator<'range'> {
     static kind: 'range'     = 'range';
     static token: RangeToken = '..';
 }

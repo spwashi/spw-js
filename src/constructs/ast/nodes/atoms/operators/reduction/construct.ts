@@ -6,7 +6,8 @@ import SpwOperator from '@constructs/ast/nodes/atoms/operators/_abstract/operato
 type ReductionToken = '-';
 
 @staticImplements<ISpwItemStatic<'reduction'> & IAtomicSpwOperatorStatic<'-'>>()
-export class ReductionOperator extends SpwOperator<'reduction', '-'> {
+export class ReductionOperator extends SpwOperator<'reduction'> {
     static kind: 'reduction'     = 'reduction';
+
     static token: ReductionToken = '-';
 }

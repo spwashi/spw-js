@@ -6,7 +6,7 @@ import SpwOperator from '@constructs/ast/nodes/atoms/operators/_abstract/operato
 type SpreadToken = '...';
 
 @staticImplements<ISpwItemStatic<'spread'> & IAtomicSpwOperatorStatic<'...'>>()
-export class SpreadOperator extends SpwOperator<'spread', '...'> {
+export class SpreadOperator extends SpwOperator<'spread'> {
     static kind: 'spread'     = 'spread';
     static token: SpreadToken = '...';
 }

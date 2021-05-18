@@ -1,27 +1,39 @@
 import {SpwNode} from '../../../_abstract/node';
-import {ISpwItemStatic} from '../../../../_abstract/item';
+import {ISpwItemStatic, SpwItem} from '../../../../_abstract/item';
 import {staticImplements} from '../../../../_util/staticImplements';
-import {HydratedSpwItem, RawSpwItem} from '@constructs/ast/_abstract/interfaces/internal';
-import {SpwItemJunction, SpwItemKey, SpwShape} from '@constructs/ast/_abstract/types';
+import {ComponentPrototype} from '@constructs/ast/_abstract/types';
+import {RawSpwItem} from '@constructs/ast/_abstract/interfaces/internal';
+import _ from 'lodash';
 
-type Kind = 'string';
-
-type Str = { chars: string, token: '"' | '\'' };
-
-type Hydrated = HydratedSpwItem & Str;
-type Raw = RawSpwItem & Str;
 
 @staticImplements<ISpwItemStatic<'string'>>()
-export class StringNode extends SpwNode<Kind, SpwItemJunction<SpwShape, Hydrated, Raw>> {
+export class StringNode extends SpwNode<'string'> {
     static readonly kind = 'string';
-
-    get key(): SpwItemKey {
-        const chars = this.hydrated?.chars ?? this.raw?.chars ?? '';
-        const token = this.hydrated?.token ?? this.raw?.token ?? '"';
-        return [token, chars, token].join('');
-    }
 
     static isStringNode(o: unknown): o is StringNode {
         return (o as StringNode)?.kind === this.kind;
+    }
+
+    static getComponentPrototypes(): ComponentPrototype[] {
+        return [
+            {
+                ...SpwItem._genericComponent(),
+                selector:      () => '"',
+                componentName: 'open',
+            },
+            {
+                ..._.merge(
+                    SpwItem._genericComponent(),
+                    {selector: (s: RawSpwItem) => s.chars},
+                    {evaluator: {stringify: (s: string[]) => Array.from(s ?? []).join('')}},
+                ),
+                componentName: 'chars',
+            },
+            {
+                ...SpwItem._genericComponent(),
+                selector:      () => '"',
+                componentName: 'close',
+            },
+        ];
     }
 }

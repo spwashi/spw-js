@@ -245,7 +245,7 @@ const generatedParser = /*
         peg$c97 = peg$otherExpectation("PhraseNode"),
         peg$c98 = function(head, anchor) {return anchor;},
         peg$c99 = function(head, tail) {const items=[head,...tail];return items;},
-        peg$c100 = function(phrase) {function makeArray(r){return Array.isArray(r)?r:[r]}const p=phrase.reduce((r,e)=>[...r,...makeArray(e)],[]);return toSpwItem({kind:"phrase",body:p});},
+        peg$c100 = function(phrase) {function makeArray(r){return Array.isArray(r)?r:[r]}const _phrase=phrase,p=_phrase.reduce((r,e)=>[...r,...makeArray(e)],[]);return toSpwItem({kind:"phrase",body:p});},
         peg$c101 = peg$otherExpectation("StringNode"),
         peg$c102 = /^[']/,
         peg$c103 = peg$classExpectation(["'"], false, false),

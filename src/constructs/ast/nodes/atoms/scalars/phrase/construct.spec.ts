@@ -12,6 +12,7 @@ describe('Phrase Nodes',
                         const all: SpwItem[]            = getAllRegisteredNodes(runtime);
                         expect(last?.kind).toEqual(PhraseNode.kind);
                         expect(all.length).toEqual(4);
+                        expect(last?.key).toEqual('test test test');
 
                         done();
 

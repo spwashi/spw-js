@@ -6,7 +6,8 @@ import SpwOperator from '@constructs/ast/nodes/atoms/operators/_abstract/operato
 type ValueToken = '*';
 
 @staticImplements<ISpwItemStatic<'value'> & IAtomicSpwOperatorStatic<'*'>>()
-export class ValueOperator extends SpwOperator<'value', '*'> {
+export class ValueOperator extends SpwOperator<'value'> {
     static kind: 'value'     = 'value';
+
     static token: ValueToken = '*';
 }

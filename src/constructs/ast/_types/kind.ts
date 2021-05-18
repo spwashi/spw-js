@@ -1,8 +1,8 @@
 type ScalarKind =
-    'anchor' |
-    'phrase' |
-    'number' |
-    'string'
+    'anchor'
+    | 'phrase'
+    | 'number'
+    | 'string'
 
 type DelimitingOperatorKind =
     'common_delimiter'
@@ -37,18 +37,19 @@ type OperatorKind =
     | DelimitingOperatorKind
 
 type ContainerNodeKind =
-    'concept' |
-    'domain' |
-    'essence' |
-    'group'
+    'concept'
+    | 'domain'
+    | 'essence'
+    | 'group'
 
 type ExpressionKind =
-    'phrase_expression' |
-    'strand_expression' |
-    'perspective_expression'
+    'phrase_expression'
+    | 'strand_expression'
+    | 'perspective_expression'
 
 export type SpwItemKind =
-    ScalarKind |
-    OperatorKind |
-    ContainerNodeKind |
-    ExpressionKind
+    'unknown'
+    | ScalarKind
+    | OperatorKind
+    | ContainerNodeKind
+    | ExpressionKind

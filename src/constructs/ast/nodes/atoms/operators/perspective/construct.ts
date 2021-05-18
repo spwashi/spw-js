@@ -10,7 +10,8 @@ const token: Token = '@';
 const kind: Kind   = 'perspective';
 
 @staticImplements<ISpwItemStatic<'perspective'> & IAtomicSpwOperatorStatic<'@'>>()
-export class PerspectiveOperator extends SpwOperator<Kind, Token> {
+export class PerspectiveOperator extends SpwOperator<Kind> {
     static readonly kind: Kind   = kind;
+
     static readonly token: Token = token;
 }

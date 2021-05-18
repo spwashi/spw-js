@@ -11,10 +11,12 @@ export interface HydratedSpwItem {
 export interface RawSpwItem {
     kind: SpwItemKind,
     location?: SpwNodeLocation | null;
-    key?: string;
-    src: string;
+    src?: string;
 
     [k: string]: RawSpwItem | RawSpwItem[] | string | SpwNodeLocation | unknown;
 }
 
-export type SpwItemValue = Record<string, unknown> | string | null;
+export type SpwItemValue =
+    Record<string, unknown>
+    | string
+    | null;
