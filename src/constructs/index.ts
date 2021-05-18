@@ -64,8 +64,8 @@ export const spwItemConstructors =
                      group_objective:  GroupObjectiveDelimiter,
                      group_subjective: GroupSubjectiveDelimiter,
 
-                     strand_expression: StrandExpression,
-                     strand_tail:       StrandTail,
+                     strand:      StrandExpression,
+                     strand_tail: StrandTail,
 
                      phrase_expression: PhraseExpression,
 

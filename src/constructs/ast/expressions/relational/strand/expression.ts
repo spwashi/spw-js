@@ -3,12 +3,12 @@ import {staticImplements} from '@constructs/ast/_util/staticImplements';
 import {ISpwConstructStatic, SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import {ComponentDescription, SpwShape} from '@constructs/ast/_abstract/types';
 
-type Kind = 'strand_expression';
+type Kind = 'strand';
 
 
-@staticImplements<ISpwConstructStatic<'strand_expression'>>()
+@staticImplements<ISpwConstructStatic<'strand'>>()
 export class StrandExpression extends SpwExpression<Kind> {
-    static readonly kind = 'strand_expression';
+    static readonly kind = 'strand';
 
     static components =
                {

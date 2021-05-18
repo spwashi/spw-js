@@ -192,7 +192,7 @@ source:Node (Space {return null;})* lens:((atom:PerspectiveOperator spec:Essence
 
 StrandExpression "StrandExpression"= 
 head:(PhraseExpression / PerspectiveExpression / Node) (Space {return null;})* tails:((Space {return null;})* operator:TransformationOperator (Space {return null;})* item:(Node / StrandExpression) {return toSpwItem({kind:"strand_tail",operator:operator,item:item});})+
-{return toSpwItem({kind:"strand_expression",head:head,tails:tails});}
+{return toSpwItem({kind:"strand",head:head,tails:tails});}
 
 PhraseExpression "PhraseExpression"= 
 head:(Domain / Essence / Concept / Group / NumberNode / PhraseNode / StringNode / AnchorNode) tail:(([\t ])* tail:(Domain / Essence / Concept / Group / NumberNode / PhraseNode / StringNode / AnchorNode) {return tail;})+
