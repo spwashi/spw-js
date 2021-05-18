@@ -1,55 +1,53 @@
 import {SpwNode} from '../../../_abstract/node';
 import {SpwItemKind} from '../../../../_types/kind';
-import {ComponentPrototype, SpwItemJunction, SpwShape} from '@constructs/ast/_abstract/types';
+import {ComponentDescription, SpwShape} from '@constructs/ast/_abstract/types';
+import {SpwConstruct, ConstructComponents} from '@constructs/ast/_abstract/construct';
 
 /**
  * Operators have "side effects" in that they represent the invocation of
  * some semantic order that extends beyond the Operation's constituent parts
  */
-export default abstract class SpwOperator<Kind extends SpwItemKind = SpwShape,
-    Junction extends SpwItemJunction = SpwItemJunction> extends SpwNode<Kind, Junction> {
+export default abstract class SpwOperator<Kind extends SpwItemKind = SpwShape> extends SpwNode<Kind> {
+    static components: ConstructComponents =
+               {
+                   token:
+                       SpwConstruct.makeComponent({
+                                                 _fallback: null as SpwShape,
+                                                 name:      'token',
+                                                 selector:  function (s) {
+                                                     return s?.token ?? this._fallback;
+                                                 },
+                                             }),
+                   label:
+                       SpwConstruct.makeComponent({
+                                                 name: 'label',
+
+                                                 evaluators:
+                                                     {
+                                                         stringify: function ([...l] = []) {
+                                                             const label = l.join('');
+                                                             return label.length ? `_${label}` : label;
+                                                         },
+                                                     },
+                                             }),
+
+                   * [Symbol.iterator](): Generator<ComponentDescription> {
+                       yield this.token;
+                       yield this.label;
+                   },
+               };
 
     protected static token: string | undefined = undefined;
+}
 
-    static get tokenComponent(): ComponentPrototype {
-        const constructor = <typeof SpwOperator>this;
-        return {
-            componentName: 'token',
-            selector(subject: SpwShape) {
-                return subject?.token ?? constructor.token;
-            },
-            generator: function* (item, key, ctxt, mut) {
-                yield mut(item || constructor.token, key, ctxt);
-                yield ctxt;
-                return;
-            },
-        }
-    }
+export function operatorComponents({token}: { token: SpwShape }): ConstructComponents {
+    return {
+        ...SpwOperator.components,
 
-    static get label(): ComponentPrototype {
-        return {
-            componentName: 'label',
-            selector(subject: SpwShape) {
-                return subject?.label;
+        token:
+            {
+                ...SpwOperator.components.token,
+                _fallback: token,
             },
-            generator: function* (item, key, ctxt, mut) {
-                yield mut(item, key, ctxt);
-                yield ctxt;
-                return;
-            },
-            evaluator: {
-                stringify: function ([...l] = []) {
-                    const label = l.join('');
-                    return label.length ? `_${label}` : label;
-                },
-            },
-        }
-    }
-
-    static getComponentPrototypes(): ComponentPrototype[] {
-        return [
-            this.tokenComponent,
-            this.label,
-        ]
-    }
+    };
 }

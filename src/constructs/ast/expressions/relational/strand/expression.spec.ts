@@ -4,7 +4,7 @@ import {
     startRuntimeWithSrc,
 } from '../../../_util/tests/util';
 import {StrandExpression} from '@constructs/ast/expressions/relational/strand/expression';
-import {SpwItem} from '@constructs/ast/_abstract/item';
+import {SpwConstruct} from '@constructs/ast/_abstract/construct';
 import * as util from 'util'
 
 describe('Strand Expressions',
@@ -12,8 +12,8 @@ describe('Strand Expressions',
              it('is a [node] followed by any number of valid strand tails',
                 done => {
                     (async () => {
-                        let all: SpwItem[]            = [];
-                        let last: SpwItem | undefined = undefined;
+                        let all: SpwConstruct[]            = [];
+                        let last: SpwConstruct | undefined = undefined;
                         try {
                             const runtime = await startRuntimeWithSrc(`test test test => test => test`);
                             last          = getLastRegisteredNode(runtime);

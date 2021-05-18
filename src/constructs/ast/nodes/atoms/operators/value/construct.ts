@@ -1,13 +1,15 @@
 import {staticImplements} from '@constructs/ast/_util/staticImplements';
-import {ISpwItemStatic} from '@constructs/ast/_abstract/item';
+import {ISpwConstructStatic, ConstructComponents} from '@constructs/ast/_abstract/construct';
 import {IAtomicSpwOperatorStatic} from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
-import SpwOperator from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
+import SpwOperator, {operatorComponents} from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
 
 type ValueToken = '*';
 
-@staticImplements<ISpwItemStatic<'value'> & IAtomicSpwOperatorStatic<'*'>>()
+@staticImplements<ISpwConstructStatic<'value'> & IAtomicSpwOperatorStatic<'*'>>()
 export class ValueOperator extends SpwOperator<'value'> {
-    static kind: 'value'     = 'value';
+    static kind: 'value' = 'value';
 
-    static token: ValueToken = '*';
+    static token: ValueToken             = '*';
+
+    static components: ConstructComponents = operatorComponents(ValueOperator);
 }

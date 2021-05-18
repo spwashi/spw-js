@@ -1,6 +1,6 @@
 import {NumberNode} from '@constructs/ast/nodes/atoms/scalars/number/construct';
 import {hydrate} from '@constructs/ast/_util/hydrate';
-import {SpwItem} from '@constructs/ast/_abstract/item';
+import {SpwConstruct} from '@constructs/ast/_abstract/construct';
 
 describe('Number', () => {
     it('should be instantiable', function () {
@@ -17,7 +17,7 @@ describe('Number', () => {
 
         const out = NumberNode.hydrate({value: '4'},
                                        {
-                                           hydrate: (raw, context) => hydrate(raw, context) as SpwItem | null,
+                                           hydrate: (raw, context) => hydrate(raw, context) as SpwConstruct | null,
                                        });
         expect(out).toBeInstanceOf(NumberNode);
     });

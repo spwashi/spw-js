@@ -1,14 +1,14 @@
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../../../_util/tests/util';
 import {StringNode} from '@constructs/ast';
-import {SpwItem} from '@constructs/ast/_abstract/item';
+import {SpwConstruct} from '@constructs/ast/_abstract/construct';
 
 describe('String Nodes',
          () => {
              it('can be parsed',
                 async done => {
-                    const runtime                   = await startRuntimeWithSrc(`"this is a string"`);
-                    const last: SpwItem | undefined = getLastRegisteredNode(runtime);
-                    const all: SpwItem[]            = getAllRegisteredNodes(runtime);
+                    const runtime                        = await startRuntimeWithSrc(`"this is a string"`);
+                    const last: SpwConstruct | undefined = getLastRegisteredNode(runtime);
+                    const all: SpwConstruct[]            = getAllRegisteredNodes(runtime);
                     if (!StringNode.isStringNode(last)) {
                         throw new Error('Incorrect type')
                     }

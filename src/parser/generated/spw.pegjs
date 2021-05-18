@@ -99,7 +99,7 @@ Operator / Scalar
 
 AnchorNode "AnchorNode"= 
 anchor:((head:([a-zA-Z])+ tail:(line:("-" / "_") chars:([a-zA-Z0-9])+ {return line+chars.join("");})+ {return[...head,...tail].join("");}) / (head:([a-zA-Z])+ tail:([a-zA-Z0-9])* {const characters=[...head,...tail];return characters.join("");}))
-{return toSpwItem({label:anchor,kind:"anchor"});}
+{return toSpwItem({kind:"anchor",label:anchor});}
 
 NumberNode "NumberNode"= 
 num:([0-9])+
@@ -111,7 +111,7 @@ phrase:(head:(AnchorNode / NumberNode) tail:(([\t ])+ anchor:(AnchorNode / Numbe
 
 StringNode "StringNode"= 
 string:(([\'] body:(UnicodeWithoutQuotes / [\n] / [\"])* [\'] {return body.join("");}) / ([\"] body:(("\\" [\"] {return'"';}) / UnicodeWithoutQuotes / [\n] / [\'])* [\"] {return body.join("");}))
-{return toSpwItem({kind:"string",token:'"',chars:string});}
+{return toSpwItem({kind:"string",open:'"',body:string,close:'"'});}
 
 Scalar "Scalar"= 
 PhraseNode / NumberNode / (node:(AnchorNode / StringNode) spec:(ContainerNode)* description:("." (Space {return null;}) container:ContainerNode {return container;})* {return"undefined"!=typeof spec&&(node.key+=spec.map(e=>e.key),node.spec=spec),node;})
@@ -120,68 +120,68 @@ Operator "Operator"=
 SpreadOperator / RangeOperator / DescentOperator / TransformationOperator / DirectionOperator / AggregationOperator / AscentOperator / BranchOperator / ChannelOperator / EvaluationOperator / InvocationOperator / PerformanceOperator / PerspectiveOperator / ReductionOperator / ReferenceOperator / ValueOperator
 
 AggregationOperator "AggregationOperator"= 
-components:((token:"+" "_" label:AnchorNode {return{token:token,label:label};}) / "+")
-{return toSpwItem({kind:"aggregation",...components});}
+_operatorComponents:((token:"+" "_" label:AnchorNode {return{token:token,label:label};}) / "+")
+{return toSpwItem({kind:"aggregation",..._operatorComponents});}
 
 AscentOperator "AscentOperator"= 
-components:((token:"^" "_" label:AnchorNode {return{token:token,label:label};}) / "^")
-{return toSpwItem({kind:"ascent",...components});}
+_operatorComponents:((token:"^" "_" label:AnchorNode {return{token:token,label:label};}) / "^")
+{return toSpwItem({kind:"ascent",..._operatorComponents});}
 
 BranchOperator "BranchOperator"= 
-components:((token:"|" "_" label:AnchorNode {return{token:token,label:label};}) / "|")
-{return toSpwItem({kind:"branch",...components});}
+_operatorComponents:((token:"|" "_" label:AnchorNode {return{token:token,label:label};}) / "|")
+{return toSpwItem({kind:"branch",..._operatorComponents});}
 
 ChannelOperator "ChannelOperator"= 
-components:((token:"#" "_" label:AnchorNode {return{token:token,label:label};}) / "#")
-{return toSpwItem({kind:"channel",...components});}
+_operatorComponents:((token:"#" "_" label:AnchorNode {return{token:token,label:label};}) / "#")
+{return toSpwItem({kind:"channel",..._operatorComponents});}
 
 DescentOperator "DescentOperator"= 
-components:((token:"." "_" label:AnchorNode {return{token:token,label:label};}) / ".")
-{return toSpwItem({kind:"descent",...components});}
+_operatorComponents:((token:"." "_" label:AnchorNode {return{token:token,label:label};}) / ".")
+{return toSpwItem({kind:"descent",..._operatorComponents});}
 
 DirectionOperator "DirectionOperator"= 
-components:((token:"->" "_" label:AnchorNode {return{token:token,label:label};}) / "->")
-{return toSpwItem({kind:"direction",...components});}
+_operatorComponents:((token:"->" "_" label:AnchorNode {return{token:token,label:label};}) / "->")
+{return toSpwItem({kind:"direction",..._operatorComponents});}
 
 EvaluationOperator "EvaluationOperator"= 
-components:((token:"?" "_" label:AnchorNode {return{token:token,label:label};}) / "?")
-{return toSpwItem({kind:"evaluation",...components});}
+_operatorComponents:((token:"?" "_" label:AnchorNode {return{token:token,label:label};}) / "?")
+{return toSpwItem({kind:"evaluation",..._operatorComponents});}
 
 InvocationOperator "InvocationOperator"= 
-components:((token:"~" "_" label:AnchorNode {return{token:token,label:label};}) / "~")
-{return toSpwItem({kind:"invocation",...components});}
+_operatorComponents:((token:"~" "_" label:AnchorNode {return{token:token,label:label};}) / "~")
+{return toSpwItem({kind:"invocation",..._operatorComponents});}
 
 PerformanceOperator "PerformanceOperator"= 
-components:((token:"!" "_" label:AnchorNode {return{token:token,label:label};}) / "!")
-{return toSpwItem({kind:"performance",...components});}
+_operatorComponents:((token:"!" "_" label:AnchorNode {return{token:token,label:label};}) / "!")
+{return toSpwItem({kind:"performance",..._operatorComponents});}
 
 PerspectiveOperator "PerspectiveOperator"= 
-components:((token:"@" "_" label:AnchorNode {return{token:token,label:label};}) / "@")
-{return toSpwItem({kind:"perspective",...components});}
+_operatorComponents:((token:"@" "_" label:AnchorNode {return{token:token,label:label};}) / "@")
+{return toSpwItem({kind:"perspective",..._operatorComponents});}
 
 RangeOperator "RangeOperator"= 
-components:((token:".." "_" label:AnchorNode {return{token:token,label:label};}) / "..")
-{return toSpwItem({kind:"range",...components});}
+_operatorComponents:((token:".." "_" label:AnchorNode {return{token:token,label:label};}) / "..")
+{return toSpwItem({kind:"range",..._operatorComponents});}
 
 ReductionOperator "ReductionOperator"= 
-components:((token:"-" "_" label:AnchorNode {return{token:token,label:label};}) / "-")
-{return toSpwItem({kind:"reduction",...components});}
+_operatorComponents:((token:"-" "_" label:AnchorNode {return{token:token,label:label};}) / "-")
+{return toSpwItem({kind:"reduction",..._operatorComponents});}
 
 ReferenceOperator "ReferenceOperator"= 
-components:((token:"&" "_" label:AnchorNode {return{token:token,label:label};}) / "&")
-{return toSpwItem({kind:"reference",...components});}
+_operatorComponents:((token:"&" "_" label:AnchorNode {return{token:token,label:label};}) / "&")
+{return toSpwItem({kind:"reference",..._operatorComponents});}
 
 SpreadOperator "SpreadOperator"= 
-components:((token:"..." "_" label:AnchorNode {return{token:token,label:label};}) / "...")
-{return toSpwItem({kind:"spread",...components});}
+_operatorComponents:((token:"..." "_" label:AnchorNode {return{token:token,label:label};}) / "...")
+{return toSpwItem({kind:"spread",..._operatorComponents});}
 
 TransformationOperator "TransformationOperator"= 
-components:((token:"=>" "_" label:AnchorNode {return{token:token,label:label};}) / "=>")
-{return toSpwItem({kind:"transformation",...components});}
+_operatorComponents:((token:"=>" "_" label:AnchorNode {return{token:token,label:label};}) / "=>")
+{return toSpwItem({kind:"transformation",..._operatorComponents});}
 
 ValueOperator "ValueOperator"= 
-components:((token:"*" "_" label:AnchorNode {return{token:token,label:label};}) / "*")
-{return toSpwItem({kind:"value",...components});}
+_operatorComponents:((token:"*" "_" label:AnchorNode {return{token:token,label:label};}) / "*")
+{return toSpwItem({kind:"value",..._operatorComponents});}
 
 Expression "Expression"= 
 StrandExpression / PhraseExpression / PerspectiveExpression
@@ -196,4 +196,4 @@ head:(PhraseExpression / PerspectiveExpression / Node) (Space {return null;})* t
 
 PhraseExpression "PhraseExpression"= 
 head:(Domain / Essence / Concept / Group / NumberNode / PhraseNode / StringNode / AnchorNode) tail:(([\t ])* tail:(Domain / Essence / Concept / Group / NumberNode / PhraseNode / StringNode / AnchorNode) {return tail;})+
-{var items=[head,...tail];return toSpwItem({kind:"phrase_expression",items:items});}
+{return toSpwItem({kind:"phrase_expression",body:[head,...tail]});}

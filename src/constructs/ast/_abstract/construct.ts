@@ -1,10 +1,10 @@
 import {RawSpwItem} from './interfaces/internal';
 import {SpwItemKind} from '../_types/kind';
-import {ComponentEvaluator, ComponentPrototype, Hydrator, InteractionContext, SpwItemKey, SpwItemReductionConfig, SpwShape} from '@constructs/ast/_abstract/types';
+import {ComponentDescription, ComponentEvaluatorObject, Hydrator, InteractionContext, SpwItemKey, SpwItemReductionConfig, SpwShape} from '@constructs/ast/_abstract/types';
 import {HydrationContext} from '@constructs/ast/_util/hydrate';
-import {getDefaultComponentPrototype} from '@constructs/ast/_abstract/_helpers/getDefaultComponentPrototype';
+import {initComponentDescription} from '@constructs/ast/_abstract/_helpers/initComponentDescription';
 
-export interface ISpwItemStatic<K extends SpwItemKind = SpwItemKind> {
+export interface ISpwConstructStatic<K extends SpwItemKind = SpwItemKind> {
     readonly kind: K;
 }
 
@@ -18,24 +18,31 @@ const getKeyFromItem =
           };
 
 type ReductionStep<Type, Context extends SpwShape = null> = [Type | null, Context];
-type SpwItemInitializer = SpwShape;
+type ConstructInitializer = SpwShape;
+
+export type ConstructComponents =
+    Iterable<ComponentDescription>
+    & { [k: string]: SpwShape };
 
 /**
  * Represents the most abstract item in a Spw syntax tree
  */
-export class SpwItem</**/
+export class SpwConstruct</**/
     /**/ K extends SpwItemKind = SpwItemKind,
-    /**/ U extends SpwItemInitializer = SpwItemInitializer
+    /**/ U extends ConstructInitializer = ConstructInitializer
     /**/> {
 
     static readonly kind: SpwItemKind = 'unknown';
+
+    static components: ConstructComponents | null =
+               null;
 
     readonly kind: K = 'unknown' as K;
 
     protected readonly _internal: U | null;
 
     constructor(internal?: U) {
-        const constructor = <typeof SpwItem>this.constructor as unknown as ISpwItemStatic<K>;
+        const constructor = <typeof SpwConstruct>this.constructor as unknown as ISpwConstructStatic<K>;
         this.kind         = constructor.kind as K;
         this._internal    = internal || null;
     }
@@ -47,9 +54,9 @@ export class SpwItem</**/
     get key(): SpwItemKey {
         type Output = SpwItemKey;
         type Context = typeof context;
-        type Prototype = ComponentPrototype;
+        type Prototype = ComponentDescription;
 
-        const evaluationScheme: keyof ComponentEvaluator = 'stringify';
+        const evaluationScheme: keyof ComponentEvaluatorObject = 'stringify';
 
         const context      = {};
         const subject      = this.internal ?? null;
@@ -60,13 +67,13 @@ export class SpwItem</**/
             return [prev, curr].join('');
         };
         const normalizer      = function (prototype: Prototype, intermediate: Output[], context: Context) {
-            const evaluator = prototype.evaluator?.[evaluationScheme] as ComponentEvaluator['stringify'];
+            const evaluator = prototype.evaluators?.[evaluationScheme] as ComponentEvaluatorObject['stringify'];
             return evaluator ? evaluator(intermediate, context)
                              : intermediate[intermediate.length - 1];
         };
         const reductionConfig = {mutator, normalizer, accumulator} as SpwItemReductionConfig<Output, Context>;
 
-        const Ctor = this.constructor as typeof SpwItem;
+        const Ctor = this.constructor as typeof SpwConstruct;
         return (
             Ctor.reduce<U, string, Output, Context>(
                 [initialValue, {}],
@@ -74,15 +81,6 @@ export class SpwItem</**/
                 reductionConfig,
             )
         );
-    }
-
-    static getComponentPrototypes(): ComponentPrototype[] {
-        return [
-            {
-                ...SpwItem._genericComponent(),
-                componentName: 'unknown',
-            },
-        ];
     }
 
     static reduce</**/
@@ -103,7 +101,7 @@ export class SpwItem</**/
             ReductionStep<StartType, ReductionContext>
             | ReductionStep<ReturnType, ReductionContext>
             | ReductionStep<null>;
-        type ItemPrototype = ComponentPrototype<SpwShape, SpwShape[], ReductionContext>;
+        type ItemPrototype = ComponentDescription<SpwShape, SpwShape[], ReductionContext>;
 
 
         function normalizeWithinContext</**/
@@ -125,7 +123,7 @@ export class SpwItem</**/
         }
 
         function generateIntermediateValue(prototype: ItemPrototype, context: ReductionContext): [Intermediate, ReductionContext] {
-            const key = prototype.componentName;
+            const key = prototype.name;
 
             const component =
                       typeof prototype.selector === 'function'
@@ -172,7 +170,12 @@ export class SpwItem</**/
         }
 
         const [finalValue] =
-                  (this.getComponentPrototypes() as unknown[] as ItemPrototype[])
+                  Array
+                      .from(
+                          typeof this.components?.[Symbol.iterator] === 'function'
+                          ? this.components as Iterable<ComponentDescription>
+                          : [],
+                      )
                       .reduce<Step>(
                           reduce,
                           seed ?? [null, null],
@@ -180,16 +183,16 @@ export class SpwItem</**/
         return finalValue as ReturnType;
     }
 
-    static hydrate<U extends Partial<RawSpwItem> | SpwItem>(
+    static hydrate<U extends Partial<RawSpwItem> | SpwConstruct>(
         node: U,
         context: HydrationContext,
-    ): SpwItem {
+    ): SpwConstruct {
         type Out = [string, SpwShape];
         type Output = Out[];
-        type Prototype = ComponentPrototype;
+        type Prototype = ComponentDescription;
         type Context = typeof context;
         type Intermediate = ([string, SpwShape])[];
-        const Ctor = this as typeof SpwItem;
+        const Ctor = this as typeof SpwConstruct;
 
         const seed: [U, Context] = [node, context];
 
@@ -204,7 +207,7 @@ export class SpwItem</**/
                     return [...prev, ...curr];
                 },
                 normalizer(prototype: Prototype, intermediate: Intermediate, context: Context): Output {
-                    const evaluator = prototype.evaluator?.hydrate as Hydrator;
+                    const evaluator = prototype.evaluators?.hydrate as Hydrator;
                     const evaluate  = evaluator?.(intermediate, context);
                     if (typeof evaluate !== 'undefined') {
                         return Array.isArray(evaluate) ? evaluate
@@ -214,32 +217,33 @@ export class SpwItem</**/
                 },
             } as SpwItemReductionConfig<Output, Context>,
         );
-        const raw     = reduced
-            .reduce((t, [currKey, curr]) => {
-                if (!currKey) {
-                    console.error(currKey);
-                    throw new Error('expected key for index')
-                }
-                const existentValue = t[currKey] as SpwShape;
-                return {
-                    ...t,
-                    [currKey]:
-                        typeof existentValue !== 'undefined'
-                        ? [
-                                ...(
-                                    Array.isArray(existentValue)
-                                    ? existentValue
-                                    : [existentValue]
-                                ),
-                                curr,
-                            ]
-                        : curr,
-                }
-            }, {} as RawSpwItem);
+        const raw     =
+                  reduced.reduce((t, [currKey, curr]) => {
+                      if (!currKey) {
+                          console.error(currKey, curr);
+                          throw new Error('expected key for index')
+                      }
+                      const existentValue = t[currKey] as SpwShape;
+                      return {
+                          ...t,
+                          [currKey]:
+                              typeof existentValue !== 'undefined'
+                              ? [
+                                      ...(
+                                          Array.isArray(existentValue)
+                                          ? existentValue
+                                          : [existentValue]
+                                      ),
+                                      curr,
+                                  ]
+                              : curr,
+                      }
+                  }, {} as RawSpwItem);
         return new Ctor(raw as RawSpwItem);
     }
 
-    protected static _genericComponent(): Omit<ComponentPrototype<SpwShape>, 'componentName'> {
-        return getDefaultComponentPrototype()
+
+    protected static makeComponent(override: { name: string, [k: string]: SpwShape } & Partial<ComponentDescription>): ComponentDescription {
+        return initComponentDescription(override);
     }
 }

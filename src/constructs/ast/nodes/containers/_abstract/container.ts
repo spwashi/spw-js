@@ -1,9 +1,8 @@
 import {SpwNode} from '../../_abstract/node';
 import {staticImplements} from '../../../_util/staticImplements';
 import {SpwItemKind} from '@constructs/ast/_types/kind';
-import {SpwItem} from '@constructs/ast/_abstract/item';
-import {ComponentPrototype, SpwShape} from '@constructs/ast/_abstract/types';
-import _ from 'lodash';
+import {ConstructComponents, SpwConstruct} from '@constructs/ast/_abstract/construct';
+import {ComponentDescription, SpwShape} from '@constructs/ast/_abstract/types';
 
 type Delimiter =
     { token: string }
@@ -15,7 +14,7 @@ export type IContainerNodeStatic =
     };
 
 type Item =
-    SpwItem
+    SpwConstruct
     | SpwShape;
 
 type Container<T extends SpwShape = Item,
@@ -30,85 +29,90 @@ export abstract class SpwContainerNode<Kind extends SpwItemKind = SpwItemKind,
 
     static readonly closeDelimiter: Delimiter = null;
 
-    static get open(): ComponentPrototype {
-        const constructor = <typeof SpwContainerNode>this;
-        return {
-            ...SpwItem._genericComponent(),
-            componentName: 'open',
-            selector(subject: SpwShape) {
-                return subject?.open;
+    static components: ConstructComponents =
+               {
+                   open:
+                       SpwConstruct.makeComponent({
+                                                 _fallback: null as Delimiter | null,
+                                                 name:      'open',
+                                                 selector:  function (s) {
+                                                     return s?.open || this._fallback;
+                                                 },
+
+                                                 evaluators:
+                                                     {
+                                                         stringify:
+                                                             function (els = []) {
+                                                                 const [token]       = els;
+                                                                 const trailingSpace = token?.length > 1 ? ' ' : '';
+                                                                 return [token, trailingSpace].join('');
+                                                             },
+                                                     },
+                                             }),
+                   body:
+                       SpwConstruct.makeComponent({
+                                                 name: 'body',
+
+                                                 generator:
+                                                     function* (_body, key, ctxt, mut) {
+                                                         const body =
+                                                                   !(Symbol.iterator in Object(_body))
+                                                                   ? (_body ? [_body] : [])
+                                                                   : _body;
+
+                                                         let index = 0;
+                                                         for (const sub of body) {
+                                                             const inner =
+                                                                       {
+                                                                           ...ctxt,
+                                                                           index: index++,
+                                                                       };
+                                                             yield mut(sub, key, inner)
+                                                         }
+
+                                                         yield ctxt;
+                                                         return;
+                                                     },
+                                                 evaluators:
+                                                     {
+                                                         stringify: function (items) {
+                                                             return Array.from(items ?? []).join('; ');
+                                                         },
+                                                     },
+                                             }),
+                   close:
+                       SpwConstruct.makeComponent({
+                                                 _fallback: null as Delimiter | null,
+                                                 name:      'close',
+                                                 selector:  function (s) {
+                                                     return s?.close || this._fallback;
+                                                 },
+                                             }),
+
+                   * [Symbol.iterator](): Generator<ComponentDescription> {
+                       yield this.open;
+                       yield this.body;
+                       yield this.close;
+                   },
+               };
+}
+
+type DelimitedConstruct = {
+    openDelimiter: Delimiter,
+    closeDelimiter: Delimiter
+};
+export function containerComponents({openDelimiter, closeDelimiter}: DelimitedConstruct): ConstructComponents {
+    return {
+        ...SpwContainerNode.components,
+        open:
+            {
+                ...SpwContainerNode.components.open,
+                _fallback: openDelimiter,
             },
-            generator: function* (item, key, ctxt, mut) {
-                yield mut(item, key, ctxt) || constructor.openDelimiter?.token;
-                yield ctxt;
-                return;
+        close:
+            {
+                ...SpwContainerNode.components.close,
+                _fallback: closeDelimiter,
             },
-            evaluator: {
-                stringify: function (els = []) {
-                    const [token]       = els;
-                    const trailingSpace = token?.length > 1 ? ' ' : '';
-                    return [token, trailingSpace].join('');
-                },
-            },
-        }
-    }
-
-    static get body(): ComponentPrototype {
-        return {
-            ..._.merge(
-                SpwItem._genericComponent(),
-                {
-                    componentName: 'body',
-                    selector(subject: SpwShape) {
-                        return subject?.body;
-                    },
-                    generator: function* (_body, key, ctxt, mut) {
-                        const body =
-                                  !(Symbol.iterator in Object(_body))
-                                  ? (_body ? [_body] : [])
-                                  : _body;
-
-                        let index = 0;
-                        for (const sub of body) {
-                            const inner = {
-                                ...ctxt,
-                                index: index++,
-                            };
-                            yield mut(sub, key, inner)
-                        }
-
-                        yield ctxt;
-                        return;
-                    },
-                    evaluator: {
-                        stringify: function (items) {
-                            return Array.from(items ?? []).join('; ');
-                        },
-                    },
-                } as ComponentPrototype,
-            ),
-        }
-    }
-
-    static get close(): ComponentPrototype {
-        const constructor = <typeof SpwContainerNode>this;
-        return {
-            ..._.merge(
-                SpwItem._genericComponent(),
-                {
-                    componentName: 'close',
-                    selector(subject: SpwShape) { return subject?.close; },
-                    generator: function* (close, key, ctxt, mut) {
-                        yield mut(close, key, ctxt) || constructor.closeDelimiter?.token;
-                        yield ctxt;
-                        return;
-                    },
-                } as ComponentPrototype,
-            ),
-        }
-    }
-
-    static getComponentPrototypes(): [ComponentPrototype, ComponentPrototype, ComponentPrototype] {
-        return [this.open, this.body, this.close];
-    }
+    };
 }

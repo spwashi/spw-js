@@ -1,5 +1,5 @@
-import SpwOperator from '../_abstract/operator';
-import {ISpwItemStatic} from '../../../../_abstract/item';
+import SpwOperator, {operatorComponents} from '../_abstract/operator';
+import {ISpwConstructStatic, ConstructComponents} from '../../../../_abstract/construct';
 import {staticImplements} from '../../../../_util/staticImplements';
 import {IAtomicSpwOperatorStatic} from '../_abstract/_types/atomic';
 
@@ -9,8 +9,11 @@ type Kind = 'channel';
 const token: Token = '#';
 const kind: Kind   = 'channel';
 
-@staticImplements<ISpwItemStatic<'channel'> & IAtomicSpwOperatorStatic<'#'>>()
+@staticImplements<ISpwConstructStatic<'channel'> & IAtomicSpwOperatorStatic<'#'>>()
 export class ChannelOperator extends SpwOperator<Kind> {
-    static readonly kind: Kind   = kind;
-    static readonly token: Token = token;
+    static readonly kind: Kind           = kind;
+
+    static readonly token: Token         = token;
+
+    static components: ConstructComponents = operatorComponents(ChannelOperator);
 }

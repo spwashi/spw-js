@@ -35,10 +35,14 @@ const pattern =
 const _action =
           // language=JavaScript
           `
-              var items = [head, ...tail];
               return toSpwItem({
-                                   kind:  '${PhraseExpression.kind}',
-                                   items: items
+                                   kind: '${PhraseExpression.kind}',
+
+                                   ${PhraseExpression.components.body.name}:
+                                       [
+                                           head,
+                                           ...tail
+                                       ]
                                })
           `;
 

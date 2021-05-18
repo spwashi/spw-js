@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {HydratedSpwItem, RawSpwItem} from '@constructs/ast/_abstract/interfaces/internal';
-import {SpwItem} from '@constructs/ast/_abstract/item';
+import {SpwConstruct} from '@constructs/ast/_abstract/construct';
 
 export type SpwItemKey =
     string
@@ -36,7 +36,7 @@ export interface SpwItemJunction<T extends SpwShape = SpwShape,
 }
 
 type Item =
-    SpwItem
+    SpwConstruct
     | SpwShape;
 
 type ComponentKey =
@@ -85,7 +85,7 @@ export type Hydrator<//
         /**/
         /**/>;
 
-export type ComponentEvaluator<//
+export type ComponentEvaluatorObject<//
     //
     Output extends SpwShape = SpwShape,
     //
@@ -104,14 +104,14 @@ export type ComponentEvaluator<//
         SerializationReducer<undefined, string, undefined>,
 
     [k: string]:
-        SerializationReducer<Intermediate, Output | SpwItem | string, Context>
+        SerializationReducer<Intermediate, Output | SpwConstruct | string, Context>
         | SerializationReducer<undefined, string, undefined>
         | undefined
 };
 /**
  *
  */
-export type ComponentPrototype<//
+export type ComponentDescription<//
     // a portion of a SpwItem
     Component extends SpwShape = SpwShape,
     // subcomponents in order
@@ -125,13 +125,15 @@ export type ComponentPrototype<//
     // component of a component
     SubComponent extends SpwShape = SpwShape> = {
     // Function or identifier for a component
-    componentName: string;
+    name: string;
     // Function or identifier for a component
     selector: ((s: Owner) => Component) | ComponentSelector;
     // Generator that produces elements of a component
     generator: InteractionGenerator<Component, SubComponent, Context>;
     // Object that contains instructions for how to evaluate a component
-    evaluator?: ComponentEvaluator<SubComponent, SubComponentTupleOrList, Context>
+    evaluators?: ComponentEvaluatorObject<SubComponent, SubComponentTupleOrList, Context>,
+    // catchall
+    [k: string]: SpwShape
 }
 
 /**
@@ -150,7 +152,7 @@ export type SpwItemReductionConfig<//
     mutator: (o: SpwShape, key?: ComponentKey, context?: Context) => InternalComponent,
     // Function that thg
     normalizer?: (
-        c: ComponentPrototype<SpwShape, any, Context>,
+        c: ComponentDescription<SpwShape, any, Context>,
         intermediateValue: InternalComponentsTupleOrList,
         context: Context,
         nextContext: Context,

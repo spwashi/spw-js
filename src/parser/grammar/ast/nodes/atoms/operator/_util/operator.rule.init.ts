@@ -1,7 +1,7 @@
 import {anyOf, referenceTo, RuleReferenceCombinator, sequenceOf, StringCombinator, stringLike} from '@spwashi/language/parsers/grammar/combinators';
 import {Rule} from '@spwashi/language/parsers/grammar';
 import {anchorNode} from '../../scalar/anchor/ref';
-import {ISpwItemStatic} from '@constructs/ast/_abstract/item';
+import {ISpwConstructStatic} from '@constructs/ast/_abstract/construct';
 import {IAtomicSpwOperatorStatic} from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
 
 function init(token: StringCombinator, ruleName: string, nodeName: string, doLabel = true): Rule {
@@ -33,18 +33,18 @@ function init(token: StringCombinator, ruleName: string, nodeName: string, doLab
               `
                   return toSpwItem({
                                        kind: "${nodeName}",
-                                       ...components
+                                       ..._operatorComponents
                                    })
               `;
 
     return new Rule(ruleName, sequenceOf([
                                              pattern
-                                                 .named('components'),
+                                                 .named('_operatorComponents'),
                                          ]), _ruleAction);
 }
 
 type Operator<T extends string> =
-    ISpwItemStatic
+    ISpwConstructStatic
     & IAtomicSpwOperatorStatic<T>
     & { name: string };
 export function getOperatorReference<T extends string>(SpwNode: Operator<T>): RuleReferenceCombinator {

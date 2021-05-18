@@ -1,15 +1,15 @@
 import {SpwNode} from '../nodes/_abstract/node';
 import {spwItemConstructors, SpwItemKind} from '../../index';
 import {HydratedSpwItem, RawSpwItem, SpwItemValue} from '../_abstract/interfaces/internal';
-import {SpwItem} from '../_abstract/item';
+import {SpwConstruct} from '../_abstract/construct';
 import {InteractionContext, SpwShape} from '@constructs/ast/_abstract/types';
 
 export interface HydrationContext extends InteractionContext {
     location?: SpwShape;
 
-    hydrate?(node: HydrationInput, context: HydrationContext): SpwItem | null;
+    hydrate?(node: HydrationInput, context: HydrationContext): SpwConstruct | null;
 
-    absorb?(spwNode: SpwItem): SpwItem | null;
+    absorb?(spwNode: SpwConstruct): SpwConstruct | null;
 
     [s: string]: SpwShape
 }
@@ -19,8 +19,8 @@ type HydrationInput =
     | RawSpwItem[]
     | SpwItemValue;
 type HydrationOutput =
-    SpwItem
-    | SpwItem[]
+    SpwConstruct
+    | SpwConstruct[]
     | { [k: string]: SpwItemValue }
     | null;
 
@@ -44,7 +44,7 @@ function _hydrateInner(node: RawSpwItem, runtime: HydrationContext) {
                             return componentValue;
                         }
 
-                        if ((componentValue as SpwItem).kind || Array.isArray(componentValue)) {
+                        if ((componentValue as SpwConstruct).kind || Array.isArray(componentValue)) {
                             return hydrate((componentValue as HydrationInput), runtime)
                         }
 
@@ -65,7 +65,7 @@ function _hydrateInner(node: RawSpwItem, runtime: HydrationContext) {
                 )()
         })
 
-    const spwNode: SpwItem = Constructor.hydrate(hydrated, runtime);
+    const spwNode: SpwConstruct = Constructor.hydrate(hydrated, runtime);
 
     return spwNode;
 }
@@ -80,7 +80,7 @@ export function hydrate(node: HydrationInput, runtime: HydrationContext, _cache 
     if (_cache.has(node)) return _cache.get(node);
     if (Array.isArray(node)) {
         const all = node.map((node) => hydrate(node, runtime, _cache));
-        return all.filter(Boolean).reduce((acc: SpwItem[], val) => acc.concat(val as SpwItem), []);
+        return all.filter(Boolean).reduce((acc: SpwConstruct[], val) => acc.concat(val as SpwConstruct), []);
     }
 
     const n = node as unknown as { [k: string]: HydrationInput };

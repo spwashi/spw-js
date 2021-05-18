@@ -77,7 +77,8 @@ const _ruleAction =
                                     []);
               return toSpwItem({
                                    kind: '${PhraseNode.kind}',
-                                   body: p
+
+                                   ${PhraseNode.components.body.name}: p
                                });
           `;
 

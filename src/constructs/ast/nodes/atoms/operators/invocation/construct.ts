@@ -1,5 +1,5 @@
-import SpwOperator from '../_abstract/operator';
-import {ISpwItemStatic} from '@constructs/ast/_abstract/item';
+import SpwOperator, {operatorComponents} from '../_abstract/operator';
+import {ConstructComponents, ISpwConstructStatic} from '@constructs/ast/_abstract/construct';
 import {staticImplements} from '@constructs/ast/_util/staticImplements';
 import {IAtomicSpwOperatorStatic} from '../_abstract/_types/atomic';
 
@@ -9,9 +9,11 @@ type Kind = 'invocation';
 const token: Token = '~';
 const kind: Kind   = 'invocation';
 
-@staticImplements<ISpwItemStatic<'invocation'> & IAtomicSpwOperatorStatic<'~'>>()
+@staticImplements<ISpwConstructStatic<'invocation'> & IAtomicSpwOperatorStatic<'~'>>()
 export class InvocationOperator extends SpwOperator<Kind> {
-    static readonly kind: Kind   = kind;
+    static readonly kind: Kind = kind;
 
     static readonly token: Token = token;
+
+    static components: ConstructComponents = operatorComponents(InvocationOperator);
 }

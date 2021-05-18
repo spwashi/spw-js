@@ -1,19 +1,26 @@
 import {staticImplements} from '@constructs/ast/_util/staticImplements';
-import {ISpwItemStatic} from '@constructs/ast/_abstract/item';
+import {ConstructComponents, ISpwConstructStatic} from '@constructs/ast/_abstract/construct';
 import {IAtomicSpwOperatorStatic} from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
 import {SpwDelimiter} from '@constructs/ast/nodes/atoms/delimiters/_abstract/delimiter';
+import {operatorComponents} from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
 
 export type OpenGroupToken = '(';
 export type CloseGroupToken = ')';
 
-@staticImplements<ISpwItemStatic<'group_objective'> & IAtomicSpwOperatorStatic<'('>>()
+@staticImplements<ISpwConstructStatic<'group_objective'> & IAtomicSpwOperatorStatic<'('>>()
 export class GroupObjectiveDelimiter extends SpwDelimiter<'group_objective'> {
     static kind: 'group_objective' = 'group_objective';
-    static token: OpenGroupToken   = '(';
+
+    static token: OpenGroupToken = '(';
+
+    static components: ConstructComponents = operatorComponents(GroupObjectiveDelimiter);
 }
 
-@staticImplements<ISpwItemStatic<'group_subjective'> & IAtomicSpwOperatorStatic<')'>>()
+@staticImplements<ISpwConstructStatic<'group_subjective'> & IAtomicSpwOperatorStatic<')'>>()
 export class GroupSubjectiveDelimiter extends SpwDelimiter<'group_subjective'> {
     static kind: 'group_subjective' = 'group_subjective';
-    static token: CloseGroupToken   = ')';
+
+    static token: CloseGroupToken = ')';
+
+    static components: ConstructComponents = operatorComponents(GroupSubjectiveDelimiter);
 }

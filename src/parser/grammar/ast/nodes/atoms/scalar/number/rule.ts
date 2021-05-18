@@ -1,6 +1,7 @@
 import {oneOrMoreOf, regExpLike, sequenceOf} from '@spwashi/language/parsers/grammar/combinators';
 import {Rule} from '@spwashi/language/parsers/grammar';
 import {ruleName} from './ref';
+import {NumberNode} from '@constructs/ast/nodes/atoms/scalars/number/construct';
 
 const oneOrMoreDigits =
           oneOrMoreOf(
@@ -17,8 +18,10 @@ const _action =
           // language=JavaScript
           `
               return toSpwItem({
-                                   kind:  'number',
-                                   value: parseInt(num.join(''))
+                                   kind: 'number',
+
+                                   ${NumberNode.components.value.name}:
+                                       parseInt(num.join(''))
                                });
           `;
 

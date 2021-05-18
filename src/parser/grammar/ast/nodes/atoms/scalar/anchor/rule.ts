@@ -1,6 +1,7 @@
 import {Rule} from '@spwashi/language/parsers/grammar';
 import {anyOf, oneOrMoreOf, regExpLike, sequenceOf, stringLike, zeroOrMoreOf} from '@spwashi/language/parsers/grammar/combinators';
 import {ruleName} from './ref';
+import {AnchorNode} from '@constructs/ast';
 
 const anchorPattern2 =
           sequenceOf([
@@ -66,8 +67,9 @@ const anchorComponent =
 const _action =
           `
               return toSpwItem({
-                                   label: anchor,
-                                   kind:  'anchor',
+                                   kind: "${AnchorNode.kind}",
+
+                                   ${AnchorNode.components.label.name}: anchor,
                                });
           `;
 

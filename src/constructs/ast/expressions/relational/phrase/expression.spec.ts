@@ -1,6 +1,6 @@
 import {PhraseExpression, StrandExpression} from '@constructs/ast';
 import {phraseExpressionRule} from '@grammar/ast/expressions/relational/phrase/rule';
-import {SpwItem} from '@constructs/ast/_abstract/item';
+import {SpwConstruct} from '@constructs/ast/_abstract/construct';
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../../_util/tests/util';
 
 describe('Rule', () => {
@@ -19,8 +19,8 @@ describe('Phrase Expressions',
                                     => three
                               `);
 
-                    const last: SpwItem | undefined = getLastRegisteredNode(runtime);
-                    const all: SpwItem[]            = getAllRegisteredNodes(runtime);
+                    const last: SpwConstruct | undefined = getLastRegisteredNode(runtime);
+                    const all: SpwConstruct[]            = getAllRegisteredNodes(runtime);
                     expect(all.length).toEqual(16);
                     expect(last?.kind).toEqual(StrandExpression.kind);
                     expect(last?.key).toEqual('boon <boon> {boon} boon=>two=>three');

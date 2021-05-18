@@ -1,26 +1,32 @@
 import {SpwNode} from '../../../_abstract/node';
-import {ISpwItemStatic, SpwItem} from '../../../../_abstract/item';
+import {ISpwConstructStatic, SpwConstruct} from '../../../../_abstract/construct';
 import {staticImplements} from '../../../../_util/staticImplements';
-import {ComponentPrototype} from '@constructs/ast/_abstract/types';
+import {ComponentDescription, ComponentEvaluatorObject} from '@constructs/ast/_abstract/types';
 
 type Kind = 'phrase';
 
-@staticImplements<ISpwItemStatic<'phrase'>>()
+@staticImplements<ISpwConstructStatic<'phrase'>>()
 export class PhraseNode extends SpwNode<Kind> {
     static readonly kind = 'phrase';
 
+    static components =
+               {
+                   body:
+                       SpwConstruct.makeComponent({
+                                                 name: 'body',
+
+                                                 evaluators:
+                                                     {
+                                                         stringify: s => Array.from(s ?? []).join(' '),
+                                                     } as ComponentEvaluatorObject,
+                                             }),
+
+                   * [Symbol.iterator](): Generator<ComponentDescription> {
+                       yield this.body
+                   },
+               };
+
     static isPhraseNode(o: unknown): o is PhraseNode {
         return (o as PhraseNode)?.kind === this.kind;
-    }
-
-    static getComponentPrototypes(): ComponentPrototype[] {
-        return [
-            {
-                ...SpwItem._genericComponent(),
-                componentName: 'body',
-                selector:      s => s.body,
-                evaluator:     {stringify: s => Array.from(s ?? []).join(' ')},
-            },
-        ];
     }
 }

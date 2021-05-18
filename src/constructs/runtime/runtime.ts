@@ -3,7 +3,7 @@ import {SpwDocument, SpwDocumentID, SpwDocumentRegistry} from './spwDocument';
 import {RuntimeRegister} from './register';
 import {hydrate} from '../ast/_util/hydrate';
 import {RawSpwItem} from '../ast/_abstract/interfaces/internal';
-import {SpwItem} from '../ast/_abstract/item';
+import {SpwConstruct} from '../ast/_abstract/construct';
 import {SpwItemKind} from '@constructs/ast/_types/kind';
 import {SpwItemKey} from '@constructs/ast/_abstract/types';
 
@@ -14,8 +14,8 @@ export type Parser =
     };
 
 type TopLevelNode =
-    SpwItem
-    | SpwItem[];
+    SpwConstruct
+    | SpwConstruct[];
 type RuntimeRegisters =
     {
         all: RuntimeRegister;
@@ -32,7 +32,7 @@ type RuntimeRegisters =
  *
  */
 export class Runtime {
-    _rawNodeMap = new Map<RawSpwItem, SpwItem>();
+    _rawNodeMap = new Map<RawSpwItem, SpwConstruct>();
 
     private readonly parser: Parser;
 
@@ -72,7 +72,7 @@ export class Runtime {
      * Mark a modules as Active
      * @param key
      */
-    loadDocument(key: SpwDocumentID | SpwDocument): SpwItem | SpwItem[] | null {
+    loadDocument(key: SpwDocumentID | SpwDocument): SpwConstruct | SpwConstruct[] | null {
         const id = `${key instanceof SpwDocument ? key.identifier : key}`
 
         // register documents
@@ -88,7 +88,7 @@ export class Runtime {
         // find the module
         const document = <SpwDocument>this.documents.documents.get(id);
         if (this.loadedDocuments.has(document)) {
-            if (this.trees.has(id)) return <SpwItem>this.trees.get(id);
+            if (this.trees.has(id)) return <SpwConstruct>this.trees.get(id);
             throw new Error('Could not load syntax tree')
         }
 
@@ -98,15 +98,15 @@ export class Runtime {
         const hydrated = this.hydrateNode(parsed, document);
         if (!hydrated) return null;
         this.loadedDocuments.add(document);
-        this.trees.set(id, hydrated as SpwItem | SpwItem[]);
-        return hydrated as SpwItem | SpwItem[];
+        this.trees.set(id, hydrated as SpwConstruct | SpwConstruct[]);
+        return hydrated as SpwConstruct | SpwConstruct[];
     }
 
     registerDocument(id: SpwDocument): void {
         this.documents.add(id);
     }
 
-    locateNode(search: Exclude<SpwItemKey, null> | RawSpwItem | unknown): SpwItem[] {
+    locateNode(search: Exclude<SpwItemKey, null> | RawSpwItem | unknown): SpwConstruct[] {
         if (!search) return [];
 
         if (typeof search === 'string') {

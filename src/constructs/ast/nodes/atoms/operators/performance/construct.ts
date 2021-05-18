@@ -1,5 +1,5 @@
 import LabeledSpwOperator from '../_abstract/operator';
-import {ISpwItemStatic} from '@constructs/ast/_abstract/item';
+import {ISpwConstructStatic} from '@constructs/ast/_abstract/construct';
 import {staticImplements} from '@constructs/ast/_util/staticImplements';
 import {IAtomicSpwOperatorStatic} from '../_abstract/_types/atomic';
 
@@ -9,7 +9,7 @@ type Kind = 'performance';
 const token: Token = '!';
 const kind: Kind   = 'performance';
 
-@staticImplements<ISpwItemStatic<'performance'> & IAtomicSpwOperatorStatic<'!'>>()
+@staticImplements<ISpwConstructStatic<'performance'> & IAtomicSpwOperatorStatic<'!'>>()
 export class PerformanceOperator extends LabeledSpwOperator<Kind> {
     static readonly kind: Kind   = kind;
 

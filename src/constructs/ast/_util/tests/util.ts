@@ -1,14 +1,14 @@
-import {SpwItem} from '@constructs/ast/_abstract/item';
+import {SpwConstruct} from '@constructs/ast/_abstract/construct';
 import {Parser, Runtime} from '@constructs/runtime/runtime';
 import {SpwDocument} from '@constructs/runtime/spwDocument';
 import {spwParser} from '../../../../parser/generated';
 
-export function getAllRegisteredNodes(runtime: Runtime): SpwItem[] {
+export function getAllRegisteredNodes(runtime: Runtime): SpwConstruct[] {
     const registerValues = runtime.registers.all.entries ?? [];
     return registerValues.map(entry => entry.item);
 }
 
-export function getLastRegisteredNode(runtime: Runtime): SpwItem | undefined {
+export function getLastRegisteredNode(runtime: Runtime): SpwConstruct | undefined {
     return runtime.registers.lastAcknowledged.entries?.[0]?.item;
 }
 

@@ -1,6 +1,6 @@
 import {Domain, InvocationOperator} from '@constructs/ast';
 import {Runtime} from '@constructs/runtime/runtime';
-import {SpwItem} from '@constructs/ast/_abstract/item';
+import {SpwConstruct} from '@constructs/ast/_abstract/construct';
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '@constructs/ast/_util/tests/util';
 
 describe('Domain:SmokeTest',
@@ -8,27 +8,27 @@ describe('Domain:SmokeTest',
              it('does what we expect it to',
                 async done => {
                     {
-                        const runtime: Runtime = await startRuntimeWithSrc(`{one => two => three}`);
-                        const all: SpwItem[]   = getAllRegisteredNodes(runtime);
+                        const runtime: Runtime    = await startRuntimeWithSrc(`{one => two => three}`);
+                        const all: SpwConstruct[] = getAllRegisteredNodes(runtime);
                         expect(all.length).toEqual(9);
                     }
 
                     {
-                        const runtime: Runtime          = await startRuntimeWithSrc(`
+                        const runtime: Runtime               = await startRuntimeWithSrc(`
                             {
                                 one 
                                 two 
                                 three
                             }
                         `);
-                        const last: SpwItem | undefined = getLastRegisteredNode(runtime);
-                        const all: SpwItem[]            = getAllRegisteredNodes(runtime);
+                        const last: SpwConstruct | undefined = getLastRegisteredNode(runtime);
+                        const all: SpwConstruct[]            = getAllRegisteredNodes(runtime);
                         expect(last?.kind).toEqual(Domain.kind)
                         expect(all.length).toEqual(6);
                     }
 
                     {
-                        const runtime: Runtime          = await startRuntimeWithSrc(`
+                        const runtime: Runtime               = await startRuntimeWithSrc(`
                                 {_todo
                                      &  => checkout "origin/main"
                                      &  => run yarn install
@@ -36,16 +36,16 @@ describe('Domain:SmokeTest',
                                         => check "./dist" for the output of < the build step >
                                 }
                             `);
-                        const last: SpwItem | undefined = getLastRegisteredNode(runtime);
-                        const all: SpwItem[]            = getAllRegisteredNodes(runtime);
+                        const last: SpwConstruct | undefined = getLastRegisteredNode(runtime);
+                        const all: SpwConstruct[]            = getAllRegisteredNodes(runtime);
                         expect(last?.kind).toEqual(Domain.kind)
                         expect(all.length).toEqual(39);
                     }
 
                     {
-                        const runtime: Runtime          = await startRuntimeWithSrc(`{_< boon > ~one => two => three}`);
-                        const last: SpwItem | undefined = getLastRegisteredNode(runtime);
-                        const all: SpwItem[]            = getAllRegisteredNodes(runtime);
+                        const runtime: Runtime               = await startRuntimeWithSrc(`{_< boon > ~one => two => three}`);
+                        const last: SpwConstruct | undefined = getLastRegisteredNode(runtime);
+                        const all: SpwConstruct[]            = getAllRegisteredNodes(runtime);
                         expect(last?.kind).toEqual(Domain.kind);
 
                         expect(InvocationOperator).not.toEqual('this is here so the docblock below works')
@@ -53,7 +53,7 @@ describe('Domain:SmokeTest',
                         expect(last?.key).toEqual('{_<boon> ~; one=>two=>three}');
                         expect(all.length).toEqual(14);
                         const indexedDelimiter = runtime.locateNode('{_<boon>')[0]
-                        const locatedDelimiter = runtime.locateNode((last as SpwItem)?.internal?.open)[0];
+                        const locatedDelimiter = runtime.locateNode((last as SpwConstruct)?.internal?.open)[0];
                         expect(indexedDelimiter).toEqual(locatedDelimiter);
                     }
 

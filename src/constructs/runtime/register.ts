@@ -1,8 +1,8 @@
 import {SpwNode} from '../ast/nodes/_abstract/node';
 import {SpwItemKind} from '../ast/_types/kind';
-import {SpwItem} from '../ast/_abstract/item';
+import {SpwConstruct} from '../ast/_abstract/construct';
 
-export type RegisterEntry = { item: SpwItem; time: number };
+export type RegisterEntry = { item: SpwConstruct; time: number };
 
 type RegisterParameters = { memory?: number | null };
 
@@ -26,7 +26,7 @@ export class RuntimeRegister {
     get entries(): RegisterEntry[] {
         return this._entries;
     }
-    get flat(): SpwItem[] {
+    get flat(): SpwConstruct[] {
         return this._entries.map(({item}) => item)
     }
 
