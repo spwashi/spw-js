@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {HydratedSpwItem, RawSpwItem} from '@constructs/ast/_abstract/interfaces/internal';
-import {SpwConstruct} from '@constructs/ast/_abstract/construct';
+import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 
 export type SpwItemKey =
     string

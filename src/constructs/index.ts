@@ -1,6 +1,6 @@
 import {SpwItemKind} from '@constructs/ast/_types/kind';
 import {AggregationOperator, AnchorNode, AscentOperator, BranchOperator, ChannelOperator, Concept, DescentOperator, DirectionOperator, Domain, Essence, EvaluationOperator, Group, InvocationOperator, PerformanceOperator, PerspectiveExpression, PerspectiveOperator, PhraseExpression, PhraseNode, RangeOperator, ReductionOperator, ReferenceOperator, SpreadOperator, StrandExpression, StringNode, TransformationOperator, ValueOperator} from './ast';
-import {ISpwConstructStatic, SpwConstruct} from '@constructs/ast/_abstract/construct';
+import {ISpwConstructStatic, SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import {NumberNode} from '@constructs/ast/nodes/atoms/scalars/number/construct';
 import {ConceptObjectiveDelimiter, ConceptSubjectiveDelimiter} from '@constructs/ast/nodes/containers/concept/delimiters';
 import {DomainObjectiveDelimiter, DomainSubjectiveDelimiter} from '@constructs/ast/nodes/containers/domain/delimiters';

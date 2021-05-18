@@ -4,7 +4,7 @@ import {
     startRuntimeWithSrc,
 } from '../../../_util/tests/util';
 import {StrandExpression} from '@constructs/ast/expressions/relational/strand/expression';
-import {SpwConstruct} from '@constructs/ast/_abstract/construct';
+import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import * as util from 'util'
 
 describe('Strand Expressions',

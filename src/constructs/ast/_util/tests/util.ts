@@ -1,4 +1,4 @@
-import {SpwConstruct} from '@constructs/ast/_abstract/construct';
+import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import {Parser, Runtime} from '@constructs/runtime/runtime';
 import {SpwDocument} from '@constructs/runtime/spwDocument';
 import {spwParser} from '../../../../parser/generated';

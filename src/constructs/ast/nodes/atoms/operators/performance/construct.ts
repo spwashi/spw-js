@@ -1,5 +1,5 @@
 import LabeledSpwOperator from '../_abstract/operator';
-import {ISpwConstructStatic} from '@constructs/ast/_abstract/construct';
+import {ISpwConstructStatic} from '@constructs/ast/_abstract/spwConstruct';
 import {staticImplements} from '@constructs/ast/_util/staticImplements';
 import {IAtomicSpwOperatorStatic} from '../_abstract/_types/atomic';
 

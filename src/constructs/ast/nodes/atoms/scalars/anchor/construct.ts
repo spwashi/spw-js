@@ -1,4 +1,4 @@
-import {ISpwConstructStatic, SpwConstruct} from '../../../../_abstract/construct';
+import {ISpwConstructStatic, SpwConstruct} from '../../../../_abstract/spwConstruct';
 import {staticImplements} from '../../../../_util/staticImplements';
 import {SpwNode} from '@constructs/ast/nodes/_abstract/node';
 import {ComponentDescription} from '@constructs/ast/_abstract/types';

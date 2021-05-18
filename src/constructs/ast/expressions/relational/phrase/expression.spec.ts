@@ -1,6 +1,6 @@
 import {PhraseExpression, StrandExpression} from '@constructs/ast';
 import {phraseExpressionRule} from '@grammar/ast/expressions/relational/phrase/rule';
-import {SpwConstruct} from '@constructs/ast/_abstract/construct';
+import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../../_util/tests/util';
 
 describe('Rule', () => {

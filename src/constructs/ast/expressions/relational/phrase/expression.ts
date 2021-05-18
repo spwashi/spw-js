@@ -1,6 +1,6 @@
 import {SpwExpression} from '@constructs/ast/expressions/_abstract/expression';
 import {staticImplements} from '@constructs/ast/_util/staticImplements';
-import {ISpwConstructStatic, SpwConstruct} from '@constructs/ast/_abstract/construct';
+import {ISpwConstructStatic, SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import {ComponentDescription, ComponentEvaluatorObject} from '@constructs/ast/_abstract/types';
 
 type Kind = 'phrase_expression';

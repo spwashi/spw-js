@@ -1,5 +1,5 @@
 import {staticImplements} from '@constructs/ast/_util/staticImplements';
-import {ConstructComponents, ISpwConstructStatic} from '@constructs/ast/_abstract/construct';
+import {ConstructComponents, ISpwConstructStatic} from '@constructs/ast/_abstract/spwConstruct';
 import {IAtomicSpwOperatorStatic} from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
 import {SpwDelimiter} from '@constructs/ast/nodes/atoms/delimiters/_abstract/delimiter';
 import {operatorComponents} from '@constructs/ast/nodes/atoms/operators/_abstract/operator';

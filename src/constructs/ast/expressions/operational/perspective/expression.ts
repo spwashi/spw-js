@@ -1,6 +1,6 @@
 import {SpwExpression} from '../../_abstract/expression';
 import {staticImplements} from '../../../_util/staticImplements';
-import {ISpwConstructStatic, SpwConstruct} from '../../../_abstract/construct';
+import {ISpwConstructStatic, SpwConstruct} from '../../../_abstract/spwConstruct';
 import {ComponentDescription, SpwShape} from '@constructs/ast/_abstract/types';
 import {DirectionOperator, Essence, PerspectiveOperator} from '@constructs/ast';
 

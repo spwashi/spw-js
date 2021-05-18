@@ -1,7 +1,7 @@
 import {SpwNode} from '../../../_abstract/node';
 import {SpwItemKind} from '../../../../_types/kind';
 import {ComponentDescription, SpwShape} from '@constructs/ast/_abstract/types';
-import {SpwConstruct, ConstructComponents} from '@constructs/ast/_abstract/construct';
+import {SpwConstruct, ConstructComponents} from '@constructs/ast/_abstract/spwConstruct';
 
 /**
  * Operators have "side effects" in that they represent the invocation of

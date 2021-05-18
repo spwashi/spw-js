@@ -1,7 +1,7 @@
 import {SpwNode} from '../../_abstract/node';
 import {staticImplements} from '../../../_util/staticImplements';
 import {SpwItemKind} from '@constructs/ast/_types/kind';
-import {ConstructComponents, SpwConstruct} from '@constructs/ast/_abstract/construct';
+import {ConstructComponents, SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import {ComponentDescription, SpwShape} from '@constructs/ast/_abstract/types';
 
 type Delimiter =

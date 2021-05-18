@@ -1,6 +1,6 @@
 import {SpwNode} from '../ast/nodes/_abstract/node';
 import {SpwItemKind} from '../ast/_types/kind';
-import {SpwConstruct} from '../ast/_abstract/construct';
+import {SpwConstruct} from '../ast/_abstract/spwConstruct';
 
 export type RegisterEntry = { item: SpwConstruct; time: number };
 

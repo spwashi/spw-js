@@ -1,7 +1,7 @@
 import {anyOf, referenceTo, RuleReferenceCombinator, sequenceOf, StringCombinator, stringLike} from '@spwashi/language/parsers/grammar/combinators';
 import {Rule} from '@spwashi/language/parsers/grammar';
 import {anchorNode} from '../../scalar/anchor/ref';
-import {ISpwConstructStatic} from '@constructs/ast/_abstract/construct';
+import {ISpwConstructStatic} from '@constructs/ast/_abstract/spwConstruct';
 import {IAtomicSpwOperatorStatic} from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
 
 function init(token: StringCombinator, ruleName: string, nodeName: string, doLabel = true): Rule {

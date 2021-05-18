@@ -1,5 +1,5 @@
 import {SpwNode} from '../../../_abstract/node';
-import {ISpwConstructStatic, SpwConstruct} from '../../../../_abstract/construct';
+import {ISpwConstructStatic, SpwConstruct} from '../../../../_abstract/spwConstruct';
 import {staticImplements} from '../../../../_util/staticImplements';
 import {ComponentDescription, ComponentEvaluatorObject} from '@constructs/ast/_abstract/types';
 

@@ -1,6 +1,6 @@
 import {Domain, InvocationOperator} from '@constructs/ast';
 import {Runtime} from '@constructs/runtime/runtime';
-import {SpwConstruct} from '@constructs/ast/_abstract/construct';
+import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '@constructs/ast/_util/tests/util';
 
 describe('Domain:SmokeTest',

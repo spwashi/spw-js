@@ -1,6 +1,6 @@
 import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../../../_util/tests/util';
 import {PhraseNode} from '@constructs/ast';
-import {SpwConstruct} from '@constructs/ast/_abstract/construct';
+import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 
 describe('Phrase Nodes',
          () => {

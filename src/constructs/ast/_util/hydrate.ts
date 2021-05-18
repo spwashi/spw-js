@@ -1,7 +1,7 @@
 import {SpwNode} from '../nodes/_abstract/node';
 import {spwItemConstructors, SpwItemKind} from '../../index';
 import {HydratedSpwItem, RawSpwItem, SpwItemValue} from '../_abstract/interfaces/internal';
-import {SpwConstruct} from '../_abstract/construct';
+import {SpwConstruct} from '../_abstract/spwConstruct';
 import {InteractionContext, SpwShape} from '@constructs/ast/_abstract/types';
 
 export interface HydrationContext extends InteractionContext {

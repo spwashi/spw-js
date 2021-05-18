@@ -1,6 +1,6 @@
 import {NumberNode} from '@constructs/ast/nodes/atoms/scalars/number/construct';
 import {hydrate} from '@constructs/ast/_util/hydrate';
-import {SpwConstruct} from '@constructs/ast/_abstract/construct';
+import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 
 describe('Number', () => {
     it('should be instantiable', function () {

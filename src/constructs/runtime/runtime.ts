@@ -3,7 +3,7 @@ import {SpwDocument, SpwDocumentID, SpwDocumentRegistry} from './spwDocument';
 import {RuntimeRegister} from './register';
 import {hydrate} from '../ast/_util/hydrate';
 import {RawSpwItem} from '../ast/_abstract/interfaces/internal';
-import {SpwConstruct} from '../ast/_abstract/construct';
+import {SpwConstruct} from '../ast/_abstract/spwConstruct';
 import {SpwItemKind} from '@constructs/ast/_types/kind';
 import {SpwItemKey} from '@constructs/ast/_abstract/types';
 
