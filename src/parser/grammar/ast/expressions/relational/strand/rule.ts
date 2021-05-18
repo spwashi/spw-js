@@ -7,6 +7,7 @@ import {node} from '@grammar/ast/nodes/_abstract/node.ref';
 import {transformationOperator} from '@grammar/ast/nodes/atoms/operator/transformation/ref';
 import {phraseExpression} from '@grammar/ast/expressions/relational/phrase/ref';
 import {perspectiveExpression} from '@grammar/ast/expressions/operational/perspective/ref';
+import {StrandTail} from '@constructs/ast/expressions/relational/strand/components/tail';
 
 const reflexive =
           strandExpression;
@@ -36,10 +37,12 @@ const tailItem =
 const _tailAction =
           // language=JavaScript
           `
-              return {
-                  item,
-                  operator,
-              }
+              return toSpwItem({
+                                   kind: '${StrandTail.kind}',
+
+                                   ${StrandTail.components.operator.name}: operator,
+                                   ${StrandTail.components.item.name}:     item,
+                               });
           `;
 
 const spaces =

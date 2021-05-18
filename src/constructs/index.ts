@@ -8,6 +8,7 @@ import {EssenceObjectiveDelimiter, EssenceSubjectiveDelimiter} from '@constructs
 import {GroupObjectiveDelimiter, GroupSubjectiveDelimiter} from '@constructs/ast/nodes/containers/group/delimiters';
 import {BlockDelimiter} from '@constructs/ast/nodes/atoms/delimiters/block/delimiter';
 import {CommonDelimiter} from '@constructs/ast/nodes/atoms/delimiters/common/delimiter';
+import {StrandTail} from '@constructs/ast/expressions/relational/strand/components/tail';
 
 type SpwItemConstructorObj = { [K in SpwItemKind]: typeof SpwConstruct & ISpwConstructStatic<K> };
 
@@ -63,8 +64,11 @@ export const spwItemConstructors =
                      group_objective:  GroupObjectiveDelimiter,
                      group_subjective: GroupSubjectiveDelimiter,
 
-                     strand_expression:      StrandExpression,
-                     phrase_expression:      PhraseExpression,
+                     strand_expression: StrandExpression,
+                     strand_tail:       StrandTail,
+
+                     phrase_expression: PhraseExpression,
+
                      perspective_expression: PerspectiveExpression,
                  } as SpwItemConstructorObj;
 

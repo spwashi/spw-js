@@ -19,7 +19,7 @@ describe('Strand Expressions',
                             last          = getLastRegisteredNode(runtime);
                             all           = getAllRegisteredNodes(runtime);
                             expect(last?.kind).toEqual(StrandExpression.kind);
-                            expect(all.length).toEqual(9);
+                            expect(all.length).toEqual(11);
                             expect(last?.key).toEqual('test test test=>test=>test');
                             done();
                         } catch (e) {

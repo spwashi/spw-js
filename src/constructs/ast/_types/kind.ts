@@ -45,6 +45,7 @@ type ContainerNodeKind =
 type ExpressionKind =
     'phrase_expression'
     | 'strand_expression'
+    | 'strand_tail'
     | 'perspective_expression'
 
 export type SpwItemKind =

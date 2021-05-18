@@ -10,7 +10,7 @@ describe('Domain:SmokeTest',
                     {
                         const runtime: Runtime    = await startRuntimeWithSrc(`{one => two => three}`);
                         const all: SpwConstruct[] = getAllRegisteredNodes(runtime);
-                        expect(all.length).toEqual(9);
+                        expect(all.length).toEqual(11);
                     }
 
                     {
@@ -39,7 +39,7 @@ describe('Domain:SmokeTest',
                         const last: SpwConstruct | undefined = getLastRegisteredNode(runtime);
                         const all: SpwConstruct[]            = getAllRegisteredNodes(runtime);
                         expect(last?.kind).toEqual(Domain.kind)
-                        expect(all.length).toEqual(39);
+                        expect(all.length).toEqual(43);
                     }
 
                     {
@@ -51,7 +51,7 @@ describe('Domain:SmokeTest',
                         expect(InvocationOperator).not.toEqual('this is here so the docblock below works')
                         /**  note: this is subject to change dependent on the behavior of {@see InvocationOperator} */
                         expect(last?.key).toEqual('{_<boon> ~; one=>two=>three}');
-                        expect(all.length).toEqual(14);
+                        expect(all.length).toEqual(16);
                         const indexedDelimiter = runtime.locateNode('{_<boon>')[0]
                         const locatedDelimiter = runtime.locateNode((last as SpwConstruct)?.internal?.open)[0];
                         expect(indexedDelimiter).toEqual(locatedDelimiter);

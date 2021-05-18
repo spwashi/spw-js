@@ -36,14 +36,7 @@ export class StrandExpression extends SpwExpression<Kind> {
                                                               }
 
                                                               for (const tail of tails) {
-                                                                  const {operator, item} = tail;
-                                                                  if (operator && item) {
-                                                                      // todo: when hydrating from a raw node, the tail is in a {item, operator} form. afterwards, it's flattened
-                                                                      yield mut(operator, key, ctxt);
-                                                                      yield mut(item, key, ctxt)
-                                                                  } else {
-                                                                      yield mut(tail, key, ctxt);
-                                                                  }
+                                                                  yield mut(tail, key, ctxt);
                                                               }
 
                                                               yield ctxt;

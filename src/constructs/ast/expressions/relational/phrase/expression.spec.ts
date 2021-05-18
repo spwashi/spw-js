@@ -21,7 +21,7 @@ describe('Phrase Expressions',
 
                     const last: SpwConstruct | undefined = getLastRegisteredNode(runtime);
                     const all: SpwConstruct[]            = getAllRegisteredNodes(runtime);
-                    expect(all.length).toEqual(16);
+                    expect(all.length).toEqual(18);
                     expect(last?.kind).toEqual(StrandExpression.kind);
                     expect(last?.key).toEqual('boon <boon> {boon} boon=>two=>three');
                     done()

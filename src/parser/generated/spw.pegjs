@@ -191,7 +191,7 @@ source:Node (Space {return null;})* lens:((atom:PerspectiveOperator spec:Essence
 {return toSpwItem({kind:"perspective_expression",source:source,lens:lens,target:target});}
 
 StrandExpression "StrandExpression"= 
-head:(PhraseExpression / PerspectiveExpression / Node) (Space {return null;})* tails:((Space {return null;})* operator:TransformationOperator (Space {return null;})* item:(Node / StrandExpression) {return{item:item,operator:operator};})+
+head:(PhraseExpression / PerspectiveExpression / Node) (Space {return null;})* tails:((Space {return null;})* operator:TransformationOperator (Space {return null;})* item:(Node / StrandExpression) {return toSpwItem({kind:"strand_tail",operator:operator,item:item});})+
 {return toSpwItem({kind:"strand_expression",head:head,tails:tails});}
 
 PhraseExpression "PhraseExpression"= 
