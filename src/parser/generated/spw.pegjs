@@ -3,7 +3,6 @@ const _cache = new Map();
 
                      function normalize(node) {
                          return {
-                             key: text(),
                              ...Object
                                  .fromEntries(
                                      Object
@@ -187,7 +186,7 @@ Expression "Expression"=
 StrandExpression / PhraseExpression / PerspectiveExpression
 
 PerspectiveExpression "PerspectiveExpression"= 
-source:Node (Space {return null;})* lens:((atom:PerspectiveOperator spec:Essence {return{atom:atom,spec:spec};}) / (atom:PerspectiveOperator {return{atom:atom};})) (Space {return null;})* "->"? (Space {return null;})* target:Node
+source:Node (Space {return null;})* lens:((atom:PerspectiveOperator spec:Essence {return toSpwItem({kind:"lens",atom:atom,spec:spec});}) / (atom:PerspectiveOperator {return{atom:atom};})) (Space {return null;})* "->"? (Space {return null;})* target:Node
 {return toSpwItem({kind:"perspective_expression",source:source,lens:lens,target:target});}
 
 StrandExpression "StrandExpression"= 

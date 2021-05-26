@@ -6,16 +6,12 @@ describe('AnchorNodes',
          () => {
              it('Can be parsed',
                 async () => {
-                    try {
-                        const key     = `${faker.random.alpha({count: 10})}`
-                        const runtime = await startRuntimeWithSrc(key);
-                        const all     = getAllRegisteredNodes(runtime);
-                        const last    = getLastRegisteredNode(runtime);
-                        expect(AnchorNode.isAnchorNode(last)).toBeTruthy();
-                        expect(all.length).toEqual(1);
-                        expect(last?.key).toEqual(key);
-                    } catch (e) {
-                        throw new Error('Parsing Error')
-                    }
+                    const key     = `${faker.random.alpha({count: 10})}`
+                    const runtime = await startRuntimeWithSrc(key);
+                    const all     = getAllRegisteredNodes(runtime);
+                    const last    = getLastRegisteredNode(runtime);
+                    expect(AnchorNode.isAnchorNode(last)).toBeTruthy();
+                    expect(all.length).toEqual(1);
+                    expect(last?.key).toEqual(key);
                 });
          })

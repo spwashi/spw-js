@@ -1,7 +1,7 @@
 import {SpwExpression} from '@constructs/ast/expressions/_abstract/expression';
 import {staticImplements} from '@constructs/ast/_util/staticImplements';
 import {ISpwConstructStatic, SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
-import {ComponentDescription, SpwShape} from '@constructs/ast/_abstract/types';
+import {ComponentDescription} from '@constructs/ast/_abstract/_types';
 
 type Kind = 'strand';
 
@@ -18,7 +18,7 @@ export class StrandExpression extends SpwExpression<Kind> {
                                                           'items',
 
                                                       selector:
-                                                          (subject: SpwShape) => {
+                                                          (subject: any) => {
                                                               return subject?.items ?? [
                                                                   subject?.head,
                                                                   ...subject?.tails,
@@ -26,27 +26,25 @@ export class StrandExpression extends SpwExpression<Kind> {
                                                           },
 
                                                       generator:
-                                                          function* (items, key, ctxt, mut) {
+                                                          function* (items, ctxt) {
                                                               const [head, ...tails] = items;
-                                                              yield mut(head, key, ctxt);
+                                                              yield [head, ctxt];
 
                                                               if (!tails || !(Symbol.iterator in Object(tails))) {
-                                                                  yield ctxt;
                                                                   return;
                                                               }
 
                                                               for (const tail of tails) {
-                                                                  yield mut(tail, key, ctxt);
+                                                                  yield [tail, ctxt];
                                                               }
 
-                                                              yield ctxt;
                                                               return;
                                                           },
 
                                                       evaluators:
                                                           {
                                                               stringify: function (items) {
-                                                                  return Array.from(items ?? []).join('');
+                                                                  return Array.from(items ?? []).filter(Boolean).join('');
                                                               },
                                                           },
                                                   }),

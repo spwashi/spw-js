@@ -47,8 +47,9 @@ type ExpressionKind =
     | 'strand'
     | 'strand_tail'
     | 'perspective_expression'
+    | 'lens'
 
-export type SpwItemKind =
+export type ConstructKind =
     'unknown'
     | ScalarKind
     | OperatorKind

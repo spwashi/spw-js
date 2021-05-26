@@ -1,9 +1,13 @@
-import {StrandExpression} from '@constructs/ast/expressions/relational/strand/expression';
-import {PhraseExpression} from '@constructs/ast/expressions/relational/phrase/expression';
-import {PerspectiveExpression} from '@constructs/ast/expressions/operational/perspective/expression';
+import {StrandExpression} from './relational/strand/expression';
+import {PhraseExpression} from './relational/phrase/expression';
+import {PerspectiveExpression} from './operations/perspective/expression';
+import {Lens} from './operations/perspective/components/lens';
+import {StrandTail} from './relational/strand/components/tail';
 
 export {
     PhraseExpression,
     StrandExpression,
+    StrandTail,
     PerspectiveExpression,
+    Lens,
 }

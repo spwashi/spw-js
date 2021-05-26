@@ -15,7 +15,7 @@ describe('Strand Expressions',
                         let all: SpwConstruct[]            = [];
                         let last: SpwConstruct | undefined = undefined;
                         try {
-                            const runtime = await startRuntimeWithSrc(`test test test => test => test`);
+                            const runtime = await startRuntimeWithSrc(`test test test =>    test    =>    test   `);
                             last          = getLastRegisteredNode(runtime);
                             all           = getAllRegisteredNodes(runtime);
                             expect(last?.kind).toEqual(StrandExpression.kind);

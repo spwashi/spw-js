@@ -1,50 +1,43 @@
-import {RawSpwItem} from './interfaces/internal';
-import {SpwItemKind} from '../_types/kind';
-import {ComponentDescription, ComponentEvaluatorObject, Hydrator, InteractionContext, SpwItemKey, SpwItemReductionConfig, SpwShape} from '@constructs/ast/_abstract/types';
-import {HydrationContext} from '@constructs/ast/_util/hydrate';
-import {initComponentDescription} from '@constructs/ast/_abstract/_helpers/initComponentDescription';
+import {ConstructKind} from '../_types/kind';
+import {ComponentDescription, ComponentEvaluatorObject, ConstructReductionOptions, InteractionContext, SpwItemKey} from '@constructs/ast/_abstract/_types';
+import {completeConfig, reduceConstruct, reduceConstructAsync} from '@constructs/ast/_abstract/_util/reduction';
+import {LanguageComponent} from '@constructs/ast/_abstract/component';
 
-export interface ISpwConstructStatic<K extends SpwItemKind = SpwItemKind> {
+export interface ISpwConstructStatic<K extends ConstructKind = ConstructKind> {
     readonly kind: K;
 }
 
-const getKeyFromItem =
-          (s: SpwShape) => {
-              if (typeof s === 'string' && s || typeof s === 'number') {
-                  return s;
-              } else {
-                  return s?.key;
-              }
-          };
-
-type ReductionStep<Type, Context extends SpwShape = null> = [Type | null, Context];
-type ConstructInitializer = SpwShape;
+type ConstructInitializer = any;
 
 export type ConstructComponents =
     Iterable<ComponentDescription>
-    & { [k: string]: SpwShape };
+    & {
+        [k: string]: ComponentDescription | any
+    };
+
+
+type KeyReductionSeed = [string, InteractionContext];
 
 /**
  * Represents the most abstract item in a Spw syntax tree
  */
-export class SpwConstruct</**/
-    /**/ K extends SpwItemKind = SpwItemKind,
-    /**/ U extends ConstructInitializer = ConstructInitializer
-    /**/> {
-
-    static readonly kind: SpwItemKind = 'unknown';
+export class SpwConstruct<K extends ConstructKind = ConstructKind, U extends ConstructInitializer = ConstructInitializer> {
+    static readonly kind: ConstructKind = 'unknown';
 
     static components: ConstructComponents | null =
                null;
 
-    readonly kind: K = 'unknown' as K;
+    readonly kind: K =
+                 'unknown' as K;
 
     protected readonly _internal: U | null;
 
     constructor(internal?: U) {
-        const constructor = <typeof SpwConstruct>this.constructor as unknown as ISpwConstructStatic<K>;
+        const constructor = <typeof SpwConstruct>this.constructor as unknown as typeof SpwConstruct;
         this.kind         = constructor.kind as K;
         this._internal    = internal || null;
+
+        Object.assign(this, this._internal);
     }
 
     get internal(): U | null {
@@ -55,195 +48,93 @@ export class SpwConstruct</**/
         type Output = SpwItemKey;
         type Context = typeof context;
         type Prototype = ComponentDescription;
+        type Seed = KeyReductionSeed;
+        const context    = {};
+        const Ctor       = this.constructor as typeof SpwConstruct;
+        const seed: Seed = ['', {}];
 
-        const evaluationScheme: keyof ComponentEvaluatorObject = 'stringify';
 
-        const context      = {};
-        const subject      = this.internal ?? null;
-        const initialValue = '';
+        const reduced =
+                  Ctor.reduce(this.internal ?? null,
+                              {
+                                  evaluator(subject) {
+                                      if (typeof subject === 'string' && subject || typeof subject === 'number') {
+                                          return subject;
+                                      }
 
-        const mutator         = getKeyFromItem;
-        const accumulator     = (prev: SpwItemKey, curr: SpwItemKey) => {
-            return [prev, curr].join('');
-        };
-        const normalizer      = function (prototype: Prototype, intermediate: Output[], context: Context) {
-            const evaluator = prototype.evaluators?.[evaluationScheme] as ComponentEvaluatorObject['stringify'];
-            return evaluator ? evaluator(intermediate, context)
-                             : intermediate[intermediate.length - 1];
-        };
-        const reductionConfig = {mutator, normalizer, accumulator} as SpwItemReductionConfig<Output, Context>;
+                                      return subject?.key;
+                                  },
 
-        const Ctor = this.constructor as typeof SpwConstruct;
-        return (
-            Ctor.reduce<U, string, Output, Context>(
-                [initialValue, {}],
-                subject,
-                reductionConfig,
-            )
-        );
+                                  stepNormalizer(prototype: Prototype, [intermediate, context]) {
+                                      const evaluator = prototype.evaluators.stringify as ComponentEvaluatorObject['stringify'];
+                                      const evaluated = evaluator
+                                                        ? evaluator(intermediate, context)
+                                                        : intermediate ? intermediate[intermediate.length - 1]
+                                                                       : null;
+                                      return [evaluated, context] as [Output, Context];
+                                  },
+
+                                  reducer([prev], [curr, next]) {
+                                      return [[prev, curr].join(''), next] as [SpwItemKey, InteractionContext];
+                                  },
+                              },
+                              seed,
+                  );
+
+        return reduced[0];
     }
 
-    static reduce</**/
-        /**/ Subject,
-        /**/ StartType = null,
-        /**/ ReturnType = StartType,
-        /**/ ReductionContext extends InteractionContext = null,
-        /**/ Intermediate extends ReturnType[] = ReturnType[],
-        /**/>(
-        // The initial value/context of the reduction
-        seed: ReductionStep<StartType, ReductionContext> | null                    = null,
-        // The item being acted on
-        target: Subject | null                                                     = null,
-        //
-        config: SpwItemReductionConfig<ReturnType, ReductionContext, Intermediate> = {mutator: () => null as unknown as ReturnType},
-    ): ReturnType {
-        type Step =
-            ReductionStep<StartType, ReductionContext>
-            | ReductionStep<ReturnType, ReductionContext>
-            | ReductionStep<null>;
-        type ItemPrototype = ComponentDescription<SpwShape, SpwShape[], ReductionContext>;
-
-
-        function normalizeWithinContext</**/
-            /**/ I extends Intermediate = Intermediate,
-            /**/ R extends ReturnType = ReturnType,
-            /**/ C extends ReductionContext = ReductionContext
-            /**/>(
-            prototype: ItemPrototype,
-            intermediate: I,
-            activeContext: C,
-            nextContext: C,
-        ): R {
-            const evaluate = config.normalizer;
-            if (typeof evaluate !== 'function') {
-                return intermediate.pop() as R;
-            }
-
-            return evaluate(prototype, intermediate, activeContext, nextContext) as unknown as R;
-        }
-
-        function generateIntermediateValue(prototype: ItemPrototype, context: ReductionContext): [Intermediate, ReductionContext] {
-            const key = prototype.name;
-
-            const component =
-                      typeof prototype.selector === 'function'
-                      ? prototype.selector(target)
-                      : prototype.selector;
-
-            const generator =
-                      prototype
-                          .generator(
-                              component,
-                              key,
-                              context,
-                              config.mutator,
-                          );
-
-            const subComponents = [] as (ReturnType | ReductionContext)[];
-            for (const item of generator) {
-                subComponents.push(item as ReturnType & ReductionContext);
-            }
-
-            const intermediate = subComponents.slice(0, -1) as Intermediate;
-            const nextContext  = subComponents.slice(-1)[0] as InteractionContext as ReductionContext;
-
-            return [intermediate, nextContext];
-        }
-
-        function reduce([prev, activeContext]: Step, prototype: ItemPrototype): Step {
-            const [intermediate, nextContext] =
-                      generateIntermediateValue(prototype,
-                                                activeContext as ReductionContext) as [Intermediate, ReductionContext];
-
-            const normalized =
-                      normalizeWithinContext(prototype,
-                                             intermediate,
-                                             activeContext as ReductionContext,
-                                             nextContext) as ReturnType;
-
-            const nextValue =
-                      (
-                          config.accumulator?.(prev as ReturnType, normalized)
-                          ?? normalized
-                      ) as ReturnType;
-            return [nextValue, nextContext];
-        }
-
-        const [finalValue] =
-                  Array
-                      .from(
-                          typeof this.components?.[Symbol.iterator] === 'function'
-                          ? this.components as Iterable<ComponentDescription>
-                          : [],
-                      )
-                      .reduce<Step>(
-                          reduce,
-                          seed ?? [null, null],
-                      ) as Step;
-        return finalValue as ReturnType;
+    static isSpwConstruct(node: SpwConstruct | any): node is SpwConstruct {
+        return !!node?.kind;
     }
 
-    static hydrate<U extends Partial<RawSpwItem> | SpwConstruct>(
-        node: U,
-        context: HydrationContext,
-    ): SpwConstruct {
-        type Out = [string, SpwShape];
-        type Output = Out[];
-        type Prototype = ComponentDescription;
-        type Context = typeof context;
-        type Intermediate = ([string, SpwShape])[];
-        const Ctor = this as typeof SpwConstruct;
-
-        const seed: [U, Context] = [node, context];
-
-        const reduced = Ctor.reduce(
-            seed,
-            node,
-            {
-                mutator(p: SpwShape, key): Out {
-                    return [key as string, p];
-                },
-                accumulator(prev: Output, curr: Output): Output {
-                    return [...prev, ...curr];
-                },
-                normalizer(prototype: Prototype, intermediate: Intermediate, context: Context): Output {
-                    const evaluator = prototype.evaluators?.hydrate as Hydrator;
-                    const evaluate  = evaluator?.(intermediate, context);
-                    if (typeof evaluate !== 'undefined') {
-                        return Array.isArray(evaluate) ? evaluate
-                                                       : [evaluate]
-                    }
-                    return intermediate;
-                },
-            } as SpwItemReductionConfig<Output, Context>,
-        );
-        const raw     =
-                  reduced.reduce((t, [currKey, curr]) => {
-                      if (!currKey) {
-                          console.error(currKey, curr);
-                          throw new Error('expected key for index')
-                      }
-                      const existentValue = t[currKey] as SpwShape;
-                      return {
-                          ...t,
-                          [currKey]:
-                              typeof existentValue !== 'undefined'
-                              ? [
-                                      ...(
-                                          Array.isArray(existentValue)
-                                          ? existentValue
-                                          : [existentValue]
-                                      ),
-                                      curr,
-                                  ]
-                              : curr,
-                      }
-                  }, {} as RawSpwItem);
-        return new Ctor(raw as RawSpwItem);
+    /**
+     * Reduce a construct
+     *
+     * convert a construct into a different representation using some sort of state-dependent mutator.
+     *
+     * @param subject
+     * @param options
+     * @param seed
+     */
+    static reduce<ReturnType = any, Intermediate extends any = ReturnType, StartType = any, Subject = any, ReductionContext extends InteractionContext = InteractionContext, _Options extends ConstructReductionOptions<ReturnType, Intermediate> | undefined = ConstructReductionOptions<ReturnType, Intermediate>, _Output extends [ReturnType, ReductionContext] = [ReturnType, ReductionContext]>(
+        subject: Subject | null                            = null,
+        options: _Options | null                           = null,
+        seed: [StartType, ReductionContext] | [null, null] = [null, null],
+    ): _Output {
+        return reduceConstruct(subject,
+                               completeConfig(options ?? {}),
+                               seed,
+                               this.components ?? [],
+        ) as _Output;
     }
 
+    /**
+     * Reduce a construct asynchronously
+     *
+     * {@see SpwConstruct.reduce}
+     *
+     * @param subject
+     * @param options
+     * @param seed
+     */
+    static async reduceAsync<ReturnType = any, Intermediate extends any = ReturnType, StartType = any, Subject = any, ReductionContext extends InteractionContext = InteractionContext, _Options extends ConstructReductionOptions<ReturnType, Intermediate> | undefined = ConstructReductionOptions<ReturnType, Intermediate>, _Output extends [ReturnType, ReductionContext] = [ReturnType, ReductionContext]>(
+        subject: Subject | null                            = null,
+        options: _Options | null                           = null,
+        seed: [StartType, ReductionContext] | [null, null] = [null, null],
+    ): Promise<_Output> {
+        return reduceConstructAsync(subject,
+                                    completeConfig(options ?? {}),
+                                    seed,
+                                    this.components ?? []) as Promise<_Output>;
+    }
 
-    protected static makeComponent(override: { name: string, [k: string]: SpwShape } & Partial<ComponentDescription>): ComponentDescription {
-        return initComponentDescription(override);
+    /**
+     * create a SpwConstruct component
+     * @param override
+     * @protected
+     */
+    protected static makeComponent(override: { name: string, [k: string]: any } & Partial<ComponentDescription>): ComponentDescription {
+        return new LanguageComponent(override);
     }
 }

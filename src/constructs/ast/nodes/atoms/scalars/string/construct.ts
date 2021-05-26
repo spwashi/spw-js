@@ -1,7 +1,7 @@
 import {SpwNode} from '../../../_abstract/node';
 import {ISpwConstructStatic, SpwConstruct} from '../../../../_abstract/spwConstruct';
 import {staticImplements} from '../../../../_util/staticImplements';
-import {ComponentDescription, ComponentEvaluatorObject} from '@constructs/ast/_abstract/types';
+import {ComponentDescription, ComponentEvaluatorObject} from '@constructs/ast/_abstract/_types';
 
 
 @staticImplements<ISpwConstructStatic<'string'>>()
@@ -24,7 +24,7 @@ export class StringNode extends SpwNode<'string'> {
 
                                                  evaluators:
                                                      {
-                                                         stringify: (s: string[] | undefined) => Array.from(s ?? []).join(''),
+                                                         stringify: (s: string[] | undefined) => Array.from(s ?? []).filter(Boolean).join(''),
                                                      } as ComponentEvaluatorObject,
                                              }),
 

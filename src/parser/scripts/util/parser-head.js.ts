@@ -5,7 +5,6 @@ export const head =
 
                      function normalize(node) {
                          return {
-                             key: text(),
                              ...Object
                                  .fromEntries(
                                      Object

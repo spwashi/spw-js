@@ -1,7 +1,7 @@
 import {ISpwConstructStatic, SpwConstruct} from '../../../../_abstract/spwConstruct';
 import {staticImplements} from '../../../../_util/staticImplements';
-import {SpwNode} from '@constructs/ast/nodes/_abstract/node';
-import {ComponentDescription} from '@constructs/ast/_abstract/types';
+import {SpwNode} from '../../../_abstract/node';
+import {ComponentDescription} from '../../../../_abstract/_types';
 
 @staticImplements<ISpwConstructStatic<'anchor'>>()
 export class AnchorNode extends SpwNode<'anchor'> {
@@ -11,9 +11,9 @@ export class AnchorNode extends SpwNode<'anchor'> {
                {
                    label:
                        SpwConstruct.makeComponent({
-                                                 name:     'label',
-                                                 selector: s => s.label,
-                                             }),
+                                                      name:     'label',
+                                                      selector: s => s.label,
+                                                  }),
 
                    * [Symbol.iterator](): Generator<ComponentDescription> {
                        yield this.label;

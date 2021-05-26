@@ -1,7 +1,7 @@
 import {SpwNode} from '../../../_abstract/node';
 import {ISpwConstructStatic, SpwConstruct} from '../../../../_abstract/spwConstruct';
 import {staticImplements} from '../../../../_util/staticImplements';
-import {ComponentDescription} from '@constructs/ast/_abstract/types';
+import {ComponentDescription} from '@constructs/ast/_abstract/_types';
 
 
 @staticImplements<ISpwConstructStatic<'number'>>()
@@ -11,7 +11,12 @@ export class NumberNode extends SpwNode<'number'> {
     static components =
                {
                    value:
-                       SpwConstruct.makeComponent({name: 'value'}),
+                       SpwConstruct.makeComponent({
+                                                      name:           'value',
+                                                      evaluators:     {
+                                                          hydrate: s => parseInt(s as any),
+                                                      },
+                                                  }),
 
                    * [Symbol.iterator](): Generator<ComponentDescription> {
                        yield this.value;

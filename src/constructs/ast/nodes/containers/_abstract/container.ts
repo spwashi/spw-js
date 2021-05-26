@@ -1,13 +1,14 @@
 import {SpwNode} from '../../_abstract/node';
 import {staticImplements} from '../../../_util/staticImplements';
-import {SpwItemKind} from '@constructs/ast/_types/kind';
+import {ConstructKind} from '@constructs/ast/_types/kind';
 import {ConstructComponents, SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
-import {ComponentDescription, SpwShape} from '@constructs/ast/_abstract/types';
+import {ComponentDescription} from '@constructs/ast/_abstract/_types';
 
 type Delimiter =
     { token: string }
     | null;
-export type IContainerNodeStatic =
+
+type IContainerNodeStatic =
     {
         openDelimiter: Delimiter;
         closeDelimiter: Delimiter;
@@ -15,15 +16,15 @@ export type IContainerNodeStatic =
 
 type Item =
     SpwConstruct
-    | SpwShape;
+    | any;
 
-type Container<T extends SpwShape = Item,
+type Container<T extends any = Item,
     Open extends Delimiter = Delimiter,
     Body extends Iterable<T> = Iterable<T>,
     Close extends Delimiter = Delimiter> = { open: Open, body: Body, close: Close };
 
 @staticImplements<IContainerNodeStatic>()
-export abstract class SpwContainerNode<Kind extends SpwItemKind = SpwItemKind,
+export abstract class SpwContainerNode<Kind extends ConstructKind = ConstructKind,
     T extends Container = Container<unknown>> extends SpwNode<Kind, T> {
     static readonly openDelimiter: Delimiter = null;
 
@@ -33,61 +34,56 @@ export abstract class SpwContainerNode<Kind extends SpwItemKind = SpwItemKind,
                {
                    open:
                        SpwConstruct.makeComponent({
-                                                 _fallback: null as Delimiter | null,
-                                                 name:      'open',
-                                                 selector:  function (s) {
-                                                     return s?.open || this._fallback;
-                                                 },
+                                                      _fallback: null as Delimiter | null,
+                                                      name:      'open',
+                                                      selector:  function (s) {
+                                                          return s?.open || this._fallback;
+                                                      },
 
-                                                 evaluators:
-                                                     {
-                                                         stringify:
-                                                             function (els = []) {
-                                                                 const [token]       = els;
-                                                                 const trailingSpace = token?.length > 1 ? ' ' : '';
-                                                                 return [token, trailingSpace].join('');
-                                                             },
-                                                     },
-                                             }),
+                                                      evaluators:
+                                                          {
+                                                              stringify:
+                                                                  function (els = []) {
+                                                                      const [token]       = els;
+                                                                      const trailingSpace = token?.length > 1 ? ' ' : '';
+                                                                      return [token, trailingSpace].join('');
+                                                                  },
+                                                          },
+                                                  }),
                    body:
                        SpwConstruct.makeComponent({
-                                                 name: 'body',
+                                                      name: 'body',
 
-                                                 generator:
-                                                     function* (_body, key, ctxt, mut) {
-                                                         const body =
-                                                                   !(Symbol.iterator in Object(_body))
-                                                                   ? (_body ? [_body] : [])
-                                                                   : _body;
+                                                      generator:
+                                                          function* (_body, ctxt) {
+                                                              const body =
+                                                                        !(Symbol.iterator in Object(_body))
+                                                                        ? (_body ? [_body] : [])
+                                                                        : _body;
 
-                                                         let index = 0;
-                                                         for (const sub of body) {
-                                                             const inner =
-                                                                       {
-                                                                           ...ctxt,
-                                                                           index: index++,
-                                                                       };
-                                                             yield mut(sub, key, inner)
-                                                         }
+                                                              for (const sub of body) {
+                                                                  yield [sub, ctxt];
+                                                              }
 
-                                                         yield ctxt;
-                                                         return;
-                                                     },
-                                                 evaluators:
-                                                     {
-                                                         stringify: function (items) {
-                                                             return Array.from(items ?? []).join('; ');
-                                                         },
-                                                     },
-                                             }),
+
+                                                              return;
+                                                          },
+                                                      evaluators:
+                                                          {
+                                                              stringify: function (items) {
+                                                                  const filtered = Array.from(items ?? []).filter(Boolean);
+                                                                  return filtered.join('; ');
+                                                              },
+                                                          },
+                                                  }),
                    close:
                        SpwConstruct.makeComponent({
-                                                 _fallback: null as Delimiter | null,
-                                                 name:      'close',
-                                                 selector:  function (s) {
-                                                     return s?.close || this._fallback;
-                                                 },
-                                             }),
+                                                      _fallback: null as Delimiter | null,
+                                                      name:      'close',
+                                                      selector:  function (s) {
+                                                          return s?.close || this._fallback;
+                                                      },
+                                                  }),
 
                    * [Symbol.iterator](): Generator<ComponentDescription> {
                        yield this.open;

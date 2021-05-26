@@ -43,7 +43,7 @@ describe('Domain:SmokeTest',
                     }
 
                     {
-                        const runtime: Runtime               = await startRuntimeWithSrc(`{_< boon > ~one => two => three}`);
+                        const runtime: Runtime               = await startRuntimeWithSrc(`{_<boon > ~one => two => three}`);
                         const last: SpwConstruct | undefined = getLastRegisteredNode(runtime);
                         const all: SpwConstruct[]            = getAllRegisteredNodes(runtime);
                         expect(last?.kind).toEqual(Domain.kind);
@@ -52,9 +52,6 @@ describe('Domain:SmokeTest',
                         /**  note: this is subject to change dependent on the behavior of {@see InvocationOperator} */
                         expect(last?.key).toEqual('{_<boon> ~; one=>two=>three}');
                         expect(all.length).toEqual(16);
-                        const indexedDelimiter = runtime.locateNode('{_<boon>')[0]
-                        const locatedDelimiter = runtime.locateNode((last as SpwConstruct)?.internal?.open)[0];
-                        expect(indexedDelimiter).toEqual(locatedDelimiter);
                     }
 
                     done();

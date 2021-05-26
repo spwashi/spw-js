@@ -1,7 +1,7 @@
 import {SpwNode} from '../../../_abstract/node';
 import {ISpwConstructStatic, SpwConstruct} from '../../../../_abstract/spwConstruct';
 import {staticImplements} from '../../../../_util/staticImplements';
-import {ComponentDescription, ComponentEvaluatorObject} from '@constructs/ast/_abstract/types';
+import {ComponentDescription, ComponentEvaluatorObject} from '@constructs/ast/_abstract/_types';
 
 type Kind = 'phrase';
 
@@ -17,7 +17,7 @@ export class PhraseNode extends SpwNode<Kind> {
 
                                                  evaluators:
                                                      {
-                                                         stringify: s => Array.from(s ?? []).join(' '),
+                                                         stringify: s => Array.from(s ?? []).filter(Boolean).join(' '),
                                                      } as ComponentEvaluatorObject,
                                              }),
 

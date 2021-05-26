@@ -1,10 +1,17 @@
 import {SpwNode} from '../ast/nodes/_abstract/node';
-import {SpwItemKind} from '../ast/_types/kind';
+import {ConstructKind} from '../ast/_types/kind';
 import {SpwConstruct} from '../ast/_abstract/spwConstruct';
 
-export type RegisterEntry = { item: SpwConstruct; time: number };
+export type RegisterEntry =
+    {
+        time: number;
+        item: SpwConstruct;
+    };
 
-type RegisterParameters = { memory?: number | null };
+type RegisterParameters =
+    {
+        memory?: number | null;
+    };
 
 function unshift<U>(addition: U, prev: Iterable<U>, memory: number | null) {
     let items = [addition, ...prev];
@@ -14,9 +21,14 @@ function unshift<U>(addition: U, prev: Iterable<U>, memory: number | null) {
     return items;
 }
 
-export class RuntimeRegister {
+/**
+ * Acts like a stack
+ */
+export class Register {
     private readonly memory: number | null;
-    private counter                        = 0;
+
+    private counter = 0;
+
     private _entries: Array<RegisterEntry> = [];
 
     constructor({memory = null}: RegisterParameters = {memory: null}) {
@@ -26,11 +38,12 @@ export class RuntimeRegister {
     get entries(): RegisterEntry[] {
         return this._entries;
     }
+
     get flat(): SpwConstruct[] {
         return this._entries.map(({item}) => item)
     }
 
-    add<Kind extends SpwItemKind>(item: SpwNode<Kind>): this {
+    add<Kind extends ConstructKind>(item: SpwNode<Kind>): this {
         const registerValue =
                   {
                       item,

@@ -4,20 +4,20 @@ import {ISpwConstructStatic, SpwConstruct} from '@constructs/ast/_abstract/spwCo
 import {ComponentDescription} from '@constructs/ast/_abstract/_types';
 
 
-@staticImplements<ISpwConstructStatic<'strand_tail'>>()
-export class StrandTail extends SpwExpression<'strand_tail'> {
-    static readonly kind = 'strand_tail';
+@staticImplements<ISpwConstructStatic<'lens'>>()
+export class Lens extends SpwExpression<'lens'> {
+    static readonly kind = 'lens';
 
     static components =
                {
-                   operator:
-                       SpwConstruct.makeComponent({name: 'operator'}),
-                   item:
-                       SpwConstruct.makeComponent({name: 'item'}),
+                   atom:
+                       SpwConstruct.makeComponent({name: 'atom'}),
+                   spec:
+                       SpwConstruct.makeComponent({name: 'spec'}),
 
                    * [Symbol.iterator](): Generator<ComponentDescription> {
-                       if (this.operator) yield this.operator;
-                       if (this.item) yield this.item;
+                       yield this.atom;
+                       yield this.spec;
                    },
                };
 }

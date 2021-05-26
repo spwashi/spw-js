@@ -327,7 +327,7 @@ const generatedParser = /*
         peg$c179 = peg$otherExpectation("Expression"),
         peg$c180 = peg$otherExpectation("PerspectiveExpression"),
         peg$c181 = function(source) {return null;},
-        peg$c182 = function(source, atom, spec) {return{atom:atom,spec:spec};},
+        peg$c182 = function(source, atom, spec) {return toSpwItem({kind:"lens",atom:atom,spec:spec});},
         peg$c183 = function(source, atom) {return{atom:atom};},
         peg$c184 = function(source, lens) {return null;},
         peg$c185 = function(source, lens, target) {return toSpwItem({kind:"perspective_expression",source:source,lens:lens,target:target});},
@@ -5471,7 +5471,6 @@ const generatedParser = /*
 
                          function normalize(node) {
                              return {
-                                 key: text(),
                                  ...Object
                                      .fromEntries(
                                          Object

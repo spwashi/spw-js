@@ -1,5 +1,5 @@
-import {ConstructComponents, SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
-import {ComponentDescription} from '@constructs/ast/_abstract/types';
+import {ConstructComponents, SpwConstruct} from './spwConstruct';
+import {ComponentDescription} from './_types';
 import * as faker from 'faker';
 
 describe('SpwConstruct', () => {
