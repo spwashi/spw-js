@@ -1,6 +1,6 @@
 import SpwOperator, {operatorComponents} from '../_abstract/operator';
 import {ISpwConstructStatic, ConstructComponents} from '../../../../_abstract/spwConstruct';
-import {staticImplements} from '../../../../_util/staticImplements';
+import {staticImplements} from '../../../../_util/typescript/staticImplements';
 import {IAtomicSpwOperatorStatic} from '../_abstract/_types/atomic';
 
 type Token = '#';

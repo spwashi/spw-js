@@ -1,5 +1,5 @@
 import {SpwNode} from '../../_abstract/node';
-import {staticImplements} from '../../../_util/staticImplements';
+import {staticImplements} from '../../../_util/typescript/staticImplements';
 import {ConstructKind} from '@constructs/ast/_types/kind';
 import {ConstructComponents, SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import {ComponentDescription} from '@constructs/ast/_abstract/_types';

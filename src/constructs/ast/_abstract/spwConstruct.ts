@@ -1,7 +1,9 @@
 import {ConstructKind} from '../_types/kind';
 import {ComponentDescription, ComponentEvaluatorObject, ConstructReductionOptions, InteractionContext, SpwItemKey} from '@constructs/ast/_abstract/_types';
-import {completeConfig, reduceConstruct, reduceConstructAsync} from '@constructs/ast/_abstract/_util/reduction';
+import {reduceConstructSync} from '@constructs/ast/_abstract/_util/reduce/sync';
 import {LanguageComponent} from '@constructs/ast/_abstract/component';
+import {reduceConstructAsync} from '@constructs/ast/_abstract/_util/reduce/async';
+import {completeConfig} from '@constructs/ast/_abstract/_util/reduce/_/util';
 
 export interface ISpwConstructStatic<K extends ConstructKind = ConstructKind> {
     readonly kind: K;
@@ -102,10 +104,10 @@ export class SpwConstruct<K extends ConstructKind = ConstructKind, U extends Con
         options: _Options | null                           = null,
         seed: [StartType, ReductionContext] | [null, null] = [null, null],
     ): _Output {
-        return reduceConstruct(subject,
-                               completeConfig(options ?? {}),
-                               seed,
-                               this.components ?? [],
+        return reduceConstructSync(subject,
+                                   completeConfig(options ?? {}),
+                                   seed,
+                                   this.components ?? [],
         ) as _Output;
     }
 

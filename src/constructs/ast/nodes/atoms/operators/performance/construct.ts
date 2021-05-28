@@ -1,6 +1,6 @@
 import LabeledSpwOperator from '../_abstract/operator';
 import {ISpwConstructStatic} from '@constructs/ast/_abstract/spwConstruct';
-import {staticImplements} from '@constructs/ast/_util/staticImplements';
+import {staticImplements} from '@constructs/ast/_util/typescript/staticImplements';
 import {IAtomicSpwOperatorStatic} from '../_abstract/_types/atomic';
 
 type Token = '!';

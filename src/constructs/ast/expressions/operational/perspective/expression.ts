@@ -1,5 +1,5 @@
 import {SpwExpression} from '../../_abstract/expression';
-import {staticImplements} from '../../../_util/staticImplements';
+import {staticImplements} from '../../../_util/typescript/staticImplements';
 import {ISpwConstructStatic, SpwConstruct} from '../../../_abstract/spwConstruct';
 import {ComponentDescription} from '@constructs/ast/_abstract/_types';
 import {DirectionOperator} from '@constructs/ast';
@@ -21,7 +21,7 @@ export class PerspectiveExpression extends SpwExpression<Kind> {
                    target:
                        SpwConstruct.makeComponent({
                                                       name:       'target',
-                                                      generator:  function* (target,  ctxt) {
+                                                      generator:  function* (target, ctxt) {
                                                           let directionOperator;
 
                                                           // todo: relic from hydration

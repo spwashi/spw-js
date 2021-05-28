@@ -1,7 +1,7 @@
 import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import {HydratedSpwItem, RawSpwConstruct, SpwItemValue} from '@constructs/ast/_abstract/_types/internal';
-import {HydrationContext, HydrationInput} from '@constructs/ast/_abstract/_util/hydration/util';
-import {SpwNodeLocation} from '@constructs/ast/_util/location';
+import {HydrationContext, HydrationInput} from '@constructs/ast/_abstract/_util/hydrate/_/util';
+import {SpwNodeLocation} from '@constructs/ast/_util/ast/location';
 
 type ObjectOfSpw = { [k: string]: SpwItemValue };
 

@@ -1,5 +1,5 @@
 import {ISpwConstructStatic, SpwConstruct} from '../../../../_abstract/spwConstruct';
-import {staticImplements} from '../../../../_util/staticImplements';
+import {staticImplements} from '../../../../_util/typescript/staticImplements';
 import {SpwNode} from '../../../_abstract/node';
 import {ComponentDescription} from '../../../../_abstract/_types';
 

@@ -1,15 +1,16 @@
 import {Runtime} from '@constructs/runtime/runtime';
-import {getAllRegisteredNodes, getLastRegisteredNode, startRuntimeWithSrc} from '../../../../_util/tests/util';
+import {selectAllNodes, selectLastAcknowledgedNode} from '../../../../_util/runtime/selectors';
 import {AnchorNode} from '@constructs/ast';
+import {initRuntime} from '@constructs/ast/_util/runtime/initRuntime';
 
 describe('AnchorNodes',
          () => {
              it('Can start with an character of the alphabet and consist of alphanumeric characters, underscores, and dashes',
                 async () => {
                     try {
-                        const runtime = await startRuntimeWithSrc(`step`);
-                        const all     = getAllRegisteredNodes(runtime);
-                        const last    = getLastRegisteredNode(runtime);
+                        const runtime = await initRuntime(`step`);
+                        const all     = selectAllNodes(runtime);
+                        const last    = selectLastAcknowledgedNode(runtime);
                         expect(AnchorNode.isAnchorNode(last)).toBeTruthy();
                         expect(all.length).toEqual(1);
                     } catch (e) {
@@ -22,7 +23,7 @@ describe('AnchorNodes',
                     const asyncTest =
                               async (src: string, check: (runtime: Runtime, src: string) => void) => {
                                   try {
-                                      const runtime = await startRuntimeWithSrc(src);
+                                      const runtime = await initRuntime(src);
                                       check(runtime, src);
                                   } catch (e) {
                                       throw new Error('Parsing Error')
@@ -30,8 +31,8 @@ describe('AnchorNodes',
                               };
                     const len       =
                               (l: number) => (runtime: Runtime, src: string) => {
-                                  const all  = getAllRegisteredNodes(runtime);
-                                  const last = getLastRegisteredNode(runtime);
+                                  const all  = selectAllNodes(runtime);
+                                  const last = selectLastAcknowledgedNode(runtime);
                                   expect(last?.kind).toEqual('anchor');
                                   expect(last?.key).toEqual(src);
                                   expect(all.length).toEqual(l);

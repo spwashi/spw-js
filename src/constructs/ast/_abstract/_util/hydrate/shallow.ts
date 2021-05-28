@@ -1,9 +1,9 @@
 import {ConstructReductionConfig, InteractionContext} from '@constructs/ast/_abstract/_types';
 import {RawSpwConstruct} from '../../_types/internal';
-import {completeConfig} from '../reduction';
 import {SpwConstruct} from '../../spwConstruct';
-import {_entryReducer, HydrationContext, joinHydratedProperties} from './util';
+import {_entryReducer, HydrationContext, joinHydratedProperties} from './_/util';
 import {getConstructClass} from '../../../../index';
+import {completeConfig} from '@constructs/ast/_abstract/_util/reduce/_/util';
 
 const _intermediateHydrationEvaluator: ConstructReductionConfig['evaluator'] =
           (value: any, key: any, context: InteractionContext | undefined | null, isAsync: boolean) =>

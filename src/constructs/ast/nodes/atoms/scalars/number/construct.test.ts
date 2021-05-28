@@ -2,9 +2,9 @@ import {NumberNode} from '@constructs/ast/nodes/atoms/scalars/number/construct';
 import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import {InteractionContext} from '@constructs/ast/_abstract/_types';
 import {RawSpwConstruct} from '@constructs/ast/_abstract/_types/internal';
-import {hydrateRecursively} from '@constructs/ast/_abstract/_util/hydration/recursive';
-import {joinHydratedProperties} from '@constructs/ast/_abstract/_util/hydration/util';
-import {hydrateShallow} from '@constructs/ast/_abstract/_util/hydration';
+import {hydrateRecursively} from '@constructs/ast/_abstract/_util/hydrate/recursive';
+import {joinHydratedProperties} from '@constructs/ast/_abstract/_util/hydrate/_/util';
+import {hydrateShallow} from '@constructs/ast/_abstract/_util/hydrate/shallow';
 
 describe('Number', () => {
     it('should be instantiable', function () {

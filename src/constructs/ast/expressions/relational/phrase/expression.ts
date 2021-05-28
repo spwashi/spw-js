@@ -1,5 +1,5 @@
 import {SpwExpression} from '@constructs/ast/expressions/_abstract/expression';
-import {staticImplements} from '@constructs/ast/_util/staticImplements';
+import {staticImplements} from '@constructs/ast/_util/typescript/staticImplements';
 import {ISpwConstructStatic, SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import {ComponentDescription, ComponentEvaluatorObject} from '@constructs/ast/_abstract/_types';
 

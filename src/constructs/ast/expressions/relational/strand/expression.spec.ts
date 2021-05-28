@@ -1,11 +1,12 @@
 import {
-    getAllRegisteredNodes,
-    getLastRegisteredNode,
-    startRuntimeWithSrc,
-} from '../../../_util/tests/util';
+    selectAllNodes,
+    selectLastAcknowledgedNode,
+
+} from '../../../_util/runtime/selectors';
 import {StrandExpression} from '@constructs/ast/expressions/relational/strand/expression';
 import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import * as util from 'util'
+import {initRuntime} from '@constructs/ast/_util/runtime/initRuntime';
 
 describe('Strand Expressions',
          () => {
@@ -15,9 +16,9 @@ describe('Strand Expressions',
                         let all: SpwConstruct[]            = [];
                         let last: SpwConstruct | undefined = undefined;
                         try {
-                            const runtime = await startRuntimeWithSrc(`test test test =>    test    =>    test   `);
-                            last          = getLastRegisteredNode(runtime);
-                            all           = getAllRegisteredNodes(runtime);
+                            const runtime = await initRuntime(`test test test =>    test    =>    test   `);
+                            last          = selectLastAcknowledgedNode(runtime);
+                            all           = selectAllNodes(runtime);
                             expect(last?.kind).toEqual(StrandExpression.kind);
                             expect(all.length).toEqual(11);
                             expect(last?.key).toEqual('test test test=>test=>test');

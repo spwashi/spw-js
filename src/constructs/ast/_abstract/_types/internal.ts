@@ -1,5 +1,5 @@
 import {ConstructKind} from '@constructs/ast/_types/kind';
-import {SpwNodeLocation} from '../../_util/location';
+import {SpwNodeLocation} from '../../_util/ast/location';
 
 export interface HydratedSpwItem {
     kind: ConstructKind;
