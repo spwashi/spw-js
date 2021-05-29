@@ -1,11 +1,11 @@
 import {anyOf, oneOrMoreOf, RuleReferenceCombinator, sequenceOf, stringLike, zeroOrMoreOf} from '@spwashi/language/parsers/grammar/combinators';
 import {Rule} from '@spwashi/language/parsers/grammar';
-import {newline, spaceTab} from '@grammar/base/space/whitespace.patterns';
+import {newline, spaceTab} from '@grammar/utility/space/whitespace.patterns';
 import {Combinator} from '@spwashi/language/parsers/grammar/combinators/abstract';
 import {getContainerNodeComponentReferences} from '../container.ref.init';
 import {expressions} from '@grammar/ast/expressions/_abstract/_list/expressions.list.ref';
 import {nodes} from '@grammar/ast/nodes/_abstract/_list/node.list.ref';
-import {spaceNode} from '@grammar/base/space/space.ref';
+import {spaceNode} from '@grammar/utility/space/space.ref';
 
 function getEmptyBlockCombinator(opener: RuleReferenceCombinator, closer: RuleReferenceCombinator) {
     const innerPattern =

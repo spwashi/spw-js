@@ -1,7 +1,7 @@
 import {anyOf, regExpLike, sequenceOf, stringLike, zeroOrMoreOf} from '@spwashi/language/parsers/grammar/combinators';
 import {Rule} from '@spwashi/language/parsers/grammar';
 import {StringNode} from '@constructs/ast';
-import {unicode_noQuotes} from '../../../../../base/unicode/unicode.ref';
+import {unicode_noQuotes} from '../../../../../utility/unicode/unicode.ref';
 import {ruleName} from './ref';
 
 const doubleQuote = regExpLike(`\\"`);

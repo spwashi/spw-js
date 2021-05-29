@@ -1,28 +1,44 @@
 {
-const _cache = new Map();
-
-                     function normalize(node) {
-                         return {
-                             ...Object
-                                 .fromEntries(
-                                     Object
-                                         .entries(node)
-                                         .filter(([k, v]) => k === 'key' ? true : v !== undefined)
-                                 ),
-                             src:      text(),
-                             location: location()
-                         };
-                     }
-
-                     function toSpwItem(node) {
-                         if (!node.kind) throw new Error('No node kind specified')
-                         var cacheKey = JSON.stringify(location());
-                         if (_cache.has(cacheKey)) return _cache.get(cacheKey);
-
-                         const out = normalize(node);
-                         _cache.set(cacheKey, out);
-                         return out;
-                     }
+function spwHead() {
+    var _cache = new Map();
+    // @ts-ignore
+    function normalize(node) {
+        return Object.assign({}, Object
+            .fromEntries(Object
+            .entries(node)
+            .filter(function (e) {
+            var k = e[0];
+            var v = e[1];
+            return k === 'key' ? true : v !== undefined;
+        })), {
+            src: text(),
+            location: location(),
+        });
+    }
+    // @ts-ignore
+    function toSpwItem(node) {
+        if (typeof location === 'undefined')
+            return;
+        if (!node.kind)
+            throw new Error('No node kind specified');
+        var cacheKey = JSON.stringify(location());
+        if (_cache.has(cacheKey))
+            return _cache.get(cacheKey);
+        var out = normalize(node);
+        _cache.set(cacheKey, out);
+        return out;
+    }
+    var constructs = {
+        space: function spaceNodeAction() { return toSpwItem({ kind: 'space' }); },
+    };
+    return {
+        toSpwItem: toSpwItem,
+        constructs: constructs,
+    };
+};
+    var head       = spwHead();
+    var toSpwItem  = head.toSpwItem;
+    var constructs = head.constructs;
 }
 
 Top "Top"= 
@@ -33,7 +49,7 @@ UnicodeWithoutQuotes "UnicodeWithoutQuotes"=
 [-a-zA-Z \t\'] / [\u0020-\u0021,\u0023-\u26FF]
 
 Space "Space"= 
-(newlines:(([\t ] / newline:[\n] {return newline;})+)+ {return toSpwItem({kind:"space"});})
+(newlines:(([\t ] / newline:[\n] {return newline;})+)+ {return constructs.space();})
 
 Node "Node"= 
 Domain / Essence / Concept / Group / Operator / Scalar

@@ -2,7 +2,7 @@ import {PhraseNode} from '@constructs/ast';
 import {Rule} from '@spwashi/language/parsers/grammar';
 import {ruleName} from './ref';
 import {anchorNode} from '../anchor/ref';
-import {spaceTab} from '../../../../../base/space/whitespace.patterns';
+import {spaceTab} from '../../../../../utility/space/whitespace.patterns';
 import {anyOf, oneOrMoreOf, sequenceOf} from '@spwashi/language/parsers/grammar/combinators';
 import {numberNode} from '@grammar/ast/nodes/atoms/scalar/number/ref';
 

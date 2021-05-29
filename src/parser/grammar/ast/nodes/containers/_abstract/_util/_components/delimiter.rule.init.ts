@@ -3,7 +3,7 @@ import {Rule} from '@spwashi/language/parsers/grammar';
 import {anchorNode} from '../../../../atoms/scalar/anchor/ref';
 import {containers} from '../../_list/container.list.ref';
 import {getContainerNodeComponentReferences} from '../container.ref.init';
-import {spaceNode} from '../../../../../../base/space/space.ref';
+import {spaceNode} from '../../../../../../utility/space/space.ref';
 
 function opener(delimiter: IDelimiter): SequenceCombinator {
     const token =

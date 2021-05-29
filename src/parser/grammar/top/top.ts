@@ -1,6 +1,6 @@
 import {anyOf, oneOrMoreOf, sequenceOf} from '@spwashi/language/parsers/grammar/combinators';
 import {Rule} from '@spwashi/language/parsers/grammar';
-import {spaceNode} from '../base/space/space.ref';
+import {spaceNode} from '../utility/space/space.ref';
 import {ruleName} from '@grammar/top/top.ref';
 import {nodes} from '@grammar/ast/nodes/_abstract/_list/node.list.ref';
 import {getContainerNodeComponentReferences} from '@grammar/ast/nodes/containers/_abstract/_util/container.ref.init';
@@ -49,4 +49,5 @@ export const allowedStartRules =
                      ruleName,
                  ];
 
-export const topRule = new Rule(ruleName, pattern.named('body'), action);
+export const topRule =
+                 new Rule(ruleName, pattern.named('body'), action);

@@ -2,7 +2,7 @@ import {Rule} from '@spwashi/language/parsers/grammar';
 import {anyOf, sequenceOf, stringLike, zeroOrMoreOf} from '@spwashi/language/parsers/grammar/combinators';
 import {ruleName} from './scalar.ref';
 import {containerNode} from '@grammar/ast/nodes/containers/_abstract/container.ref';
-import {spaceNode} from '@grammar/base/space/space.ref';
+import {spaceNode} from '@grammar/utility/space/space.ref';
 import {anchorNode} from '@grammar/ast/nodes/atoms/scalar/anchor/ref';
 import {stringNode} from '@grammar/ast/nodes/atoms/scalar/string/ref';
 import {phraseNode} from '@grammar/ast/nodes/atoms/scalar/phrase/ref';

@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import {head} from './util/parser-head.js';
+import head from './util/parser-head.js';
 import spwGrammar from '../grammar';
 import {generateParser} from '@spwashi/language/parsers/scripts/generateParser';
 import {allowedStartRules} from '../grammar/top/top';

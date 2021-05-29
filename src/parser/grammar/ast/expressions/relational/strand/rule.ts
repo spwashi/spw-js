@@ -1,7 +1,7 @@
 import {ruleName, strandExpression} from './ref';
 import {Rule} from '@spwashi/language/parsers/grammar';
 import {anyOf, oneOrMoreOf, sequenceOf, zeroOrMoreOf} from '@spwashi/language/parsers/grammar/combinators';
-import {spaceNode} from '../../../../base/space/space.ref';
+import {spaceNode} from '../../../../utility/space/space.ref';
 import {StrandExpression} from '@constructs/ast';
 import {node} from '@grammar/ast/nodes/_abstract/node.ref';
 import {transformationOperator} from '@grammar/ast/nodes/atoms/operator/transformation/ref';
