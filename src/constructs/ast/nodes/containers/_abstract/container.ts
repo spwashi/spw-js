@@ -66,7 +66,7 @@ export abstract class SpwContainerNode<Kind extends ConstructKind = ConstructKin
                                                               }
 
 
-                                                              return;
+                                                              return null;
                                                           },
                                                       evaluators:
                                                           {

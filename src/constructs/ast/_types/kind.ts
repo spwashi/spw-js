@@ -49,8 +49,12 @@ type ExpressionKind =
     | 'perspective_expression'
     | 'lens'
 
+type ContextKind =
+    'context'
+
 export type ConstructKind =
     'unknown'
+    | ContextKind
     | ScalarKind
     | OperatorKind
     | ContainerNodeKind

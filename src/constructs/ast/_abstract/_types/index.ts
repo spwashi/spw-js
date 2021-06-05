@@ -15,29 +15,43 @@ type ComponentKey =
 
 export type InteractionContext =
     {
-        enter?: () => InteractionContext,
-        exit?: () => void,
-        [s: string]: any
+        enter<T extends Partial<InteractionContext> = Partial<InteractionContext>>(arg?: T): InteractionContext & T,
+        exit(): InteractionContext | void,
     };
-export type InteractionGenerator<YieldOutput = any> =
+
+// todo move this
+export const PlainInteractionContext =
+                 (): InteractionContext => ({
+                     enter<T extends Partial<InteractionContext>>(item?: T): InteractionContext & T {
+                         const parent = (this || PlainInteractionContext()) as InteractionContext;
+                         return {
+                             ...parent,
+                             ...item || {},
+                             parent,
+                         } as InteractionContext & T & { parent: InteractionContext }
+                     },
+                     exit(): InteractionContext | void {return this},
+                 });
+
+export type InteractionGenerator<YieldOutput = any, Context extends InteractionContext = InteractionContext> =
     (
         item: any,
-        context: InteractionContext | null | undefined,
+        context: Context | null,
     )
         => Generator<//
-        /**/  [YieldOutput, InteractionContext | null | undefined],
-        /**/  InteractionContext | undefined | void
+        /**/  [YieldOutput, Context | null],
+        /**/  Context | null
         /**/>;
 
 type AsyncInteractionGenerator<//
     //
     YieldOutput = any,
-    > =
+    Context extends InteractionContext = InteractionContext> =
     (
         item: any,
-        context: InteractionContext | null,
+        context: Context | null,
     )
-        => AsyncGenerator<[YieldOutput | undefined, InteractionContext | null], InteractionContext | void, YieldOutput | undefined>;
+        => AsyncGenerator<[YieldOutput | undefined, Context | null], Context | null, YieldOutput | undefined>;
 
 type SerializationReducer<Intermediate, Output, SerializationContext extends InteractionContext = InteractionContext> =
     (s?: Intermediate, context?: SerializationContext | null) => Output;
@@ -77,8 +91,8 @@ export type ComponentEvaluatorObject<//
 /**
  *
  */
-export type ComponentDescription<//
-    // a portion of a SpwItem
+export type ComponentDescription<Context extends InteractionContext = InteractionContext,
+// a portion of a SpwItem
     Component extends any = any,
     // subcomponents in order
     SubComponentTupleOrList extends SubComponent[] = any[],
@@ -91,8 +105,8 @@ export type ComponentDescription<//
     // Function or identifier for a component
     selector: ((s: Owner) => Component);
     // Generator that produces elements of a component
-    generator: InteractionGenerator<SubComponent>;
-    asyncGenerator?: AsyncInteractionGenerator<SubComponent>;
+    generator: InteractionGenerator<SubComponent, Context>;
+    asyncGenerator?: AsyncInteractionGenerator<SubComponent, Context>;
     // Object that contains instructions for how to evaluate a component
     evaluators: ComponentEvaluatorObject<SubComponent, SubComponentTupleOrList>,
     // catchall
@@ -100,6 +114,7 @@ export type ComponentDescription<//
 }
 
 export type ConstructReductionConfig<//
+    Context extends InteractionContext = InteractionContext,
     // The expected return type
     ReductionOutput = any,
     // What's passed to the evaluator; the result of generating values
@@ -113,7 +128,7 @@ export type ConstructReductionConfig<//
      * @param context
      * @param isAsync
      */
-    evaluator: (o: any, key: ComponentKey, context: InteractionContext | null, isAsync: boolean) => InternalComponent,
+    evaluator: (o: any, key: ComponentKey, context: Context | null, isAsync: boolean) => InternalComponent,
     /**
      *
      * @param c
@@ -121,9 +136,9 @@ export type ConstructReductionConfig<//
      * @param context
      */
     stepNormalizer: (
-        componentDescription: ComponentDescription<any>,
-        [intermediateValue, context]: [Intermediate[], InteractionContext | null],
-    ) => [ReductionOutput, InteractionContext],
+        componentDescription: ComponentDescription<Context>,
+        [intermediateValue, context]: [Intermediate[], Context | null],
+    ) => [ReductionOutput, Context],
     /**
      *
      * @param previous
@@ -132,21 +147,21 @@ export type ConstructReductionConfig<//
      */
     reducer:
         (
-            previous: [ReductionOutput | any, InteractionContext | null],
-            current: [ReductionOutput | null | undefined, InteractionContext | null],
+            previous: [ReductionOutput | any, Context | null],
+            current: [ReductionOutput | null | undefined, Context | null],
             isAsync?: boolean | null,
-        ) => [ReductionOutput, InteractionContext | null]
+        ) => [ReductionOutput, Context | null]
 };
 
 
 /**
  *
  */
-export type ConstructReductionOptions<//
+export type ConstructReductionOptions<Context extends InteractionContext = InteractionContext,
     // The expected return type
     ReductionOutput = any,
     // What's passed to the evaluator; the result of generating values
     Intermediate extends any | null | undefined = any,
     // An item that might be returned from the generator after mutation
     InternalComponent extends any = any> =
-    Partial<ConstructReductionConfig<ReductionOutput, Intermediate, InternalComponent>>
+    Partial<ConstructReductionConfig<Context, ReductionOutput, Intermediate, InternalComponent>>

@@ -1,9 +1,9 @@
 import {NumberNode} from '@constructs/ast/nodes/atoms/scalars/number/construct';
 import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
-import {InteractionContext} from '@constructs/ast/_abstract/_types';
+import {InteractionContext, PlainInteractionContext} from '@constructs/ast/_abstract/_types';
 import {RawSpwConstruct} from '@constructs/ast/_abstract/_types/internal';
 import {hydrateRecursively} from '@constructs/ast/_abstract/_util/hydrate/recursive';
-import {joinHydratedProperties} from '@constructs/ast/_abstract/_util/hydrate/_/util';
+import {HydrationContext, joinHydratedProperties} from '@constructs/ast/_abstract/_util/hydrate/_/util';
 import {hydrateShallow} from '@constructs/ast/_abstract/_util/hydrate/shallow';
 
 describe('Number', () => {
@@ -16,15 +16,13 @@ describe('Number', () => {
         expect(n.key).toEqual('4');
     });
     it('should be hydrate-able', async function () {
-        const raw     = {value: '4', kind: 'number'};
-        const options = {
-            hydrate: (raw: RawSpwConstruct, context: InteractionContext) => hydrateRecursively(raw, context) as SpwConstruct | null,
-        }
-
-        const {node, promise} = _hydrate(raw, options);
+        const raw             = {value: '4', kind: 'number'};
+        const context         = initHydrationContext();
+        const {node, promise} = hydrateNumber(raw, context);
 
         NumberNode.components.value.asyncGenerator = async function* (_: any, context: InteractionContext | null) {
-            yield [4000, context]
+            yield [4000, context];
+            return null;
         };
 
         expect(node).toBeInstanceOf(NumberNode);
@@ -33,7 +31,29 @@ describe('Number', () => {
     });
 })
 
-function _hydrate(node: any, context: any) {
+/**
+ * Initialize a hydration context that will let us test this Node
+ */
+function initHydrationContext() {
+    const hydrationContextFragment =
+              {
+                  hydrate: (raw: RawSpwConstruct, context: InteractionContext) =>
+                               hydrateRecursively(raw, context) as SpwConstruct | null,
+              } as Partial<HydrationContext>;
+
+    const context =
+              PlainInteractionContext()
+                  .enter(hydrationContextFragment);
+    return context;
+}
+
+/**
+ * Function for hydrating
+ *
+ * @param node
+ * @param context
+ */
+function hydrateNumber(node: any, context: HydrationContext) {
     const {node: hydratedNode, promise} = hydrateShallow(node as RawSpwConstruct, context);
     context.absorb?.(hydratedNode);
     return {

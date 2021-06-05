@@ -1,5 +1,5 @@
 import {ConstructKind} from '../_types/kind';
-import {ComponentDescription, ComponentEvaluatorObject, ConstructReductionOptions, InteractionContext, SpwItemKey} from '@constructs/ast/_abstract/_types';
+import {ComponentDescription, ComponentEvaluatorObject, ConstructReductionOptions, InteractionContext, PlainInteractionContext, SpwItemKey} from '@constructs/ast/_abstract/_types';
 import {reduceConstructSync} from '@constructs/ast/_abstract/_util/reduce/sync';
 import {LanguageComponent} from '@constructs/ast/_abstract/component';
 import {reduceConstructAsync} from '@constructs/ast/_abstract/_util/reduce/async';
@@ -50,10 +50,11 @@ export class SpwConstruct<K extends ConstructKind = ConstructKind, U extends Con
         type Output = SpwItemKey;
         type Context = typeof context;
         type Prototype = ComponentDescription;
-        type Seed = KeyReductionSeed;
-        const context    = {};
+        type Seed = KeyReductionSeed
+
+        const context    = PlainInteractionContext().enter();
         const Ctor       = this.constructor as typeof SpwConstruct;
-        const seed: Seed = ['', {}];
+        const seed: Seed = ['', context];
 
 
         const reduced =
@@ -99,15 +100,16 @@ export class SpwConstruct<K extends ConstructKind = ConstructKind, U extends Con
      * @param options
      * @param seed
      */
-    static reduce<ReturnType = any, Intermediate extends any = ReturnType, StartType = any, Subject = any, ReductionContext extends InteractionContext = InteractionContext, _Options extends ConstructReductionOptions<ReturnType, Intermediate> | undefined = ConstructReductionOptions<ReturnType, Intermediate>, _Output extends [ReturnType, ReductionContext] = [ReturnType, ReductionContext]>(
-        subject: Subject | null                            = null,
-        options: _Options | null                           = null,
-        seed: [StartType, ReductionContext] | [null, null] = [null, null],
+    static reduce<ReturnType = any, Intermediate extends any = ReturnType, StartType = any, Subject = any, ReductionContext extends InteractionContext = InteractionContext, _Output extends [ReturnType, ReductionContext] = [ReturnType, ReductionContext]>(
+        subject: Subject | null                                                               = null,
+        options: ConstructReductionOptions<ReductionContext, ReturnType, Intermediate> | null = null,
+        seed: [StartType, ReductionContext] | [null, null]                                    = [null, null],
     ): _Output {
-        return reduceConstructSync(subject,
-                                   completeConfig(options ?? {}),
-                                   seed,
-                                   this.components ?? [],
+        return reduceConstructSync<ReductionContext>(
+            subject,
+            completeConfig<ReductionContext>(options ?? {}),
+            seed,
+            (this.components ?? []) as ComponentDescription<ReductionContext>[],
         ) as _Output;
     }
 
@@ -120,15 +122,23 @@ export class SpwConstruct<K extends ConstructKind = ConstructKind, U extends Con
      * @param options
      * @param seed
      */
-    static async reduceAsync<ReturnType = any, Intermediate extends any = ReturnType, StartType = any, Subject = any, ReductionContext extends InteractionContext = InteractionContext, _Options extends ConstructReductionOptions<ReturnType, Intermediate> | undefined = ConstructReductionOptions<ReturnType, Intermediate>, _Output extends [ReturnType, ReductionContext] = [ReturnType, ReductionContext]>(
-        subject: Subject | null                            = null,
-        options: _Options | null                           = null,
-        seed: [StartType, ReductionContext] | [null, null] = [null, null],
+    static async reduceAsync<//
+        ReductionContext extends InteractionContext = InteractionContext,
+        ReturnType = any,
+        Intermediate extends any = ReturnType,
+        StartType = any | null,
+        Subject = any,
+        _Output extends [ReturnType, ReductionContext] = [ReturnType, ReductionContext]>(
+        subject: Subject | null                                                               = null,
+        options: ConstructReductionOptions<ReductionContext, ReturnType, Intermediate> | null = null,
+        seed: [StartType, ReductionContext | null] | [null, null]                             = [null, null],
     ): Promise<_Output> {
-        return reduceConstructAsync(subject,
-                                    completeConfig(options ?? {}),
-                                    seed,
-                                    this.components ?? []) as Promise<_Output>;
+        return reduceConstructAsync<ReductionContext>(
+            subject,
+            completeConfig<ReductionContext>(options ?? {}),
+            seed,
+            (this.components ?? []) as ComponentDescription<ReductionContext>[],
+        ) as Promise<_Output>;
     }
 
     /**

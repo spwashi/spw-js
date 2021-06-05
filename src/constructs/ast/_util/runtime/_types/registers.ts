@@ -1,8 +1,8 @@
-import {Register} from '@constructs/runtime/register';
+import {Register} from '@constructs/runtime/register/register';
 
 export type RuntimeRegisters =
     {
         all: Register;
-        keys: { [p: string]: Register };
-        lastAcknowledged: Register
+        indexed: Map<any, Register>;
+        subject: Register
     };

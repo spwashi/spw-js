@@ -40,7 +40,7 @@ export class PerspectiveExpression extends SpwExpression<Kind> {
                                                               yield [target, ctxt];
                                                           }
 
-                                                          return;
+                                                          return null;
                                                       },
                                                       evaluators: {
                                                           stringify: ([direction, target] = []) => [

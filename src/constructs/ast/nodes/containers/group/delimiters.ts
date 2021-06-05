@@ -1,7 +1,7 @@
 import {staticImplements} from '@constructs/ast/_util/typescript/staticImplements';
 import {ConstructComponents, ISpwConstructStatic} from '@constructs/ast/_abstract/spwConstruct';
 import {IAtomicSpwOperatorStatic} from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
-import {SpwDelimiter} from '@constructs/ast/nodes/atoms/delimiters/_abstract/delimiter';
+import {SpwDelimiter} from '@constructs/ast/nodes/atoms/operators/delimiters/_abstract/delimiter';
 import {operatorComponents} from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
 
 export type OpenGroupToken = '(';

@@ -6,7 +6,7 @@ import {
 import {StrandExpression} from '@constructs/ast/expressions/relational/strand/expression';
 import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import * as util from 'util'
-import {initRuntime} from '@constructs/ast/_util/runtime/initRuntime';
+import {initRuntime} from '@constructs/ast/_util/runtime/initializers/runtime';
 
 describe('Strand Expressions',
          () => {

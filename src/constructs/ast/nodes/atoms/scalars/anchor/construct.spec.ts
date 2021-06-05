@@ -1,7 +1,7 @@
 import {Runtime} from '@constructs/runtime/runtime';
 import {selectAllNodes, selectLastAcknowledgedNode} from '../../../../_util/runtime/selectors';
 import {AnchorNode} from '@constructs/ast';
-import {initRuntime} from '@constructs/ast/_util/runtime/initRuntime';
+import {initRuntime} from '@constructs/ast/_util/runtime/initializers/runtime';
 
 describe('AnchorNodes',
          () => {

@@ -12,7 +12,6 @@ export default `
     var constructs = head.constructs;
 `;
 
-
 /* builtins */
 const text     = () => null;
 const location = () => null;
@@ -25,7 +24,10 @@ function spwHead() {
      * add the usual things to a node, remove missteps
      * @param node
      */
-    function normalize(node) {
+    function normalize(
+        // @ts-ignore
+        node,
+    ) {
         return Object.assign(
             {
                 src:      text(),
@@ -47,7 +49,10 @@ function spwHead() {
      * Convert a node to a {@see SpwConstruct } SpwConstruct initializer
      * @param node
      */
-    function toSpwItem(node) {
+    function toSpwItem(
+        // @ts-ignore
+        node,
+    ) {
         if (typeof location === 'undefined') return;
         if (!node.kind) throw new Error('No node kind specified')
         var cacheKey = JSON.stringify(location());

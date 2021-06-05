@@ -11,12 +11,16 @@ import {defaultLifecycleGenerator} from './_/util';
  * @param prototypes
  * @param lifecycle
  */
-export async function reduceConstructAsync<Subject, StartType, ReturnType, Intermediate, Context extends InteractionContext = InteractionContext>(
+export async function reduceConstructAsync<Context extends InteractionContext = InteractionContext,
+    Subject = any,
+    StartType = any,
+    ReturnType = any,
+    Intermediate = any>(
     subject: Subject | null,
-    config: ConstructReductionConfig,
-    seed: [StartType | null, Context | null]   = [null, null],
-    prototypes: Iterable<ComponentDescription> = [],
-    lifecycle: ReductionLifecycleController    = defaultLifecycleGenerator,
+    config: ConstructReductionConfig<Context>,
+    seed: [StartType | null, Context | null]            = [null, null],
+    prototypes: Iterable<ComponentDescription<Context>> = [],
+    lifecycle: ReductionLifecycleController             = defaultLifecycleGenerator,
 ): Promise<[ReturnType, Context]> {
     const startBeginGenerator = await lifecycle({type: 'begin-reduction', seed, subject});
     for (const out of startBeginGenerator()) {

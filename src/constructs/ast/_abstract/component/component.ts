@@ -13,7 +13,7 @@ const defaultGenerator =
                   yield [component, ctxt];
               }
 
-              return;
+              return null;
           } as InteractionGenerator;
 
 const defaultEvaluator =

@@ -31,14 +31,14 @@ export class StrandExpression extends SpwExpression<Kind> {
                                                               yield [head, ctxt];
 
                                                               if (!tails || !(Symbol.iterator in Object(tails))) {
-                                                                  return;
+                                                                  return null;
                                                               }
 
                                                               for (const tail of tails) {
                                                                   yield [tail, ctxt];
                                                               }
 
-                                                              return;
+                                                              return null;
                                                           },
 
                                                       evaluators:

@@ -6,13 +6,15 @@ import {ConceptObjectiveDelimiter, ConceptSubjectiveDelimiter} from '@constructs
 import {DomainObjectiveDelimiter, DomainSubjectiveDelimiter} from '@constructs/ast/nodes/containers/domain/delimiters';
 import {EssenceObjectiveDelimiter, EssenceSubjectiveDelimiter} from '@constructs/ast/nodes/containers/essence/delimiters';
 import {GroupObjectiveDelimiter, GroupSubjectiveDelimiter} from '@constructs/ast/nodes/containers/group/delimiters';
-import {BlockDelimiter} from '@constructs/ast/nodes/atoms/delimiters/block/delimiter';
-import {CommonDelimiter} from '@constructs/ast/nodes/atoms/delimiters/common/delimiter';
+import {BlockDelimiter} from '@constructs/ast/nodes/atoms/operators/delimiters/block/delimiter';
+import {CommonDelimiter} from '@constructs/ast/nodes/atoms/operators/delimiters/common/delimiter';
+import {ConstructContext} from '@constructs/runtime/context/interfaces';
 
 type SpwConstructorObject = { [K in ConstructKind]: typeof SpwConstruct & ISpwConstructStatic<K> };
 
 const spwItemConstructors = {
     unknown: SpwConstruct,
+    context: ConstructContext,
     // scalars
 
     anchor: AnchorNode,

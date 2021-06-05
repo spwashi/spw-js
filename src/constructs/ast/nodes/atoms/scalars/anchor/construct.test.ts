@@ -1,7 +1,7 @@
 import {selectAllNodes, selectLastAcknowledgedNode} from '../../../../_util/runtime/selectors';
 import {AnchorNode} from '@constructs/ast';
 import faker from 'faker';
-import {initRuntime} from '@constructs/ast/_util/runtime/initRuntime';
+import {initRuntime} from '@constructs/ast/_util/runtime/initializers/runtime';
 
 describe('AnchorNodes',
          () => {

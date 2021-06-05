@@ -1,7 +1,7 @@
 import {PerspectiveExpression} from '@constructs/ast';
 import {perspectiveExpressionRule} from '@grammar/ast/expressions/operational/perspective/rule';
 import {selectAllNodes, selectLastAcknowledgedNode} from '../../../_util/runtime/selectors';
-import {initRuntime} from '@constructs/ast/_util/runtime/initRuntime';
+import {initRuntime} from '@constructs/ast/_util/runtime/initializers/runtime';
 
 describe('Rule', () => {
     it('should exist', function () {

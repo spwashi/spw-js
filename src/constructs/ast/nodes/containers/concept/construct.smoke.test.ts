@@ -2,7 +2,7 @@ import {Domain, InvocationOperator} from '@constructs/ast';
 import {Runtime} from '@constructs/runtime/runtime';
 import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import {selectAllNodes, selectLastAcknowledgedNode} from '@constructs/ast/_util/runtime/selectors';
-import {initRuntime} from '@constructs/ast/_util/runtime/initRuntime';
+import {initRuntime} from '@constructs/ast/_util/runtime/initializers/runtime';
 
 describe('Domain:SmokeTest',
          () => {

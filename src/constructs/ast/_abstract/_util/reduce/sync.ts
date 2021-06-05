@@ -11,12 +11,17 @@ import {defaultLifecycleGenerator} from '@constructs/ast/_abstract/_util/reduce/
  * @param prototypes
  * @param lifecycle
  */
-export function reduceConstructSync<Subject, StartType, Intermediate, ReturnType, Context extends InteractionContext | null = InteractionContext>(
+export function reduceConstructSync<Context extends InteractionContext = InteractionContext,
+    Subject = any,
+    StartType = any | null,
+    Intermediate = any,
+    ReturnType = any,
+    >(
     subject: Subject | null,
-    config: ConstructReductionConfig,
-    seed: [StartType | null, Context | null]   = [null, null],
-    prototypes: Iterable<ComponentDescription> = [],
-    lifecycle: ReductionLifecycleController    = defaultLifecycleGenerator,
+    config: ConstructReductionConfig<Context>,
+    seed: [StartType | null, Context | null]            = [null, null],
+    prototypes: Iterable<ComponentDescription<Context>> = [],
+    lifecycle: ReductionLifecycleController             = defaultLifecycleGenerator,
 ): [ReturnType, Context] {
     lifecycle({
                   type:    'begin-reduction',

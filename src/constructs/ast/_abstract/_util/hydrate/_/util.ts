@@ -36,17 +36,21 @@ export type HydrationInput =
     | Partial<RawSpwConstruct>[]
     | { [k: string]: RawSpwConstruct };
 
-export interface HydrationContext extends InteractionContext {
-    location?: { [k: string]: any };
+export type AbsorbInput =
+    SpwConstruct
+    | HydratedSpwItem;
 
+export type AbsorbOutput =
+    SpwConstruct
+    | HydratedSpwItem
+    | null;
+
+export interface HydrationContext extends InteractionContext {
     hydrate?(node: HydrationInput, context: HydrationContext):
         SpwConstruct | null;
 
 
-    absorb?(spwNode: SpwConstruct | HydratedSpwItem):
-        SpwConstruct | HydratedSpwItem | null;
-
-    [s: string]: any
+    absorb?(spwNode: AbsorbInput): AbsorbOutput;
 }
 
 export const joinHydratedProperties =

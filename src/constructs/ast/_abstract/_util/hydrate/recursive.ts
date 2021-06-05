@@ -10,9 +10,8 @@ type ObjectOfSpw = { [k: string]: SpwItemValue };
  * @param location
  * @param context
  */
-function contextualizeLocation(location: SpwNodeLocation | null | undefined, context: HydrationContext) {
-    return location ? {...location, ...context.location}
-                    : null;
+function normalizeLocation(location: SpwNodeLocation | null | undefined) {
+    return location ? {...location} : null;
 }
 
 /**
@@ -40,7 +39,7 @@ function hydrateConstruct(n: Partial<RawSpwConstruct>, context: HydrationContext
                       }),
                       {
                           kind:     node.kind,
-                          location: contextualizeLocation(node.location, context),
+                          location: normalizeLocation(node.location),
                       },
                   ) as Partial<HydratedSpwItem>;
 
@@ -91,5 +90,4 @@ export function hydrateRecursively(node: HydrationInput, hydrationContext: Hydra
     // hydrate objects
     return !node?.kind ? hydratePrimitive(node, hydrationContext)
                        : hydrateConstruct(node, hydrationContext);
-
 }

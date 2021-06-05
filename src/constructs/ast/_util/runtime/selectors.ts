@@ -17,5 +17,5 @@ export function selectAllNodes(runtime: Runtime): SpwConstruct[] {
  * @param runtime
  */
 export function selectLastAcknowledgedNode(runtime: Runtime): SpwConstruct | undefined {
-    return runtime.registers.lastAcknowledged.entries?.[0]?.item;
+    return runtime.registers.subject.entries?.[0]?.item;
 }

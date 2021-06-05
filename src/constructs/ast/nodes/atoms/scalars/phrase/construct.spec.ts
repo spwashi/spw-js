@@ -1,7 +1,7 @@
 import {selectAllNodes, selectLastAcknowledgedNode} from '../../../../_util/runtime/selectors';
 import {PhraseNode} from '@constructs/ast';
 import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
-import {initRuntime} from '@constructs/ast/_util/runtime/initRuntime';
+import {initRuntime} from '@constructs/ast/_util/runtime/initializers/runtime';
 
 describe('Phrase Nodes',
          () => {

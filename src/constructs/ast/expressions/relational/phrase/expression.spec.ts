@@ -2,7 +2,7 @@ import {PhraseExpression, StrandExpression} from '@constructs/ast';
 import {phraseExpressionRule} from '@grammar/ast/expressions/relational/phrase/rule';
 import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
 import {selectAllNodes, selectLastAcknowledgedNode} from '../../../_util/runtime/selectors';
-import {initRuntime} from '@constructs/ast/_util/runtime/initRuntime';
+import {initRuntime} from '@constructs/ast/_util/runtime/initializers/runtime';
 
 describe('Rule', () => {
     it('should exist', function () {

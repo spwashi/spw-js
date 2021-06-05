@@ -1,22 +1,31 @@
 {
 function spwHead() {
     var _cache = new Map();
+    /**
+     * add the usual things to a node, remove missteps
+     * @param node
+     */
+    function normalize(
     // @ts-ignore
-    function normalize(node) {
-        return Object.assign({}, Object
-            .fromEntries(Object
+    node) {
+        return Object.assign({
+            src: text(),
+            location: location(),
+        }, Object.fromEntries(Object
             .entries(node)
             .filter(function (e) {
             var k = e[0];
             var v = e[1];
             return k === 'key' ? true : v !== undefined;
-        })), {
-            src: text(),
-            location: location(),
-        });
+        })));
     }
+    /**
+     * Convert a node to a {@see SpwConstruct } SpwConstruct initializer
+     * @param node
+     */
+    function toSpwItem(
     // @ts-ignore
-    function toSpwItem(node) {
+    node) {
         if (typeof location === 'undefined')
             return;
         if (!node.kind)
@@ -28,6 +37,7 @@ function spwHead() {
         _cache.set(cacheKey, out);
         return out;
     }
+    /** Actions **/
     var constructs = {
         space: function spaceNodeAction() { return toSpwItem({ kind: 'space' }); },
     };
