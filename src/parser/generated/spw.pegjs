@@ -11,9 +11,7 @@ function spwHead() {
         return Object.assign({
             src: text(),
             location: location(),
-        }, Object.fromEntries(Object
-            .entries(node)
-            .filter(function (e) {
+        }, Object.fromEntries(Object.entries(node).filter(function (e) {
             var k = e[0];
             var v = e[1];
             return k === 'key' ? true : v !== undefined;
@@ -39,7 +37,9 @@ function spwHead() {
     }
     /** Actions **/
     var constructs = {
-        space: function spaceNodeAction() { return toSpwItem({ kind: 'space' }); },
+        space: function spaceNodeAction() {
+            return toSpwItem({ kind: 'space' });
+        },
     };
     return {
         toSpwItem: toSpwItem,

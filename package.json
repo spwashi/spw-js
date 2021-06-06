@@ -14,7 +14,9 @@
     "tsc": "tsc",
     "prebuild": "yarn src:build:parser",
     "build": "node ./node_modules/ttypescript/bin/tsc && ./node_modules/@babel/cli/bin/babel.js dist -d dist",
-    "postpublish": "cd dist || true; cp -rf package.json ../"
+    "postpublish": "cd dist || true; cp -rf package.json ../",
+    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "eslint-fix": "eslint --fix"
   },
   "repository": {
     "type": "git",

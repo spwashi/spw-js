@@ -1,6 +1,6 @@
-import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
-import {Register} from '@constructs/runtime/register/register';
-import {ConstructContext} from '@constructs/runtime/context/interfaces/index';
+import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
+import { Register } from '@constructs/runtime/register/register';
+import { ConstructContext } from '@constructs/runtime/context/interfaces/index';
 
 /**
  * Pushed when an operator is encountered
@@ -17,6 +17,6 @@ import {ConstructContext} from '@constructs/runtime/context/interfaces/index';
 
  */
 export interface OperativeContext extends ConstructContext {
-    operator: SpwConstruct;
-    subject: Register<SpwConstruct>;
+  operator: SpwConstruct;
+  subject: Register<SpwConstruct>;
 }

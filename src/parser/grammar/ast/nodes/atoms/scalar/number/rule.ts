@@ -1,22 +1,19 @@
-import {oneOrMoreOf, regExpLike, sequenceOf} from '@spwashi/language/parsers/grammar/combinators';
-import {Rule} from '@spwashi/language/parsers/grammar';
-import {ruleName} from './ref';
-import {NumberNode} from '@constructs/ast/nodes/atoms/scalars/number/construct';
+import {
+  oneOrMoreOf,
+  regExpLike,
+  sequenceOf,
+} from '@spwashi/language/parsers/grammar/combinators';
+import { Rule } from '@spwashi/language/parsers/grammar';
+import { ruleName } from './ref';
+import { NumberNode } from '@constructs/ast/nodes/atoms/scalars/number/construct';
 
-const oneOrMoreDigits =
-          oneOrMoreOf(
-              regExpLike('\\d'),
-          );
+const oneOrMoreDigits = oneOrMoreOf(regExpLike('\\d'));
 
-const numberSequence =
-          sequenceOf([
-                         oneOrMoreDigits
-                             .named('num'),
-                     ]);
+const numberSequence = sequenceOf([oneOrMoreDigits.named('num')]);
 
 const _action =
-          // language=JavaScript
-          `
+  // language=JavaScript
+  `
               return toSpwItem({
                                    kind: 'number',
 

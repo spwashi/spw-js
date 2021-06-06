@@ -1,5 +1,5 @@
-import {SpwConstruct} from '@constructs/ast/_abstract/spwConstruct';
-import {Runtime} from '@constructs/runtime/runtime';
+import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
+import { Runtime } from '@constructs/runtime/runtime';
 
 /**
  * All registered nodes
@@ -7,8 +7,8 @@ import {Runtime} from '@constructs/runtime/runtime';
  * @param runtime
  */
 export function selectAllNodes(runtime: Runtime): SpwConstruct[] {
-    const registerValues = runtime.registers.all.entries ?? [];
-    return registerValues.map(entry => entry.item);
+  const registerValues = runtime.registers.all.entries ?? [];
+  return registerValues.map((entry) => entry.item);
 }
 
 /**
@@ -16,6 +16,8 @@ export function selectAllNodes(runtime: Runtime): SpwConstruct[] {
  *
  * @param runtime
  */
-export function selectLastAcknowledgedNode(runtime: Runtime): SpwConstruct | undefined {
-    return runtime.registers.subject.entries?.[0]?.item;
+export function selectLastAcknowledgedNode(
+  runtime: Runtime,
+): SpwConstruct | undefined {
+  return runtime.registers.subject.entries?.[0]?.item;
 }

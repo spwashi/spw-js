@@ -1,3 +1,3 @@
-import {spwParser} from './parser/generated';
+import { spwParser } from './parser/generated';
 
-export {spwParser};
+export { spwParser };

@@ -1,5 +1,5 @@
-import {referenceTo} from '@spwashi/language/parsers/grammar/combinators';
-import {PhraseExpression} from '@constructs/ast';
+import { referenceTo } from '@spwashi/language/parsers/grammar/combinators';
+import { PhraseExpression } from '@constructs/ast';
 
-export const ruleName         = PhraseExpression.name;
-export const phraseExpression = referenceTo(ruleName)
+export const ruleName = PhraseExpression.name;
+export const phraseExpression = referenceTo(ruleName);
