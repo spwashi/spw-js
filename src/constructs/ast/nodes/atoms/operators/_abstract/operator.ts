@@ -2,9 +2,9 @@ import { SpwNode } from '../../../_abstract/node';
 import { ConstructKind } from '../../../../_types/kind';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
 import {
-  SpwConstruct,
+  Construct,
   ConstructComponents,
-} from '@constructs/ast/_abstract/spwConstruct';
+} from '../../../../_abstract/construct';
 
 /**
  * Operators have "side effects" in that they represent the invocation of
@@ -14,14 +14,14 @@ export default abstract class SpwOperator<
   Kind extends ConstructKind = any,
 > extends SpwNode<Kind> {
   static components: ConstructComponents = {
-    token: SpwConstruct.makeComponent({
+    token: Construct.makeComponent({
       _fallback: null as any,
       name: 'token',
       selector: function (s) {
         return s?.token ?? this._fallback;
       },
     }),
-    label: SpwConstruct.makeComponent({
+    label: Construct.makeComponent({
       name: 'label',
 
       evaluators: {

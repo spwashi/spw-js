@@ -1,16 +1,16 @@
 import {
   selectAllNodes,
   selectLastAcknowledgedNode,
-} from '../../../../_util/runtime/selectors';
+} from '../../../../../runtime/_util/selectors';
 import { StringNode } from '@constructs/ast';
-import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
-import { initRuntime } from '@constructs/ast/_util/runtime/initializers/runtime';
+import { Construct } from '../../../../_abstract/construct';
+import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
 
 describe('String Nodes', () => {
   it('can be parsed', async (done) => {
     const runtime = await initRuntime(`"this is a string"`);
-    const last: SpwConstruct | undefined = selectLastAcknowledgedNode(runtime);
-    const all: SpwConstruct[] = selectAllNodes(runtime);
+    const last: Construct | undefined = selectLastAcknowledgedNode(runtime);
+    const all: Construct[] = selectAllNodes(runtime);
     if (!StringNode.isStringNode(last)) {
       throw new Error('Incorrect type');
     }

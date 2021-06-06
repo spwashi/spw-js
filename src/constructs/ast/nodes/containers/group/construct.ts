@@ -4,7 +4,7 @@ import {
   GroupSubjectiveDelimiter,
 } from './delimiters';
 import { ConstructKind } from '@constructs/ast/_types/kind';
-import { ConstructComponents } from '@constructs/ast/_abstract/spwConstruct';
+import { ConstructComponents } from '../../../_abstract/construct';
 
 export class Group extends SpwContainerNode<'group'> {
   static kind = 'group' as ConstructKind;

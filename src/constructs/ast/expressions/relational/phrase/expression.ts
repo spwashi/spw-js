@@ -1,9 +1,6 @@
 import { SpwExpression } from '@constructs/ast/expressions/_abstract/expression';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  SpwConstruct,
-} from '@constructs/ast/_abstract/spwConstruct';
+import { ISpwConstructStatic, Construct } from '../../../_abstract/construct';
 import {
   ComponentDescription,
   ComponentEvaluatorObject,
@@ -16,7 +13,7 @@ export class PhraseExpression extends SpwExpression<Kind> {
   static readonly kind = 'phrase_expression';
 
   static components = {
-    body: SpwConstruct.makeComponent({
+    body: Construct.makeComponent({
       name: 'body',
       evaluators: {
         stringify: (s) =>

@@ -4,7 +4,7 @@ import {
   DomainSubjectiveDelimiter,
 } from '@constructs/ast/nodes/containers/domain/delimiters';
 import { ConstructKind } from '@constructs/ast/_types/kind';
-import { ConstructComponents } from '@constructs/ast/_abstract/spwConstruct';
+import { ConstructComponents } from '../../../_abstract/construct';
 
 export class Domain extends SpwContainerNode<'domain'> {
   static kind = 'domain' as ConstructKind;

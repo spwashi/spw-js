@@ -1,9 +1,9 @@
-import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
+import { Construct } from '../../../ast/_abstract/construct';
 import { Register } from '@constructs/runtime/register/register';
 
 type RuntimeContext = Register<ConstructContext>;
 
-export class ConstructContext extends SpwConstruct {
+export class ConstructContext extends Construct {
   static kind: 'context';
 
   setting?: RuntimeContext;

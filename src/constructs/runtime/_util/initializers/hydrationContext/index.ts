@@ -1,8 +1,8 @@
-import { RuntimeRegisters } from '@constructs/ast/_util/runtime/_types/registers';
+import { RuntimeRegisters } from '@constructs/runtime/_util/_types/registers';
 import { HydrationContext } from '@constructs/ast/_abstract/_util/hydrate/_/util';
-import { hydrateNode } from '@constructs/ast/_util/runtime/initializers/hydrationContext/_util/hydrateNode';
+import { hydrateNode } from '@constructs/runtime/_util/initializers/hydrationContext/_util/hydrateNode';
 import { PlainInteractionContext } from '@constructs/ast/_abstract/_types';
-import { absorbNodeIntoThis } from '@constructs/ast/_util/runtime/initializers/hydrationContext/_util/absorbNodeIntoThis';
+import { absorbNodeIntoThis } from '@constructs/runtime/_util/initializers/hydrationContext/_util/absorbNodeIntoThis';
 
 type PartialHydrationContext = Partial<HydrationContext> & {
   registers: RuntimeRegisters;

@@ -2,7 +2,7 @@ import SpwOperator, { operatorComponents } from '../_abstract/operator';
 import {
   ISpwConstructStatic,
   ConstructComponents,
-} from '@constructs/ast/_abstract/spwConstruct';
+} from '../../../../_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { IAtomicSpwOperatorStatic } from '../_abstract/_types/atomic';
 

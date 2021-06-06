@@ -1,8 +1,8 @@
 import { SpwNode } from '../../../_abstract/node';
 import {
   ISpwConstructStatic,
-  SpwConstruct,
-} from '../../../../_abstract/spwConstruct';
+  Construct,
+} from '../../../../_abstract/construct';
 import { staticImplements } from '../../../../_util/typescript/staticImplements';
 import {
   ComponentDescription,
@@ -16,7 +16,7 @@ export class PhraseNode extends SpwNode<Kind> {
   static readonly kind = 'phrase';
 
   static components = {
-    body: SpwConstruct.makeComponent({
+    body: Construct.makeComponent({
       name: 'body',
 
       evaluators: {

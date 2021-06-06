@@ -1,4 +1,4 @@
-import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
+import { Construct } from '../../../ast/_abstract/construct';
 import { Register } from '@constructs/runtime/register/register';
 import { ConstructContext } from '@constructs/runtime/context/interfaces/index';
 
@@ -17,6 +17,6 @@ import { ConstructContext } from '@constructs/runtime/context/interfaces/index';
 
  */
 export interface OperativeContext extends ConstructContext {
-  operator: SpwConstruct;
-  subject: Register<SpwConstruct>;
+  operator: Construct;
+  subject: Register<Construct>;
 }

@@ -1,4 +1,4 @@
-import { RuntimeRegisters } from '@constructs/ast/_util/runtime/_types/registers';
+import { RuntimeRegisters } from '@constructs/runtime/_util/_types/registers';
 
 export type Runtime = {
   registers: RuntimeRegisters;

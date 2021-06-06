@@ -1,8 +1,8 @@
 /* eslint-disable no-var,@typescript-eslint/ban-ts-comment */
 
-import { SpwConstruct } from '../../../constructs/ast/_abstract/spwConstruct';
+import { Construct } from '../../../constructs/ast/_abstract/construct';
 
-SpwConstruct;
+Construct;
 
 // language=JavaScript
 export default `
@@ -44,7 +44,7 @@ function spwHead() {
   }
 
   /**
-   * Convert a node to a {@see SpwConstruct } SpwConstruct initializer
+   * Convert a node to a {@see Construct } SpwConstruct initializer
    * @param node
    */
   function toSpwItem(

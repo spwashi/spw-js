@@ -1,9 +1,9 @@
 import {
   selectAllNodes,
   selectLastAcknowledgedNode,
-} from '../../../../_util/runtime/selectors';
+} from '../../../../../runtime/_util/selectors';
 import { NumberNode } from '@constructs/ast/nodes/atoms/scalars/number/construct';
-import { initRuntime } from '@constructs/ast/_util/runtime/initializers/runtime';
+import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
 
 describe(NumberNode.name, () => {
   it('Can be parsed', async (done) => {

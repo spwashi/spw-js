@@ -1,9 +1,9 @@
-import { RuntimeRegisters } from '@constructs/ast/_util/runtime/_types/registers';
+import { RuntimeRegisters } from '@constructs/runtime/_util/_types/registers';
 import {
   AbsorbInput,
   AbsorbOutput,
 } from '@constructs/ast/_abstract/_util/hydrate/_/util';
-import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
+import { Construct } from '../../../../../ast/_abstract/construct';
 import { Register } from '@constructs/runtime/register/register';
 
 /**
@@ -18,7 +18,7 @@ export function absorbNodeIntoThis(
 ): AbsorbOutput | null {
   const registers = this.registers;
 
-  if (!SpwConstruct.isSpwConstruct(node)) {
+  if (!Construct.isSpwConstruct(node)) {
     return node;
   }
 
@@ -29,6 +29,8 @@ export function absorbNodeIntoThis(
   if (!key) {
     return node;
   }
+
+  // Add node to the "indexed" register
 
   const keys = registers.indexed.set(
     key,

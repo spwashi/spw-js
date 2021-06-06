@@ -3,7 +3,7 @@ import {
   RawSpwConstruct,
 } from '@constructs/ast/_abstract/_types/internal';
 import { HydrationContext } from '@constructs/ast/_abstract/_util/hydrate/_/util';
-import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
+import { Construct } from '../../../../../ast/_abstract/construct';
 import { getConstructClass } from '@constructs/index';
 import { hydrateShallow } from '@constructs/ast/_abstract/_util/hydrate/shallow';
 import { hydrateRecursively } from '@constructs/ast/_abstract/_util/hydrate/recursive';
@@ -20,7 +20,7 @@ import { PlainInteractionContext } from '@constructs/ast/_abstract/_types';
 export function hydrateNode(
   node: RawSpwConstruct,
   context: HydrationContext,
-): SpwConstruct | null {
+): Construct | null {
   const Constructor = getConstructClass(node.kind);
 
   const hydrationContext = PlainInteractionContext().enter({
@@ -32,7 +32,7 @@ export function hydrateNode(
      * @param node
      * @param context
      */
-    hydrate(node, context): SpwConstruct | null {
+    hydrate(node, context): Construct | null {
       return hydrateShallow(node, context).node;
     },
   } as Partial<HydrationContext>);

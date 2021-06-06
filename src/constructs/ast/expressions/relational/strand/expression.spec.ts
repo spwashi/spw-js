@@ -1,17 +1,17 @@
 import {
   selectAllNodes,
   selectLastAcknowledgedNode,
-} from '../../../_util/runtime/selectors';
+} from '../../../../runtime/_util/selectors';
 import { StrandExpression } from '@constructs/ast/expressions/relational/strand/expression';
-import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
+import { Construct } from '../../../_abstract/construct';
 import * as util from 'util';
-import { initRuntime } from '@constructs/ast/_util/runtime/initializers/runtime';
+import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
 
 describe('Strand Expressions', () => {
   it('is a [node] followed by any number of valid strand tails', (done) => {
     (async () => {
-      let all: SpwConstruct[] = [];
-      let last: SpwConstruct | undefined = undefined;
+      let all: Construct[] = [];
+      let last: Construct | undefined = undefined;
       try {
         const runtime = await initRuntime(
           `test test test =>    test    =>    test   `,

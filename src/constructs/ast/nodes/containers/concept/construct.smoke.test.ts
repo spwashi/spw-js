@@ -1,17 +1,17 @@
 import { Domain, InvocationOperator } from '@constructs/ast';
 import { Runtime } from '@constructs/runtime/runtime';
-import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
+import { Construct } from '../../../_abstract/construct';
 import {
   selectAllNodes,
   selectLastAcknowledgedNode,
-} from '@constructs/ast/_util/runtime/selectors';
-import { initRuntime } from '@constructs/ast/_util/runtime/initializers/runtime';
+} from '@constructs/runtime/_util/selectors';
+import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
 
 describe('Domain:SmokeTest', () => {
   it('does what we expect it to', async (done) => {
     {
       const runtime: Runtime = await initRuntime(`{one => two => three}`);
-      const all: SpwConstruct[] = selectAllNodes(runtime);
+      const all: Construct[] = selectAllNodes(runtime);
       expect(all.length).toEqual(11);
     }
 
@@ -23,9 +23,8 @@ describe('Domain:SmokeTest', () => {
                                 three
                             }
                         `);
-      const last: SpwConstruct | undefined =
-        selectLastAcknowledgedNode(runtime);
-      const all: SpwConstruct[] = selectAllNodes(runtime);
+      const last: Construct | undefined = selectLastAcknowledgedNode(runtime);
+      const all: Construct[] = selectAllNodes(runtime);
       expect(last?.kind).toEqual(Domain.kind);
       expect(all.length).toEqual(6);
     }
@@ -39,9 +38,8 @@ describe('Domain:SmokeTest', () => {
                                         => check "./dist" for the output of < the build step >
                                 }
                             `);
-      const last: SpwConstruct | undefined =
-        selectLastAcknowledgedNode(runtime);
-      const all: SpwConstruct[] = selectAllNodes(runtime);
+      const last: Construct | undefined = selectLastAcknowledgedNode(runtime);
+      const all: Construct[] = selectAllNodes(runtime);
       expect(last?.kind).toEqual(Domain.kind);
       expect(all.length).toEqual(43);
     }
@@ -50,9 +48,8 @@ describe('Domain:SmokeTest', () => {
       const runtime: Runtime = await initRuntime(
         `{_<boon > ~one => two => three}`,
       );
-      const last: SpwConstruct | undefined =
-        selectLastAcknowledgedNode(runtime);
-      const all: SpwConstruct[] = selectAllNodes(runtime);
+      const last: Construct | undefined = selectLastAcknowledgedNode(runtime);
+      const all: Construct[] = selectAllNodes(runtime);
       expect(last?.kind).toEqual(Domain.kind);
 
       expect(InvocationOperator).not.toEqual(

@@ -3,7 +3,7 @@ import {
   RawSpwConstruct,
 } from '@constructs/ast/_abstract/_types/internal';
 import { InteractionContext } from '@constructs/ast/_abstract/_types';
-import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
+import { Construct } from '../../../construct';
 
 export function _entryReducer(
   t: RawSpwConstruct,
@@ -29,15 +29,12 @@ export type HydrationInput =
   | Partial<RawSpwConstruct>[]
   | { [k: string]: RawSpwConstruct };
 
-export type AbsorbInput = SpwConstruct | HydratedSpwItem;
+export type AbsorbInput = Construct | HydratedSpwItem;
 
-export type AbsorbOutput = SpwConstruct | HydratedSpwItem | null;
+export type AbsorbOutput = Construct | HydratedSpwItem | null;
 
 export interface HydrationContext extends InteractionContext {
-  hydrate?(
-    node: HydrationInput,
-    context: HydrationContext,
-  ): SpwConstruct | null;
+  hydrate?(node: HydrationInput, context: HydrationContext): Construct | null;
 
   absorb?(spwNode: AbsorbInput): AbsorbOutput;
 }

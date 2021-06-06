@@ -1,5 +1,5 @@
 import { NumberNode } from '@constructs/ast/nodes/atoms/scalars/number/construct';
-import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
+import { Construct } from '../../../../_abstract/construct';
 import {
   InteractionContext,
   PlainInteractionContext,
@@ -46,7 +46,7 @@ describe('Number', () => {
 function initHydrationContext() {
   const hydrationContextFragment = {
     hydrate: (raw: RawSpwConstruct, context: InteractionContext) =>
-      hydrateRecursively(raw, context) as SpwConstruct | null,
+      hydrateRecursively(raw, context) as Construct | null,
   } as Partial<HydrationContext>;
 
   const context = PlainInteractionContext().enter(hydrationContextFragment);

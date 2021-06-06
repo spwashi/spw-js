@@ -1,7 +1,7 @@
 import {
   ISpwConstructStatic,
-  SpwConstruct,
-} from '../../../../_abstract/spwConstruct';
+  Construct,
+} from '../../../../_abstract/construct';
 import { staticImplements } from '../../../../_util/typescript/staticImplements';
 import { SpwNode } from '../../../_abstract/node';
 import { ComponentDescription } from '../../../../_abstract/_types';
@@ -11,7 +11,7 @@ export class AnchorNode extends SpwNode<'anchor'> {
   static readonly kind = 'anchor';
 
   static components = {
-    label: SpwConstruct.makeComponent({
+    label: Construct.makeComponent({
       name: 'label',
       selector: (s) => s.label,
     }),

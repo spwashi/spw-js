@@ -8,7 +8,7 @@ import {
 } from '@spwashi/language/parsers/grammar/combinators';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import { anchorNode } from '../../scalar/anchor/ref';
-import { ISpwConstructStatic } from '@constructs/ast/_abstract/spwConstruct';
+import { ISpwConstructStatic } from '../../../../../../../constructs/ast/_abstract/construct';
 import { IAtomicSpwOperatorStatic } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
 
 function init(

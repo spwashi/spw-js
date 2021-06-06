@@ -1,9 +1,6 @@
 import { SpwExpression } from '@constructs/ast/expressions/_abstract/expression';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  SpwConstruct,
-} from '@constructs/ast/_abstract/spwConstruct';
+import { ISpwConstructStatic, Construct } from '../../../_abstract/construct';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
 
 type Kind = 'strand';
@@ -13,7 +10,7 @@ export class StrandExpression extends SpwExpression<Kind> {
   static readonly kind = 'strand';
 
   static components = {
-    items: SpwConstruct.makeComponent({
+    items: Construct.makeComponent({
       name: 'items',
 
       selector: (subject: any) => {

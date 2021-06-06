@@ -5,7 +5,7 @@ import {
   PlainInteractionContext,
 } from '@constructs/ast/_abstract/_types';
 import { RawSpwConstruct } from '../../_types/internal';
-import { SpwConstruct } from '../../spwConstruct';
+import { Construct } from '../../construct';
 import { HydrationContext, joinHydratedProperties } from './_/util';
 import { getConstructClass } from '../../../../index';
 import { completeConfig } from '@constructs/ast/_abstract/_util/reduce/_/util';
@@ -65,7 +65,7 @@ export function hydrateShallow<
 >(
   node: Unhydrated,
   context: Context,
-): { node: SpwConstruct; promise: Promise<[Out[], Context]> } {
+): { node: Construct; promise: Promise<[Out[], Context]> } {
   type Output = Out[];
   type SeedValue = Partial<RawSpwConstruct>;
 

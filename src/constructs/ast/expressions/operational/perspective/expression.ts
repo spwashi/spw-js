@@ -1,9 +1,6 @@
 import { SpwExpression } from '../../_abstract/expression';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  SpwConstruct,
-} from '../../../_abstract/spwConstruct';
+import { ISpwConstructStatic, Construct } from '../../../_abstract/construct';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
 import { DirectionOperator } from '@constructs/ast';
 
@@ -14,11 +11,11 @@ export class PerspectiveExpression extends SpwExpression<Kind> {
   static readonly kind = 'perspective_expression';
 
   static components = {
-    source: SpwConstruct.makeComponent({ name: 'source' }),
+    source: Construct.makeComponent({ name: 'source' }),
 
-    lens: SpwConstruct.makeComponent({ name: 'lens' }),
+    lens: Construct.makeComponent({ name: 'lens' }),
 
-    target: SpwConstruct.makeComponent({
+    target: Construct.makeComponent({
       name: 'target',
       generator: function* (target, ctxt) {
         let directionOperator;

@@ -2,7 +2,7 @@ import { staticImplements } from '@constructs/ast/_util/typescript/staticImpleme
 import {
   ISpwConstructStatic,
   ConstructComponents,
-} from '@constructs/ast/_abstract/spwConstruct';
+} from '../../../../../_abstract/construct';
 import { SpwDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiters/_abstract/delimiter';
 import { operatorComponents } from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
 

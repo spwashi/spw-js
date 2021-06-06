@@ -27,7 +27,7 @@ type KeyReductionSeed = [string, InteractionContext];
 /**
  * Represents the most abstract item in a Spw syntax tree
  */
-export class SpwConstruct<
+export class Construct<
   K extends ConstructKind = ConstructKind,
   U extends ConstructInitializer = ConstructInitializer,
 > {
@@ -40,9 +40,9 @@ export class SpwConstruct<
   protected readonly _internal: U | null;
 
   constructor(internal?: U) {
-    const constructor = (<typeof SpwConstruct>(
+    const constructor = (<typeof Construct>(
       this.constructor
-    )) as unknown as typeof SpwConstruct;
+    )) as unknown as typeof Construct;
     this.kind = constructor.kind as K;
     this._internal = internal || null;
 
@@ -60,7 +60,7 @@ export class SpwConstruct<
     type Seed = KeyReductionSeed;
 
     const context = PlainInteractionContext().enter();
-    const Ctor = this.constructor as typeof SpwConstruct;
+    const Ctor = this.constructor as typeof Construct;
     const seed: Seed = ['', context];
 
     const reduced = Ctor.reduce(
@@ -101,7 +101,7 @@ export class SpwConstruct<
     return reduced[0];
   }
 
-  static isSpwConstruct(node: SpwConstruct | any): node is SpwConstruct {
+  static isSpwConstruct(node: Construct | any): node is Construct {
     return !!node?.kind;
   }
 
@@ -144,7 +144,7 @@ export class SpwConstruct<
   /**
    * Reduce a construct asynchronously
    *
-   * {@see SpwConstruct.reduce}
+   * {@see Construct.reduce}
    *
    * @param subject
    * @param options

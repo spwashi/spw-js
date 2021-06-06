@@ -1,10 +1,10 @@
 import {
   selectAllNodes,
   selectLastAcknowledgedNode,
-} from '../../../../_util/runtime/selectors';
+} from '../../../../../runtime/_util/selectors';
 import { AnchorNode } from '@constructs/ast';
 import faker from 'faker';
-import { initRuntime } from '@constructs/ast/_util/runtime/initializers/runtime';
+import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
 
 describe('AnchorNodes', () => {
   it('Can be parsed', async () => {

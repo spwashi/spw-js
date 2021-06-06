@@ -1,10 +1,7 @@
 import { SpwNode } from '../../_abstract/node';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
 import { ConstructKind } from '@constructs/ast/_types/kind';
-import {
-  ConstructComponents,
-  SpwConstruct,
-} from '@constructs/ast/_abstract/spwConstruct';
+import { ConstructComponents, Construct } from '../../../_abstract/construct';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
 
 type Delimiter = { token: string } | null;
@@ -14,7 +11,7 @@ type IContainerNodeStatic = {
   closeDelimiter: Delimiter;
 };
 
-type Item = SpwConstruct | any;
+type Item = Construct | any;
 
 type Container<
   T extends any = Item,
@@ -33,7 +30,7 @@ export abstract class SpwContainerNode<
   static readonly closeDelimiter: Delimiter = null;
 
   static components: ConstructComponents = {
-    open: SpwConstruct.makeComponent({
+    open: Construct.makeComponent({
       _fallback: null as Delimiter | null,
       name: 'open',
       selector: function (s) {
@@ -48,7 +45,7 @@ export abstract class SpwContainerNode<
         },
       },
     }),
-    body: SpwConstruct.makeComponent({
+    body: Construct.makeComponent({
       name: 'body',
 
       generator: function* (_body, ctxt) {
@@ -71,7 +68,7 @@ export abstract class SpwContainerNode<
         },
       },
     }),
-    close: SpwConstruct.makeComponent({
+    close: Construct.makeComponent({
       _fallback: null as Delimiter | null,
       name: 'close',
       selector: function (s) {

@@ -31,8 +31,8 @@ import {
 } from './ast';
 import {
   ISpwConstructStatic,
-  SpwConstruct,
-} from '@constructs/ast/_abstract/spwConstruct';
+  Construct,
+} from './ast/_abstract/construct';
 import { NumberNode } from '@constructs/ast/nodes/atoms/scalars/number/construct';
 import {
   ConceptObjectiveDelimiter,
@@ -55,11 +55,11 @@ import { CommonDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiter
 import { ConstructContext } from '@constructs/runtime/context/interfaces';
 
 type SpwConstructorObject = {
-  [K in ConstructKind]: typeof SpwConstruct & ISpwConstructStatic<K>;
+  [K in ConstructKind]: typeof Construct & ISpwConstructStatic<K>;
 };
 
 const spwItemConstructors = {
-  unknown: SpwConstruct,
+  unknown: Construct,
   context: ConstructContext,
   // scalars
 
@@ -121,6 +121,6 @@ const spwItemConstructors = {
 
 export function getConstructClass(
   kind: ConstructKind | any,
-): typeof SpwConstruct {
-  return spwItemConstructors[kind as ConstructKind] || SpwConstruct;
+): typeof Construct {
+  return spwItemConstructors[kind as ConstructKind] || Construct;
 }

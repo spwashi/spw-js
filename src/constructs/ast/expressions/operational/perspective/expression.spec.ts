@@ -3,8 +3,8 @@ import { perspectiveExpressionRule } from '@grammar/ast/expressions/operational/
 import {
   selectAllNodes,
   selectLastAcknowledgedNode,
-} from '../../../_util/runtime/selectors';
-import { initRuntime } from '@constructs/ast/_util/runtime/initializers/runtime';
+} from '../../../../runtime/_util/selectors';
+import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
 
 describe('Rule', () => {
   it('should exist', function () {

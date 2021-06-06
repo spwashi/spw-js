@@ -1,8 +1,8 @@
 import { SpwNode } from '../../../_abstract/node';
 import {
   ISpwConstructStatic,
-  SpwConstruct,
-} from '../../../../_abstract/spwConstruct';
+  Construct,
+} from '../../../../_abstract/construct';
 import { staticImplements } from '../../../../_util/typescript/staticImplements';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
 
@@ -11,7 +11,7 @@ export class NumberNode extends SpwNode<'number'> {
   static readonly kind = 'number';
 
   static components = {
-    value: SpwConstruct.makeComponent({
+    value: Construct.makeComponent({
       name: 'value',
       evaluators: {
         hydrate: (s) => parseInt(s as any),

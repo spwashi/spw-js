@@ -1,8 +1,8 @@
 import { SpwNode } from '../../../_abstract/node';
 import {
   ISpwConstructStatic,
-  SpwConstruct,
-} from '../../../../_abstract/spwConstruct';
+  Construct,
+} from '../../../../_abstract/construct';
 import { staticImplements } from '../../../../_util/typescript/staticImplements';
 import {
   ComponentDescription,
@@ -14,13 +14,13 @@ export class StringNode extends SpwNode<'string'> {
   static readonly kind = 'string';
 
   static components = {
-    open: SpwConstruct.makeComponent({
+    open: Construct.makeComponent({
       name: 'open',
 
       selector: () => '"',
     }),
 
-    body: SpwConstruct.makeComponent({
+    body: Construct.makeComponent({
       name: 'body',
 
       evaluators: {
@@ -31,7 +31,7 @@ export class StringNode extends SpwNode<'string'> {
       } as ComponentEvaluatorObject,
     }),
 
-    close: SpwConstruct.makeComponent({
+    close: Construct.makeComponent({
       name: 'close',
 
       selector: () => '"',

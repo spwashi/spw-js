@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { RawSpwConstruct } from '@constructs/ast/_abstract/_types/internal';
-import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
+import { Construct } from '../construct';
 
 export type SpwItemKey = string | null;
 
@@ -92,7 +92,7 @@ export type ComponentEvaluatorObject<
   toString?: SerializationReducer<undefined, string>;
 
   [k: string]:
-    | SerializationReducer<Intermediate, Output | SpwConstruct | string>
+    | SerializationReducer<Intermediate, Output | Construct | string>
     | SerializationReducer<undefined, string>
     | undefined;
 };

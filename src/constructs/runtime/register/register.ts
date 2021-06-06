@@ -1,6 +1,6 @@
-import { SpwConstruct } from '../../ast/_abstract/spwConstruct';
+import { Construct } from '../../ast/_abstract/construct';
 
-export interface RegisterEntry<T = SpwConstruct> {
+export interface RegisterEntry<T = Construct> {
   location: number;
   item: T;
 }
@@ -30,7 +30,7 @@ const defaultLocator = {
 /**
  * Acts like a stack
  */
-export class Register<T = SpwConstruct, ItemLocation extends any = number> {
+export class Register<T = Construct, ItemLocation extends any = number> {
   /**
    * Returns a location at which this item is stored
    *

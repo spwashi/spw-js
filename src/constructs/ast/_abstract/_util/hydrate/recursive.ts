@@ -1,4 +1,4 @@
-import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
+import { Construct } from '../../construct';
 import {
   HydratedSpwItem,
   RawSpwConstruct,
@@ -88,16 +88,13 @@ function isArray(node: HydrationInput): node is Partial<RawSpwConstruct>[] {
 export function hydrateRecursively(
   node: HydrationInput,
   hydrationContext: HydrationContext,
-): SpwConstruct | SpwConstruct[] | ObjectOfSpw | null {
+): Construct | Construct[] | ObjectOfSpw | null {
   // hydrate arrays
   if (isArray(node)) {
     return node
       .filter(Boolean)
       .map((node) => hydrateRecursively(node, hydrationContext))
-      .reduce(
-        (acc: SpwConstruct[], val) => acc.concat(val as SpwConstruct),
-        [],
-      );
+      .reduce((acc: Construct[], val) => acc.concat(val as Construct), []);
   }
 
   // hydrate objects

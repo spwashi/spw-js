@@ -1,7 +1,7 @@
 import { ConstructKind } from '../../_types/kind';
-import { SpwConstruct } from '../../_abstract/spwConstruct';
+import { Construct } from '../../_abstract/construct';
 
 export abstract class SpwExpression<
   Kind extends ConstructKind,
   U extends any = any,
-> extends SpwConstruct<Kind, U> {}
+> extends Construct<Kind, U> {}

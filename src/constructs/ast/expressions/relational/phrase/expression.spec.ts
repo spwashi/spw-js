@@ -1,11 +1,11 @@
 import { PhraseExpression, StrandExpression } from '@constructs/ast';
 import { phraseExpressionRule } from '@grammar/ast/expressions/relational/phrase/rule';
-import { SpwConstruct } from '@constructs/ast/_abstract/spwConstruct';
+import { Construct } from '../../../_abstract/construct';
 import {
   selectAllNodes,
   selectLastAcknowledgedNode,
-} from '../../../_util/runtime/selectors';
-import { initRuntime } from '@constructs/ast/_util/runtime/initializers/runtime';
+} from '../../../../runtime/_util/selectors';
+import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
 
 describe('Rule', () => {
   it('should exist', function () {
@@ -19,8 +19,8 @@ describe('Phrase Expressions', () => {
                                     => three
                               `);
 
-    const last: SpwConstruct | undefined = selectLastAcknowledgedNode(runtime);
-    const all: SpwConstruct[] = selectAllNodes(runtime);
+    const last: Construct | undefined = selectLastAcknowledgedNode(runtime);
+    const all: Construct[] = selectAllNodes(runtime);
     expect(all.length).toEqual(18);
     expect(last?.kind).toEqual(StrandExpression.kind);
     expect(last?.key).toEqual('boon <boon> {boon} boon=>two=>three');
