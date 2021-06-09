@@ -34,7 +34,7 @@ export type AbsorbInput = Construct | HydratedSpwItem;
 export type AbsorbOutput = Construct | HydratedSpwItem | null;
 
 export interface HydrationContext extends InteractionContext {
-  hydrate?(node: HydrationInput, context: HydrationContext): Construct | null;
+  hydrate(node: HydrationInput, context: HydrationContext): Construct | null;
 
   absorb?(spwNode: AbsorbInput): AbsorbOutput;
 }

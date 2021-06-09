@@ -36,11 +36,11 @@ function getEmptyBlockCombinator(
   const _action =
     // language=JavaScript
     `
-                  return {
-                      open,
-                      close
-                  };
-              `;
+              return {
+                open,
+                close
+              };
+            `;
   return pattern.withAction(_action);
 }
 
@@ -59,12 +59,12 @@ export function createContainerPattern(ruleName: string): Combinator {
   const _action =
     // language=JavaScript
     `
-                  return {
-                      open:  open,
-                      body:  body,
-                      close: close
-                  }
-              `;
+              return {
+                open:  open,
+                body:  body,
+                close: close
+              }
+            `;
 
   return anyOf([
     getEmptyBlockCombinator(open, close),

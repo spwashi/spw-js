@@ -2,13 +2,16 @@ import {
   anyOf,
   oneOrMoreOf,
   regExpLike,
+  stringLike,
   zeroOrMoreOf,
 } from '@spwashi/language/parsers/grammar/combinators';
+import { OperatorDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiters/operator/delimiter';
 
-export const spaceTab = regExpLike('\\t ');
+export const tab = regExpLike('\\t');
+export const space = stringLike(OperatorDelimiter.token);
 export const newline = regExpLike('\\n');
-
-const patterns = [spaceTab, newline.named('newline')];
+export const spaceTab = anyOf([space, tab]);
+const patterns = [tab, space, newline.named('newline')];
 
 // language=JavaScript
 const _action = 'return newline';

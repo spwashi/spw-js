@@ -140,7 +140,7 @@ export type ConstructReductionConfig<
    * @param context
    * @param isAsync
    */
-  evaluator: (
+  valueMapper: (
     o: any,
     key: ComponentKey,
     context: Context | null,
@@ -162,7 +162,7 @@ export type ConstructReductionConfig<
    * @param current
    * @param isAsync
    */
-  reducer: (
+  stepReducer: (
     previous: [ReductionOutput | any, Context | null],
     current: [ReductionOutput | null | undefined, Context | null],
     isAsync?: boolean | null,

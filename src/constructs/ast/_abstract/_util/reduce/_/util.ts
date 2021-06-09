@@ -9,16 +9,16 @@ export function completeConfig<
   C extends InteractionContext = InteractionContext,
 >(options: ConstructReductionOptions<C> = {}): ConstructReductionConfig<C> {
   const {
-    evaluator = () => null,
-    reducer = (_, next) => next,
+    valueMapper = () => null,
+    stepReducer = (_, next) => next,
     stepNormalizer = (_: any, [v, c]) => {
       return [Array.isArray(v) ? v.pop() : v, c] as [typeof v, C];
     },
   } = options;
 
   return {
-    reducer,
-    evaluator,
+    stepReducer: stepReducer,
+    valueMapper: valueMapper,
     stepNormalizer,
   };
 }

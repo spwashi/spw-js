@@ -69,7 +69,7 @@ export async function reduceConstructAsync<
             break;
           }
           const [item, ctxt] = value;
-          const mutated = await config.evaluator(
+          const mutated = await config.valueMapper(
             item,
             prototype.name,
             ctxt,
@@ -109,7 +109,7 @@ export async function reduceConstructAsync<
       ];
       const previous = await promised;
 
-      promised = (await config.reducer(previous, normalized, true)) as [
+      promised = (await config.stepReducer(previous, normalized, true)) as [
         ReturnType,
         Context,
       ];

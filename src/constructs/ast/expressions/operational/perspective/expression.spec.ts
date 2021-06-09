@@ -27,7 +27,7 @@ describe('Perspective Expressions', () => {
 
     expect(last.kind).toEqual(PerspectiveExpression.kind);
     expect(last.key).toEqual('actor@_lens[spec]->target');
-    expect(all.length).toEqual(10);
+    expect(all.length).toEqual(11);
 
     done();
   });

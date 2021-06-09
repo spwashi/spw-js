@@ -21,6 +21,6 @@ export function initHydrationContext(
     registers: registers,
     hydrate: hydrateNode,
     absorb: absorbNodeIntoThis,
-  } as PartialHydrationContext);
+  } as PartialHydrationContext) as HydrationContext;
   return hydrationContext;
 }

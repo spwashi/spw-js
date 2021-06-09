@@ -33,9 +33,7 @@ function hydrateConstruct(
 ) {
   const node = n as RawSpwConstruct;
   if (!n.kind) throw new Error('trying to hydrate without a kind');
-  if (!context.hydrate) {
-    throw new Error('Cannot hydrate without hydrator');
-  }
+
   const prehydrated = Object.entries(node)
     .filter(([k]) => !['kind', 'location', 'src', 'key'].includes(k))
     .reduce(

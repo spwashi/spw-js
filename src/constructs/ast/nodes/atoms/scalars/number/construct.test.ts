@@ -43,13 +43,13 @@ describe('Number', () => {
 /**
  * Initialize a hydration context that will let us test this Node
  */
-function initHydrationContext() {
-  const hydrationContextFragment = {
-    hydrate: (raw: RawSpwConstruct, context: InteractionContext) =>
+function initHydrationContext(): HydrationContext {
+  const fragment = {
+    hydrate: (raw: RawSpwConstruct, context: HydrationContext) =>
       hydrateRecursively(raw, context) as Construct | null,
   } as Partial<HydrationContext>;
 
-  const context = PlainInteractionContext().enter(hydrationContextFragment);
+  const context = PlainInteractionContext().enter(fragment) as HydrationContext;
   return context;
 }
 
@@ -64,7 +64,9 @@ function hydrateNumber(node: any, context: HydrationContext) {
     node as RawSpwConstruct,
     context,
   );
-  context.absorb?.(hydratedNode);
+  if (context.absorb) {
+    context.absorb(hydratedNode);
+  }
   return {
     node: hydratedNode,
     promise: Promise.resolve(promise).then(

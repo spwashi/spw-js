@@ -18,11 +18,13 @@ export function absorbNodeIntoThis(
 ): AbsorbOutput | null {
   const registers = this.registers;
 
-  if (!Construct.isSpwConstruct(node)) {
+  if (!Construct.isConstruct(node)) {
     return node;
   }
-
-  registers.all.push(node);
+  const resolved = registers.all.resolve(node);
+  if (!resolved) {
+    registers.all.push(node);
+  }
   registers.subject.push(node);
 
   const key = node.key;

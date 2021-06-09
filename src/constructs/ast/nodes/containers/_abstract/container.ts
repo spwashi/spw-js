@@ -1,8 +1,11 @@
 import { SpwNode } from '../../_abstract/node';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
 import { ConstructKind } from '@constructs/ast/_types/kind';
-import { ConstructComponents, Construct } from '../../../_abstract/construct';
+import { Construct, ConstructComponents } from '../../../_abstract/construct';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { BlockDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiters/block/delimiter';
+import { CommonDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiters/common/delimiter';
+import { OperatorDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiters/operator/delimiter';
 
 type Delimiter = { token: string } | null;
 
@@ -36,12 +39,23 @@ export abstract class SpwContainerNode<
       selector: function (s) {
         return s?.open || this._fallback;
       },
+      generator: function* (component, ctxt) {
+        if (!Array.isArray(component)) {
+          yield [component, ctxt];
+          if (component?.label) {
+            yield [new OperatorDelimiter(), ctxt];
+          }
+        } else {
+          for (const item of component) {
+            yield [item, ctxt];
+          }
+        }
+        return null;
+      },
 
       evaluators: {
         stringify: function (els = []) {
-          const [token] = els;
-          const trailingSpace = token?.length > 1 ? ' ' : '';
-          return [token, trailingSpace].join('');
+          return els.join('');
         },
       },
     }),
@@ -55,8 +69,26 @@ export abstract class SpwContainerNode<
             : []
           : _body;
 
+        let first = true;
+        let prev;
         for (const sub of body) {
+          if (!first && Construct.isConstruct(sub)) {
+            const excluded = [
+              BlockDelimiter,
+              OperatorDelimiter,
+              CommonDelimiter,
+            ].map((c) => c.kind as ConstructKind);
+            if (
+              !excluded.includes(sub?.kind) &&
+              !excluded.includes(prev?.kind)
+            ) {
+              yield [new BlockDelimiter(), ctxt];
+              yield [new OperatorDelimiter(), ctxt];
+            }
+          }
+          first = false;
           yield [sub, ctxt];
+          prev = sub;
         }
 
         return null;
@@ -64,7 +96,7 @@ export abstract class SpwContainerNode<
       evaluators: {
         stringify: function (items) {
           const filtered = Array.from(items ?? []).filter(Boolean);
-          return filtered.join('; ');
+          return filtered.join('');
         },
       },
     }),

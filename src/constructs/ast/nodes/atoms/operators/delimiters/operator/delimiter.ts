@@ -6,13 +6,14 @@ import {
 import { SpwDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiters/_abstract/delimiter';
 import { operatorComponents } from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
 
-type BlockDelimiterToken = ';';
+type OperatorDelimiterToken = ' ';
 
-@staticImplements<ISpwConstructStatic<'block_delimiter'>>()
-export class BlockDelimiter extends SpwDelimiter<'block_delimiter'> {
-  static kind: 'block_delimiter' = 'block_delimiter';
+@staticImplements<ISpwConstructStatic<'operator_delimiter'>>()
+export class OperatorDelimiter extends SpwDelimiter<'operator_delimiter'> {
+  static kind: 'operator_delimiter' = 'operator_delimiter';
 
-  static token: BlockDelimiterToken = ';';
+  static token: OperatorDelimiterToken = ' ';
 
-  static components: ConstructComponents = operatorComponents(BlockDelimiter);
+  static components: ConstructComponents =
+    operatorComponents(OperatorDelimiter);
 }

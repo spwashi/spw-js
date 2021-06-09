@@ -26,7 +26,7 @@ describe('Domain:SmokeTest', () => {
       const last: Construct | undefined = selectLastAcknowledgedNode(runtime);
       const all: Construct[] = selectAllNodes(runtime);
       expect(last?.kind).toEqual(Domain.kind);
-      expect(all.length).toEqual(6);
+      expect(all.length).toEqual(10);
     }
 
     {
@@ -40,8 +40,11 @@ describe('Domain:SmokeTest', () => {
                             `);
       const last: Construct | undefined = selectLastAcknowledgedNode(runtime);
       const all: Construct[] = selectAllNodes(runtime);
+      expect(last?.key).toEqual(
+        '{_todo &=>checkout; "origin/main"; &=>run yarn install; &=>run yarn build=>check; "./dist" for the output of <the build step>}',
+      );
       expect(last?.kind).toEqual(Domain.kind);
-      expect(all.length).toEqual(43);
+      expect(all.length).toEqual(52);
     }
 
     {
@@ -57,7 +60,7 @@ describe('Domain:SmokeTest', () => {
       );
       /**  note: this is subject to change dependent on the behavior of {@see InvocationOperator} */
       expect(last?.key).toEqual('{_<boon> ~; one=>two=>three}');
-      expect(all.length).toEqual(16);
+      expect(all.length).toEqual(19);
     }
 
     done();

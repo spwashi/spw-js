@@ -81,12 +81,18 @@ export class Register<T = Construct, ItemLocation extends any = number> {
    *
    * @param index
    */
-  resolve(index: string | number = 0): T | null {
+  resolve(index: string | T | number = 0): T | null {
     if (typeof index === 'string') {
       // the idea of <{the index} being something other than {the desired item's}>
       throw new Error('Cannot resolve with strings yet');
     }
 
+    if (typeof index === 'object' && index) {
+      return this._entries.filter((i) => i.item === index)[0]?.item ?? null;
+    }
+    if (typeof index !== 'number') {
+      throw new Error('Cannot resolve object ');
+    }
     return this._entries[index]?.item ?? null;
   }
 

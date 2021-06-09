@@ -1,13 +1,7 @@
-import {
-  HydratedSpwItem,
-  RawSpwConstruct,
-} from '@constructs/ast/_abstract/_types/internal';
+import { RawSpwConstruct } from '@constructs/ast/_abstract/_types/internal';
 import { HydrationContext } from '@constructs/ast/_abstract/_util/hydrate/_/util';
 import { Construct } from '../../../../../ast/_abstract/construct';
-import { getConstructClass } from '@constructs/index';
 import { hydrateShallow } from '@constructs/ast/_abstract/_util/hydrate/shallow';
-import { hydrateRecursively } from '@constructs/ast/_abstract/_util/hydrate/recursive';
-import { PlainInteractionContext } from '@constructs/ast/_abstract/_types';
 
 /**
  * For each Node,
@@ -21,31 +15,5 @@ export function hydrateNode(
   node: RawSpwConstruct,
   context: HydrationContext,
 ): Construct | null {
-  const Constructor = getConstructClass(node.kind);
-
-  const hydrationContext = PlainInteractionContext().enter({
-    /**
-     * For one node,
-     *    assuming all parameters have been hydrated,
-     *        - initialize a Node
-     *
-     * @param node
-     * @param context
-     */
-    hydrate(node, context): Construct | null {
-      return hydrateShallow(node, context).node;
-    },
-  } as Partial<HydrationContext>);
-
-  const subHydratedNode = hydrateRecursively(
-    node,
-    hydrationContext,
-  ) as HydratedSpwItem;
-  const hydrated = new Constructor(subHydratedNode);
-
-  // declare the node absorbed
-  // : note, there's something smelly about the way this node is being absorbed
-  context.absorb?.(hydrated);
-
-  return hydrated;
+  return hydrateShallow(node, context).node;
 }

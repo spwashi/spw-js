@@ -1,8 +1,8 @@
 import {
+  ComponentDescription,
   ConstructReductionConfig,
   ConstructReductionOptions,
   InteractionContext,
-  PlainInteractionContext,
 } from '@constructs/ast/_abstract/_types';
 import { RawSpwConstruct } from '../../_types/internal';
 import { Construct } from '../../construct';
@@ -10,7 +10,14 @@ import { HydrationContext, joinHydratedProperties } from './_/util';
 import { getConstructClass } from '../../../../index';
 import { completeConfig } from '@constructs/ast/_abstract/_util/reduce/_/util';
 
-const _intermediateHydrationEvaluator: ConstructReductionConfig['evaluator'] = (
+/**
+ * For each value, resolve the promise if we're in "async" mode
+ * @param value
+ * @param key
+ * @param context
+ * @param isAsync
+ */
+const _hydrationValueMapper: ConstructReductionConfig['valueMapper'] = (
   value: any,
   key: any,
   context: InteractionContext | undefined | null,
@@ -21,24 +28,32 @@ const _intermediateHydrationEvaluator: ConstructReductionConfig['evaluator'] = (
     : Promise.resolve((async () => [key as string, await value])());
 
 function getStepNormalizer<Context extends InteractionContext>() {
-  const _intermediateStepNormalizer: ConstructReductionConfig<Context>['stepNormalizer'] =
-    (prototype, [entries, context]) => {
-      return [
-        entries.map(([key, value]) => {
-          const hydrated = prototype.evaluators.hydrate
-            ? prototype.evaluators.hydrate(value, context)
-            : value;
-          return [key, hydrated];
-        }),
-        context ?? PlainInteractionContext().enter(),
-      ];
-    };
-  return _intermediateStepNormalizer;
+  return ((prototype: ComponentDescription<Context>, [entries, context]) => {
+    return [
+      entries.map(([key, value]) => {
+        const hydrated = prototype.evaluators.hydrate
+          ? prototype.evaluators.hydrate(value, context)
+          : value;
+        return [key, hydrated];
+      }),
+      context,
+    ];
+  }) as ConstructReductionConfig<Context>['stepNormalizer'];
 }
 
-const _shallowHydrationReducer: ConstructReductionConfig<HydrationContext>['reducer'] =
+/**
+ * Absorbs all generated constructs into the runtime
+ *
+ * @param prev
+ * @param step
+ * @param isAsync
+ */
+const _hydrationStepReducer: ConstructReductionConfig<HydrationContext>['stepReducer'] =
   function ([prev], step, isAsync) {
-    const [curr, context] = step as [any, HydrationContext];
+    const [curr, context] = step as [
+      [string, string | Construct][],
+      HydrationContext,
+    ];
     if (isAsync === null) {
       return [curr ?? [], context];
     }
@@ -47,8 +62,17 @@ const _shallowHydrationReducer: ConstructReductionConfig<HydrationContext>['redu
       throw new Error('Wrong context');
     }
     return [
-      [...prev, ...(curr ?? [])],
-      context?.enter() ?? PlainInteractionContext(),
+      [
+        ...prev,
+        ...(curr ?? [])
+          .map(([k, n]: [string, string | Construct]) => {
+            // absorb constructs, ignore others
+            const absorbed = Construct.isConstruct(n) ? context.absorb?.(n) : n;
+            return [k, absorbed] as [string, Construct | any];
+          })
+          .filter(([, n]: [string, any]) => n != void 0),
+      ],
+      context.enter() as HydrationContext,
     ];
   };
 
@@ -72,9 +96,9 @@ export function hydrateShallow<
   const seed: [SeedValue, Context] = [{}, context];
 
   const options = {
+    valueMapper: _hydrationValueMapper,
+    stepReducer: _hydrationStepReducer,
     stepNormalizer: getStepNormalizer<Context>(),
-    evaluator: _intermediateHydrationEvaluator,
-    reducer: _shallowHydrationReducer,
   } as ConstructReductionOptions<Context>;
 
   const config = completeConfig<Context>(options);
@@ -87,10 +111,11 @@ export function hydrateShallow<
 
   const intermediate = stepSync[0];
   const hydratedNode = new Ctor(joinHydratedProperties(intermediate));
-  const stepInter = config.reducer(stepSync, stepSync, null);
+  const stepInter = config.stepReducer(stepSync, stepSync, null);
   const promise = Ctor.reduceAsync<Context>(node, config, stepInter) as Promise<
     [Output, Context]
   >;
+  context.absorb && context.absorb(hydratedNode);
   return {
     node: hydratedNode,
     promise,

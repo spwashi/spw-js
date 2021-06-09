@@ -18,7 +18,7 @@ function spwHead() {
         })));
     }
     /**
-     * Convert a node to a {@see SpwConstruct } SpwConstruct initializer
+     * Convert a node to a {@see Construct } SpwConstruct initializer
      * @param node
      */
     function toSpwItem(
@@ -59,7 +59,7 @@ UnicodeWithoutQuotes "UnicodeWithoutQuotes"=
 [-a-zA-Z \t\'] / [\u0020-\u0021,\u0023-\u26FF]
 
 Space "Space"= 
-(newlines:(([\t ] / newline:[\n] {return newline;})+)+ {return constructs.space();})
+(newlines:(([\t] / " " / newline:[\n] {return newline;})+)+ {return constructs.space();})
 
 Node "Node"= 
 Domain / Essence / Concept / Group / Operator / Scalar
@@ -77,7 +77,7 @@ DomainBody "DomainBody"=
 (StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Group / Operator / Scalar / (Space {return null;}))+
 
 Domain "Domain"= 
-container:((open:DomainOpen (([\t ] {return null;}) / (underscore:"_" {return underscore;}) / ([\n] {return null;}))* close:DomainClose {return{open:open,close:close};}) / (open:DomainOpen body:DomainBody close:DomainClose {return{open:open,body:body,close:close};}))
+container:((open:DomainOpen ((" " / [\t] {return null;}) / (underscore:"_" {return underscore;}) / ([\n] {return null;}))* close:DomainClose {return{open:open,close:close};}) / (open:DomainOpen body:DomainBody close:DomainClose {return{open:open,body:body,close:close};}))
 {return toSpwItem({kind:"domain",open:container.open,body:container.body,close:container.close});}
 
 EssenceOpen "EssenceOpen"= 
@@ -90,7 +90,7 @@ EssenceBody "EssenceBody"=
 (StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Group / Operator / Scalar / (Space {return null;}))+
 
 Essence "Essence"= 
-container:((open:EssenceOpen (([\t ] {return null;}) / (underscore:"_" {return underscore;}) / ([\n] {return null;}))* close:EssenceClose {return{open:open,close:close};}) / (open:EssenceOpen body:EssenceBody close:EssenceClose {return{open:open,body:body,close:close};}))
+container:((open:EssenceOpen ((" " / [\t] {return null;}) / (underscore:"_" {return underscore;}) / ([\n] {return null;}))* close:EssenceClose {return{open:open,close:close};}) / (open:EssenceOpen body:EssenceBody close:EssenceClose {return{open:open,body:body,close:close};}))
 {return toSpwItem({kind:"essence",open:container.open,body:container.body,close:container.close});}
 
 ConceptOpen "ConceptOpen"= 
@@ -103,7 +103,7 @@ ConceptBody "ConceptBody"=
 (StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Group / Operator / Scalar / (Space {return null;}))+
 
 Concept "Concept"= 
-container:((open:ConceptOpen (([\t ] {return null;}) / (underscore:"_" {return underscore;}) / ([\n] {return null;}))* close:ConceptClose {return{open:open,close:close};}) / (open:ConceptOpen body:ConceptBody close:ConceptClose {return{open:open,body:body,close:close};}))
+container:((open:ConceptOpen ((" " / [\t] {return null;}) / (underscore:"_" {return underscore;}) / ([\n] {return null;}))* close:ConceptClose {return{open:open,close:close};}) / (open:ConceptOpen body:ConceptBody close:ConceptClose {return{open:open,body:body,close:close};}))
 {return toSpwItem({kind:"concept",open:container.open,body:container.body,close:container.close});}
 
 GroupOpen "GroupOpen"= 
@@ -116,7 +116,7 @@ GroupBody "GroupBody"=
 (StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Group / Operator / Scalar / (Space {return null;}))+
 
 Group "Group"= 
-container:((open:GroupOpen (([\t ] {return null;}) / (underscore:"_" {return underscore;}) / ([\n] {return null;}))* close:GroupClose {return{open:open,close:close};}) / (open:GroupOpen body:GroupBody close:GroupClose {return{open:open,body:body,close:close};}))
+container:((open:GroupOpen ((" " / [\t] {return null;}) / (underscore:"_" {return underscore;}) / ([\n] {return null;}))* close:GroupClose {return{open:open,close:close};}) / (open:GroupOpen body:GroupBody close:GroupClose {return{open:open,body:body,close:close};}))
 {return toSpwItem({kind:"group",open:container.open,body:container.body,close:container.close});}
 
 Atom "Atom"= 
@@ -131,7 +131,7 @@ num:([0-9])+
 {return toSpwItem({kind:"number",value:parseInt(num.join(""))});}
 
 PhraseNode "PhraseNode"= 
-phrase:(head:(AnchorNode / NumberNode) tail:(([\t ])+ anchor:(AnchorNode / NumberNode) {return anchor;})+ {const items=[head,...tail];return items;})
+phrase:(head:(AnchorNode / NumberNode) tail:((" " / [\t])+ anchor:(AnchorNode / NumberNode) {return anchor;})+ {const items=[head,...tail];return items;})
 {function makeArray(r){return Array.isArray(r)?r:[r]}const _phrase=phrase,p=_phrase.reduce((r,e)=>[...r,...makeArray(e)],[]);return toSpwItem({kind:"phrase",body:p});}
 
 StringNode "StringNode"= 
@@ -220,5 +220,5 @@ head:(PhraseExpression / PerspectiveExpression / Node) (Space {return null;})* t
 {return toSpwItem({kind:"strand",head:head,tails:tails});}
 
 PhraseExpression "PhraseExpression"= 
-head:(Domain / Essence / Concept / Group / NumberNode / PhraseNode / StringNode / AnchorNode) tail:(([\t ])* tail:(Domain / Essence / Concept / Group / NumberNode / PhraseNode / StringNode / AnchorNode) {return tail;})+
+head:(Domain / Essence / Concept / Group / NumberNode / PhraseNode / StringNode / AnchorNode) tail:((" " / [\t])* tail:(Domain / Essence / Concept / Group / NumberNode / PhraseNode / StringNode / AnchorNode) {return tail;})+
 {return toSpwItem({kind:"phrase_expression",body:[head,...tail]});}

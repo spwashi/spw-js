@@ -64,7 +64,7 @@ export function reduceConstructSync<
       // init vars
       const next = out.value as [Intermediate, Context];
       const key = prototype.name;
-      const mutated = config.evaluator(next[0], key, next[1], false);
+      const mutated = config.valueMapper(next[0], key, next[1], false);
 
       // init generator
       const startEvalGenerator = lifecycle({ type: 'eval' });
@@ -95,7 +95,7 @@ export function reduceConstructSync<
       isContext(nextContext) ? nextContext : context,
     ] as [Intermediate[], Context]) as [ReturnType, Context];
 
-    lastStep = config.reducer(lastStep, normalized, false) as
+    lastStep = config.stepReducer(lastStep, normalized, false) as
       | [Intermediate, Context]
       | [ReturnType, Context];
   }

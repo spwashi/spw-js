@@ -66,29 +66,31 @@ export class Construct<
     const reduced = Ctor.reduce(
       this.internal ?? null,
       {
-        evaluator(subject) {
+        valueMapper(subject) {
           if (
             (typeof subject === 'string' && subject) ||
             typeof subject === 'number'
           ) {
             return subject;
           }
-
           return subject?.key;
         },
 
         stepNormalizer(prototype: Prototype, [intermediate, context]) {
           const evaluator = prototype.evaluators
             .stringify as ComponentEvaluatorObject['stringify'];
-          const evaluated = evaluator
-            ? evaluator(intermediate, context)
-            : intermediate
-            ? intermediate[intermediate.length - 1]
-            : null;
+          let evaluated: string | null;
+          if (evaluator) {
+            evaluated = evaluator(intermediate, context);
+          } else {
+            evaluated = intermediate
+              ? intermediate[intermediate.length - 1]
+              : null;
+          }
           return [evaluated, context] as [Output, Context];
         },
 
-        reducer([prev], [curr, next]) {
+        stepReducer([prev], [curr, next]) {
           return [[prev, curr].join(''), next] as [
             SpwItemKey,
             InteractionContext,
@@ -101,7 +103,7 @@ export class Construct<
     return reduced[0];
   }
 
-  static isSpwConstruct(node: Construct | any): node is Construct {
+  static isConstruct(node: Construct | any): node is Construct {
     return !!node?.kind;
   }
 

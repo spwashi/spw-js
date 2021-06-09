@@ -1,6 +1,7 @@
 type ScalarKind = 'anchor' | 'phrase' | 'number' | 'string';
 
 type DelimitingOperatorKind =
+  | 'operator_delimiter'
   | 'common_delimiter'
   | 'block_delimiter'
   | 'domain_objective'
