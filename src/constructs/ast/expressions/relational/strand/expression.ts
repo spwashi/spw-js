@@ -1,12 +1,11 @@
-import { SpwExpression } from '@constructs/ast/expressions/_abstract/expression';
+import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import { ISpwConstructStatic, Construct } from '../../../_abstract/construct';
+import { Construct, IConstructClass } from '../../../_abstract/construct';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { StrandExpressionKind } from '@constructs/ast/expressions/relational/strand/__types';
 
-type Kind = 'strand';
-
-@staticImplements<ISpwConstructStatic<'strand'>>()
-export class StrandExpression extends SpwExpression<Kind> {
+@staticImplements<IConstructClass<'strand'>>()
+export class StrandExpression extends Expression<StrandExpressionKind> {
   static readonly kind = 'strand';
 
   static components = {

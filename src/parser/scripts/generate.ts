@@ -4,10 +4,10 @@ import head from './util/parser-head.js';
 import spwGrammar from '../grammar';
 import { generateParser } from '@spwashi/language/parsers/scripts/generateParser';
 import { allowedStartRules } from '../grammar/top/top';
-import { RawSpwConstruct } from '../../constructs/ast/_abstract/_types/internal';
+import { RawConstruct } from '../../constructs/ast/_abstract/_types/internal';
 
 export type SpwParser = {
-  parse: (input: string) => RawSpwConstruct;
+  parse: (input: string) => RawConstruct;
   SyntaxError: Error;
 };
 
@@ -33,9 +33,7 @@ async function getGeneratedParser(): Promise<SpwParser> {
   ].join('\n');
   fs.writeFileSync(parser_ts_path, parserString);
 
-  return import('../generated').then(
-    ({ spwParser }) => spwParser as unknown as SpwParser,
-  );
+  return import('../generated').then(({ spwParser }) => spwParser as unknown as SpwParser);
 }
 
 const generatedParser = getGeneratedParser();

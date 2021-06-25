@@ -1,14 +1,14 @@
-import {
-  ISpwConstructStatic,
-  Construct,
-} from '../../../../_abstract/construct';
+import { Construct, IConstructClass } from '../../../../_abstract/construct';
 import { staticImplements } from '../../../../_util/typescript/staticImplements';
-import { SpwNode } from '../../../_abstract/node';
+import { Node } from '../../../_abstract/node';
 import { ComponentDescription } from '../../../../_abstract/_types';
+import { AnchorNodeKind } from '@constructs/ast/nodes/atoms/scalars/anchor/__types';
 
-@staticImplements<ISpwConstructStatic<'anchor'>>()
-export class AnchorNode extends SpwNode<'anchor'> {
-  static readonly kind = 'anchor';
+type StaticType = IConstructClass<AnchorNodeKind>;
+
+@staticImplements<StaticType>()
+export class AnchorNode extends Node<AnchorNodeKind> {
+  static readonly kind: AnchorNodeKind = 'anchor';
 
   static components = {
     label: Construct.makeComponent({

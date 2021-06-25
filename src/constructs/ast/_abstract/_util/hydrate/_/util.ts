@@ -1,14 +1,11 @@
-import {
-  HydratedSpwItem,
-  RawSpwConstruct,
-} from '@constructs/ast/_abstract/_types/internal';
+import { HydratedConstruct, RawConstruct } from '@constructs/ast/_abstract/_types/internal';
 import { InteractionContext } from '@constructs/ast/_abstract/_types';
 import { Construct } from '../../../construct';
 
 export function _entryReducer(
-  t: RawSpwConstruct,
+  t: RawConstruct,
   [currKey, curr]: [string, any | any[]],
-): RawSpwConstruct {
+): RawConstruct {
   const isArray = Array.isArray(t[currKey]);
   return {
     ...t,
@@ -25,13 +22,13 @@ export function _entryReducer(
 }
 
 export type HydrationInput =
-  | Partial<RawSpwConstruct>
-  | Partial<RawSpwConstruct>[]
-  | { [k: string]: RawSpwConstruct };
+  | Partial<RawConstruct>
+  | Partial<RawConstruct>[]
+  | { [k: string]: RawConstruct };
 
-export type AbsorbInput = Construct | HydratedSpwItem;
+export type AbsorbInput = Construct | HydratedConstruct;
 
-export type AbsorbOutput = Construct | HydratedSpwItem | null;
+export type AbsorbOutput = Construct | HydratedConstruct | null;
 
 export interface HydrationContext extends InteractionContext {
   hydrate(node: HydrationInput, context: HydrationContext): Construct | null;
@@ -39,7 +36,7 @@ export interface HydrationContext extends InteractionContext {
   absorb?(spwNode: AbsorbInput): AbsorbOutput;
 }
 
-export const joinHydratedProperties = (
-  componentEntries: [string, any][],
-): HydratedSpwItem =>
-  componentEntries.reduce(_entryReducer, {} as RawSpwConstruct);
+export const joinHydratedProperties = (componentEntries: [string, any][]): HydratedConstruct => {
+  !componentEntries.reduce && console.trace(componentEntries);
+  return componentEntries.reduce(_entryReducer, {} as RawConstruct);
+};

@@ -29,7 +29,7 @@ const tailItem = anyOf(allowedTailElements);
 const _tailAction =
   // language=JavaScript
   `
-              return toSpwItem({
+              return toConstruct({
                                    kind: '${StrandTail.kind}',
 
                                    ${StrandTail.components.operator.name}: operator,
@@ -48,16 +48,12 @@ const tail = sequenceOf([
 
 const tails = oneOrMoreOf(tail);
 
-const pattern = sequenceOf([
-  headItem.named('head'),
-  spaces,
-  tails.named('tails'),
-]);
+const pattern = sequenceOf([headItem.named('head'), spaces, tails.named('tails')]);
 
 const _action =
   // language=JavaScript
   `
-              return toSpwItem({
+              return toConstruct({
                                    kind: '${StrandExpression.kind}',
                                    head,
                                    tails,

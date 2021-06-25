@@ -14,6 +14,8 @@ import { referenceOperator } from '@grammar/ast/nodes/atoms/operator/reference/r
 import { spreadOperator } from '@grammar/ast/nodes/atoms/operator/spread/ref';
 import { transformationOperator } from '@grammar/ast/nodes/atoms/operator/transformation/ref';
 import { valueOperator } from '@grammar/ast/nodes/atoms/operator/value/ref';
+import { commonDelimitingOperator } from '@grammar/ast/nodes/atoms/operator/delimiters/common/ref';
+import { blockDelimitingOperator } from '@grammar/ast/nodes/atoms/operator/delimiters/block/ref';
 
 export const operators = [
   // these begin with a "." and are arranged by length in descending order
@@ -37,4 +39,9 @@ export const operators = [
   reductionOperator,
   referenceOperator,
   valueOperator,
+
+  // delimiters
+  commonDelimitingOperator,
+  blockDelimitingOperator,
+  // operatorDelimitingOperator,
 ];

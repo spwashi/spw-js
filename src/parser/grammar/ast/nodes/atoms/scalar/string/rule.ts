@@ -25,9 +25,7 @@ const escapedDoubleQuote = sequenceOf([backslash, doubleQuote]).withAction(
   _escapedDoubleQuoteAction,
 );
 
-const singleQuoteBody = zeroOrMoreOf(
-  anyOf([unicode_noQuotes, newline, doubleQuote]),
-);
+const singleQuoteBody = zeroOrMoreOf(anyOf([unicode_noQuotes, newline, doubleQuote]));
 
 const doubleQuoteBody = zeroOrMoreOf(
   anyOf([escapedDoubleQuote, unicode_noQuotes, newline, singleQuote]),
@@ -41,21 +39,13 @@ const _stringAction =
 
 const pattern = sequenceOf([
   anyOf([
-    sequenceOf([
-      singleQuote,
-      singleQuoteBody.named('body'),
-      singleQuote,
-    ]).withAction(_stringAction),
-    sequenceOf([
-      doubleQuote,
-      doubleQuoteBody.named('body'),
-      doubleQuote,
-    ]).withAction(_stringAction),
+    sequenceOf([singleQuote, singleQuoteBody.named('body'), singleQuote]).withAction(_stringAction),
+    sequenceOf([doubleQuote, doubleQuoteBody.named('body'), doubleQuote]).withAction(_stringAction),
   ]).named('string'),
 ]);
 
 // language=JavaScript
-const action = `return toSpwItem({
+const action = `return toConstruct({
                                      kind: '${StringNode.kind}',
     
                                      ${StringNode.components.open.name}:  '"',

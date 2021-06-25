@@ -1,22 +1,21 @@
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
-import { IAtomicSpwOperatorStatic } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
-import SpwOperator, {
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
+import { ITokenOperatorClass } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
+import Operator, {
   operatorComponents,
 } from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
+import {
+  BranchOperatorKind,
+  BranchOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/branch/__types';
 
-type BranchToken = '|';
+type StaticType = IConstructClass<BranchOperatorKind> & ITokenOperatorClass<BranchOperatorToken>;
 
-@staticImplements<
-  ISpwConstructStatic<'branch'> & IAtomicSpwOperatorStatic<'|'>
->()
-export class BranchOperator extends SpwOperator<'branch'> {
-  static kind: 'branch' = 'branch';
+@staticImplements<StaticType>()
+export class BranchOperator extends Operator<BranchOperatorKind> {
+  static kind: BranchOperatorKind = 'branch';
 
-  static token: BranchToken = '|';
+  static token: BranchOperatorToken = '|';
 
   static components: ConstructComponents = operatorComponents(BranchOperator);
 }

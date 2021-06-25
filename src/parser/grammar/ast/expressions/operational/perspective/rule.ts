@@ -19,7 +19,7 @@ const lensWithSpec = sequenceOf([
 ]).withAction(
   // language=JavaScript
   `
-                      return toSpwItem({
+                      return toConstruct({
                                            kind: '${Lens.kind}',
                                            atom,
                                            spec,
@@ -49,7 +49,7 @@ const pattern = sequenceOf([
 const action =
   // language=JavaScript
   `
-              return toSpwItem({
+              return toConstruct({
                                    kind:   '${PerspectiveExpression.kind}',
                                    source,
                                    lens:   lens,

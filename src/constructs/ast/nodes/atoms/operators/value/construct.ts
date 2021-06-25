@@ -1,22 +1,21 @@
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
-import { IAtomicSpwOperatorStatic } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
-import SpwOperator, {
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
+import { ITokenOperatorClass } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
+import Operator, {
   operatorComponents,
 } from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
+import {
+  ValueOperatorKind,
+  ValueOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/value/__types';
 
-type ValueToken = '*';
+type StaticType = IConstructClass<ValueOperatorKind> & ITokenOperatorClass<ValueOperatorToken>;
 
-@staticImplements<
-  ISpwConstructStatic<'value'> & IAtomicSpwOperatorStatic<'*'>
->()
-export class ValueOperator extends SpwOperator<'value'> {
-  static kind: 'value' = 'value';
+@staticImplements<StaticType>()
+export class ValueOperator extends Operator<ValueOperatorKind> {
+  static kind: ValueOperatorKind = 'value';
 
-  static token: ValueToken = '*';
+  static token: ValueOperatorToken = '*';
 
   static components: ConstructComponents = operatorComponents(ValueOperator);
 }

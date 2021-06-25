@@ -38,7 +38,7 @@ function opener(delimiter: IDelimiter): SequenceCombinator {
   ]);
   // language=JavaScript
   const action = `
-                  return toSpwItem({
+                  return toConstruct({
                                        token:       token,
                                        position:    'open',
                                        label:       node.anchor,
@@ -55,32 +55,21 @@ function closer(delimiter: IDelimiter): SequenceCombinator {
 
   const node = anyOf([anchorNode]);
 
-  const pattern1 = sequenceOf([
-    token.named('token'),
-    underscore,
-    node.named('node'),
-  ]);
+  const pattern1 = sequenceOf([token.named('token'), underscore, node.named('node')]);
 
-  const pattern2 = sequenceOf([
-    node.named('node'),
-    underscore,
-    token.named('token'),
-  ]);
+  const pattern2 = sequenceOf([node.named('node'), underscore, token.named('token')]);
 
   const _patternAction =
     // language=JavaScript
     `
-                  return toSpwItem({
+                  return toConstruct({
                                        token:    token,
                                        position: 'close',
                                        label:    node,
                                        kind:     '${delimiter.kind}'
                                    })
               `;
-  return anyOf([
-    pattern1.withAction(_patternAction),
-    pattern2.withAction(_patternAction),
-  ]);
+  return anyOf([pattern1.withAction(_patternAction), pattern2.withAction(_patternAction)]);
 }
 export type IDelimiter = { token: string; kind: string };
 
@@ -89,7 +78,7 @@ function plain(delimiter: IDelimiter, index: 'open' | 'close') {
     sequenceOf([stringLike(delimiter.token).named('tok')])
       // language=JavaScript
       .withAction(
-        `return toSpwItem({
+        `return toConstruct({
                                   token:    tok,
                                   position: '${index}',
                                   kind:     '${delimiter.kind}'
@@ -103,14 +92,8 @@ export function createDelimiterRule(
   index: 'open' | 'close' = 'open',
 ): Rule {
   const reverse = index !== 'open';
-  const { ruleName: name } =
-    getContainerNodeComponentReferences(ruleName)[index];
+  const { ruleName: name } = getContainerNodeComponentReferences(ruleName)[index];
   const plainDelimiterCombinator = plain(delimiter, index);
-  const labeledDelimiterCombinator = !reverse
-    ? opener(delimiter)
-    : closer(delimiter);
-  return new Rule(
-    name,
-    anyOf([labeledDelimiterCombinator, plainDelimiterCombinator]),
-  );
+  const labeledDelimiterCombinator = !reverse ? opener(delimiter) : closer(delimiter);
+  return new Rule(name, anyOf([labeledDelimiterCombinator, plainDelimiterCombinator]));
 }

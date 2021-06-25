@@ -1,7 +1,4 @@
-import {
-  Construct,
-  ISpwConstructStatic,
-} from '@constructs/ast/_abstract/construct';
+import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
 import { ConstructContext } from '@constructs/runtime/context/interfaces';
 import {
   AggregationOperator,
@@ -15,9 +12,9 @@ import {
   Domain,
   Essence,
   EvaluationOperator,
-  Group,
   InvocationOperator,
   Lens,
+  Location,
   PerformanceOperator,
   PerspectiveExpression,
   PerspectiveOperator,
@@ -34,29 +31,21 @@ import {
   ValueOperator,
 } from '@constructs/ast';
 import { NumberNode } from '@constructs/ast/nodes/atoms/scalars/number/construct';
-import { BlockDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiters/block/delimiter';
-import { CommonDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiters/common/delimiter';
-import {
-  ConceptObjectiveDelimiter,
-  ConceptSubjectiveDelimiter,
-} from '@constructs/ast/nodes/containers/concept/delimiters';
-import {
-  DomainObjectiveDelimiter,
-  DomainSubjectiveDelimiter,
-} from '@constructs/ast/nodes/containers/domain/delimiters';
-import {
-  EssenceObjectiveDelimiter,
-  EssenceSubjectiveDelimiter,
-} from '@constructs/ast/nodes/containers/essence/delimiters';
-import {
-  GroupObjectiveDelimiter,
-  GroupSubjectiveDelimiter,
-} from '@constructs/ast/nodes/containers/group/delimiters';
-import { ConstructKind } from '@constructs/ast/_types/kind';
-import { OperatorDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiters/operator/delimiter';
+import { BlockDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/block/construct';
+import { CommonDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/common/construct';
+import { ConceptualIdentityOperator } from '@constructs/ast/nodes/containers/concept/components/identity/construct';
+import { DomainIdentityOperator } from '@constructs/ast/nodes/containers/domain/components/identity/construct';
+import { ConstructKind } from '@constructs/ast/_types/kinds';
+import { OperatorDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/operator/construct';
+import { DomainSchemeOperator } from '@constructs/ast/nodes/containers/domain/components/scheme/construct';
+import { ConceptSchemeOperator } from '@constructs/ast/nodes/containers/concept/components/scheme/construct';
+import { EssentialSchemeOperator } from '@constructs/ast/nodes/containers/essence/components/scheme/construct';
+import { EssentialIdentityOperator } from '@constructs/ast/nodes/containers/essence/components/identity/construct';
+import { LocationalSchemeOperator } from '@constructs/ast/nodes/containers/location/components/scheme/construct';
+import { LocationalIdentityOperator } from '@constructs/ast/nodes/containers/location/components/identity/construct';
 
-type SpwConstructorObject = {
-  [K in ConstructKind]: typeof Construct & ISpwConstructStatic<K>;
+type ConstructorNameMap = {
+  [K in ConstructKind]: typeof Construct & IConstructClass<K>;
 };
 export const spwItemConstructors = {
   unknown: Construct,
@@ -89,27 +78,27 @@ export const spwItemConstructors = {
 
   // delimiters
 
-  operator_delimiter: OperatorDelimiter,
-  block_delimiter: BlockDelimiter,
-  common_delimiter: CommonDelimiter,
+  operator_delimiter: OperatorDelimitingOperator,
+  block_delimiter: BlockDelimitingOperator,
+  common_delimiter: CommonDelimitingOperator,
 
   // containers
 
   concept: Concept,
-  concept_objective: ConceptObjectiveDelimiter,
-  concept_subjective: ConceptSubjectiveDelimiter,
+  concept_identity: ConceptualIdentityOperator,
+  concept_scheme: ConceptSchemeOperator,
 
   domain: Domain,
-  domain_subjective: DomainSubjectiveDelimiter,
-  domain_objective: DomainObjectiveDelimiter,
+  domain_identity: DomainIdentityOperator,
+  domain_scheme: DomainSchemeOperator,
 
   essence: Essence,
-  essence_objective: EssenceObjectiveDelimiter,
-  essence_subjective: EssenceSubjectiveDelimiter,
+  essence_scheme: EssentialSchemeOperator,
+  essence_identity: EssentialIdentityOperator,
 
-  group: Group,
-  group_objective: GroupObjectiveDelimiter,
-  group_subjective: GroupSubjectiveDelimiter,
+  group: Location,
+  group_scheme: LocationalSchemeOperator,
+  group_identity: LocationalIdentityOperator,
 
   strand: StrandExpression,
   strand_tail: StrandTail,
@@ -118,4 +107,4 @@ export const spwItemConstructors = {
 
   perspective_expression: PerspectiveExpression,
   lens: Lens,
-} as SpwConstructorObject;
+} as ConstructorNameMap;

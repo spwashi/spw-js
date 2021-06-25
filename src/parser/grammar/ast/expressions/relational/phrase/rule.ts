@@ -17,9 +17,7 @@ const head = anyOf(allowedElements);
 const delimiter = zeroOrMoreOf(spaceTab);
 
 const tail = oneOrMoreOf(
-  sequenceOf([delimiter, anyOf(allowedElements).named('tail')]).withAction(
-    `return tail`,
-  ),
+  sequenceOf([delimiter, anyOf(allowedElements).named('tail')]).withAction(`return tail`),
 );
 
 const pattern = sequenceOf([head.named('head'), tail.named('tail')]);
@@ -27,7 +25,7 @@ const pattern = sequenceOf([head.named('head'), tail.named('tail')]);
 const _action =
   // language=JavaScript
   `
-              return toSpwItem({
+              return toConstruct({
                                    kind: '${PhraseExpression.kind}',
 
                                    ${PhraseExpression.components.body.name}:

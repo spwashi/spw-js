@@ -2,6 +2,6 @@
  * Static interface:
  *  Items that have a single, consistent token
  */
-export interface IAtomicSpwOperatorStatic<Token> {
+export interface ITokenOperatorClass<Token = string> {
   token: Token;
 }

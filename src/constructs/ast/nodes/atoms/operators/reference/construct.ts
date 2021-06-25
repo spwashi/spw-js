@@ -1,23 +1,22 @@
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
-import { IAtomicSpwOperatorStatic } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
-import SpwOperator, {
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
+import { ITokenOperatorClass } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
+import Operator, {
   operatorComponents,
 } from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
+import {
+  ReferenceOperatorKind,
+  ReferenceOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/reference/__types';
 
-type ReferenceToken = '&';
+type StaticType = IConstructClass<ReferenceOperatorKind> &
+  ITokenOperatorClass<ReferenceOperatorToken>;
 
-@staticImplements<
-  ISpwConstructStatic<'reference'> & IAtomicSpwOperatorStatic<'&'>
->()
-export class ReferenceOperator extends SpwOperator<'reference'> {
-  static kind: 'reference' = 'reference';
+@staticImplements<StaticType>()
+export class ReferenceOperator extends Operator<ReferenceOperatorKind> {
+  static kind: ReferenceOperatorKind = 'reference';
 
-  static token: ReferenceToken = '&';
+  static token: ReferenceOperatorToken = '&';
 
-  static components: ConstructComponents =
-    operatorComponents(ReferenceOperator);
+  static components: ConstructComponents = operatorComponents(ReferenceOperator);
 }

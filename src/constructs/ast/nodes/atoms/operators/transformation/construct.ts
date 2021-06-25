@@ -1,24 +1,22 @@
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
-import { IAtomicSpwOperatorStatic } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
-import SpwOperator, {
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
+import { ITokenOperatorClass } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
+import Operator, {
   operatorComponents,
 } from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
+import {
+  TransformationOperatorKind,
+  TransformationOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/transformation/__types';
 
-type TransformationToken = '=>';
+type StaticType = IConstructClass<TransformationOperatorKind> &
+  ITokenOperatorClass<TransformationOperatorToken>;
 
-@staticImplements<
-  ISpwConstructStatic<'transformation'> & IAtomicSpwOperatorStatic<'=>'>
->()
-export class TransformationOperator extends SpwOperator<'transformation'> {
-  static kind: 'transformation' = 'transformation';
+@staticImplements<StaticType>()
+export class TransformationOperator extends Operator<'transformation'> {
+  static kind: TransformationOperatorKind = 'transformation';
 
-  static token: TransformationToken = '=>';
+  static token: TransformationOperatorToken = '=>';
 
-  static components: ConstructComponents = operatorComponents(
-    TransformationOperator,
-  );
+  static components: ConstructComponents = operatorComponents(TransformationOperator);
 }

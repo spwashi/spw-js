@@ -1,23 +1,22 @@
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
-import { IAtomicSpwOperatorStatic } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
-import SpwOperator, {
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
+import { ITokenOperatorClass } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
+import Operator, {
   operatorComponents,
 } from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
+import {
+  ReductionOperatorKind,
+  ReductionOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/reduction/__types';
 
-type ReductionToken = '-';
+type StaticType = IConstructClass<ReductionOperatorKind> &
+  ITokenOperatorClass<ReductionOperatorToken>;
 
-@staticImplements<
-  ISpwConstructStatic<'reduction'> & IAtomicSpwOperatorStatic<'-'>
->()
-export class ReductionOperator extends SpwOperator<'reduction'> {
-  static kind: 'reduction' = 'reduction';
+@staticImplements<StaticType>()
+export class ReductionOperator extends Operator<ReductionOperatorKind> {
+  static kind: ReductionOperatorKind = 'reduction';
 
-  static token: ReductionToken = '-';
+  static token: ReductionOperatorToken = '-';
 
-  static components: ConstructComponents =
-    operatorComponents(ReductionOperator);
+  static components: ConstructComponents = operatorComponents(ReductionOperator);
 }

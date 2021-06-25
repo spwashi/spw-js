@@ -4,7 +4,7 @@ interface LineColumnOffset {
   offset?: number;
 }
 
-export type SpwNodeLocation = {
+export type ConstructLocation = {
   start: LineColumnOffset;
   end: LineColumnOffset;
 };

@@ -1,14 +1,14 @@
-import { SpwExpression } from '@constructs/ast/expressions/_abstract/expression';
+import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  Construct,
-} from '../../../../_abstract/construct';
+import { Construct, IConstructClass } from '../../../../_abstract/construct';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { LensKind } from '@constructs/ast/expressions/operational/perspective/components/__types';
 
-@staticImplements<ISpwConstructStatic<'lens'>>()
-export class Lens extends SpwExpression<'lens'> {
-  static readonly kind = 'lens';
+type StaticType = IConstructClass<LensKind>;
+
+@staticImplements<StaticType>()
+export class Lens extends Expression<LensKind> {
+  static readonly kind: LensKind = 'lens';
 
   static components = {
     atom: Construct.makeComponent({ name: 'atom' }),

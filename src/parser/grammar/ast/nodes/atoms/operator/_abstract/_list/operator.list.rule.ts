@@ -15,6 +15,9 @@ import { referenceOperatorRule } from '@grammar/ast/nodes/atoms/operator/referen
 import { spreadOperatorRule } from '@grammar/ast/nodes/atoms/operator/spread/rule';
 import { transformationOperatorRule } from '@grammar/ast/nodes/atoms/operator/transformation/rule';
 import { valueOperatorRule } from '@grammar/ast/nodes/atoms/operator/value/rule';
+import { commonDelimitingOperatorRule } from '@grammar/ast/nodes/atoms/operator/delimiters/common/rule';
+import { blockDelimitingOperatorRule } from '@grammar/ast/nodes/atoms/operator/delimiters/block/rule';
+import { operatorDelimitingOperatorRule } from '@grammar/ast/nodes/atoms/operator/delimiters/operator/rule';
 
 export default [
   operatorRule,
@@ -22,6 +25,9 @@ export default [
   ascentOperatorRule,
   branchOperatorRule,
   channelOperatorRule,
+  commonDelimitingOperatorRule,
+  blockDelimitingOperatorRule,
+  operatorDelimitingOperatorRule,
   descentOperatorRule,
   directionOperatorRule,
   evaluationOperatorRule,

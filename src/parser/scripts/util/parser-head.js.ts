@@ -8,7 +8,7 @@ Construct;
 export default `
     ${spwHead.toString()};
     var head       = spwHead();
-    var toSpwItem  = head.toSpwItem;
+    var toConstruct  = head.toConstruct;
     var constructs = head.constructs;
 `;
 
@@ -44,10 +44,10 @@ function spwHead() {
   }
 
   /**
-   * Convert a node to a {@see Construct } SpwConstruct initializer
+   * Convert a node to a {@see Construct } Construct initializer
    * @param node
    */
-  function toSpwItem(
+  function toConstruct(
     // @ts-ignore
     node,
   ) {
@@ -64,12 +64,12 @@ function spwHead() {
   /** Actions **/
   var constructs = {
     space: function spaceNodeAction() {
-      return toSpwItem({ kind: 'space' });
+      return toConstruct({ kind: 'space' });
     },
   };
 
   return {
-    toSpwItem,
+    toConstruct,
     constructs,
   };
 }

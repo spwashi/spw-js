@@ -1,10 +1,11 @@
 import { Construct } from '../../../ast/_abstract/construct';
 import { Register } from '@constructs/runtime/register/register';
+import { ConstructContextKind } from '@constructs/runtime/context/interfaces/__types';
 
 type RuntimeContext = Register<ConstructContext>;
 
 export class ConstructContext extends Construct {
-  static kind: 'context';
+  static kind: ConstructContextKind = 'context';
 
   setting?: RuntimeContext;
 

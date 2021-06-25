@@ -1,22 +1,21 @@
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
-import { IAtomicSpwOperatorStatic } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
-import SpwOperator, {
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
+import { ITokenOperatorClass } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
+import Operator, {
   operatorComponents,
 } from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
+import {
+  AscentOperatorKind,
+  AscentOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/ascent/__types';
 
-type AscentToken = '^';
+type StaticType = IConstructClass<AscentOperatorKind> & ITokenOperatorClass<AscentOperatorToken>;
 
-@staticImplements<
-  ISpwConstructStatic<'ascent'> & IAtomicSpwOperatorStatic<'^'>
->()
-export class AscentOperator extends SpwOperator<'ascent'> {
-  static kind: 'ascent' = 'ascent';
+@staticImplements<StaticType>()
+export class AscentOperator extends Operator<AscentOperatorKind> {
+  static kind: AscentOperatorKind = 'ascent';
 
-  static token: AscentToken = '^';
+  static token: AscentOperatorToken = '^';
 
   static components: ConstructComponents = operatorComponents(AscentOperator);
 }

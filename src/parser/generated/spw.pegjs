@@ -18,10 +18,10 @@ function spwHead() {
         })));
     }
     /**
-     * Convert a node to a {@see Construct } SpwConstruct initializer
+     * Convert a node to a {@see Construct } Construct initializer
      * @param node
      */
-    function toSpwItem(
+    function toConstruct(
     // @ts-ignore
     node) {
         if (typeof location === 'undefined')
@@ -38,21 +38,21 @@ function spwHead() {
     /** Actions **/
     var constructs = {
         space: function spaceNodeAction() {
-            return toSpwItem({ kind: 'space' });
+            return toConstruct({ kind: 'space' });
         },
     };
     return {
-        toSpwItem: toSpwItem,
+        toConstruct: toConstruct,
         constructs: constructs,
     };
 };
     var head       = spwHead();
-    var toSpwItem  = head.toSpwItem;
+    var toConstruct  = head.toConstruct;
     var constructs = head.constructs;
 }
 
 Top "Top"= 
-body:(StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Group / Operator / Scalar / DomainOpen / (Space {return null;}))+
+body:(StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Location / Operator / Scalar / DomainOpen / (Space {return null;}))+
 {const items=Array.isArray(body)?body.map(i=>i&&i.kind?i:void 0).filter(i=>void 0!==i):body;return 1===items.length?items[0]:items;}
 
 UnicodeWithoutQuotes "UnicodeWithoutQuotes"= 
@@ -62,163 +62,175 @@ Space "Space"=
 (newlines:(([\t] / " " / newline:[\n] {return newline;})+)+ {return constructs.space();})
 
 Node "Node"= 
-Domain / Essence / Concept / Group / Operator / Scalar
+Domain / Essence / Concept / Location / Operator / Scalar
 
 ContainerNode "ContainerNode"= 
-Domain / Essence / Concept / Group
+Domain / Essence / Concept / Location
 
 DomainOpen "DomainOpen"= 
-(token:"{" "_" node:(anchor:(AnchorNode / Domain / Essence / Concept / Group) description:(Domain / Essence / Concept / Group)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toSpwItem({token:token,position:"open",label:node.anchor,description:node.description,kind:"domain_objective"});}) / (tok:"{" {return toSpwItem({token:tok,position:"open",kind:"domain_objective"});})
+(token:"{" "_" node:(anchor:(AnchorNode / Domain / Essence / Concept / Location) description:(Domain / Essence / Concept / Location)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toConstruct({token:token,position:"open",label:node.anchor,description:node.description,kind:"domain_scheme"});}) / (tok:"{" {return toConstruct({token:tok,position:"open",kind:"domain_scheme"});})
 
 DomainClose "DomainClose"= 
-((token:"}" "_" node:AnchorNode {return toSpwItem({token:token,position:"close",label:node,kind:"domain_subjective"});}) / (node:AnchorNode "_" token:"}" {return toSpwItem({token:token,position:"close",label:node,kind:"domain_subjective"});})) / (tok:"}" {return toSpwItem({token:tok,position:"close",kind:"domain_subjective"});})
+((token:"}" "_" node:AnchorNode {return toConstruct({token:token,position:"close",label:node,kind:"domain_identity"});}) / (node:AnchorNode "_" token:"}" {return toConstruct({token:token,position:"close",label:node,kind:"domain_identity"});})) / (tok:"}" {return toConstruct({token:tok,position:"close",kind:"domain_identity"});})
 
 DomainBody "DomainBody"= 
-(StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Group / Operator / Scalar / (Space {return null;}))+
+(StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Location / Operator / Scalar / SpreadOperator / RangeOperator / DescentOperator / TransformationOperator / DirectionOperator / AggregationOperator / AscentOperator / BranchOperator / ChannelOperator / EvaluationOperator / InvocationOperator / PerformanceOperator / PerspectiveOperator / ReductionOperator / ReferenceOperator / ValueOperator / CommonDelimitingOperator / BlockDelimitingOperator / (Space {return null;}))+
 
 Domain "Domain"= 
 container:((open:DomainOpen ((" " / [\t] {return null;}) / (underscore:"_" {return underscore;}) / ([\n] {return null;}))* close:DomainClose {return{open:open,close:close};}) / (open:DomainOpen body:DomainBody close:DomainClose {return{open:open,body:body,close:close};}))
-{return toSpwItem({kind:"domain",open:container.open,body:container.body,close:container.close});}
+{return toConstruct({kind:"domain",open:container.open,body:container.body,close:container.close});}
 
 EssenceOpen "EssenceOpen"= 
-(token:"[" "_" node:(anchor:(AnchorNode / Domain / Essence / Concept / Group) description:(Domain / Essence / Concept / Group)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toSpwItem({token:token,position:"open",label:node.anchor,description:node.description,kind:"essence_objective"});}) / (tok:"[" {return toSpwItem({token:tok,position:"open",kind:"essence_objective"});})
+(token:"[" "_" node:(anchor:(AnchorNode / Domain / Essence / Concept / Location) description:(Domain / Essence / Concept / Location)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toConstruct({token:token,position:"open",label:node.anchor,description:node.description,kind:"essence_scheme"});}) / (tok:"[" {return toConstruct({token:tok,position:"open",kind:"essence_scheme"});})
 
 EssenceClose "EssenceClose"= 
-((token:"]" "_" node:AnchorNode {return toSpwItem({token:token,position:"close",label:node,kind:"essence_subjective"});}) / (node:AnchorNode "_" token:"]" {return toSpwItem({token:token,position:"close",label:node,kind:"essence_subjective"});})) / (tok:"]" {return toSpwItem({token:tok,position:"close",kind:"essence_subjective"});})
+((token:"]" "_" node:AnchorNode {return toConstruct({token:token,position:"close",label:node,kind:"essence_identity"});}) / (node:AnchorNode "_" token:"]" {return toConstruct({token:token,position:"close",label:node,kind:"essence_identity"});})) / (tok:"]" {return toConstruct({token:tok,position:"close",kind:"essence_identity"});})
 
 EssenceBody "EssenceBody"= 
-(StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Group / Operator / Scalar / (Space {return null;}))+
+(StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Location / Operator / Scalar / SpreadOperator / RangeOperator / DescentOperator / TransformationOperator / DirectionOperator / AggregationOperator / AscentOperator / BranchOperator / ChannelOperator / EvaluationOperator / InvocationOperator / PerformanceOperator / PerspectiveOperator / ReductionOperator / ReferenceOperator / ValueOperator / CommonDelimitingOperator / BlockDelimitingOperator / (Space {return null;}))+
 
 Essence "Essence"= 
 container:((open:EssenceOpen ((" " / [\t] {return null;}) / (underscore:"_" {return underscore;}) / ([\n] {return null;}))* close:EssenceClose {return{open:open,close:close};}) / (open:EssenceOpen body:EssenceBody close:EssenceClose {return{open:open,body:body,close:close};}))
-{return toSpwItem({kind:"essence",open:container.open,body:container.body,close:container.close});}
+{return toConstruct({kind:"essence",open:container.open,body:container.body,close:container.close});}
 
 ConceptOpen "ConceptOpen"= 
-(token:"<" "_" node:(anchor:(AnchorNode / Domain / Essence / Concept / Group) description:(Domain / Essence / Concept / Group)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toSpwItem({token:token,position:"open",label:node.anchor,description:node.description,kind:"concept_objective"});}) / (tok:"<" {return toSpwItem({token:tok,position:"open",kind:"concept_objective"});})
+(token:"<" "_" node:(anchor:(AnchorNode / Domain / Essence / Concept / Location) description:(Domain / Essence / Concept / Location)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toConstruct({token:token,position:"open",label:node.anchor,description:node.description,kind:"concept_scheme"});}) / (tok:"<" {return toConstruct({token:tok,position:"open",kind:"concept_scheme"});})
 
 ConceptClose "ConceptClose"= 
-((token:">" "_" node:AnchorNode {return toSpwItem({token:token,position:"close",label:node,kind:"concept_subjective"});}) / (node:AnchorNode "_" token:">" {return toSpwItem({token:token,position:"close",label:node,kind:"concept_subjective"});})) / (tok:">" {return toSpwItem({token:tok,position:"close",kind:"concept_subjective"});})
+((token:">" "_" node:AnchorNode {return toConstruct({token:token,position:"close",label:node,kind:"concept_identity"});}) / (node:AnchorNode "_" token:">" {return toConstruct({token:token,position:"close",label:node,kind:"concept_identity"});})) / (tok:">" {return toConstruct({token:tok,position:"close",kind:"concept_identity"});})
 
 ConceptBody "ConceptBody"= 
-(StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Group / Operator / Scalar / (Space {return null;}))+
+(StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Location / Operator / Scalar / SpreadOperator / RangeOperator / DescentOperator / TransformationOperator / DirectionOperator / AggregationOperator / AscentOperator / BranchOperator / ChannelOperator / EvaluationOperator / InvocationOperator / PerformanceOperator / PerspectiveOperator / ReductionOperator / ReferenceOperator / ValueOperator / CommonDelimitingOperator / BlockDelimitingOperator / (Space {return null;}))+
 
 Concept "Concept"= 
 container:((open:ConceptOpen ((" " / [\t] {return null;}) / (underscore:"_" {return underscore;}) / ([\n] {return null;}))* close:ConceptClose {return{open:open,close:close};}) / (open:ConceptOpen body:ConceptBody close:ConceptClose {return{open:open,body:body,close:close};}))
-{return toSpwItem({kind:"concept",open:container.open,body:container.body,close:container.close});}
+{return toConstruct({kind:"concept",open:container.open,body:container.body,close:container.close});}
 
-GroupOpen "GroupOpen"= 
-(token:"(" "_" node:(anchor:(AnchorNode / Domain / Essence / Concept / Group) description:(Domain / Essence / Concept / Group)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toSpwItem({token:token,position:"open",label:node.anchor,description:node.description,kind:"group_objective"});}) / (tok:"(" {return toSpwItem({token:tok,position:"open",kind:"group_objective"});})
+LocationOpen "LocationOpen"= 
+(token:"(" "_" node:(anchor:(AnchorNode / Domain / Essence / Concept / Location) description:(Domain / Essence / Concept / Location)? {return{anchor:anchor,description:description};}) (Space {return null;}) {return toConstruct({token:token,position:"open",label:node.anchor,description:node.description,kind:"group_scheme"});}) / (tok:"(" {return toConstruct({token:tok,position:"open",kind:"group_scheme"});})
 
-GroupClose "GroupClose"= 
-((token:")" "_" node:AnchorNode {return toSpwItem({token:token,position:"close",label:node,kind:"group_subjective"});}) / (node:AnchorNode "_" token:")" {return toSpwItem({token:token,position:"close",label:node,kind:"group_subjective"});})) / (tok:")" {return toSpwItem({token:tok,position:"close",kind:"group_subjective"});})
+LocationClose "LocationClose"= 
+((token:")" "_" node:AnchorNode {return toConstruct({token:token,position:"close",label:node,kind:"group_identity"});}) / (node:AnchorNode "_" token:")" {return toConstruct({token:token,position:"close",label:node,kind:"group_identity"});})) / (tok:")" {return toConstruct({token:tok,position:"close",kind:"group_identity"});})
 
-GroupBody "GroupBody"= 
-(StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Group / Operator / Scalar / (Space {return null;}))+
+LocationBody "LocationBody"= 
+(StrandExpression / PhraseExpression / PerspectiveExpression / Domain / Essence / Concept / Location / Operator / Scalar / SpreadOperator / RangeOperator / DescentOperator / TransformationOperator / DirectionOperator / AggregationOperator / AscentOperator / BranchOperator / ChannelOperator / EvaluationOperator / InvocationOperator / PerformanceOperator / PerspectiveOperator / ReductionOperator / ReferenceOperator / ValueOperator / CommonDelimitingOperator / BlockDelimitingOperator / (Space {return null;}))+
 
-Group "Group"= 
-container:((open:GroupOpen ((" " / [\t] {return null;}) / (underscore:"_" {return underscore;}) / ([\n] {return null;}))* close:GroupClose {return{open:open,close:close};}) / (open:GroupOpen body:GroupBody close:GroupClose {return{open:open,body:body,close:close};}))
-{return toSpwItem({kind:"group",open:container.open,body:container.body,close:container.close});}
+Location "Location"= 
+container:((open:LocationOpen ((" " / [\t] {return null;}) / (underscore:"_" {return underscore;}) / ([\n] {return null;}))* close:LocationClose {return{open:open,close:close};}) / (open:LocationOpen body:LocationBody close:LocationClose {return{open:open,body:body,close:close};}))
+{return toConstruct({kind:"group",open:container.open,body:container.body,close:container.close});}
 
 Atom "Atom"= 
 Operator / Scalar
 
 AnchorNode "AnchorNode"= 
 anchor:((head:([a-zA-Z])+ tail:(line:("-" / "_") chars:([a-zA-Z0-9])+ {return line+chars.join("");})+ {return[...head,...tail].join("");}) / (head:([a-zA-Z])+ tail:([a-zA-Z0-9])* {const characters=[...head,...tail];return characters.join("");}))
-{return toSpwItem({kind:"anchor",label:anchor});}
+{return toConstruct({kind:"anchor",label:anchor});}
 
 NumberNode "NumberNode"= 
 num:([0-9])+
-{return toSpwItem({kind:"number",value:parseInt(num.join(""))});}
+{return toConstruct({kind:"number",value:parseInt(num.join(""))});}
 
 PhraseNode "PhraseNode"= 
 phrase:(head:(AnchorNode / NumberNode) tail:((" " / [\t])+ anchor:(AnchorNode / NumberNode) {return anchor;})+ {const items=[head,...tail];return items;})
-{function makeArray(r){return Array.isArray(r)?r:[r]}const _phrase=phrase,p=_phrase.reduce((r,e)=>[...r,...makeArray(e)],[]);return toSpwItem({kind:"phrase",body:p});}
+{function makeArray(r){return Array.isArray(r)?r:[r]}const _phrase=phrase,p=_phrase.reduce((r,a)=>[...r,...makeArray(a)],[]);return toConstruct({kind:"phrase",body:p});}
 
 StringNode "StringNode"= 
 string:(([\'] body:(UnicodeWithoutQuotes / [\n] / [\"])* [\'] {return body.join("");}) / ([\"] body:(("\\" [\"] {return'"';}) / UnicodeWithoutQuotes / [\n] / [\'])* [\"] {return body.join("");}))
-{return toSpwItem({kind:"string",open:'"',body:string,close:'"'});}
+{return toConstruct({kind:"string",open:'"',body:string,close:'"'});}
 
 Scalar "Scalar"= 
 PhraseNode / NumberNode / (node:(AnchorNode / StringNode) spec:(ContainerNode)* description:("." (Space {return null;}) container:ContainerNode {return container;})* {return"undefined"!=typeof spec&&(node.key+=spec.map(e=>e.key),node.spec=spec),node;})
 
 Operator "Operator"= 
-SpreadOperator / RangeOperator / DescentOperator / TransformationOperator / DirectionOperator / AggregationOperator / AscentOperator / BranchOperator / ChannelOperator / EvaluationOperator / InvocationOperator / PerformanceOperator / PerspectiveOperator / ReductionOperator / ReferenceOperator / ValueOperator
+SpreadOperator / RangeOperator / DescentOperator / TransformationOperator / DirectionOperator / AggregationOperator / AscentOperator / BranchOperator / ChannelOperator / EvaluationOperator / InvocationOperator / PerformanceOperator / PerspectiveOperator / ReductionOperator / ReferenceOperator / ValueOperator / CommonDelimitingOperator / BlockDelimitingOperator
 
 AggregationOperator "AggregationOperator"= 
 _operatorComponents:((token:"+" "_" label:AnchorNode {return{token:token,label:label};}) / "+")
-{return toSpwItem({kind:"aggregation",..._operatorComponents});}
+{return toConstruct({kind:"aggregation",..._operatorComponents});}
 
 AscentOperator "AscentOperator"= 
 _operatorComponents:((token:"^" "_" label:AnchorNode {return{token:token,label:label};}) / "^")
-{return toSpwItem({kind:"ascent",..._operatorComponents});}
+{return toConstruct({kind:"ascent",..._operatorComponents});}
 
 BranchOperator "BranchOperator"= 
 _operatorComponents:((token:"|" "_" label:AnchorNode {return{token:token,label:label};}) / "|")
-{return toSpwItem({kind:"branch",..._operatorComponents});}
+{return toConstruct({kind:"branch",..._operatorComponents});}
 
 ChannelOperator "ChannelOperator"= 
 _operatorComponents:((token:"#" "_" label:AnchorNode {return{token:token,label:label};}) / "#")
-{return toSpwItem({kind:"channel",..._operatorComponents});}
+{return toConstruct({kind:"channel",..._operatorComponents});}
+
+CommonDelimitingOperator "CommonDelimitingOperator"= 
+_operatorComponents:((token:"," "_" label:AnchorNode {return{token:token,label:label};}) / ",")
+{return toConstruct({kind:"common_delimiter",..._operatorComponents});}
+
+BlockDelimitingOperator "BlockDelimitingOperator"= 
+_operatorComponents:((token:";" "_" label:AnchorNode {return{token:token,label:label};}) / ";")
+{return toConstruct({kind:"block_delimiter",..._operatorComponents});}
+
+OperatorDelimitingOperator "OperatorDelimitingOperator"= 
+_operatorComponents:((token:" " "_" label:AnchorNode {return{token:token,label:label};}) / " ")
+{return toConstruct({kind:"operator_delimiter",..._operatorComponents});}
 
 DescentOperator "DescentOperator"= 
 _operatorComponents:((token:"." "_" label:AnchorNode {return{token:token,label:label};}) / ".")
-{return toSpwItem({kind:"descent",..._operatorComponents});}
+{return toConstruct({kind:"descent",..._operatorComponents});}
 
 DirectionOperator "DirectionOperator"= 
 _operatorComponents:((token:"->" "_" label:AnchorNode {return{token:token,label:label};}) / "->")
-{return toSpwItem({kind:"direction",..._operatorComponents});}
+{return toConstruct({kind:"direction",..._operatorComponents});}
 
 EvaluationOperator "EvaluationOperator"= 
 _operatorComponents:((token:"?" "_" label:AnchorNode {return{token:token,label:label};}) / "?")
-{return toSpwItem({kind:"evaluation",..._operatorComponents});}
+{return toConstruct({kind:"evaluation",..._operatorComponents});}
 
 InvocationOperator "InvocationOperator"= 
 _operatorComponents:((token:"~" "_" label:AnchorNode {return{token:token,label:label};}) / "~")
-{return toSpwItem({kind:"invocation",..._operatorComponents});}
+{return toConstruct({kind:"invocation",..._operatorComponents});}
 
 PerformanceOperator "PerformanceOperator"= 
 _operatorComponents:((token:"!" "_" label:AnchorNode {return{token:token,label:label};}) / "!")
-{return toSpwItem({kind:"performance",..._operatorComponents});}
+{return toConstruct({kind:"performance",..._operatorComponents});}
 
 PerspectiveOperator "PerspectiveOperator"= 
 _operatorComponents:((token:"@" "_" label:AnchorNode {return{token:token,label:label};}) / "@")
-{return toSpwItem({kind:"perspective",..._operatorComponents});}
+{return toConstruct({kind:"perspective",..._operatorComponents});}
 
 RangeOperator "RangeOperator"= 
 _operatorComponents:((token:".." "_" label:AnchorNode {return{token:token,label:label};}) / "..")
-{return toSpwItem({kind:"range",..._operatorComponents});}
+{return toConstruct({kind:"range",..._operatorComponents});}
 
 ReductionOperator "ReductionOperator"= 
 _operatorComponents:((token:"-" "_" label:AnchorNode {return{token:token,label:label};}) / "-")
-{return toSpwItem({kind:"reduction",..._operatorComponents});}
+{return toConstruct({kind:"reduction",..._operatorComponents});}
 
 ReferenceOperator "ReferenceOperator"= 
 _operatorComponents:((token:"&" "_" label:AnchorNode {return{token:token,label:label};}) / "&")
-{return toSpwItem({kind:"reference",..._operatorComponents});}
+{return toConstruct({kind:"reference",..._operatorComponents});}
 
 SpreadOperator "SpreadOperator"= 
 _operatorComponents:((token:"..." "_" label:AnchorNode {return{token:token,label:label};}) / "...")
-{return toSpwItem({kind:"spread",..._operatorComponents});}
+{return toConstruct({kind:"spread",..._operatorComponents});}
 
 TransformationOperator "TransformationOperator"= 
 _operatorComponents:((token:"=>" "_" label:AnchorNode {return{token:token,label:label};}) / "=>")
-{return toSpwItem({kind:"transformation",..._operatorComponents});}
+{return toConstruct({kind:"transformation",..._operatorComponents});}
 
 ValueOperator "ValueOperator"= 
 _operatorComponents:((token:"*" "_" label:AnchorNode {return{token:token,label:label};}) / "*")
-{return toSpwItem({kind:"value",..._operatorComponents});}
+{return toConstruct({kind:"value",..._operatorComponents});}
 
 Expression "Expression"= 
 StrandExpression / PhraseExpression / PerspectiveExpression
 
 PerspectiveExpression "PerspectiveExpression"= 
-source:Node (Space {return null;})* lens:((atom:PerspectiveOperator spec:Essence {return toSpwItem({kind:"lens",atom:atom,spec:spec});}) / (atom:PerspectiveOperator {return{atom:atom};})) (Space {return null;})* "->"? (Space {return null;})* target:Node
-{return toSpwItem({kind:"perspective_expression",source:source,lens:lens,target:target});}
+source:Node (Space {return null;})* lens:((atom:PerspectiveOperator spec:Essence {return toConstruct({kind:"lens",atom:atom,spec:spec});}) / (atom:PerspectiveOperator {return{atom:atom};})) (Space {return null;})* "->"? (Space {return null;})* target:Node
+{return toConstruct({kind:"perspective_expression",source:source,lens:lens,target:target});}
 
 StrandExpression "StrandExpression"= 
-head:(PhraseExpression / PerspectiveExpression / Node) (Space {return null;})* tails:((Space {return null;})* operator:TransformationOperator (Space {return null;})* item:(Node / StrandExpression) {return toSpwItem({kind:"strand_tail",operator:operator,item:item});})+
-{return toSpwItem({kind:"strand",head:head,tails:tails});}
+head:(PhraseExpression / PerspectiveExpression / Node) (Space {return null;})* tails:((Space {return null;})* operator:TransformationOperator (Space {return null;})* item:(Node / StrandExpression) {return toConstruct({kind:"strand_tail",operator:operator,item:item});})+
+{return toConstruct({kind:"strand",head:head,tails:tails});}
 
 PhraseExpression "PhraseExpression"= 
-head:(Domain / Essence / Concept / Group / NumberNode / PhraseNode / StringNode / AnchorNode) tail:((" " / [\t])* tail:(Domain / Essence / Concept / Group / NumberNode / PhraseNode / StringNode / AnchorNode) {return tail;})+
-{return toSpwItem({kind:"phrase_expression",body:[head,...tail]});}
+head:(Domain / Essence / Concept / Location / NumberNode / PhraseNode / StringNode / AnchorNode) tail:((" " / [\t])* tail:(Domain / Essence / Concept / Location / NumberNode / PhraseNode / StringNode / AnchorNode) {return tail;})+
+{return toConstruct({kind:"phrase_expression",body:[head,...tail]});}

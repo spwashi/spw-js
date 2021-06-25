@@ -1,18 +1,18 @@
-import { ConstructKind } from '../_types/kind';
+import { ConstructKind } from '../_types/kinds';
 import {
   ComponentDescription,
   ComponentEvaluatorObject,
   ConstructReductionOptions,
   InteractionContext,
   PlainInteractionContext,
-  SpwItemKey,
+  ConstructComponentKey,
 } from '@constructs/ast/_abstract/_types';
 import { reduceConstructSync } from '@constructs/ast/_abstract/_util/reduce/sync';
 import { LanguageComponent } from '@constructs/ast/_abstract/component';
 import { reduceConstructAsync } from '@constructs/ast/_abstract/_util/reduce/async';
 import { completeConfig } from '@constructs/ast/_abstract/_util/reduce/_/util';
 
-export interface ISpwConstructStatic<K extends ConstructKind = ConstructKind> {
+export interface IConstructClass<K extends ConstructKind = ConstructKind> {
   readonly kind: K;
 }
 
@@ -40,9 +40,7 @@ export class Construct<
   protected readonly _internal: U | null;
 
   constructor(internal?: U) {
-    const constructor = (<typeof Construct>(
-      this.constructor
-    )) as unknown as typeof Construct;
+    const constructor = (<typeof Construct>this.constructor) as unknown as typeof Construct;
     this.kind = constructor.kind as K;
     this._internal = internal || null;
 
@@ -53,8 +51,8 @@ export class Construct<
     return this._internal;
   }
 
-  get key(): SpwItemKey {
-    type Output = SpwItemKey;
+  get key(): ConstructComponentKey {
+    type Output = ConstructComponentKey;
     type Context = typeof context;
     type Prototype = ComponentDescription;
     type Seed = KeyReductionSeed;
@@ -67,34 +65,25 @@ export class Construct<
       this.internal ?? null,
       {
         valueMapper(subject) {
-          if (
-            (typeof subject === 'string' && subject) ||
-            typeof subject === 'number'
-          ) {
+          if ((typeof subject === 'string' && subject) || typeof subject === 'number') {
             return subject;
           }
           return subject?.key;
         },
 
         stepNormalizer(prototype: Prototype, [intermediate, context]) {
-          const evaluator = prototype.evaluators
-            .stringify as ComponentEvaluatorObject['stringify'];
+          const evaluator = prototype.evaluators.stringify as ComponentEvaluatorObject['stringify'];
           let evaluated: string | null;
           if (evaluator) {
             evaluated = evaluator(intermediate, context);
           } else {
-            evaluated = intermediate
-              ? intermediate[intermediate.length - 1]
-              : null;
+            evaluated = intermediate ? intermediate[intermediate.length - 1] : null;
           }
           return [evaluated, context] as [Output, Context];
         },
 
         stepReducer([prev], [curr, next]) {
-          return [[prev, curr].join(''), next] as [
-            SpwItemKey,
-            InteractionContext,
-          ];
+          return [[prev, curr].join(''), next] as [ConstructComponentKey, InteractionContext];
         },
       },
       seed,
@@ -122,17 +111,10 @@ export class Construct<
     StartType = any,
     Subject = any,
     ReductionContext extends InteractionContext = InteractionContext,
-    _Output extends [ReturnType, ReductionContext] = [
-      ReturnType,
-      ReductionContext,
-    ],
+    _Output extends [ReturnType, ReductionContext] = [ReturnType, ReductionContext],
   >(
     subject: Subject | null = null,
-    options: ConstructReductionOptions<
-      ReductionContext,
-      ReturnType,
-      Intermediate
-    > | null = null,
+    options: ConstructReductionOptions<ReductionContext, ReturnType, Intermediate> | null = null,
     seed: [StartType, ReductionContext] | [null, null] = [null, null],
   ): _Output {
     return reduceConstructSync<ReductionContext>(
@@ -159,17 +141,10 @@ export class Construct<
     Intermediate extends any = ReturnType,
     StartType = any | null,
     Subject = any,
-    _Output extends [ReturnType, ReductionContext] = [
-      ReturnType,
-      ReductionContext,
-    ],
+    _Output extends [ReturnType, ReductionContext] = [ReturnType, ReductionContext],
   >(
     subject: Subject | null = null,
-    options: ConstructReductionOptions<
-      ReductionContext,
-      ReturnType,
-      Intermediate
-    > | null = null,
+    options: ConstructReductionOptions<ReductionContext, ReturnType, Intermediate> | null = null,
     seed: [StartType, ReductionContext | null] | [null, null] = [null, null],
   ): Promise<_Output> {
     return reduceConstructAsync<ReductionContext>(
@@ -181,7 +156,7 @@ export class Construct<
   }
 
   /**
-   * create a SpwConstruct component
+   * create a Construct component
    * @param override
    * @protected
    */

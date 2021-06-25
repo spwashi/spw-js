@@ -4,7 +4,7 @@ import {
   ConstructReductionOptions,
   InteractionContext,
 } from '@constructs/ast/_abstract/_types';
-import { RawSpwConstruct } from '../../_types/internal';
+import { RawConstruct } from '../../_types/internal';
 import { Construct } from '../../construct';
 import { HydrationContext, joinHydratedProperties } from './_/util';
 import { getConstructClass } from '../../../../index';
@@ -22,12 +22,13 @@ const _hydrationValueMapper: ConstructReductionConfig['valueMapper'] = (
   key: any,
   context: InteractionContext | undefined | null,
   isAsync: boolean,
-) =>
-  !isAsync
+) => {
+  return !isAsync
     ? [key as string, value]
     : Promise.resolve((async () => [key as string, await value])());
+};
 
-function getStepNormalizer<Context extends InteractionContext>() {
+function _getHydrationStepNormalizer<Context extends InteractionContext>() {
   return ((prototype: ComponentDescription<Context>, [entries, context]) => {
     return [
       entries.map(([key, value]) => {
@@ -48,33 +49,33 @@ function getStepNormalizer<Context extends InteractionContext>() {
  * @param step
  * @param isAsync
  */
-const _hydrationStepReducer: ConstructReductionConfig<HydrationContext>['stepReducer'] =
-  function ([prev], step, isAsync) {
-    const [curr, context] = step as [
-      [string, string | Construct][],
-      HydrationContext,
-    ];
-    if (isAsync === null) {
-      return [curr ?? [], context];
-    }
-    if (typeof context?.enter !== 'function') {
-      console.error(context);
-      throw new Error('Wrong context');
-    }
-    return [
-      [
-        ...prev,
-        ...(curr ?? [])
-          .map(([k, n]: [string, string | Construct]) => {
-            // absorb constructs, ignore others
-            const absorbed = Construct.isConstruct(n) ? context.absorb?.(n) : n;
-            return [k, absorbed] as [string, Construct | any];
-          })
-          .filter(([, n]: [string, any]) => n != void 0),
-      ],
-      context.enter() as HydrationContext,
-    ];
-  };
+const _hydrationStepReducer: ConstructReductionConfig<HydrationContext>['stepReducer'] = function (
+  [prev],
+  step,
+  isAsync,
+) {
+  const [curr, context] = step as [[string, string | Construct][], HydrationContext];
+  if (isAsync === null) {
+    return [curr ?? [], context];
+  }
+  if (typeof context?.enter !== 'function') {
+    console.error(context);
+    throw new Error('Wrong context');
+  }
+  return [
+    [
+      ...prev,
+      ...(curr ?? [])
+        .map(([k, n]: [string, string | Construct]) => {
+          // absorb constructs, ignore others
+          const absorbed = Construct.isConstruct(n) ? context.absorb?.(n) : n;
+          return [k, absorbed] as [string, Construct | any];
+        })
+        .filter(([, n]: [string, any]) => n != void 0),
+    ],
+    context.enter() as HydrationContext,
+  ];
+};
 
 /**
  * Hydrates a node without probing
@@ -83,38 +84,29 @@ const _hydrationStepReducer: ConstructReductionConfig<HydrationContext>['stepRed
  * @param context
  */
 export function hydrateShallow<
-  Unhydrated extends RawSpwConstruct | any,
+  Unhydrated extends RawConstruct | any,
   Context extends HydrationContext = HydrationContext,
   Out extends [string, any] = [string, any],
->(
-  node: Unhydrated,
-  context: Context,
-): { node: Construct; promise: Promise<[Out[], Context]> } {
+>(node: Unhydrated, context: Context): { node: Construct; promise: Promise<[Out[], Context]> } {
   type Output = Out[];
-  type SeedValue = Partial<RawSpwConstruct>;
+  type SeedValue = [];
 
-  const seed: [SeedValue, Context] = [{}, context];
+  const seed: [SeedValue, Context] = [[], context];
 
   const options = {
     valueMapper: _hydrationValueMapper,
     stepReducer: _hydrationStepReducer,
-    stepNormalizer: getStepNormalizer<Context>(),
+    stepNormalizer: _getHydrationStepNormalizer<Context>(),
   } as ConstructReductionOptions<Context>;
 
   const config = completeConfig<Context>(options);
-  const Ctor = getConstructClass((node as RawSpwConstruct)?.kind);
-  const stepSync = Ctor.reduce<Out[], Out, SeedValue, Unhydrated, Context>(
-    node,
-    options,
-    seed,
-  );
+  const Ctor = getConstructClass((node as RawConstruct)?.kind);
+  const stepSync = Ctor.reduce<Out[], Out, SeedValue, Unhydrated, Context>(node, options, seed);
 
   const intermediate = stepSync[0];
   const hydratedNode = new Ctor(joinHydratedProperties(intermediate));
   const stepInter = config.stepReducer(stepSync, stepSync, null);
-  const promise = Ctor.reduceAsync<Context>(node, config, stepInter) as Promise<
-    [Output, Context]
-  >;
+  const promise = Ctor.reduceAsync<Context>(node, config, stepInter) as Promise<[Output, Context]>;
   context.absorb && context.absorb(hydratedNode);
   return {
     node: hydratedNode,

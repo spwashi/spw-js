@@ -1,22 +1,21 @@
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
-import { IAtomicSpwOperatorStatic } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
-import SpwOperator, {
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
+import { ITokenOperatorClass } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
+import Operator, {
   operatorComponents,
 } from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
+import {
+  RangeOperatorKind,
+  RangeOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/range/__types';
 
-type RangeToken = '..';
+type StaticType = IConstructClass<RangeOperatorKind> & ITokenOperatorClass<RangeOperatorToken>;
 
-@staticImplements<
-  ISpwConstructStatic<'range'> & IAtomicSpwOperatorStatic<'..'>
->()
-export class RangeOperator extends SpwOperator<'range'> {
-  static kind: 'range' = 'range';
+@staticImplements<StaticType>()
+export class RangeOperator extends Operator<RangeOperatorKind> {
+  static kind: RangeOperatorKind = 'range';
 
-  static token: RangeToken = '..';
+  static token: RangeOperatorToken = '..';
 
   static components: ConstructComponents = operatorComponents(RangeOperator);
 }

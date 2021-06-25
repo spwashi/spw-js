@@ -13,6 +13,7 @@ import { getContainerNodeComponentReferences } from '../container.ref.init';
 import { expressions } from '@grammar/ast/expressions/_abstract/_list/expressions.list.ref';
 import { nodes } from '@grammar/ast/nodes/_abstract/_list/node.list.ref';
 import { spaceNode } from '@grammar/utility/space/space.ref';
+import { operators } from '@grammar/ast/nodes/atoms/operator/_abstract/_list/operator.list.ref';
 
 function getEmptyBlockCombinator(
   opener: RuleReferenceCombinator,
@@ -47,7 +48,7 @@ function getEmptyBlockCombinator(
 export function createContainerBodyRules(ruleName: string): Rule[] {
   const bodyName = getContainerNodeComponentReferences(ruleName).body.ruleName;
   const listOfAnyNode = oneOrMoreOf(
-    anyOf([...expressions, ...nodes, spaceNode]),
+    anyOf([...expressions, ...nodes, ...operators, spaceNode]),
   );
   return [new Rule(bodyName, listOfAnyNode)];
 }

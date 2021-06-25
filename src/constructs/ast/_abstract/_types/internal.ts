@@ -1,29 +1,24 @@
-import { ConstructKind } from '@constructs/ast/_types/kind';
-import { SpwNodeLocation } from '../../_util/ast/location';
+import { ConstructKind } from '@constructs/ast/_types/kinds';
+import { ConstructLocation } from '../../_util/ast/location';
 
-export interface HydratedSpwItem {
+export interface HydratedConstruct {
   kind: ConstructKind;
-  location?: SpwNodeLocation | null;
+  location?: ConstructLocation | null;
 
   [k: string]:
-    | HydratedSpwItem
-    | HydratedSpwItem[]
+    | HydratedConstruct
+    | HydratedConstruct[]
     | ConstructKind
-    | SpwNodeLocation
+    | ConstructLocation
     | unknown;
 }
 
-export interface RawSpwConstruct {
+export interface RawConstruct {
   kind: ConstructKind;
-  location?: SpwNodeLocation | null;
+  location?: ConstructLocation | null;
   src?: string;
 
-  [k: string]:
-    | RawSpwConstruct
-    | RawSpwConstruct[]
-    | string
-    | SpwNodeLocation
-    | unknown;
+  [k: string]: RawConstruct | RawConstruct[] | string | ConstructLocation | unknown;
 }
 
-export type SpwItemValue = Record<string, unknown> | string | null;
+export type ConstructComponentValue = Record<string, unknown> | string | null;

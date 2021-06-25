@@ -1,22 +1,21 @@
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
-import { IAtomicSpwOperatorStatic } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
-import SpwOperator, {
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
+import { ITokenOperatorClass } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
+import Operator, {
   operatorComponents,
 } from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
+import {
+  DescentOperatorKind,
+  DescentOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/descent/__types';
 
-type DescentToken = '.';
+type StaticType = IConstructClass<DescentOperatorKind> & ITokenOperatorClass<DescentOperatorToken>;
 
-@staticImplements<
-  ISpwConstructStatic<'descent'> & IAtomicSpwOperatorStatic<'.'>
->()
-export class DescentOperator extends SpwOperator<'descent'> {
-  static kind: 'descent' = 'descent';
+@staticImplements<StaticType>()
+export class DescentOperator extends Operator<'descent'> {
+  static kind: DescentOperatorKind = 'descent';
 
-  static token: DescentToken = '.';
+  static token: DescentOperatorToken = '.';
 
   static components: ConstructComponents = operatorComponents(DescentOperator);
 }

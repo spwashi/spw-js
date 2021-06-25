@@ -1,13 +1,12 @@
-import { SpwExpression } from '../../_abstract/expression';
+import { Expression } from '../../_abstract/expression';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
-import { ISpwConstructStatic, Construct } from '../../../_abstract/construct';
+import { Construct, IConstructClass } from '../../../_abstract/construct';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
 import { DirectionOperator } from '@constructs/ast';
+import { PerspectiveExpressionKind } from '@constructs/ast/expressions/operational/perspective/__types';
 
-type Kind = 'perspective_expression';
-
-@staticImplements<ISpwConstructStatic<'perspective_expression'>>()
-export class PerspectiveExpression extends SpwExpression<Kind> {
+@staticImplements<IConstructClass<'perspective_expression'>>()
+export class PerspectiveExpression extends Expression<PerspectiveExpressionKind> {
   static readonly kind = 'perspective_expression';
 
   static components = {

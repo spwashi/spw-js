@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { RawSpwConstruct } from '@constructs/ast/_abstract/_types/internal';
+import { RawConstruct } from '@constructs/ast/_abstract/_types/internal';
 import { Construct } from '../construct';
 
-export type SpwItemKey = string | null;
+export type ConstructComponentKey = string | null;
 
 type ComponentKey = string | number | (string | number)[] | undefined;
 
@@ -15,9 +15,7 @@ export type InteractionContext = {
 
 // todo move this
 export const PlainInteractionContext = (): InteractionContext => ({
-  enter<T extends Partial<InteractionContext>>(
-    item?: T,
-  ): InteractionContext & T {
+  enter<T extends Partial<InteractionContext>>(item?: T): InteractionContext & T {
     const parent = (this || PlainInteractionContext()) as InteractionContext;
     return {
       ...parent,
@@ -85,7 +83,7 @@ export type ComponentEvaluatorObject<
   Intermediate = Output[],
   //
 > = {
-  hydrate?: Hydrator<Output, Intermediate | RawSpwConstruct[]>;
+  hydrate?: Hydrator<Output, Intermediate | RawConstruct[]>;
 
   stringify?: SerializationReducer<Intermediate, string>;
 
@@ -101,7 +99,7 @@ export type ComponentEvaluatorObject<
  */
 export type ComponentDescription<
   Context extends InteractionContext = InteractionContext,
-  // a portion of a SpwItem
+  // an item of a Construct
   Component extends any = any,
   // subcomponents in order
   SubComponentTupleOrList extends SubComponent[] = any[],
@@ -180,11 +178,4 @@ export type ConstructReductionOptions<
   Intermediate extends any | null | undefined = any,
   // An item that might be returned from the generator after mutation
   InternalComponent extends any = any,
-> = Partial<
-  ConstructReductionConfig<
-    Context,
-    ReductionOutput,
-    Intermediate,
-    InternalComponent
-  >
->;
+> = Partial<ConstructReductionConfig<Context, ReductionOutput, Intermediate, InternalComponent>>;

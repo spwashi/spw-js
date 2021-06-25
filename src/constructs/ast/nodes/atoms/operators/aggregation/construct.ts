@@ -1,23 +1,19 @@
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
-import { IAtomicSpwOperatorStatic } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
-import SpwOperator, {
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
+import { ITokenOperatorClass } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
+import Operator, {
   operatorComponents,
 } from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
+import {
+  AggregationOperatorKind,
+  AggregationOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/aggregation/__types';
 
-type AggregationToken = '+';
+@staticImplements<IConstructClass<AggregationOperatorKind> & ITokenOperatorClass<'+'>>()
+export class AggregationOperator extends Operator<AggregationOperatorKind> {
+  static kind: AggregationOperatorKind = 'aggregation';
 
-@staticImplements<
-  ISpwConstructStatic<'aggregation'> & IAtomicSpwOperatorStatic<'+'>
->()
-export class AggregationOperator extends SpwOperator<'aggregation'> {
-  static kind: 'aggregation' = 'aggregation';
+  static token: AggregationOperatorToken = '+';
 
-  static token: AggregationToken = '+';
-
-  static components: ConstructComponents =
-    operatorComponents(AggregationOperator);
+  static components: ConstructComponents = operatorComponents(AggregationOperator);
 }

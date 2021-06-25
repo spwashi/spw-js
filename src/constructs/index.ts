@@ -1,4 +1,4 @@
-import { ConstructKind } from '@constructs/ast/_types/kind';
+import { ConstructKind } from '@constructs/ast/_types/kinds';
 import { Construct } from './ast/_abstract/construct';
 import { spwItemConstructors } from '@constructs/constructors';
 

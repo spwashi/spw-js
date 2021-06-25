@@ -1,15 +1,11 @@
-import { SpwExpression } from '@constructs/ast/expressions/_abstract/expression';
+import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import { ISpwConstructStatic, Construct } from '../../../_abstract/construct';
-import {
-  ComponentDescription,
-  ComponentEvaluatorObject,
-} from '@constructs/ast/_abstract/_types';
+import { Construct, IConstructClass } from '../../../_abstract/construct';
+import { ComponentDescription, ComponentEvaluatorObject } from '@constructs/ast/_abstract/_types';
+import { PhraseExpressionKind } from '@constructs/ast/expressions/relational/phrase/__types';
 
-type Kind = 'phrase_expression';
-
-@staticImplements<ISpwConstructStatic<'phrase_expression'>>()
-export class PhraseExpression extends SpwExpression<Kind> {
+@staticImplements<IConstructClass<'phrase_expression'>>()
+export class PhraseExpression extends Expression<PhraseExpressionKind> {
   static readonly kind = 'phrase_expression';
 
   static components = {

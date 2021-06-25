@@ -1,18 +1,13 @@
-import { SpwNode } from '../../../_abstract/node';
-import { ConstructKind } from '../../../../_types/kind';
+import { Node } from '../../../_abstract/node';
+import { ConstructKind } from '../../../../_types/kinds';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
-import {
-  Construct,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
+import { Construct, ConstructComponents } from '../../../../_abstract/construct';
 
 /**
  * Operators have "side effects" in that they represent the invocation of
  * some semantic order that extends beyond the Operation's constituent parts
  */
-export default abstract class SpwOperator<
-  Kind extends ConstructKind = any,
-> extends SpwNode<Kind> {
+export default abstract class Operator<Kind extends ConstructKind = any> extends Node<Kind> {
   static components: ConstructComponents = {
     token: Construct.makeComponent({
       _fallback: null as any,
@@ -41,16 +36,12 @@ export default abstract class SpwOperator<
   protected static token: string | undefined = undefined;
 }
 
-export function operatorComponents({
-  token,
-}: {
-  token: any;
-}): ConstructComponents {
+export function operatorComponents({ token }: { token: any }): ConstructComponents {
   return {
-    ...SpwOperator.components,
+    ...Operator.components,
 
     token: {
-      ...SpwOperator.components.token,
+      ...Operator.components.token,
       _fallback: token,
     },
   };

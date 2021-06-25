@@ -1,19 +1,17 @@
-import LabeledSpwOperator from '../_abstract/operator';
-import { ISpwConstructStatic } from '../../../../_abstract/construct';
+import Operator, { operatorComponents } from '../_abstract/operator';
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import { IAtomicSpwOperatorStatic } from '../_abstract/_types/atomic';
+import { ITokenOperatorClass } from '../_abstract/_types/atomic';
+import {
+  PerformanceOperatorKind,
+  PerformanceOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/performance/__types';
 
-type Token = '!';
-type Kind = 'performance';
+@staticImplements<IConstructClass<'performance'> & ITokenOperatorClass<'!'>>()
+export class PerformanceOperator extends Operator<PerformanceOperatorKind> {
+  static readonly kind: PerformanceOperatorKind = 'performance';
 
-const token: Token = '!';
-const kind: Kind = 'performance';
+  static readonly token: PerformanceOperatorToken = '!';
 
-@staticImplements<
-  ISpwConstructStatic<'performance'> & IAtomicSpwOperatorStatic<'!'>
->()
-export class PerformanceOperator extends LabeledSpwOperator<Kind> {
-  static readonly kind: Kind = kind;
-
-  static readonly token: Token = token;
+  static components: ConstructComponents = operatorComponents(PerformanceOperator);
 }

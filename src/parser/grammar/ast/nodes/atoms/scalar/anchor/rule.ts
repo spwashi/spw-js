@@ -45,13 +45,11 @@ const anchorPattern1 = sequenceOf([
   ).named('tail'),
 ]).withAction(_anchorPattern1Action);
 
-const anchorComponent = sequenceOf([
-  anyOf([anchorPattern1, anchorPattern2]).named('anchor'),
-]);
+const anchorComponent = sequenceOf([anyOf([anchorPattern1, anchorPattern2]).named('anchor')]);
 
 // language=JavaScript
 const _action = `
-    return toSpwItem({
+    return toConstruct({
                          kind: "${AnchorNode.kind}",
 
                          ${AnchorNode.components.label.name}: anchor,

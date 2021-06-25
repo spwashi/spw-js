@@ -1,4 +1,4 @@
-import { RawSpwConstruct } from '@constructs/ast/_abstract/_types/internal';
+import { RawConstruct } from '@constructs/ast/_abstract/_types/internal';
 import { HydrationContext } from '@constructs/ast/_abstract/_util/hydrate/_/util';
 import { Construct } from '../../../../../ast/_abstract/construct';
 import { hydrateShallow } from '@constructs/ast/_abstract/_util/hydrate/shallow';
@@ -11,9 +11,6 @@ import { hydrateShallow } from '@constructs/ast/_abstract/_util/hydrate/shallow'
  * @param node
  * @param context
  */
-export function hydrateNode(
-  node: RawSpwConstruct,
-  context: HydrationContext,
-): Construct | null {
+export function hydrateNode(node: RawConstruct, context: HydrationContext): Construct | null {
   return hydrateShallow(node, context).node;
 }

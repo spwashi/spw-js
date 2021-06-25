@@ -4,7 +4,7 @@ export { PhraseNode } from './atoms/scalars/phrase/construct';
 export { Domain } from './containers/domain/construct';
 export { Concept } from './containers/concept/construct';
 export { Essence } from './containers/essence/construct';
-export { Group } from './containers/group/construct';
+export { Location } from './containers/location/construct';
 export { AggregationOperator } from './atoms/operators/aggregation/construct';
 export { AscentOperator } from './atoms/operators/ascent/construct';
 export { BranchOperator } from './atoms/operators/branch/construct';

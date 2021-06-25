@@ -1,23 +1,22 @@
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
-import { IAtomicSpwOperatorStatic } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
-import SpwOperator, {
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
+import { ITokenOperatorClass } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
+import Operator, {
   operatorComponents,
 } from '@constructs/ast/nodes/atoms/operators/_abstract/operator';
+import {
+  DirectionOperatorKind,
+  DirectionOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/direction/__types';
 
-type DirectionToken = '->';
+type StaticType = IConstructClass<DirectionOperatorKind> &
+  ITokenOperatorClass<DirectionOperatorToken>;
 
-@staticImplements<
-  ISpwConstructStatic<'direction'> & IAtomicSpwOperatorStatic<'->'>
->()
-export class DirectionOperator extends SpwOperator<'direction'> {
-  static kind: 'direction' = 'direction';
+@staticImplements<StaticType>()
+export class DirectionOperator extends Operator<DirectionOperatorKind> {
+  static kind: DirectionOperatorKind = 'direction';
 
-  static token: DirectionToken = '->';
+  static token: DirectionOperatorToken = '->';
 
-  static components: ConstructComponents =
-    operatorComponents(DirectionOperator);
+  static components: ConstructComponents = operatorComponents(DirectionOperator);
 }

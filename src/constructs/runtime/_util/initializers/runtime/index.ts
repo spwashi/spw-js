@@ -1,3 +1,3 @@
-import initRuntime from '@constructs/runtime/_util/initializers/runtime/initRuntime';
+import initRuntime from './initRuntime';
 
 export { initRuntime };

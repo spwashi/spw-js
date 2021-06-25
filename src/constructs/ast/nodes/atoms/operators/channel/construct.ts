@@ -1,24 +1,19 @@
-import SpwOperator, { operatorComponents } from '../_abstract/operator';
-import {
-  ISpwConstructStatic,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
+import Operator, { operatorComponents } from '../_abstract/operator';
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
 import { staticImplements } from '../../../../_util/typescript/staticImplements';
-import { IAtomicSpwOperatorStatic } from '../_abstract/_types/atomic';
+import { ITokenOperatorClass } from '../_abstract/_types/atomic';
+import {
+  ChannelOperatorKind,
+  ChannelOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/channel/__types';
 
-type Token = '#';
-type Kind = 'channel';
+type StaticType = IConstructClass<'channel'> & ITokenOperatorClass<'#'>;
 
-const token: Token = '#';
-const kind: Kind = 'channel';
+@staticImplements<StaticType>()
+export class ChannelOperator extends Operator<ChannelOperatorKind> {
+  static readonly kind: ChannelOperatorKind = 'channel';
 
-@staticImplements<
-  ISpwConstructStatic<'channel'> & IAtomicSpwOperatorStatic<'#'>
->()
-export class ChannelOperator extends SpwOperator<Kind> {
-  static readonly kind: Kind = kind;
-
-  static readonly token: Token = token;
+  static readonly token: ChannelOperatorToken = '#';
 
   static components: ConstructComponents = operatorComponents(ChannelOperator);
 }

@@ -8,61 +8,44 @@ import {
 } from '@spwashi/language/parsers/grammar/combinators';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import { anchorNode } from '../../scalar/anchor/ref';
-import { ISpwConstructStatic } from '../../../../../../../constructs/ast/_abstract/construct';
-import { IAtomicSpwOperatorStatic } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
+import { IConstructClass } from '../../../../../../../constructs/ast/_abstract/construct';
+import { ITokenOperatorClass } from '@constructs/ast/nodes/atoms/operators/_abstract/_types/atomic';
 
-function init(
-  token: StringCombinator,
-  ruleName: string,
-  nodeName: string,
-  doLabel = true,
-): Rule {
+function init(token: StringCombinator, ruleName: string, nodeName: string, doLabel = true): Rule {
   const _labeledTokenAction =
     // language=JavaScript
     `
-                  return {
-                      token,
-                      label
-                  }
-              `;
+              return {
+                token,
+                label
+              }
+            `;
 
   const labeledToken = !doLabel
     ? token
-    : sequenceOf([
-        token.named('token'),
-        stringLike('_'),
-        anchorNode.named('label'),
-      ]).withAction(_labeledTokenAction);
+    : sequenceOf([token.named('token'), stringLike('_'), anchorNode.named('label')]).withAction(
+        _labeledTokenAction,
+      );
 
   const pattern = anyOf([labeledToken, token].filter(Boolean));
 
   const _ruleAction =
     // language=JavaScript
     `
-                  return toSpwItem({
-                                       kind: "${nodeName}",
-                                       ..._operatorComponents
-                                   })
-              `;
+              return toConstruct({
+                                 kind: "${nodeName}",
+                                 ..._operatorComponents
+                               })
+            `;
 
-  return new Rule(
-    ruleName,
-    sequenceOf([pattern.named('_operatorComponents')]),
-    _ruleAction,
-  );
+  return new Rule(ruleName, sequenceOf([pattern.named('_operatorComponents')]), _ruleAction);
 }
 
-type Operator<T extends string> = ISpwConstructStatic &
-  IAtomicSpwOperatorStatic<T> & { name: string };
-export function getOperatorReference<T extends string>(
-  SpwNode: Operator<T>,
-): RuleReferenceCombinator {
-  return referenceTo(SpwNode.name);
+type Operator<T extends string> = IConstructClass & ITokenOperatorClass<T> & { name: string };
+export function getOperatorReference<T extends string>(Op: Operator<T>): RuleReferenceCombinator {
+  return referenceTo(Op.name);
 }
-export function getOperatorRule<Token extends string>(
-  SpwNode: Operator<Token>,
-  doLabel = true,
-): Rule {
-  const token = stringLike(SpwNode.token);
-  return init(token, SpwNode.name, SpwNode.kind, doLabel);
+export function getOperatorRule<Token extends string>(Op: Operator<Token>, doLabel = true): Rule {
+  const token = stringLike(Op.token);
+  return init(token, Op.name, Op.kind, doLabel);
 }

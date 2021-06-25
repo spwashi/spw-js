@@ -1,25 +1,17 @@
-import SpwOperator, { operatorComponents } from '../_abstract/operator';
-import {
-  ISpwConstructStatic,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
+import Operator, { operatorComponents } from '../_abstract/operator';
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import { IAtomicSpwOperatorStatic } from '../_abstract/_types/atomic';
+import { ITokenOperatorClass } from '../_abstract/_types/atomic';
+import {
+  PerspectiveOperatorKind,
+  PerspectiveOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/perspective/__types';
 
-type Token = '@';
-type Kind = 'perspective';
+@staticImplements<IConstructClass<'perspective'> & ITokenOperatorClass<'@'>>()
+export class PerspectiveOperator extends Operator<PerspectiveOperatorKind> {
+  static readonly kind: PerspectiveOperatorKind = 'perspective';
 
-const token: Token = '@';
-const kind: Kind = 'perspective';
+  static readonly token: PerspectiveOperatorToken = '@';
 
-@staticImplements<
-  ISpwConstructStatic<'perspective'> & IAtomicSpwOperatorStatic<'@'>
->()
-export class PerspectiveOperator extends SpwOperator<Kind> {
-  static readonly kind: Kind = kind;
-
-  static readonly token: Token = token;
-
-  static components: ConstructComponents =
-    operatorComponents(PerspectiveOperator);
+  static components: ConstructComponents = operatorComponents(PerspectiveOperator);
 }

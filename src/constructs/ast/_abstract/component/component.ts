@@ -1,9 +1,5 @@
-import {
-  ComponentDescription,
-  ComponentEvaluatorObject,
-  InteractionGenerator,
-} from '../_types';
-import { RawSpwConstruct } from '../_types/internal';
+import { ComponentDescription, ComponentEvaluatorObject, InteractionGenerator } from '../_types';
+import { RawConstruct } from '../_types/internal';
 
 const defaultGenerator = function* (component, ctxt) {
   if (
@@ -23,7 +19,7 @@ const defaultGenerator = function* (component, ctxt) {
 } as InteractionGenerator;
 
 const defaultEvaluator = {
-  hydrate: function (items: RawSpwConstruct[] | undefined) {
+  hydrate: function (items: RawConstruct[] | undefined) {
     return items;
   },
   stringify: function (items) {

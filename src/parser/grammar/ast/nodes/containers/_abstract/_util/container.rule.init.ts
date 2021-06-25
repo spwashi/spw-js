@@ -1,12 +1,6 @@
 import { Rule } from '@spwashi/language/parsers/grammar';
-import {
-  createDelimiterRule,
-  IDelimiter,
-} from './_components/delimiter.rule.init';
-import {
-  createContainerBodyRules,
-  createContainerPattern,
-} from './_components/body.rule.init';
+import { createDelimiterRule, IDelimiter } from './_components/delimiter.rule.init';
+import { createContainerBodyRules, createContainerPattern } from './_components/body.rule.init';
 import { sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
 
 export const createContainerRules = ({
@@ -26,14 +20,12 @@ export const createContainerRules = ({
 
   const body = createContainerBodyRules(ruleName);
 
-  const pattern = sequenceOf([
-    createContainerPattern(ruleName).named('container'),
-  ]);
+  const pattern = sequenceOf([createContainerPattern(ruleName).named('container')]);
 
   const _ruleAction =
     // language=JavaScript
     `
-                                   return toSpwItem({
+                                   return toConstruct({
                                                         kind:  '${kind}',
                                                         open:  container.open,
                                                         body:  container.body,

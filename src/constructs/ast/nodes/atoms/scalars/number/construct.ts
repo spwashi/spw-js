@@ -1,14 +1,14 @@
-import { SpwNode } from '../../../_abstract/node';
-import {
-  ISpwConstructStatic,
-  Construct,
-} from '../../../../_abstract/construct';
+import { Node } from '../../../_abstract/node';
+import { Construct, IConstructClass } from '../../../../_abstract/construct';
 import { staticImplements } from '../../../../_util/typescript/staticImplements';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { NumberNodeKind } from '@constructs/ast/nodes/atoms/scalars/number/__types';
 
-@staticImplements<ISpwConstructStatic<'number'>>()
-export class NumberNode extends SpwNode<'number'> {
-  static readonly kind = 'number';
+type StaticType = IConstructClass<NumberNodeKind>;
+
+@staticImplements<StaticType>()
+export class NumberNode extends Node<NumberNodeKind> {
+  static readonly kind: NumberNodeKind = 'number';
 
   static components = {
     value: Construct.makeComponent({

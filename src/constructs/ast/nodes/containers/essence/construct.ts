@@ -1,17 +1,15 @@
-import { containerComponents, SpwContainerNode } from '../_abstract/container';
-import {
-  EssenceObjectiveDelimiter,
-  EssenceSubjectiveDelimiter,
-} from '@constructs/ast/nodes/containers/essence/delimiters';
-import { ConstructKind } from '@constructs/ast/_types/kind';
+import { containerComponents, ContainerNode } from '../_abstract/container';
 import { ConstructComponents } from '../../../_abstract/construct';
+import { EssentialSchemeOperator } from '@constructs/ast/nodes/containers/essence/components/scheme/construct';
+import { EssentialIdentityOperator } from '@constructs/ast/nodes/containers/essence/components/identity/construct';
+import { EssenceNodeKind } from '@constructs/ast/nodes/containers/essence/__types';
 
-export class Essence extends SpwContainerNode<'essence'> {
-  static kind = 'essence' as ConstructKind;
+export class Essence extends ContainerNode<EssenceNodeKind> {
+  static kind: EssenceNodeKind = 'essence';
 
-  static readonly openDelimiter = EssenceObjectiveDelimiter;
+  static readonly openDelimiter = EssentialSchemeOperator;
 
-  static readonly closeDelimiter = EssenceSubjectiveDelimiter;
+  static readonly closeDelimiter = EssentialIdentityOperator;
 
   static components: ConstructComponents = containerComponents(Essence);
 }

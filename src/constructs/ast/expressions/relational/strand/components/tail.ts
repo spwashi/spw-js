@@ -1,14 +1,14 @@
-import { SpwExpression } from '@constructs/ast/expressions/_abstract/expression';
+import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import {
-  ISpwConstructStatic,
-  Construct,
-} from '../../../../_abstract/construct';
+import { Construct, IConstructClass } from '../../../../_abstract/construct';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { StrandTailKind } from '@constructs/ast/expressions/relational/strand/components/__types';
 
-@staticImplements<ISpwConstructStatic<'strand_tail'>>()
-export class StrandTail extends SpwExpression<'strand_tail'> {
-  static readonly kind = 'strand_tail';
+type StaticType = IConstructClass<StrandTailKind>;
+
+@staticImplements<StaticType>()
+export class StrandTail extends Expression<StrandTailKind> {
+  static readonly kind: StrandTailKind = 'strand_tail';
 
   static components = {
     operator: Construct.makeComponent({ name: 'operator' }),

@@ -5,10 +5,10 @@ import {
   stringLike,
   zeroOrMoreOf,
 } from '@spwashi/language/parsers/grammar/combinators';
-import { OperatorDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiters/operator/delimiter';
+import { OperatorDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/operator/construct';
 
 export const tab = regExpLike('\\t');
-export const space = stringLike(OperatorDelimiter.token);
+export const space = stringLike(OperatorDelimitingOperator.token);
 export const newline = regExpLike('\\n');
 export const spaceTab = anyOf([space, tab]);
 const patterns = [tab, space, newline.named('newline')];

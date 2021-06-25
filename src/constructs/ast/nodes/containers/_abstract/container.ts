@@ -1,11 +1,11 @@
-import { SpwNode } from '../../_abstract/node';
+import { Node } from '../../_abstract/node';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
-import { ConstructKind } from '@constructs/ast/_types/kind';
+import { ConstructKind } from '@constructs/ast/_types/kinds';
 import { Construct, ConstructComponents } from '../../../_abstract/construct';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
-import { BlockDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiters/block/delimiter';
-import { CommonDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiters/common/delimiter';
-import { OperatorDelimiter } from '@constructs/ast/nodes/atoms/operators/delimiters/operator/delimiter';
+import { BlockDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/block/construct';
+import { CommonDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/common/construct';
+import { OperatorDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/operator/construct';
 
 type Delimiter = { token: string } | null;
 
@@ -24,10 +24,10 @@ type Container<
 > = { open: Open; body: Body; close: Close };
 
 @staticImplements<IContainerNodeStatic>()
-export abstract class SpwContainerNode<
+export abstract class ContainerNode<
   Kind extends ConstructKind = ConstructKind,
   T extends Container = Container<unknown>,
-> extends SpwNode<Kind, T> {
+> extends Node<Kind, T> {
   static readonly openDelimiter: Delimiter = null;
 
   static readonly closeDelimiter: Delimiter = null;
@@ -43,7 +43,7 @@ export abstract class SpwContainerNode<
         if (!Array.isArray(component)) {
           yield [component, ctxt];
           if (component?.label) {
-            yield [new OperatorDelimiter(), ctxt];
+            yield [new OperatorDelimitingOperator(), ctxt];
           }
         } else {
           for (const item of component) {
@@ -63,27 +63,20 @@ export abstract class SpwContainerNode<
       name: 'body',
 
       generator: function* (_body, ctxt) {
-        const body = !(Symbol.iterator in Object(_body))
-          ? _body
-            ? [_body]
-            : []
-          : _body;
+        const body = !(Symbol.iterator in Object(_body)) ? (_body ? [_body] : []) : _body;
 
         let first = true;
         let prev;
         for (const sub of body) {
           if (!first && Construct.isConstruct(sub)) {
             const excluded = [
-              BlockDelimiter,
-              OperatorDelimiter,
-              CommonDelimiter,
+              BlockDelimitingOperator,
+              OperatorDelimitingOperator,
+              CommonDelimitingOperator,
             ].map((c) => c.kind as ConstructKind);
-            if (
-              !excluded.includes(sub?.kind) &&
-              !excluded.includes(prev?.kind)
-            ) {
-              yield [new BlockDelimiter(), ctxt];
-              yield [new OperatorDelimiter(), ctxt];
+            if (!excluded.includes(sub?.kind) && !excluded.includes(prev?.kind)) {
+              yield [new BlockDelimitingOperator(), ctxt];
+              yield [new OperatorDelimitingOperator(), ctxt];
             }
           }
           first = false;
@@ -125,13 +118,13 @@ export function containerComponents({
   closeDelimiter,
 }: DelimitedConstruct): ConstructComponents {
   return {
-    ...SpwContainerNode.components,
+    ...ContainerNode.components,
     open: {
-      ...SpwContainerNode.components.open,
+      ...ContainerNode.components.open,
       _fallback: openDelimiter,
     },
     close: {
-      ...SpwContainerNode.components.close,
+      ...ContainerNode.components.close,
       _fallback: closeDelimiter,
     },
   };

@@ -1,25 +1,17 @@
-import SpwOperator, { operatorComponents } from '../_abstract/operator';
-import {
-  ISpwConstructStatic,
-  ConstructComponents,
-} from '../../../../_abstract/construct';
+import Operator, { operatorComponents } from '../_abstract/operator';
+import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import { IAtomicSpwOperatorStatic } from '../_abstract/_types/atomic';
+import { ITokenOperatorClass } from '../_abstract/_types/atomic';
+import {
+  EvaluationOperatorKind,
+  EvaluationOperatorToken,
+} from '@constructs/ast/nodes/atoms/operators/evaluation/__types';
 
-type Token = '?';
-type Kind = 'evaluation';
+@staticImplements<IConstructClass<'evaluation'> & ITokenOperatorClass<'?'>>()
+export class EvaluationOperator extends Operator<EvaluationOperatorKind> {
+  static readonly kind: EvaluationOperatorKind = 'evaluation';
 
-const token: Token = '?';
-const kind: Kind = 'evaluation';
+  static readonly token: EvaluationOperatorToken = '?';
 
-@staticImplements<
-  ISpwConstructStatic<'evaluation'> & IAtomicSpwOperatorStatic<'?'>
->()
-export class EvaluationOperator extends SpwOperator<Kind> {
-  static readonly kind: Kind = kind;
-
-  static readonly token: Token = token;
-
-  static components: ConstructComponents =
-    operatorComponents(EvaluationOperator);
+  static components: ConstructComponents = operatorComponents(EvaluationOperator);
 }

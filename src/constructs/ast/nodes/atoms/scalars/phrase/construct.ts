@@ -1,19 +1,14 @@
-import { SpwNode } from '../../../_abstract/node';
-import {
-  ISpwConstructStatic,
-  Construct,
-} from '../../../../_abstract/construct';
+import { Node } from '../../../_abstract/node';
+import { Construct, IConstructClass } from '../../../../_abstract/construct';
 import { staticImplements } from '../../../../_util/typescript/staticImplements';
-import {
-  ComponentDescription,
-  ComponentEvaluatorObject,
-} from '@constructs/ast/_abstract/_types';
+import { ComponentDescription, ComponentEvaluatorObject } from '@constructs/ast/_abstract/_types';
+import { PhraseNodeKind } from '@constructs/ast/nodes/atoms/scalars/phrase/__types';
 
-type Kind = 'phrase';
+type StaticType = IConstructClass<PhraseNodeKind>;
 
-@staticImplements<ISpwConstructStatic<'phrase'>>()
-export class PhraseNode extends SpwNode<Kind> {
-  static readonly kind = 'phrase';
+@staticImplements<StaticType>()
+export class PhraseNode extends Node<PhraseNodeKind> {
+  static readonly kind: PhraseNodeKind = 'phrase';
 
   static components = {
     body: Construct.makeComponent({
