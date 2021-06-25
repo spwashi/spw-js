@@ -28,17 +28,17 @@ import { ConceptSchemeOperator } from '@constructs/ast/nodes/containers/concept/
 import { CommonDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/common/construct';
 import { BlockDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/block/construct';
 import { OperatorDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/operator/construct';
-import { Node } from '@constructs/ast/nodes/_abstract/node';
 import { LocationalSchemeOperator } from '@constructs/ast/nodes/containers/location/components/scheme/construct';
 import { DomainSchemeOperator } from '@constructs/ast/nodes/containers/domain/components/scheme/construct';
 import { EssentialSchemeOperator } from '@constructs/ast/nodes/containers/essence/components/scheme/construct';
+import { Node } from '@constructs/ast/nodes/_abstract/node';
 import { ContainerNode } from '@constructs/ast/nodes/containers/_abstract/container';
 
 export const tok_whitespace = 'whitespace';
 
-export const rn_node = Node.kind;
+export const rn_node = 'node' || Node.kind;
 export const rn_anchorNode = 'node_anchor';
-export const rn_container = ContainerNode.kind;
+export const rn_container = 'container' || ContainerNode.kind;
 
 export const tok_anchorNode = 'anchor';
 

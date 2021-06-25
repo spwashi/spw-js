@@ -62,10 +62,10 @@ const operatorTypes = [
 ];
 
 export const operatorRules: Tokenizer = {
-  [rn_operator]: operatorTypes.map((op) => ({ include: tokenizerState(op.name) })),
+  [rn_operator]: operatorTypes.map((op) => ({ include: tokenizerState(op.kind) })),
   ...Object.fromEntries(
     operatorTypes.map((op) => {
-      return [op.name, [makeOperatorRule(op.token, rn_operator + '.' + op.name)]];
+      return [op.kind, [makeOperatorRule(op.token, rn_operator + '.' + op.kind)]];
     }),
   ),
 };
