@@ -14,11 +14,10 @@
     "src:lint": "eslint src --ext .ts --fix",
     "src:build:parser": "ts-node -r tsconfig-paths/register src/parser/scripts/generate.ts;",
     "presrc:prepublish": "yarn run src:lint && yarn src:test",
-    "src:prepublish": "cp -rf package.json dist; cp -rf babel.config.js dist",
+    "src:prepublish": "cp -rf package.json dist; cp -rf babel.config.js dist; yarn build",
     "tsc": "tsc",
     "prebuild": "yarn src:build:parser",
     "build": "node ./node_modules/ttypescript/bin/tsc && ./node_modules/@babel/cli/bin/babel.js dist -d dist",
-    "prepublish": "yarn build",
     "postpublish": "cd dist || true; cp -rf package.json ../",
     "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "eslint-fix": "eslint --fix"
