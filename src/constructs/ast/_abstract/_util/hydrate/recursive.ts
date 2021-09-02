@@ -29,7 +29,7 @@ function hydrateConstruct(n: Partial<RawConstruct>, context: HydrationContext) {
   if (!n.kind) throw new Error('trying to hydrate without a kind');
 
   const prehydrated = Object.entries(node)
-    .filter(([k]) => !['kind', 'location', 'src', 'key'].includes(k))
+    .filter(([k]) => !['kind', 'loc', 'src', 'key'].includes(k))
     .reduce(
       (all, [key, value]) => ({
         ...all,

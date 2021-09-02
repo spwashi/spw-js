@@ -1,6 +1,6 @@
 import { Construct } from '../../ast/_abstract/construct';
 
-export interface RegisterEntry<T = Construct> {
+interface RegisterEntry<T = Construct> {
   location: number;
   item: T;
 }

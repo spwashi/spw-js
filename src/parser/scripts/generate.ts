@@ -1,9 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import head from './util/parser-head.js';
-import spwGrammar from '../grammar';
+import spwGrammar, { allowedStartRules } from '../grammar';
 import { generateParser } from '@spwashi/language/parsers/scripts/generateParser';
-import { allowedStartRules } from '../grammar/top/top';
 import { RawConstruct } from '../../constructs/ast/_abstract/_types/internal';
 
 export type SpwParser = {
@@ -30,6 +29,7 @@ async function getGeneratedParser(): Promise<SpwParser> {
     `const ${varName} = ${generated.parser};`,
     `export default ${varName};`,
     `export {${varName} as spwParser};`,
+    '',
   ].join('\n');
   fs.writeFileSync(parser_ts_path, parserString);
 

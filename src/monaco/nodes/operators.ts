@@ -1,5 +1,5 @@
 // containers
-import XRegExp from 'xregexp';
+import { build, escape } from 'xregexp';
 import {
   AggregationOperator,
   AscentOperator,
@@ -20,18 +20,19 @@ import {
 } from '@constructs/ast';
 import { Tokenizer } from '../_types/types';
 import { rn_operator } from '../tokens';
-import { CommonDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/common/construct';
-import { BlockDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/block/construct';
-import { OperatorDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/operator/construct';
+import { CommonDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/common/construct';
+import { BlockDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/block/construct';
+import { NodeDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/node/construct';
 import { tokenizerState } from '../util/tokenizerState';
+import { BindingOperator } from '@constructs/ast/nodes/operators/pragmatic/single-token/binding/construct';
 
 function makeOperatorRule(token: string, tokenName: string, behavior?: { action: string }) {
-  const regExp = XRegExp.build(
+  const regExp = build(
     // language=JSRegexp
     '{{token}}{{label}}',
     {
       // language=JSRegexp
-      token: XRegExp.escape(token),
+      token: escape(token),
       // language=JSRegexp
       label: '(_[a-zA-Z_\\d-]*)?',
     },
@@ -43,6 +44,7 @@ const operatorTypes = [
   AggregationOperator,
   AscentOperator,
   BranchOperator,
+  BindingOperator,
   ChannelOperator,
   DescentOperator,
   DirectionOperator,
@@ -58,7 +60,7 @@ const operatorTypes = [
   ValueOperator,
   BlockDelimitingOperator,
   CommonDelimitingOperator,
-  OperatorDelimitingOperator,
+  NodeDelimitingOperator,
 ];
 
 export const operatorRules: Tokenizer = {

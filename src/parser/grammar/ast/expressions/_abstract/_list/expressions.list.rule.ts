@@ -1,11 +1,13 @@
-import { strandRule } from '../../relational/strand/rule';
-import { phraseExpressionRule } from '../../relational/phrase/rule';
 import { expressionRule } from '../expression.rule';
-import { perspectiveExpressionRule } from '../../operational/perspective/rule';
+import { prefixExpressionRule } from '../../prefix/_abstract/prefix.rule';
+import { postfixExpressionRule } from '../../postfix/_abstract/postfix.rule';
+import { sequenceExpressionRules } from '@grammar/ast/expressions/sequence/_abstract/_list/sequences.list.rule';
+import { infixExpressionRules } from '@grammar/ast/expressions/infix/_abstract/_list/infix.list.rule';
 
 export const expressionRules = [
   expressionRule,
-  perspectiveExpressionRule,
-  strandRule,
-  phraseExpressionRule,
+  ...sequenceExpressionRules,
+  ...infixExpressionRules,
+  prefixExpressionRule,
+  postfixExpressionRule,
 ];

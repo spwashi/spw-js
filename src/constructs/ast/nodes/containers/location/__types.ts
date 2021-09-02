@@ -1,1 +1,1 @@
-export type LocationNodeKind = 'group';
+export type LocationNodeKind = 'location';

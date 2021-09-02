@@ -13,9 +13,7 @@ type PartialHydrationContext = Partial<HydrationContext> & {
  *
  * @param registers
  */
-export function initHydrationContext(
-  registers: RuntimeRegisters,
-): HydrationContext {
+export function initHydrationContext(registers: RuntimeRegisters): HydrationContext {
   const hydrationContext: HydrationContext = PlainInteractionContext().enter({
     kind: 'hydrationContext',
     registers: registers,

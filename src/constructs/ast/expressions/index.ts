@@ -1,13 +1,5 @@
-import { StrandExpression } from './relational/strand/expression';
-import { PhraseExpression } from './relational/phrase/expression';
-import { PerspectiveExpression } from './operational/perspective/expression';
-import { Lens } from './operational/perspective/components/lens';
-import { StrandTail } from './relational/strand/components/tail';
+import { StrandExpression } from './infix/strand/expression';
+import { PhraseExpression } from './infix/phrase/expression';
+import { StrandTail } from './infix/strand/_components/tail';
 
-export {
-  PhraseExpression,
-  StrandExpression,
-  StrandTail,
-  PerspectiveExpression,
-  Lens,
-};
+export { PhraseExpression, StrandExpression, StrandTail };

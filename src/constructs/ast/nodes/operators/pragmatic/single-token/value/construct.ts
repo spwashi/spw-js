@@ -1,0 +1,16 @@
+import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
+import { ConstructComponents, IConstructClass } from '@constructs/ast/_abstract/construct';
+import { ITokenOperatorClass } from '@constructs/ast/nodes/operators/_abstract/_types/atomic';
+import { Operator, operatorComponents } from '@constructs/ast/nodes/operators/_abstract/operator';
+import { ValueOperatorKind, ValueOperatorToken } from './__types';
+
+type StaticType = IConstructClass<ValueOperatorKind> & ITokenOperatorClass<ValueOperatorToken>;
+
+@staticImplements<StaticType>()
+export class ValueOperator extends Operator<ValueOperatorKind> {
+  static kind: ValueOperatorKind = 'value';
+
+  static token: ValueOperatorToken = '*';
+
+  static components: ConstructComponents = operatorComponents(ValueOperator);
+}

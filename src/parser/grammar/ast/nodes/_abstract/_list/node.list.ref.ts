@@ -1,13 +1,15 @@
-import {
-  containerDelimiters,
-  containers,
-} from '../../containers/_abstract/_list/container.list.ref';
-import { atoms } from '../../atoms/_abstract/_list/atom.list.ref';
-import { scalars } from '../../atoms/scalar/_abstract/_list/scalar.list.ref';
-import { operators } from '@grammar/ast/nodes/atoms/operator/_abstract/_list/operator.list.ref';
+import { scalars } from '@grammar/ast/nodes/atoms/scalars/_abstract/_list/scalar.list.ref';
+import { pragmaticOperators } from '@grammar/ast/nodes/atoms/operators/_abstract/_list/operator.list.ref';
+import { semanticOperators } from '@grammar/ast/nodes/atoms/operators/delimiters/_abstract/_list/delimiter.list.ref';
 
-export const nodes = [...containers, ...atoms];
+/**
+ * Represent a self-contained unit of description.
+ *
+ * - Scalars {@see scalars}
+ */
+export const nodes = [...scalars];
 
-export const compositionalNodes = [...containers, ...scalars];
-
-export const conceptualNodes = [...containerDelimiters, ...operators];
+/**
+ * Nodes that represent theoretical operations
+ */
+export const abstractNodes = [...pragmaticOperators, ...semanticOperators];

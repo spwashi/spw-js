@@ -6,10 +6,10 @@ Construct;
 
 // language=JavaScript
 export default `
-    ${spwHead.toString()};
-    var head       = spwHead();
-    var toConstruct  = head.toConstruct;
-    var constructs = head.constructs;
+  ${spwHead.toString()};
+  var head        = spwHead();
+  var toConstruct = head.toConstruct;
+  var constructs  = head.constructs;
 `;
 
 /* builtins */
@@ -31,7 +31,7 @@ function spwHead() {
     return Object.assign(
       {
         src: text(),
-        location: location(),
+        loc: location(),
       },
       Object.fromEntries(
         Object.entries(node).filter((e) => {
@@ -63,7 +63,7 @@ function spwHead() {
 
   /** Actions **/
   var constructs = {
-    space: function spaceNodeAction() {
+    space: function () {
       return toConstruct({ kind: 'space' });
     },
   };

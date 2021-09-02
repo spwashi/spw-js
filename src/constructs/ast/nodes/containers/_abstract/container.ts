@@ -3,9 +3,9 @@ import { staticImplements } from '../../../_util/typescript/staticImplements';
 import { ConstructKind } from '@constructs/ast/_types/kinds';
 import { Construct, ConstructComponents } from '../../../_abstract/construct';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
-import { BlockDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/block/construct';
-import { CommonDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/common/construct';
-import { OperatorDelimitingOperator } from '@constructs/ast/nodes/atoms/operators/delimiters/operator/construct';
+import { BlockDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/block/construct';
+import { CommonDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/common/construct';
+import { NodeDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/node/construct';
 
 type Delimiter = { token: string } | null;
 
@@ -43,7 +43,7 @@ export abstract class ContainerNode<
         if (!Array.isArray(component)) {
           yield [component, ctxt];
           if (component?.label) {
-            yield [new OperatorDelimitingOperator(), ctxt];
+            yield [new NodeDelimitingOperator(), ctxt];
           }
         } else {
           for (const item of component) {
@@ -71,12 +71,12 @@ export abstract class ContainerNode<
           if (!first && Construct.isConstruct(sub)) {
             const excluded = [
               BlockDelimitingOperator,
-              OperatorDelimitingOperator,
+              NodeDelimitingOperator,
               CommonDelimitingOperator,
             ].map((c) => c.kind as ConstructKind);
             if (!excluded.includes(sub?.kind) && !excluded.includes(prev?.kind)) {
               yield [new BlockDelimitingOperator(), ctxt];
-              yield [new OperatorDelimitingOperator(), ctxt];
+              yield [new NodeDelimitingOperator(), ctxt];
             }
           }
           first = false;

@@ -2,10 +2,7 @@ import { HydratedConstruct, RawConstruct } from '@constructs/ast/_abstract/_type
 import { InteractionContext } from '@constructs/ast/_abstract/_types';
 import { Construct } from '../../../construct';
 
-export function _entryReducer(
-  t: RawConstruct,
-  [currKey, curr]: [string, any | any[]],
-): RawConstruct {
+function _entryReducer(t: RawConstruct, [currKey, curr]: [string, any | any[]]): RawConstruct {
   const isArray = Array.isArray(t[currKey]);
   return {
     ...t,

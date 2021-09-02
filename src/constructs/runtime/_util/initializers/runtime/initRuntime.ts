@@ -11,10 +11,7 @@ import { Construct } from '@constructs/ast/_abstract/construct';
  * @param runtime
  * @param src
  */
-export function parseIntoRuntime(
-  runtime: Runtime,
-  src: string,
-): HydratedConstruct | Construct | null {
+function parseIntoRuntime(runtime: Runtime, src: string): HydratedConstruct | Construct | null {
   const raw = spwParser.parse(src, {}) as RawConstruct;
   const context = initHydrationContext(runtime.registers);
   return hydrateRecursively(raw, context) as HydratedConstruct | Construct | null;
