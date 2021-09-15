@@ -4,11 +4,13 @@ import { locatedEntityExpression } from '@grammar/ast/expressions/sequence/locat
 import { locatedConceptExpression } from '@grammar/ast/expressions/sequence/located_concept/ref';
 import { locatedDomainExpression } from '@grammar/ast/expressions/sequence/located_domain/ref';
 import { locatedEssenceExpression } from '@grammar/ast/expressions/sequence/located_essence/ref';
+import { instanceExpression } from '@grammar/ast/expressions/sequence/instance/ref';
 
 /**
  * Reference ArrayExpressions that are based on a specific sequence of constructs
  */
 export const sequenceExpressions = [
+  instanceExpression,
   entityExpression,
   behaviorExpression,
   locatedEntityExpression,

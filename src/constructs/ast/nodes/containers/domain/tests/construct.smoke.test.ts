@@ -1,5 +1,8 @@
-import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
-import { selectAllNodes, selectLastAcknowledgedNode } from '@constructs/runtime/_util/selectors';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
+import {
+  selectAllNodesFromRuntime,
+  selectLastAcknowledgedNodeFromRuntime,
+} from '@constructs/runtime/_util/selectors';
 import { Domain } from '../construct';
 import { domain } from '@grammar/ast/nodes/containers/domain/ref';
 
@@ -11,10 +14,10 @@ describe('Rule Reference', () => {
 
 describe('Domain', () => {
   it('can be parsed', async (done) => {
-    const runtime = await initRuntime(`{domain}`);
+    const runtime = await initRuntimeWithSrc(`{domain}`);
 
-    const last = selectLastAcknowledgedNode(runtime);
-    const all = selectAllNodes(runtime);
+    const last = selectLastAcknowledgedNodeFromRuntime(runtime);
+    const all = selectAllNodesFromRuntime(runtime);
 
     if (!Domain.isDomain(last)) {
       throw new Error('Expected a ' + Domain.name + ' expression');

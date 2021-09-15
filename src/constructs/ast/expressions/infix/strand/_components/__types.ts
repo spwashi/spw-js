@@ -1,1 +1,1 @@
-export type StrandTailKind = 'strand_tail';
+export type StrandExpressionTailKind = 'strand_expression_tail';

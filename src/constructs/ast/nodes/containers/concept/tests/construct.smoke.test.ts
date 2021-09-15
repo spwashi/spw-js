@@ -1,5 +1,8 @@
-import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
-import { selectAllNodes, selectLastAcknowledgedNode } from '@constructs/runtime/_util/selectors';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
+import {
+  selectAllNodesFromRuntime,
+  selectLastAcknowledgedNodeFromRuntime,
+} from '@constructs/runtime/_util/selectors';
 import { Concept } from '../construct';
 import { concept } from '@grammar/ast/nodes/containers/concept/ref';
 
@@ -11,10 +14,10 @@ describe('Rule Reference', () => {
 
 describe('Concept', () => {
   it('can be parsed', async (done) => {
-    const runtime = await initRuntime(`<concept>`);
+    const runtime = await initRuntimeWithSrc(`<concept>`);
 
-    const last = selectLastAcknowledgedNode(runtime);
-    const all = selectAllNodes(runtime);
+    const last = selectLastAcknowledgedNodeFromRuntime(runtime);
+    const all = selectAllNodesFromRuntime(runtime);
 
     if (!Concept.isConcept(last)) {
       throw new Error('Expected a ' + Concept.name + ' expression');

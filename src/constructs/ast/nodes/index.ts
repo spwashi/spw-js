@@ -1,4 +1,5 @@
 export { AnchorNode } from './scalars/anchor/construct';
+export { NumberNode } from './scalars/number/construct';
 export { StringNode } from './scalars/string/construct';
 export { PhraseNode } from './scalars/phrase/construct';
 export { Domain } from './containers/domain/construct';

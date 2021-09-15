@@ -1,4 +1,4 @@
 import { referenceTo } from '@spwashi/language/parsers/grammar/combinators';
 
-export const ruleName = 'ContainerNode';
-export const containerNode = referenceTo(ruleName);
+export const ruleName = 'Container';
+export const container = referenceTo(ruleName);

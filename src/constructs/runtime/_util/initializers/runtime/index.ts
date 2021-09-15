@@ -1,3 +1,3 @@
-import initRuntime from './initRuntime';
+import initRuntimeWithSrc from './initRuntimeWithSrc';
 
-export { initRuntime };
+export { initRuntimeWithSrc };

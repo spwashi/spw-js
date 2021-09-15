@@ -1,14 +1,17 @@
 import { Runtime } from '@constructs/runtime/runtime';
-import { selectAllNodes, selectLastAcknowledgedNode } from '../../../../../runtime/_util/selectors';
+import {
+  selectAllNodesFromRuntime,
+  selectLastAcknowledgedNodeFromRuntime,
+} from '../../../../../runtime/_util/selectors';
 import { AnchorNode } from '@constructs/ast';
-import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 
 describe('AnchorNodes', () => {
   it('Can start with an character of the alphabet and consist of alphanumeric characters, underscores, and dashes', async () => {
     try {
-      const runtime = await initRuntime(`step`);
-      const all = selectAllNodes(runtime);
-      const last = selectLastAcknowledgedNode(runtime);
+      const runtime = await initRuntimeWithSrc(`step`);
+      const all = selectAllNodesFromRuntime(runtime);
+      const last = selectLastAcknowledgedNodeFromRuntime(runtime);
       expect(AnchorNode.isAnchorNode(last)).toBeTruthy();
       expect(all.length).toEqual(1);
     } catch (e) {
@@ -19,15 +22,15 @@ describe('AnchorNodes', () => {
   it('Must start with an alphabetic character and must end with an alphanumeric character', async () => {
     const asyncTest = async (src: string, check: (runtime: Runtime, src: string) => void) => {
       try {
-        const runtime = await initRuntime(src);
+        const runtime = await initRuntimeWithSrc(src);
         check(runtime, src);
       } catch (e) {
         throw new Error('Parsing Error');
       }
     };
     const len = (l: number) => (runtime: Runtime, src: string) => {
-      const all = selectAllNodes(runtime);
-      const last = selectLastAcknowledgedNode(runtime);
+      const all = selectAllNodesFromRuntime(runtime);
+      const last = selectLastAcknowledgedNodeFromRuntime(runtime);
       expect(last?.kind).toEqual('anchor');
       expect(last?.key).toEqual(src);
       expect(all.length).toEqual(l);

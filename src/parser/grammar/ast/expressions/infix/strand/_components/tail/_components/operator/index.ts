@@ -1,7 +1,7 @@
-import { StrandTail } from '@constructs/ast/expressions/infix/strand/_components/tail';
+import { StrandExpressionTail } from '@constructs/ast/expressions/infix/strand/_components/tail';
 import { transformationOperator } from '@grammar/ast/nodes/atoms/operators/pragmatic/transformation/ref';
 
 export default {
-  name: StrandTail.components.operator.name,
+  name: StrandExpressionTail.components.operator.name,
   pattern: transformationOperator,
 };

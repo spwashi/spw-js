@@ -1,10 +1,10 @@
 import { anyOf, oneOrMoreOf, sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
 import { spaceTab } from '@grammar/utility/space/whitespace.patterns';
-import { containerNode } from '@grammar/ast/nodes/containers/_abstract/container.ref';
+import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
 import { sequenceExpression } from '@grammar/ast/expressions/sequence/_abstract/sequence.ref';
 import { node } from '@grammar/ast/nodes/_abstract/node.ref';
 
-const allowedElements = [sequenceExpression, containerNode, node];
+const allowedElements = [sequenceExpression, container, node];
 const _delimiter = {
   name: undefined,
   pattern: oneOrMoreOf(spaceTab),

@@ -13,8 +13,8 @@ export class EntityExpression extends Expression<EntityExpressionKind> {
     anchor: Construct.makeComponent({ name: 'anchor' }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {
-      if (this.concept) yield this.concept;
-      if (this.anchor) yield this.anchor;
+      yield this.concept;
+      yield this.anchor;
     },
   };
 

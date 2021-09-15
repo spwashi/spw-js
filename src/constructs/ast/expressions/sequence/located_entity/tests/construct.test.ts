@@ -1,5 +1,8 @@
-import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
-import { selectAllNodes, selectLastAcknowledgedNode } from '@constructs/runtime/_util/selectors';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
+import {
+  selectAllNodesFromRuntime,
+  selectLastAcknowledgedNodeFromRuntime,
+} from '@constructs/runtime/_util/selectors';
 import { LocatedEntityExpression } from '../construct';
 import { locatedEntityExpressionRule } from '@grammar/ast/expressions/sequence/located_entity/rule';
 
@@ -11,10 +14,10 @@ describe('Rule', () => {
 
 describe('LocatedEntityExpression', () => {
   it('can be parsed', async (done) => {
-    const runtime = await initRuntime(`(somewhere) <something>someone`);
+    const runtime = await initRuntimeWithSrc(`(somewhere) <something>someone`);
 
-    const last = selectLastAcknowledgedNode(runtime);
-    const all = selectAllNodes(runtime);
+    const last = selectLastAcknowledgedNodeFromRuntime(runtime);
+    const all = selectAllNodesFromRuntime(runtime);
 
     if (!LocatedEntityExpression.isLocatedEntityExpression(last)) {
       throw new Error('Expected a Node expression');

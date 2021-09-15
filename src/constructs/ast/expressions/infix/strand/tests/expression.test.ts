@@ -1,19 +1,22 @@
-import { selectAllNodes, selectLastAcknowledgedNode } from '../../../../../runtime/_util/selectors';
+import {
+  selectAllNodesFromRuntime,
+  selectLastAcknowledgedNodeFromRuntime,
+} from '../../../../../runtime/_util/selectors';
 import { StrandExpression } from '@constructs/ast/expressions/infix/strand/expression';
 import { Construct } from '../../../../_abstract/construct';
 import * as util from 'util';
-import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 
 describe('Strand Expressions', () => {
   it('is serialized the way we expect it to be', async (done) => {
     let all: Construct[] = [];
     let last: Construct | undefined = undefined;
     try {
-      const runtime = await initRuntime(`
+      const runtime = await initRuntimeWithSrc(`
 test test test =>    test    =>    test
 `);
-      last = selectLastAcknowledgedNode(runtime);
-      all = selectAllNodes(runtime);
+      last = selectLastAcknowledgedNodeFromRuntime(runtime);
+      all = selectAllNodesFromRuntime(runtime);
       expect(last?.kind).toEqual(StrandExpression.kind);
       expect(all.length).toEqual(12);
       expect(last?.key).toEqual(`test test test=>test=>test`);
@@ -25,13 +28,13 @@ test test test =>    test    =>    test
   });
 
   it('has the operator precedence we expect', async (done) => {
-    const runtime = await initRuntime(`
+    const runtime = await initRuntimeWithSrc(`
                                 boon boon => two 
                                     => three
                               `);
 
-    const last: Construct | undefined = selectLastAcknowledgedNode(runtime);
-    const all: Construct[] = selectAllNodes(runtime);
+    const last: Construct | undefined = selectLastAcknowledgedNodeFromRuntime(runtime);
+    const all: Construct[] = selectAllNodesFromRuntime(runtime);
     expect(all.length).toEqual(11);
     expect(last?.kind).toEqual(StrandExpression.kind);
     expect(last?.key).toEqual('boon boon=>two=>three');

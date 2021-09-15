@@ -1,5 +1,8 @@
-import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
-import { selectAllNodes, selectLastAcknowledgedNode } from '@constructs/runtime/_util/selectors';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
+import {
+  selectAllNodesFromRuntime,
+  selectLastAcknowledgedNodeFromRuntime,
+} from '@constructs/runtime/_util/selectors';
 import { Essence } from '../construct';
 import { essence } from '@grammar/ast/nodes/containers/essence/ref';
 
@@ -11,10 +14,10 @@ describe('Rule Reference', () => {
 
 describe('Essence', () => {
   it('can be parsed', async (done) => {
-    const runtime = await initRuntime(`[essence]`);
+    const runtime = await initRuntimeWithSrc(`[essence]`);
 
-    const last = selectLastAcknowledgedNode(runtime);
-    const all = selectAllNodes(runtime);
+    const last = selectLastAcknowledgedNodeFromRuntime(runtime);
+    const all = selectAllNodesFromRuntime(runtime);
 
     if (!Essence.isEssence(last)) {
       throw new Error('Expected a ' + Essence.name + ' expression');

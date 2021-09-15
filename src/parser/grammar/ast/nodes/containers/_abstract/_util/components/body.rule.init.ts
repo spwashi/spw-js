@@ -1,17 +1,17 @@
 import {
   anyOf,
-  oneOrMoreOf,
   RuleReferenceCombinator,
   sequenceOf,
   stringLike,
   zeroOrMoreOf,
 } from '@spwashi/language/parsers/grammar/combinators';
 import { Rule } from '@spwashi/language/parsers/grammar';
-import { newline, spaceTab } from '@grammar/utility/space/whitespace.patterns';
+import { newline, space, spaceTab } from '@grammar/utility/space/whitespace.patterns';
 import { Combinator } from '@spwashi/language/parsers/grammar/combinators/abstract';
 import { getContainerNodeComponentReferences } from '../container.ref.init';
-import { spaceNode } from '@grammar/utility/space/space.ref';
+import { block } from '@grammar/ast/expressions/sequence/block/ref';
 import { expression } from '@grammar/ast/expressions/_abstract/expression.ref';
+import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
 import { node } from '@grammar/ast/nodes/_abstract/node.ref';
 
 function getEmptyBlockCombinator(
@@ -40,26 +40,25 @@ function getEmptyBlockCombinator(
 
 export function createContainerBodyRules(ruleName: string): Rule[] {
   const bodyName = getContainerNodeComponentReferences(ruleName).body.ruleName;
-  const listOfAnyNode = oneOrMoreOf(anyOf([expression, node, spaceNode]));
+
+  // either an expression or a block
+  const listOfAnyNode = sequenceOf([
+    anyOf([block, expression, container, node]).named('expression'),
+  ]).withAction('return expression');
   return [new Rule(bodyName, listOfAnyNode)];
 }
 
 export function createContainerPattern(ruleName: string): Combinator {
-  const references = getContainerNodeComponentReferences(ruleName);
-  const { open, body, close } = references;
+  const { open, body, close } = getContainerNodeComponentReferences(ruleName);
+  const __ = zeroOrMoreOf(space);
 
-  const _action =
-    // language=JavaScript
-    `
-            return {
-              open: open,
-              body: body,
-              close: close
-            }
-          `;
+  // language=JavaScript
+  const _action = ` return { open, body, close } `;
 
   return anyOf([
     getEmptyBlockCombinator(open, close),
-    sequenceOf([open.named('open'), body.named('body'), close.named('close')]).withAction(_action),
+    sequenceOf([open.named('open'), __, body.named('body'), __, close.named('close')]).withAction(
+      _action,
+    ),
   ]);
 }

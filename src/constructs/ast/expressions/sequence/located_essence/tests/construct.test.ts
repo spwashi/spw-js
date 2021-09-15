@@ -1,5 +1,8 @@
-import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
-import { selectAllNodes, selectLastAcknowledgedNode } from '@constructs/runtime/_util/selectors';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
+import {
+  selectAllNodesFromRuntime,
+  selectLastAcknowledgedNodeFromRuntime,
+} from '@constructs/runtime/_util/selectors';
 import { LocatedEssenceExpression } from '../construct';
 import { locatedEssenceExpressionRule } from '@grammar/ast/expressions/sequence/located_essence/rule';
 
@@ -11,10 +14,10 @@ describe('Rule', () => {
 
 describe('Located Essence Expressions', () => {
   it('can be parsed', async (done) => {
-    const runtime = await initRuntime(`(location)[essence]`);
+    const runtime = await initRuntimeWithSrc(`(location)[essence]`);
 
-    const last = selectLastAcknowledgedNode(runtime);
-    const all = selectAllNodes(runtime);
+    const last = selectLastAcknowledgedNodeFromRuntime(runtime);
+    const all = selectAllNodesFromRuntime(runtime);
 
     if (!LocatedEssenceExpression.isLocatedEssenceExpression(last)) {
       throw new Error('Expected a ' + LocatedEssenceExpression.kind);

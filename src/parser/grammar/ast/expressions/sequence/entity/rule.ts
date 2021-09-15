@@ -28,8 +28,8 @@ const pattern = sequenceOf([_concept, __, _anchor].map(componentize));
 const action = `
   const expression = {
     kind: '${EntityExpression.kind}',
-    ${_anchor.name}: typeof ${_anchor.name} !== 'undefined' ? ${_anchor.name} : undefined,
-    ${_concept.name}: typeof ${_concept.name} !== 'undefined' ? ${_concept.name} : undefined
+    ${_anchor.name}: ${_anchor.name},
+    ${_concept.name}: ${_concept.name}
   };
   return toConstruct(expression)
 `;

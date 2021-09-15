@@ -1,5 +1,8 @@
-import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
-import { selectAllNodes, selectLastAcknowledgedNode } from '@constructs/runtime/_util/selectors';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
+import {
+  selectAllNodesFromRuntime,
+  selectLastAcknowledgedNodeFromRuntime,
+} from '@constructs/runtime/_util/selectors';
 import { entityExpressionRule } from '@grammar/ast/expressions/sequence/entity/rule';
 import { EntityExpression } from '../construct';
 
@@ -11,16 +14,16 @@ describe('Rule', () => {
 
 describe('EntityExpression', () => {
   it('can be parsed', async (done) => {
-    const runtime = await initRuntime(`<something>something`);
-    const last = selectLastAcknowledgedNode(runtime);
-    const all = selectAllNodes(runtime);
+    const runtime = await initRuntimeWithSrc(`<conceptual_anchor>name`);
+    const last = selectLastAcknowledgedNodeFromRuntime(runtime);
+    const all = selectAllNodesFromRuntime(runtime);
 
     if (!EntityExpression.isEntityExpression(last)) {
-      throw new Error('Expected a Node expression');
+      throw new Error('Expected a ' + EntityExpression.name);
     }
 
     expect(last?.kind).toEqual(EntityExpression.kind);
-    expect(last?.key).toEqual('<something>something');
+    expect(last?.key).toEqual('<conceptual_anchor>name');
     expect(all.length).toEqual(6);
 
     done();

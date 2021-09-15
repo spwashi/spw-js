@@ -1,8 +1,8 @@
 import { Construct } from '../../construct';
 import {
+  ConstructComponentValue,
   HydratedConstruct,
   RawConstruct,
-  ConstructComponentValue,
 } from '@constructs/ast/_abstract/_types/internal';
 import { HydrationContext, HydrationInput } from '@constructs/ast/_abstract/_util/hydrate/_/util';
 import { ConstructLocation } from '@constructs/ast/_util/ast/location';

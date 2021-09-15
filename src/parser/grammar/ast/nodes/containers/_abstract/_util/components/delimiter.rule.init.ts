@@ -7,7 +7,7 @@ import {
 } from '@spwashi/language/parsers/grammar/combinators';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import { anchorNode } from '../../../../atoms/scalars/anchor/ref';
-import { containers } from '../../_list/container.list.ref';
+import { containerNodes } from '../../_list/container.list.ref';
 import { getContainerNodeComponentReferences } from '../container.ref.init';
 import { spaceNode } from '../../../../../../utility/space/space.ref';
 
@@ -16,9 +16,9 @@ function opener(delimiter: IDelimiter): SequenceCombinator {
 
   const underscore = stringLike('_');
 
-  const headAnchor = anyOf([anchorNode, ...containers]);
+  const headAnchor = anyOf([anchorNode, ...containerNodes]);
 
-  const headDescription = optionally(sequenceOf([anyOf(containers)]));
+  const headDescription = optionally(sequenceOf([anyOf(containerNodes)]));
 
   const describedAnchor = sequenceOf([
     headAnchor.named('anchor'),

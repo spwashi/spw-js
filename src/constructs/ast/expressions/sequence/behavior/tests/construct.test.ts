@@ -1,5 +1,8 @@
-import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
-import { selectAllNodes, selectLastAcknowledgedNode } from '@constructs/runtime/_util/selectors';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
+import {
+  selectAllNodesFromRuntime,
+  selectLastAcknowledgedNodeFromRuntime,
+} from '@constructs/runtime/_util/selectors';
 import { behaviorExpressionRule } from '@grammar/ast/expressions/sequence/behavior/rule';
 import { BehaviorExpression } from '../construct';
 
@@ -11,10 +14,10 @@ describe('Rule', () => {
 
 describe('Behavior Expressions', () => {
   it('can be parsed', async (done) => {
-    const runtime = await initRuntime(`(location){domain}[essence]`);
+    const runtime = await initRuntimeWithSrc(`(location){domain}[essence]`);
 
-    const last = selectLastAcknowledgedNode(runtime);
-    const all = selectAllNodes(runtime);
+    const last = selectLastAcknowledgedNodeFromRuntime(runtime);
+    const all = selectAllNodesFromRuntime(runtime);
 
     if (!BehaviorExpression.isBehaviorExpression(last)) {
       throw new Error('Expected a ' + BehaviorExpression.kind);

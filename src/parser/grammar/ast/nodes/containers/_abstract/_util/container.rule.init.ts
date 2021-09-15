@@ -15,22 +15,18 @@ export const createContainerRules = ({
   openDelimiter: IDelimiter;
 }): Rule[] => {
   const opener = createDelimiterRule(ruleName, openDelimiter, 'open');
-
   const closer = createDelimiterRule(ruleName, closeDelimiter, 'close');
-
   const body = createContainerBodyRules(ruleName);
-
   const pattern = sequenceOf([createContainerPattern(ruleName).named('container')]);
-
   const _ruleAction =
     // language=JavaScript
     `
-                                   return toConstruct({
-                                                        kind:  '${kind}',
-                                                        open:  container.open,
-                                                        body:  container.body,
-                                                        close: container.close,
-                                                    })
-                               `;
+            return toConstruct({
+                                 kind: '${kind}',
+                                 open: container.open,
+                                 body: container.body,
+                                 close: container.close,
+                               })
+          `;
   return [opener, closer, ...body, new Rule(ruleName, pattern, _ruleAction)];
 };

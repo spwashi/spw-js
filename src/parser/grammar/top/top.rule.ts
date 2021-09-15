@@ -4,11 +4,12 @@ import { ruleName } from '@grammar/top/top.ref';
 import { expression } from '@grammar/ast/expressions/_abstract/expression.ref';
 import { node } from '@grammar/ast/nodes/_abstract/node.ref';
 import _optionalSpaces from '@grammar/ast/expressions/prefix/_abstract/_components/spaces';
-import { containerNode } from '@grammar/ast/nodes/containers/_abstract/container.ref';
+import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
+import { block } from '@grammar/ast/expressions/sequence/block/ref';
 
 const __ = _optionalSpaces.pattern;
 
-const body = anyOf([expression, node, containerNode]).named('body');
+const body = anyOf([block, expression, container, node]).named('body');
 const pattern = sequenceOf([__, body, __]);
 
 const action =

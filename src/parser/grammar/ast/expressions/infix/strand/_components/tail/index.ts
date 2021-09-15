@@ -5,7 +5,7 @@ import {
 } from '@spwashi/language/parsers/grammar/combinators';
 import _operator from './_components/operator';
 import { spaceNode } from '@grammar/utility/space/space.ref';
-import { StrandTail } from '@constructs/ast';
+import { StrandExpressionTail } from '@constructs/ast';
 import _item from './_components/item';
 
 const _tailSequence = [
@@ -14,14 +14,14 @@ const _tailSequence = [
   zeroOrMoreOf(spaceNode),
   _item.pattern.named(_item.name),
 ];
+
 const _tailSegmentPattern = sequenceOf(_tailSequence).withAction(
   // language=JavaScript
   `
     return toConstruct({
-                         kind: '${StrandTail.kind}',
-
-                         ${_operator.name}:                  operator,
-                         ${StrandTail.components.item.name}: item,
+                         kind: '${StrandExpressionTail.kind}',
+                         ${_operator.name}: operator,
+                         ${_item.name}: item,
                        });
   `,
 );

@@ -1,5 +1,8 @@
-import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
-import { selectAllNodes, selectLastAcknowledgedNode } from '@constructs/runtime/_util/selectors';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
+import {
+  selectAllNodesFromRuntime,
+  selectLastAcknowledgedNodeFromRuntime,
+} from '@constructs/runtime/_util/selectors';
 import { Location } from '../construct';
 import { location } from '@grammar/ast/nodes/containers/location/ref';
 
@@ -11,10 +14,10 @@ describe('Rule Reference', () => {
 
 describe('Location', () => {
   it('can be parsed', async (done) => {
-    const runtime = await initRuntime(`(location)`);
+    const runtime = await initRuntimeWithSrc(`(location)`);
 
-    const last = selectLastAcknowledgedNode(runtime);
-    const all = selectAllNodes(runtime);
+    const last = selectLastAcknowledgedNodeFromRuntime(runtime);
+    const all = selectAllNodesFromRuntime(runtime);
 
     if (!Location.isLocation(last)) {
       throw new Error('Expected a ' + Location.name + ' expression');

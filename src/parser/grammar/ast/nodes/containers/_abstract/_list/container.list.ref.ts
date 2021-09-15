@@ -3,4 +3,4 @@ import { essence } from '../../essence/ref';
 import { concept } from '../../concept/ref';
 import { location } from '../../location/ref';
 
-export const containers = [concept, location, domain, essence];
+export const containerNodes = [concept, location, domain, essence];

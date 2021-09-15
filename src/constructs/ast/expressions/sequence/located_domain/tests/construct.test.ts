@@ -1,5 +1,8 @@
-import { initRuntime } from '@constructs/runtime/_util/initializers/runtime';
-import { selectAllNodes, selectLastAcknowledgedNode } from '@constructs/runtime/_util/selectors';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
+import {
+  selectAllNodesFromRuntime,
+  selectLastAcknowledgedNodeFromRuntime,
+} from '@constructs/runtime/_util/selectors';
 import { LocatedDomainExpression } from '../construct';
 import { locatedDomainExpressionRule } from '@grammar/ast/expressions/sequence/located_domain/rule';
 
@@ -11,10 +14,10 @@ describe('Rule', () => {
 
 describe('Node Expressions', () => {
   it('can be parsed', async (done) => {
-    const runtime = await initRuntime(`(location){domain}`);
+    const runtime = await initRuntimeWithSrc(`(location){domain}`);
 
-    const last = selectLastAcknowledgedNode(runtime);
-    const all = selectAllNodes(runtime);
+    const last = selectLastAcknowledgedNodeFromRuntime(runtime);
+    const all = selectAllNodesFromRuntime(runtime);
 
     if (!LocatedDomainExpression.isLocatedDomainExpression(last)) {
       throw new Error('Expected a ' + LocatedDomainExpression.name + ' expression');

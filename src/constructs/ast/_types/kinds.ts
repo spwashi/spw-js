@@ -35,8 +35,7 @@ import { EssenceNodeKind } from '@constructs/ast/nodes/containers/essence/__type
 import { LocationNodeKind } from '@constructs/ast/nodes/containers/location/__types';
 import { PhraseExpressionKind } from '@constructs/ast/expressions/infix/phrase/__types';
 import { StrandExpressionKind } from '@constructs/ast/expressions/infix/strand/__types';
-import { StrandTailKind } from '@constructs/ast/expressions/infix/strand/_components/__types';
-import { ConstructContextKind } from '@constructs/runtime/context/interfaces/__types';
+import { StrandExpressionTailKind } from '@constructs/ast/expressions/infix/strand/_components/__types';
 import { PrefixExpressionKind } from '@constructs/ast/expressions/prefix/__types';
 import { InfixExpressionKind } from '@constructs/ast/expressions/infix/__types';
 import { BehaviorExpressionKind } from '@constructs/ast/expressions/sequence/behavior/__types';
@@ -50,6 +49,12 @@ import { LocatedConceptExpressionKind } from '@constructs/ast/expressions/sequen
 import { EntityExpressionKind } from '@constructs/ast/expressions/sequence/entity/__types';
 import { LocatedEntityExpressionKind } from '@constructs/ast/expressions/sequence/located_entity/__types';
 import { RelationOperatorKind } from '@constructs/ast/nodes/operators/pragmatic/single-token/relation/__types';
+import { InstanceExpressionKind } from '@constructs/ast/expressions/sequence/instance/__types';
+import { CommonExpressionKind } from '@constructs/ast/expressions/infix/common/__types';
+import { CommonExpressionTailKind } from '@constructs/ast/expressions/infix/common/_components/__types';
+import { BlockExpressionKind } from '@constructs/ast/expressions/sequence/block/__types';
+import { AggregationExpressionKind } from '@constructs/ast/expressions/infix/operations/aggregation/__types';
+import { AggregationTailKind } from '@constructs/ast/expressions/infix/operations/aggregation/_components/__types';
 
 type ScalarKind = AnchorNodeKind | PhraseNodeKind | NumberNodeKind | StringNodeKind;
 
@@ -97,17 +102,22 @@ type ExpressionKind =
   | PostfixExpressionKind
   | BehaviorExpressionKind
   | EntityExpressionKind
+  | InstanceExpressionKind
   | LocatedEssenceExpressionKind
   | LocatedDomainExpressionKind
   | LocatedConceptExpressionKind
   | LocatedEntityExpressionKind
   | PhraseExpressionKind
+  | BlockExpressionKind
+  | CommonExpressionKind
+  | CommonExpressionTailKind
   | StrandExpressionKind
-  | StrandTailKind;
+  | StrandExpressionTailKind
+  | AggregationExpressionKind
+  | AggregationTailKind;
 
 export type ConstructKind =
   | 'unknown'
-  | ConstructContextKind
   | ScalarKind
   | OperatorKind
   | ContainerNodeKind

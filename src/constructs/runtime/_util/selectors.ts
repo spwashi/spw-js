@@ -6,7 +6,7 @@ import { Runtime } from '@constructs/runtime/runtime';
  *
  * @param runtime
  */
-export function selectAllNodes(runtime: Runtime): Construct[] {
+export function selectAllNodesFromRuntime(runtime: Runtime): Construct[] {
   const registerValues = runtime.registers.all.entries ?? [];
   return registerValues.map((entry) => entry.item);
 }
@@ -16,8 +16,6 @@ export function selectAllNodes(runtime: Runtime): Construct[] {
  *
  * @param runtime
  */
-export function selectLastAcknowledgedNode(
-  runtime: Runtime,
-): Construct | undefined {
+export function selectLastAcknowledgedNodeFromRuntime(runtime: Runtime): Construct | undefined {
   return runtime.registers.subject.entries?.[0]?.item;
 }
