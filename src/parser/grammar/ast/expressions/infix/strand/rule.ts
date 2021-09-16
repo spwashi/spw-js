@@ -1,10 +1,10 @@
-import { ruleName } from './ref';
+import { StrandExpression } from '@constructs/ast';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import { sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
 import { spaceNode } from '../../../../utility/space/space.ref';
-import { StrandExpression } from '@constructs/ast';
 import head from './_components/head/head';
 import tail from './_components/tail';
+import { ruleName } from './ref';
 
 const pattern = sequenceOf([
   head.pattern.named(head.name),

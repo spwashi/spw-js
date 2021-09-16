@@ -1,7 +1,7 @@
-import { oneOrMoreOf, regExpLike, sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
-import { Rule } from '@spwashi/language/parsers/grammar';
-import { ruleName } from './ref';
 import { NumberNode } from '@constructs/ast/nodes/scalars/number/construct';
+import { Rule } from '@spwashi/language/parsers/grammar';
+import { oneOrMoreOf, regExpLike, sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
+import { ruleName } from './ref';
 
 const oneOrMoreDigits = oneOrMoreOf(regExpLike('\\d'));
 

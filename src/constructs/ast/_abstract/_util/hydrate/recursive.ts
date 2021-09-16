@@ -1,4 +1,3 @@
-import { Construct } from '../../construct';
 import {
   ConstructComponentValue,
   HydratedConstruct,
@@ -6,6 +5,7 @@ import {
 } from '@constructs/ast/_abstract/_types/internal';
 import { HydrationContext, HydrationInput } from '@constructs/ast/_abstract/_util/hydrate/_/util';
 import { ConstructLocation } from '@constructs/ast/_util/ast/location';
+import { Construct } from '../../construct';
 
 type ConstructObject = { [k: string]: ConstructComponentValue };
 

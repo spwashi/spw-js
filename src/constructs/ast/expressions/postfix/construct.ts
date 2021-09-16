@@ -1,7 +1,7 @@
+import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { Construct } from '@constructs/ast/_abstract/construct';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { PostfixExpressionKind } from './__types';
-import { Construct } from '@constructs/ast/_abstract/construct';
-import { ComponentDescription } from '@constructs/ast/_abstract/_types';
 
 export class PostfixExpression extends Expression<PostfixExpressionKind> {
   static kind: PostfixExpressionKind = 'postfix_expression';

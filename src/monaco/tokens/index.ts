@@ -1,4 +1,3 @@
-import { EssentialIdentityOperator } from '@constructs/ast/nodes/containers/essence/_components/identity/construct';
 import {
   AggregationOperator,
   AscentOperator,
@@ -21,18 +20,19 @@ import {
   TransformationOperator,
   ValueOperator,
 } from '@constructs/ast';
-import { ConceptualIdentityOperator } from '@constructs/ast/nodes/containers/concept/_components/identity/construct';
-import { DomainIdentityOperator } from '@constructs/ast/nodes/containers/domain/_components/identity/construct';
-import { LocationalIdentityOperator } from '@constructs/ast/nodes/containers/location/_components/identity/construct';
-import { ConceptSchemeOperator } from '@constructs/ast/nodes/containers/concept/_components/scheme/construct';
-import { CommonDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/common/construct';
-import { BlockDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/block/construct';
-import { NodeDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/node/construct';
-import { LocationalSchemeOperator } from '@constructs/ast/nodes/containers/location/_components/scheme/construct';
-import { DomainSchemeOperator } from '@constructs/ast/nodes/containers/domain/_components/scheme/construct';
-import { EssentialSchemeOperator } from '@constructs/ast/nodes/containers/essence/_components/scheme/construct';
 import { Node } from '@constructs/ast/nodes/_abstract/node';
 import { ContainerNode } from '@constructs/ast/nodes/containers/_abstract/container';
+import { ConceptualIdentityOperator } from '@constructs/ast/nodes/containers/concept/_components/identity/construct';
+import { ConceptSchemeOperator } from '@constructs/ast/nodes/containers/concept/_components/scheme/construct';
+import { DomainIdentityOperator } from '@constructs/ast/nodes/containers/domain/_components/identity/construct';
+import { DomainSchemeOperator } from '@constructs/ast/nodes/containers/domain/_components/scheme/construct';
+import { EssentialIdentityOperator } from '@constructs/ast/nodes/containers/essence/_components/identity/construct';
+import { EssentialSchemeOperator } from '@constructs/ast/nodes/containers/essence/_components/scheme/construct';
+import { LocationalIdentityOperator } from '@constructs/ast/nodes/containers/location/_components/identity/construct';
+import { LocationalSchemeOperator } from '@constructs/ast/nodes/containers/location/_components/scheme/construct';
+import { BlockDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/block/construct';
+import { CommonDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/common/construct';
+import { NodeDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/node/construct';
 
 export const tok_whitespace = 'whitespace';
 

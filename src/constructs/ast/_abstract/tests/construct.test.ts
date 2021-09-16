@@ -1,6 +1,6 @@
-import { ConstructComponents, Construct } from '../construct';
-import { ComponentDescription } from '../_types';
 import * as faker from 'faker';
+import { ComponentDescription } from '../_types';
+import { Construct, ConstructComponents } from '../construct';
 
 describe('Constructs', () => {
   it('Can be initialized', () => {

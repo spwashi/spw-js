@@ -1,10 +1,10 @@
-import { ruleName } from './ref';
-import { Rule } from '@spwashi/language/parsers/grammar';
-import { sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
-import { location } from '@grammar/ast/nodes/containers/location/ref';
-import { domain } from '@grammar/ast/nodes/containers/domain/ref';
 import { LocatedDomainExpression } from '@constructs/ast/expressions/sequence/located_domain/construct';
 import { componentize } from '@grammar/ast/expressions/sequence/_util/componentize';
+import { domain } from '@grammar/ast/nodes/containers/domain/ref';
+import { location } from '@grammar/ast/nodes/containers/location/ref';
+import { Rule } from '@spwashi/language/parsers/grammar';
+import { sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
+import { ruleName } from './ref';
 
 const components = LocatedDomainExpression.components;
 const _location = {

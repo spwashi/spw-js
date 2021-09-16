@@ -1,13 +1,13 @@
-import { NumberNode } from '@constructs/ast/nodes/scalars/number/construct';
-import { Construct } from '../../../../_abstract/construct';
 import { InteractionContext, PlainInteractionContext } from '@constructs/ast/_abstract/_types';
 import { RawConstruct } from '@constructs/ast/_abstract/_types/internal';
-import { hydrateRecursively } from '@constructs/ast/_abstract/_util/hydrate/recursive';
 import {
   HydrationContext,
   joinHydratedProperties,
 } from '@constructs/ast/_abstract/_util/hydrate/_/util';
+import { hydrateRecursively } from '@constructs/ast/_abstract/_util/hydrate/recursive';
 import { hydrateShallow } from '@constructs/ast/_abstract/_util/hydrate/shallow';
+import { NumberNode } from '@constructs/ast/nodes/scalars/number/construct';
+import { Construct } from '../../../../_abstract/construct';
 
 describe('Number', () => {
   it('should be hydrate-able', async function () {

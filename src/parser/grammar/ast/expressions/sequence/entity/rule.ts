@@ -1,12 +1,12 @@
-import { ruleName } from './ref';
-import { Rule } from '@spwashi/language/parsers/grammar';
-import { anyOf, sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
 import { EntityExpression } from '@constructs/ast/expressions/sequence/entity/construct';
+import { componentize } from '@grammar/ast/expressions/sequence/_util/componentize';
 import { referenceOperator } from '@grammar/ast/nodes/atoms/operators/pragmatic/reference/ref';
+import { scalar } from '@grammar/ast/nodes/atoms/scalars/_abstract/scalar.ref';
 import { concept } from '@grammar/ast/nodes/containers/concept/ref';
 import { space } from '@grammar/utility/space/whitespace.patterns';
-import { componentize } from '@grammar/ast/expressions/sequence/_util/componentize';
-import { scalar } from '@grammar/ast/nodes/atoms/scalars/_abstract/scalar.ref';
+import { Rule } from '@spwashi/language/parsers/grammar';
+import { anyOf, sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
+import { ruleName } from './ref';
 
 const components = EntityExpression.components;
 

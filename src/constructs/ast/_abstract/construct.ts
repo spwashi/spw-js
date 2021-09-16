@@ -1,16 +1,16 @@
-import { ConstructKind } from '../_types/kinds';
 import {
   ComponentDescription,
   ComponentEvaluatorObject,
+  ConstructComponentKey,
   ConstructReductionOptions,
   InteractionContext,
   PlainInteractionContext,
-  ConstructComponentKey,
 } from '@constructs/ast/_abstract/_types';
+import { completeConfig } from '@constructs/ast/_abstract/_util/reduce/_/util';
+import { reduceConstructAsync } from '@constructs/ast/_abstract/_util/reduce/async';
 import { reduceConstructSync } from '@constructs/ast/_abstract/_util/reduce/sync';
 import { LanguageComponent } from '@constructs/ast/_abstract/component';
-import { reduceConstructAsync } from '@constructs/ast/_abstract/_util/reduce/async';
-import { completeConfig } from '@constructs/ast/_abstract/_util/reduce/_/util';
+import { ConstructKind } from '../_types/kinds';
 
 export interface IConstructClass<K extends ConstructKind = ConstructKind> {
   readonly kind: K;

@@ -1,9 +1,9 @@
+import { NumberNode } from '@constructs/ast/nodes/scalars/number/construct';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '../../../../../runtime/_util/selectors';
-import { NumberNode } from '@constructs/ast/nodes/scalars/number/construct';
-import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 
 describe(NumberNode.name, () => {
   it('Can be parsed', async (done) => {

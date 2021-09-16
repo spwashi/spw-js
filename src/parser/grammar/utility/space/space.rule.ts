@@ -1,10 +1,7 @@
 import { Rule } from '@spwashi/language/parsers/grammar';
-import { whitespace } from './whitespace.patterns';
+import { oneOrMoreOf, sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
 import { ruleName } from './space.ref';
-import {
-  oneOrMoreOf,
-  sequenceOf,
-} from '@spwashi/language/parsers/grammar/combinators';
+import { whitespace } from './whitespace.patterns';
 
 // language=JavaScript
 const _action = `return constructs.space();`;

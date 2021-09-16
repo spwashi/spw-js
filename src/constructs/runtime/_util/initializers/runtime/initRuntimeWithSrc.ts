@@ -1,14 +1,14 @@
-import { Runtime } from '@constructs/runtime/runtime';
-import { initRuntimeRegisters } from '@constructs/runtime/_util/initializers/runtime/registers';
-import { initHydrationContext } from '@constructs/runtime/_util/initializers/hydrationContext';
-import { spwParser } from '../../../../../parser/generated';
 import { HydratedConstruct, RawConstruct } from '@constructs/ast/_abstract/_types/internal';
 import { hydrateRecursively } from '@constructs/ast/_abstract/_util/hydrate/recursive';
 import { Construct } from '@constructs/ast/_abstract/construct';
+import { initHydrationContext } from '@constructs/runtime/_util/initializers/hydrationContext';
+import { initRuntimeRegisters } from '@constructs/runtime/_util/initializers/runtime/registers';
 import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
+import { Runtime } from '@constructs/runtime/runtime';
+import { spwParser } from '../../../../../parser/generated';
 
 /**
  * Parse a string of text within the context of a runtime

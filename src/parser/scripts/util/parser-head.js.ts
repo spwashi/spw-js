@@ -7,9 +7,9 @@ Construct;
 // language=JavaScript
 export default `
   ${spwHead.toString()};
-  var head        = spwHead();
+  var head = spwHead();
   var toConstruct = head.toConstruct;
-  var constructs  = head.constructs;
+  var constructs = head.constructs;
 `;
 
 /* builtins */

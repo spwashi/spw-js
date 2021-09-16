@@ -1,11 +1,11 @@
-import { ruleName } from './ref';
-import { Rule } from '@spwashi/language/parsers/grammar';
-import { sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
-import { location } from '@grammar/ast/nodes/containers/location/ref';
-import { concept } from '@grammar/ast/nodes/containers/concept/ref';
 import { LocatedConceptExpression } from '@constructs/ast/expressions/sequence/located_concept/construct';
 import { componentize } from '@grammar/ast/expressions/sequence/_util/componentize';
+import { concept } from '@grammar/ast/nodes/containers/concept/ref';
+import { location } from '@grammar/ast/nodes/containers/location/ref';
 import { space } from '@grammar/utility/space/whitespace.patterns';
+import { Rule } from '@spwashi/language/parsers/grammar';
+import { sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
+import { ruleName } from './ref';
 
 const components = LocatedConceptExpression.components;
 const _location = {

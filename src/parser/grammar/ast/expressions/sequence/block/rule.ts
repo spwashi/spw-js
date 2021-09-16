@@ -1,4 +1,11 @@
-import { ruleName } from './ref';
+import { Block } from '@constructs/ast/expressions/sequence/block/construct';
+import { expression } from '@grammar/ast/expressions/_abstract/expression.ref';
+import _optionalSpaces from '@grammar/ast/expressions/prefix/_abstract/_components/spaces';
+import { componentize } from '@grammar/ast/expressions/sequence/_util/componentize';
+import { node } from '@grammar/ast/nodes/_abstract/node.ref';
+import { blockDelimitingOperator } from '@grammar/ast/nodes/atoms/operators/delimiters/block/ref';
+import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
+import { space } from '@grammar/utility/space/whitespace.patterns';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import {
   anyOf,
@@ -7,14 +14,7 @@ import {
   sequenceOf,
   zeroOrMoreOf,
 } from '@spwashi/language/parsers/grammar/combinators';
-import { Block } from '@constructs/ast/expressions/sequence/block/construct';
-import { space } from '@grammar/utility/space/whitespace.patterns';
-import { componentize } from '@grammar/ast/expressions/sequence/_util/componentize';
-import { node } from '@grammar/ast/nodes/_abstract/node.ref';
-import { expression } from '@grammar/ast/expressions/_abstract/expression.ref';
-import { blockDelimitingOperator } from '@grammar/ast/nodes/atoms/operators/delimiters/block/ref';
-import _optionalSpaces from '@grammar/ast/expressions/prefix/_abstract/_components/spaces';
-import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
+import { ruleName } from './ref';
 
 const _expression = {
   name: 'expression',

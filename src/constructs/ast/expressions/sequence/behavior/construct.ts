@@ -1,8 +1,8 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
-import { BehaviorExpressionKind } from '@constructs/ast/expressions/sequence/behavior/__types';
-import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
+import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
+import { BehaviorExpressionKind } from '@constructs/ast/expressions/sequence/behavior/__types';
 
 @staticImplements<IConstructClass<'behavior_expression'>>()
 export class BehaviorExpression extends Expression<BehaviorExpressionKind> {

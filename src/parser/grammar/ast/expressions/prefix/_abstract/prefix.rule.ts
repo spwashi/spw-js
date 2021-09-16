@@ -1,10 +1,10 @@
-import { ruleName } from './prefix.ref';
-import { Rule } from '@spwashi/language/parsers/grammar';
-import { sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
 import { PrefixExpression } from '@constructs/ast/expressions/prefix/construct';
 import _operands from '@grammar/ast/expressions/prefix/_abstract/_components/operands';
 import _operator from '@grammar/ast/expressions/prefix/_abstract/_components/operator';
 import _optionalSpaces from '@grammar/ast/expressions/prefix/_abstract/_components/spaces';
+import { Rule } from '@spwashi/language/parsers/grammar';
+import { sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
+import { ruleName } from './prefix.ref';
 
 const kind = `${PrefixExpression.kind}`;
 const name = ruleName;

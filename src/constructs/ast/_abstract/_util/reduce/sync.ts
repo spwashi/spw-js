@@ -71,11 +71,7 @@ export function reduceConstructSync<
       const lifecycleGenerator = startEvalGenerator([mutated, context]);
 
       // loop over generator
-      for (
-        let value, done;
-        ({ value, done } = lifecycleGenerator.next()), !done;
-
-      ) {
+      for (let value, done; ({ value, done } = lifecycleGenerator.next()), !done; ) {
         if (value === undefined) {
           continue;
         }

@@ -1,11 +1,11 @@
+import { AggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/expression';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
+import * as util from 'util';
 import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '../../../../../../runtime/_util/selectors';
-import { AggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/expression';
 import { Construct } from '../../../../../_abstract/construct';
-import * as util from 'util';
-import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 
 describe('Aggregation Expressions', () => {
   it('is serialized the way we expect it to be', async (done) => {

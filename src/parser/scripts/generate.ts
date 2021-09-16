@@ -1,9 +1,9 @@
+import { generateParser } from '@spwashi/language/parsers/scripts/generateParser';
 import * as fs from 'fs';
 import * as path from 'path';
-import head from './util/parser-head.js';
-import spwGrammar, { allowedStartRules } from '../grammar';
-import { generateParser } from '@spwashi/language/parsers/scripts/generateParser';
 import { RawConstruct } from '../../constructs/ast/_abstract/_types/internal';
+import spwGrammar, { allowedStartRules } from '../grammar';
+import head from './util/parser-head.js';
 
 export type SpwParser = {
   parse: (input: string) => RawConstruct;

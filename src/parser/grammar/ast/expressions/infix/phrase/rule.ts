@@ -1,9 +1,9 @@
 import { PhraseExpression } from '@constructs/ast';
-import { sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
 import { Rule } from '@spwashi/language/parsers/grammar';
-import { ruleName } from './ref';
+import { sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
 import _head from './_components/head';
 import _tail from './_components/tail';
+import { ruleName } from './ref';
 
 const head = _head.pattern.named(_head.name);
 const tail = _tail.pattern.named(_tail.name);

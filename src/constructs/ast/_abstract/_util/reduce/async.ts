@@ -69,20 +69,11 @@ export async function reduceConstructAsync<
             break;
           }
           const [item, ctxt] = value;
-          const mutated = await config.valueMapper(
-            item,
-            prototype.name,
-            ctxt,
-            true,
-          );
+          const mutated = await config.valueMapper(item, prototype.name, ctxt, true);
           const startEvalGenerator = lifecycle({ type: 'eval' });
           const lifecycleGenerator = startEvalGenerator([mutated, ctxt]);
 
-          for (
-            let value, done;
-            ({ value, done } = lifecycleGenerator.next()), !done;
-
-          ) {
+          for (let value, done; ({ value, done } = lifecycleGenerator.next()), !done; ) {
             if (value === undefined) {
               continue;
             }
@@ -103,16 +94,10 @@ export async function reduceConstructAsync<
       ] as [Promise<Intermediate[]>, Context];
 
       const resolved = [await step[0], step[1]] as [Intermediate[], Context];
-      const normalized = config.stepNormalizer(prototype, resolved) as [
-        ReturnType,
-        Context,
-      ];
+      const normalized = config.stepNormalizer(prototype, resolved) as [ReturnType, Context];
       const previous = await promised;
 
-      promised = (await config.stepReducer(previous, normalized, true)) as [
-        ReturnType,
-        Context,
-      ];
+      promised = (await config.stepReducer(previous, normalized, true)) as [ReturnType, Context];
     }
 
     return promised;

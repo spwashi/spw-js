@@ -1,13 +1,13 @@
-import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { ConstructComponents, IConstructClass } from '@constructs/ast/_abstract/construct';
-import { Delimiter } from '@constructs/ast/nodes/operators/semantic/_abstract/delimiter';
-import { operatorComponents } from '@constructs/ast/nodes/operators/_abstract/operator';
+import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import {
-  ConceptualSchemeOperatorKind,
   ConceptIntroductionOperator,
+  ConceptualSchemeOperatorKind,
 } from '@constructs/ast/nodes/containers/concept/_components/scheme/__types';
 import { ITokenOperatorClass } from '@constructs/ast/nodes/operators/_abstract/_types/atomic';
+import { operatorComponents } from '@constructs/ast/nodes/operators/_abstract/operator';
 import { DivergenceOperator } from '@constructs/ast/nodes/operators/pragmatic/single-token/divergence/construct';
+import { Delimiter } from '@constructs/ast/nodes/operators/semantic/_abstract/delimiter';
 
 type StaticType = IConstructClass<ConceptualSchemeOperatorKind> &
   ITokenOperatorClass<ConceptIntroductionOperator>;

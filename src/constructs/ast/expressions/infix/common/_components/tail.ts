@@ -1,8 +1,8 @@
-import { Expression } from '@constructs/ast/expressions/_abstract/expression';
-import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import { Construct, IConstructClass } from '../../../../_abstract/construct';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
+import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { CommonExpressionTailKind } from '@constructs/ast/expressions/infix/common/_components/__types';
+import { Construct, IConstructClass } from '../../../../_abstract/construct';
 
 type StaticType = IConstructClass<CommonExpressionTailKind>;
 

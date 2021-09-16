@@ -1,10 +1,10 @@
+import { NodeDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/node/construct';
 import {
   anyOf,
   oneOrMoreOf,
   regExpLike,
   stringLike,
 } from '@spwashi/language/parsers/grammar/combinators';
-import { NodeDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/node/construct';
 
 const tab = regExpLike('\\t');
 export const space = stringLike(NodeDelimitingOperator.token);

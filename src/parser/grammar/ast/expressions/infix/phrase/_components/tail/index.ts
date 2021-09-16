@@ -1,8 +1,8 @@
-import { anyOf, oneOrMoreOf, sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
-import { spaceTab } from '@grammar/utility/space/whitespace.patterns';
-import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
 import { sequenceExpression } from '@grammar/ast/expressions/sequence/_abstract/sequence.ref';
 import { node } from '@grammar/ast/nodes/_abstract/node.ref';
+import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
+import { spaceTab } from '@grammar/utility/space/whitespace.patterns';
+import { anyOf, oneOrMoreOf, sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
 
 const allowedElements = [sequenceExpression, container, node];
 const _delimiter = {

@@ -1,5 +1,5 @@
-import { HydratedConstruct, RawConstruct } from '@constructs/ast/_abstract/_types/internal';
 import { InteractionContext } from '@constructs/ast/_abstract/_types';
+import { HydratedConstruct, RawConstruct } from '@constructs/ast/_abstract/_types/internal';
 import { Construct } from '../../../construct';
 
 function _entryReducer(t: RawConstruct, [currKey, curr]: [string, any | any[]]): RawConstruct {

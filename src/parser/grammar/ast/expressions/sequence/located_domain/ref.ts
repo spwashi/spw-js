@@ -1,5 +1,5 @@
-import { referenceTo } from '@spwashi/language/parsers/grammar/combinators';
 import { LocatedDomainExpression } from '@constructs/ast/expressions/sequence/located_domain/construct';
+import { referenceTo } from '@spwashi/language/parsers/grammar/combinators';
 
 export const ruleName = LocatedDomainExpression.name;
 

@@ -1,8 +1,8 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
-import { BlockExpressionKind } from './__types';
-import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
+import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
+import { BlockExpressionKind } from './__types';
 
 @staticImplements<IConstructClass<BlockExpressionKind>>()
 export class Block extends Expression<BlockExpressionKind> {

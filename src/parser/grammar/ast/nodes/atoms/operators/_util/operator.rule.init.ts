@@ -1,3 +1,5 @@
+import { ITokenOperatorClass } from '@constructs/ast/nodes/operators/_abstract/_types/atomic';
+import { Rule } from '@spwashi/language/parsers/grammar';
 import {
   anyOf,
   referenceTo,
@@ -6,10 +8,8 @@ import {
   StringCombinator,
   stringLike,
 } from '@spwashi/language/parsers/grammar/combinators';
-import { Rule } from '@spwashi/language/parsers/grammar';
-import { anchorNode } from '../../scalars/anchor/ref';
 import { IConstructClass } from '../../../../../../../constructs/ast/_abstract/construct';
-import { ITokenOperatorClass } from '@constructs/ast/nodes/operators/_abstract/_types/atomic';
+import { anchorNode } from '../../scalars/anchor/ref';
 
 function init(token: StringCombinator, ruleName: string, nodeName: string, doLabel = true): Rule {
   const _labeledTokenAction =

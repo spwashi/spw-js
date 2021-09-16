@@ -4,11 +4,11 @@ import {
   ConstructReductionOptions,
   InteractionContext,
 } from '@constructs/ast/_abstract/_types';
+import { completeConfig } from '@constructs/ast/_abstract/_util/reduce/_/util';
+import { getConstructClass } from '../../../../index';
 import { RawConstruct } from '../../_types/internal';
 import { Construct } from '../../construct';
 import { HydrationContext, joinHydratedProperties } from './_/util';
-import { getConstructClass } from '../../../../index';
-import { completeConfig } from '@constructs/ast/_abstract/_util/reduce/_/util';
 
 /**
  * For each value, resolve the promise if we're in "async" mode

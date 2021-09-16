@@ -1,13 +1,13 @@
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
-import { ConstructComponents, IConstructClass } from '../../../../../_abstract/construct';
-import { ITokenOperatorClass } from '@constructs/ast/nodes/operators/_abstract/_types/atomic';
-import { Delimiter } from '../../../../operators/semantic/_abstract/delimiter';
-import { operatorComponents } from '@constructs/ast/nodes/operators/_abstract/operator';
 import {
-  ConceptualIdentityOperatorKind,
   ConceptConvergenceToken,
+  ConceptualIdentityOperatorKind,
 } from '@constructs/ast/nodes/containers/concept/_components/identity/__types';
+import { ITokenOperatorClass } from '@constructs/ast/nodes/operators/_abstract/_types/atomic';
+import { operatorComponents } from '@constructs/ast/nodes/operators/_abstract/operator';
 import { ConvergenceOperator } from '@constructs/ast/nodes/operators/pragmatic/single-token/convergence/construct';
+import { ConstructComponents, IConstructClass } from '../../../../../_abstract/construct';
+import { Delimiter } from '../../../../operators/semantic/_abstract/delimiter';
 
 type StaticType = IConstructClass<ConceptualIdentityOperatorKind> &
   ITokenOperatorClass<ConceptConvergenceToken>;

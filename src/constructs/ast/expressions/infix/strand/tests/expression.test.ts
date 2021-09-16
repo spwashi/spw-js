@@ -1,11 +1,11 @@
+import { StrandExpression } from '@constructs/ast/expressions/infix/strand/expression';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
+import * as util from 'util';
 import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '../../../../../runtime/_util/selectors';
-import { StrandExpression } from '@constructs/ast/expressions/infix/strand/expression';
 import { Construct } from '../../../../_abstract/construct';
-import * as util from 'util';
-import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 
 describe('Strand Expressions', () => {
   it('is serialized the way we expect it to be', async (done) => {

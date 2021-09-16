@@ -1,11 +1,11 @@
-import { Node } from '../../_abstract/node';
-import { staticImplements } from '../../../_util/typescript/staticImplements';
-import { ConstructKind } from '@constructs/ast/_types/kinds';
-import { Construct, ConstructComponents } from '../../../_abstract/construct';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { ConstructKind } from '@constructs/ast/_types/kinds';
 import { BlockDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/block/construct';
 import { CommonDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/common/construct';
 import { NodeDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/node/construct';
+import { Construct, ConstructComponents } from '../../../_abstract/construct';
+import { staticImplements } from '../../../_util/typescript/staticImplements';
+import { Node } from '../../_abstract/node';
 
 type Delimiter = { token: string } | null;
 

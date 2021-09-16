@@ -1,5 +1,5 @@
-import { referenceTo } from '@spwashi/language/parsers/grammar/combinators';
 import { LocatedConceptExpression } from '@constructs/ast/expressions/sequence/located_concept/construct';
+import { referenceTo } from '@spwashi/language/parsers/grammar/combinators';
 
 export const ruleName = LocatedConceptExpression.name;
 

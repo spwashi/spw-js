@@ -1,8 +1,8 @@
-import { Node } from '../../_abstract/node';
-import { Construct, IConstructClass } from '../../../_abstract/construct';
-import { staticImplements } from '../../../_util/typescript/staticImplements';
 import { ComponentDescription, ComponentEvaluatorObject } from '@constructs/ast/_abstract/_types';
 import { StringNodeKind } from '@constructs/ast/nodes/scalars/string/__types';
+import { Construct, IConstructClass } from '../../../_abstract/construct';
+import { staticImplements } from '../../../_util/typescript/staticImplements';
+import { Node } from '../../_abstract/node';
 
 type StaticType = IConstructClass<StringNodeKind>;
 

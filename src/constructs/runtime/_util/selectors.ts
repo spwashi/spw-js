@@ -1,5 +1,5 @@
-import { Construct } from '../../ast/_abstract/construct';
 import { Runtime } from '@constructs/runtime/runtime';
+import { Construct } from '../../ast/_abstract/construct';
 
 /**
  * All registered nodes

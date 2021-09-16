@@ -1,5 +1,5 @@
-import { referenceTo } from '@spwashi/language/parsers/grammar/combinators';
 import { LocatedEssenceExpression } from '@constructs/ast/expressions/sequence/located_essence/construct';
+import { referenceTo } from '@spwashi/language/parsers/grammar/combinators';
 
 export const ruleName = LocatedEssenceExpression.name;
 

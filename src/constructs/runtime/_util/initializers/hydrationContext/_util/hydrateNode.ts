@@ -1,7 +1,7 @@
 import { RawConstruct } from '@constructs/ast/_abstract/_types/internal';
 import { HydrationContext } from '@constructs/ast/_abstract/_util/hydrate/_/util';
-import { Construct } from '../../../../../ast/_abstract/construct';
 import { hydrateShallow } from '@constructs/ast/_abstract/_util/hydrate/shallow';
+import { Construct } from '../../../../../ast/_abstract/construct';
 
 /**
  * For each Node,

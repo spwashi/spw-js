@@ -1,3 +1,9 @@
+import { expression } from '@grammar/ast/expressions/_abstract/expression.ref';
+import { block } from '@grammar/ast/expressions/sequence/block/ref';
+import { node } from '@grammar/ast/nodes/_abstract/node.ref';
+import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
+import { newline, space, spaceTab } from '@grammar/utility/space/whitespace.patterns';
+import { Rule } from '@spwashi/language/parsers/grammar';
 import {
   anyOf,
   RuleReferenceCombinator,
@@ -5,14 +11,8 @@ import {
   stringLike,
   zeroOrMoreOf,
 } from '@spwashi/language/parsers/grammar/combinators';
-import { Rule } from '@spwashi/language/parsers/grammar';
-import { newline, space, spaceTab } from '@grammar/utility/space/whitespace.patterns';
 import { Combinator } from '@spwashi/language/parsers/grammar/combinators/abstract';
 import { getContainerNodeComponentReferences } from '../container.ref.init';
-import { block } from '@grammar/ast/expressions/sequence/block/ref';
-import { expression } from '@grammar/ast/expressions/_abstract/expression.ref';
-import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
-import { node } from '@grammar/ast/nodes/_abstract/node.ref';
 
 function getEmptyBlockCombinator(
   opener: RuleReferenceCombinator,

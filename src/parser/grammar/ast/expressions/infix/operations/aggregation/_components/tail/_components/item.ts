@@ -1,6 +1,6 @@
 import { AggregationExpressionTail } from '@constructs/ast';
-import { node } from '@grammar/ast/nodes/_abstract/node.ref';
 import { expression } from '@grammar/ast/expressions/_abstract/expression.ref';
+import { node } from '@grammar/ast/nodes/_abstract/node.ref';
 import { anyOf } from '@spwashi/language/parsers/grammar/combinators';
 
 const _item = {

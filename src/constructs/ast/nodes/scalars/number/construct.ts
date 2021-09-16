@@ -1,8 +1,8 @@
-import { Node } from '../../_abstract/node';
-import { Construct, IConstructClass } from '../../../_abstract/construct';
-import { staticImplements } from '../../../_util/typescript/staticImplements';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
 import { NumberNodeKind } from '@constructs/ast/nodes/scalars/number/__types';
+import { Construct, IConstructClass } from '../../../_abstract/construct';
+import { staticImplements } from '../../../_util/typescript/staticImplements';
+import { Node } from '../../_abstract/node';
 
 type StaticType = IConstructClass<NumberNodeKind>;
 

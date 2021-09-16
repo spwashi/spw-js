@@ -1,10 +1,10 @@
+import { PhraseNode } from '@constructs/ast';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '../../../../../runtime/_util/selectors';
-import { PhraseNode } from '@constructs/ast';
 import { Construct } from '../../../../_abstract/construct';
-import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 
 describe('Phrase Nodes', () => {
   it('can be parsed', (done) => {

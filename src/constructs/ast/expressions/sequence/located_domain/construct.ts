@@ -1,8 +1,8 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
-import { LocatedDomainExpressionKind } from '@constructs/ast/expressions/sequence/located_domain/__types';
-import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
+import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
+import { LocatedDomainExpressionKind } from '@constructs/ast/expressions/sequence/located_domain/__types';
 
 @staticImplements<IConstructClass<LocatedDomainExpressionKind>>()
 export class LocatedDomainExpression extends Expression<LocatedDomainExpressionKind> {

@@ -3,8 +3,8 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { LocatedEssenceExpression } from '../construct';
 import { locatedEssenceExpressionRule } from '@grammar/ast/expressions/sequence/located_essence/rule';
+import { LocatedEssenceExpression } from '../construct';
 
 describe('Rule', () => {
   it('should exist', function () {

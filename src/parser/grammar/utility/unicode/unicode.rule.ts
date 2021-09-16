@@ -1,8 +1,5 @@
-import {
-  anyOf,
-  regExpLike,
-} from '@spwashi/language/parsers/grammar/combinators';
 import { Rule } from '@spwashi/language/parsers/grammar';
+import { anyOf, regExpLike } from '@spwashi/language/parsers/grammar/combinators';
 import { ruleName } from './unicode.ref';
 
 const unicode = anyOf([

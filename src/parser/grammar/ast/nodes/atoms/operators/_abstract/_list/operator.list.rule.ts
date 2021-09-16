@@ -1,4 +1,3 @@
-import { operatorRule } from '../operator.rule';
 import { aggregationOperatorRule } from '@grammar/ast/nodes/atoms/operators/pragmatic/aggregation/rule';
 import { ascentOperatorRule } from '@grammar/ast/nodes/atoms/operators/pragmatic/ascent/rule';
 import { branchOperatorRule } from '@grammar/ast/nodes/atoms/operators/pragmatic/branch/rule';
@@ -15,6 +14,7 @@ import { referenceOperatorRule } from '@grammar/ast/nodes/atoms/operators/pragma
 import { spreadOperatorRule } from '@grammar/ast/nodes/atoms/operators/pragmatic/spread/rule';
 import { transformationOperatorRule } from '@grammar/ast/nodes/atoms/operators/pragmatic/transformation/rule';
 import { valueOperatorRule } from '@grammar/ast/nodes/atoms/operators/pragmatic/value/rule';
+import { operatorRule } from '../operator.rule';
 
 export const operatorRules = [
   operatorRule,

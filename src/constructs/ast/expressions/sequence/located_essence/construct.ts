@@ -1,12 +1,12 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
-import { LocatedEssenceExpressionKind } from '@constructs/ast/expressions/sequence/located_essence/__types';
-import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import {
   Construct,
   ConstructComponents,
   IConstructClass,
 } from '@constructs/ast/_abstract/construct';
+import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
+import { LocatedEssenceExpressionKind } from '@constructs/ast/expressions/sequence/located_essence/__types';
 
 @staticImplements<IConstructClass<LocatedEssenceExpressionKind>>()
 export class LocatedEssenceExpression extends Expression<LocatedEssenceExpressionKind> {

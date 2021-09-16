@@ -12,9 +12,7 @@ describe('Registers', () => {
 
     // input
 
-    const inputItems = Array(faker.datatype.number(MAX_ITEMS)).map(() =>
-      faker.datatype.string(),
-    );
+    const inputItems = Array(faker.datatype.number(MAX_ITEMS)).map(() => faker.datatype.string());
 
     // output
 
@@ -35,12 +33,8 @@ describe('Registers', () => {
 
     // input
 
-    const inputItems = Array(faker.datatype.number(MAX_ITEMS)).map(() =>
-      faker.datatype.string(),
-    );
-    const inputMemory = faker.datatype.number(
-      inputItems.length / faker.datatype.number(MAX_ITEMS),
-    );
+    const inputItems = Array(faker.datatype.number(MAX_ITEMS)).map(() => faker.datatype.string());
+    const inputMemory = faker.datatype.number(inputItems.length / faker.datatype.number(MAX_ITEMS));
 
     // output
 

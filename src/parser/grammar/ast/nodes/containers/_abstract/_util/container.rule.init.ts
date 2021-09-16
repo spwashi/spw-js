@@ -1,7 +1,7 @@
 import { Rule } from '@spwashi/language/parsers/grammar';
-import { createDelimiterRule, IDelimiter } from './components/delimiter.rule.init';
-import { createContainerBodyRules, createContainerPattern } from './components/body.rule.init';
 import { sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
+import { createContainerBodyRules, createContainerPattern } from './components/body.rule.init';
+import { createDelimiterRule, IDelimiter } from './components/delimiter.rule.init';
 
 export const createContainerRules = ({
   name: ruleName,

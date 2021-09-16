@@ -1,11 +1,11 @@
 import { PhraseExpression } from '@constructs/ast';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 import { phraseExpressionRule } from '@grammar/ast/expressions/infix/phrase/rule';
-import { Construct } from '../../../../_abstract/construct';
 import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '../../../../../runtime/_util/selectors';
-import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
+import { Construct } from '../../../../_abstract/construct';
 
 describe('Rule', () => {
   it('should exist', function () {

@@ -1,5 +1,5 @@
-import { Register } from '@constructs/runtime/register/register';
 import { RuntimeRegisters } from '@constructs/runtime/_util/_types/registers';
+import { Register } from '@constructs/runtime/register/register';
 
 export function initRuntimeRegisters(): RuntimeRegisters {
   return {

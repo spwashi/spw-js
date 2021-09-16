@@ -1,4 +1,4 @@
-import { getOperatorReference } from '@grammar/ast/nodes/atoms/operators/_util/operator.rule.init';
 import { DirectionOperator } from '@constructs/ast';
+import { getOperatorReference } from '@grammar/ast/nodes/atoms/operators/_util/operator.rule.init';
 
 export const directionOperator = getOperatorReference(DirectionOperator);

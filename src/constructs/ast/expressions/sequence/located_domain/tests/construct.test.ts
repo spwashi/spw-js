@@ -3,8 +3,8 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { LocatedDomainExpression } from '../construct';
 import { locatedDomainExpressionRule } from '@grammar/ast/expressions/sequence/located_domain/rule';
+import { LocatedDomainExpression } from '../construct';
 
 describe('Rule', () => {
   it('should exist', function () {

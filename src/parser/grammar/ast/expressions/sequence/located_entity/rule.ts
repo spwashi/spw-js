@@ -1,10 +1,10 @@
-import { ruleName } from './ref';
+import { LocatedEntityExpression } from '@constructs/ast/expressions/sequence/located_entity/construct';
+import { entityExpression } from '@grammar/ast/expressions/sequence/entity/ref';
+import { location } from '@grammar/ast/nodes/containers/location/ref';
+import { space } from '@grammar/utility/space/whitespace.patterns';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import { sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
-import { location } from '@grammar/ast/nodes/containers/location/ref';
-import { LocatedEntityExpression } from '@constructs/ast/expressions/sequence/located_entity/construct';
-import { space } from '@grammar/utility/space/whitespace.patterns';
-import { entityExpression } from '@grammar/ast/expressions/sequence/entity/ref';
+import { ruleName } from './ref';
 
 const components = LocatedEntityExpression.components;
 const _location = {

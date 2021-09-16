@@ -1,10 +1,10 @@
+import { PhraseExpression } from '@constructs/ast';
 import {
   getAllNodes,
   getSalientNode,
 } from '@constructs/runtime/_util/initializers/runtime/initRuntimeWithSrc';
 import { instanceExpressionRule } from '@grammar/ast/expressions/sequence/instance/rule';
 import { InstanceExpression } from '../construct';
-import { PhraseExpression } from '@constructs/ast';
 
 describe('Rule', () => {
   it('should exist', function () {

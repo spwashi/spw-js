@@ -1,7 +1,7 @@
+import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { Construct } from '@constructs/ast/_abstract/construct';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { PrefixExpressionKind } from './__types';
-import { Construct } from '@constructs/ast/_abstract/construct';
-import { ComponentDescription } from '@constructs/ast/_abstract/_types';
 
 export class PrefixExpression extends Expression<PrefixExpressionKind> {
   static kind: PrefixExpressionKind = 'prefix_expression';

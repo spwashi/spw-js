@@ -1,8 +1,8 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
-import { EntityExpressionKind } from './__types';
-import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
+import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
+import { EntityExpressionKind } from './__types';
 
 @staticImplements<IConstructClass<EntityExpressionKind>>()
 export class EntityExpression extends Expression<EntityExpressionKind> {

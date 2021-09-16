@@ -1,3 +1,4 @@
+import { Rule } from '@spwashi/language/parsers/grammar';
 import {
   anyOf,
   optionally,
@@ -5,11 +6,10 @@ import {
   sequenceOf,
   stringLike,
 } from '@spwashi/language/parsers/grammar/combinators';
-import { Rule } from '@spwashi/language/parsers/grammar';
+import { spaceNode } from '../../../../../../utility/space/space.ref';
 import { anchorNode } from '../../../../atoms/scalars/anchor/ref';
 import { containerNodes } from '../../_list/container.list.ref';
 import { getContainerNodeComponentReferences } from '../container.ref.init';
-import { spaceNode } from '../../../../../../utility/space/space.ref';
 
 function opener(delimiter: IDelimiter): SequenceCombinator {
   const token = stringLike(delimiter.token);

@@ -1,5 +1,5 @@
-import { referenceTo } from '@spwashi/language/parsers/grammar/combinators';
 import { InfixExpression } from '@constructs/ast/expressions/infix/construct';
+import { referenceTo } from '@spwashi/language/parsers/grammar/combinators';
 
 export const ruleName = InfixExpression.name;
 

@@ -1,12 +1,12 @@
+import { StrandExpression } from '@constructs/ast';
+import { CommonExpression } from '@constructs/ast/expressions/infix/common/expression';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
+import * as util from 'util';
 import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '../../../../../runtime/_util/selectors';
-import { CommonExpression } from '@constructs/ast/expressions/infix/common/expression';
 import { Construct } from '../../../../_abstract/construct';
-import * as util from 'util';
-import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
-import { StrandExpression } from '@constructs/ast';
 
 describe(CommonExpression.name, () => {
   it('is serialized the way we expect it to be', async (done) => {

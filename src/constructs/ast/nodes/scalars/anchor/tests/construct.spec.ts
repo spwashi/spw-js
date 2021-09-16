@@ -1,10 +1,10 @@
+import { AnchorNode } from '@constructs/ast';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 import { Runtime } from '@constructs/runtime/runtime';
 import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '../../../../../runtime/_util/selectors';
-import { AnchorNode } from '@constructs/ast';
-import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 
 describe('AnchorNodes', () => {
   it('Can start with an character of the alphabet and consist of alphanumeric characters, underscores, and dashes', async () => {

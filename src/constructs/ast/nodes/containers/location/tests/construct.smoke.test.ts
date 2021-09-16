@@ -3,8 +3,8 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { Location } from '../construct';
 import { location } from '@grammar/ast/nodes/containers/location/ref';
+import { Location } from '../construct';
 
 describe('Rule Reference', () => {
   it('should exist', function () {

@@ -1,10 +1,10 @@
 import { PhraseNode } from '@constructs/ast';
-import { Rule } from '@spwashi/language/parsers/grammar';
-import { ruleName } from './ref';
-import { anchorNode } from '../anchor/ref';
-import { spaceTab } from '../../../../../utility/space/whitespace.patterns';
-import { anyOf, oneOrMoreOf, sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
 import { numberNode } from '@grammar/ast/nodes/atoms/scalars/number/ref';
+import { Rule } from '@spwashi/language/parsers/grammar';
+import { anyOf, oneOrMoreOf, sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
+import { spaceTab } from '../../../../../utility/space/whitespace.patterns';
+import { anchorNode } from '../anchor/ref';
+import { ruleName } from './ref';
 
 const head = anyOf([anchorNode, numberNode]);
 

@@ -5,9 +5,9 @@ import {
 } from '@constructs/ast/_abstract/_types';
 import { ReductionLifecycleController } from '@constructs/ast/_abstract/_util/reduce/_/types';
 
-export function completeConfig<
-  C extends InteractionContext = InteractionContext,
->(options: ConstructReductionOptions<C> = {}): ConstructReductionConfig<C> {
+export function completeConfig<C extends InteractionContext = InteractionContext>(
+  options: ConstructReductionOptions<C> = {},
+): ConstructReductionConfig<C> {
   const {
     valueMapper = () => null,
     stepReducer = (_, next) => next,
@@ -22,9 +22,7 @@ export function completeConfig<
     stepNormalizer,
   };
 }
-export const defaultLifecycleGenerator: ReductionLifecycleController = ({
-  type,
-}) => {
+export const defaultLifecycleGenerator: ReductionLifecycleController = ({ type }) => {
   switch (type) {
     case 'eval':
     case 'begin-reduction':

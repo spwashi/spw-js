@@ -1,3 +1,5 @@
+import { StringNode } from '@constructs/ast';
+import { Rule } from '@spwashi/language/parsers/grammar';
 import {
   anyOf,
   regExpLike,
@@ -5,8 +7,6 @@ import {
   stringLike,
   zeroOrMoreOf,
 } from '@spwashi/language/parsers/grammar/combinators';
-import { Rule } from '@spwashi/language/parsers/grammar';
-import { StringNode } from '@constructs/ast';
 import { unicode_noQuotes } from '../../../../../utility/unicode/unicode.ref';
 import { ruleName } from './ref';
 

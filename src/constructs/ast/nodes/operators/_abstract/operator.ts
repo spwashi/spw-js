@@ -1,7 +1,7 @@
-import { Node } from '@constructs/ast/nodes/_abstract/node';
-import { ConstructKind } from '@constructs/ast/_types/kinds';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types';
 import { Construct, ConstructComponents } from '@constructs/ast/_abstract/construct';
+import { ConstructKind } from '@constructs/ast/_types/kinds';
+import { Node } from '@constructs/ast/nodes/_abstract/node';
 
 /**
  * Operators have "side effects" in that they represent the invocation of

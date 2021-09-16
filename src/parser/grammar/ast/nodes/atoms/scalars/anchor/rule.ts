@@ -1,3 +1,4 @@
+import { AnchorNode } from '@constructs/ast';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import {
   anyOf,
@@ -8,7 +9,6 @@ import {
   zeroOrMoreOf,
 } from '@spwashi/language/parsers/grammar/combinators';
 import { ruleName } from './ref';
-import { AnchorNode } from '@constructs/ast';
 
 const anchorPattern2 = sequenceOf([
   oneOrMoreOf(regExpLike('a-zA-Z')).named('head'),

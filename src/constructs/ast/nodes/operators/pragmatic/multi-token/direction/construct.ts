@@ -1,5 +1,5 @@
-import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { ConstructComponents, IConstructClass } from '@constructs/ast/_abstract/construct';
+import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { ITokenOperatorClass } from '@constructs/ast/nodes/operators/_abstract/_types/atomic';
 import { Operator, operatorComponents } from '@constructs/ast/nodes/operators/_abstract/operator';
 import { DirectionOperatorKind, DirectionOperatorToken } from './__types';

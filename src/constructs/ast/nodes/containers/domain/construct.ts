@@ -1,8 +1,8 @@
-import { containerComponents, ContainerNode } from '../_abstract/container';
-import { DomainIdentityOperator } from '@constructs/ast/nodes/containers/domain/_components/identity/construct';
-import { ConstructComponents } from '../../../_abstract/construct';
-import { DomainSchemeOperator } from '@constructs/ast/nodes/containers/domain/_components/scheme/construct';
 import { DomainNodeKind } from '@constructs/ast/nodes/containers/domain/__types';
+import { DomainIdentityOperator } from '@constructs/ast/nodes/containers/domain/_components/identity/construct';
+import { DomainSchemeOperator } from '@constructs/ast/nodes/containers/domain/_components/scheme/construct';
+import { ConstructComponents } from '../../../_abstract/construct';
+import { containerComponents, ContainerNode } from '../_abstract/container';
 
 export class Domain extends ContainerNode<DomainNodeKind> {
   static kind: DomainNodeKind = 'domain';

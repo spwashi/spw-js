@@ -1,12 +1,12 @@
+import { StrandExpressionTail } from '@constructs/ast';
+import { spaceNode } from '@grammar/utility/space/space.ref';
 import {
   oneOrMoreOf,
   sequenceOf,
   zeroOrMoreOf,
 } from '@spwashi/language/parsers/grammar/combinators';
-import _operator from './_components/operator';
-import { spaceNode } from '@grammar/utility/space/space.ref';
-import { StrandExpressionTail } from '@constructs/ast';
 import _item from './_components/item';
+import _operator from './_components/operator';
 
 const _tailSequence = [
   zeroOrMoreOf(spaceNode),

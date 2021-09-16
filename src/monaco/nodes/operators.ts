@@ -1,5 +1,4 @@
 // containers
-import { build, escape } from 'xregexp';
 import {
   AggregationOperator,
   AscentOperator,
@@ -18,13 +17,14 @@ import {
   TransformationOperator,
   ValueOperator,
 } from '@constructs/ast';
+import { BindingOperator } from '@constructs/ast/nodes/operators/pragmatic/single-token/binding/construct';
+import { BlockDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/block/construct';
+import { CommonDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/common/construct';
+import { NodeDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/node/construct';
+import { build, escape } from 'xregexp';
 import { Tokenizer } from '../_types/types';
 import { rn_operator } from '../tokens';
-import { CommonDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/common/construct';
-import { BlockDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/block/construct';
-import { NodeDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/node/construct';
 import { tokenizerState } from '../util/tokenizerState';
-import { BindingOperator } from '@constructs/ast/nodes/operators/pragmatic/single-token/binding/construct';
 
 function makeOperatorRule(token: string, tokenName: string, behavior?: { action: string }) {
   const regExp = build(

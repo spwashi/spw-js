@@ -1,10 +1,10 @@
-import { ruleName } from './postfix.ref';
-import { Rule } from '@spwashi/language/parsers/grammar';
-import { sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
 import { PostfixExpression } from '@constructs/ast/expressions/postfix/construct';
 import _operands from '@grammar/ast/expressions/postfix/_abstract/_components/operands';
 import _operator from '@grammar/ast/expressions/postfix/_abstract/_components/operator';
 import _spaces from '@grammar/ast/expressions/postfix/_abstract/_components/spaces/_spaces';
+import { Rule } from '@spwashi/language/parsers/grammar';
+import { sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
+import { ruleName } from './postfix.ref';
 
 const kind = `${PostfixExpression.kind}`;
 const name = ruleName;

@@ -1,6 +1,33 @@
-import { ConstructKind } from '@constructs/ast/_types/kinds';
 import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
+import { ConstructKind } from '@constructs/ast/_types/kinds';
+import { InfixExpression } from '@constructs/ast/expressions/infix/construct';
+import { AggregationExpressionTail } from '@constructs/ast/expressions/infix/operations/aggregation/_components/tail';
+import { AggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/expression';
+import { PostfixExpression } from '@constructs/ast/expressions/postfix/construct';
+import { PrefixExpression } from '@constructs/ast/expressions/prefix/construct';
 import { Block } from '@constructs/ast/expressions/sequence/block/construct';
+import {
+  BehaviorExpression,
+  CommonExpression,
+  CommonExpressionTail,
+  ConceptSchemeOperator,
+  ConceptualIdentityOperator,
+  DomainIdentityOperator,
+  DomainSchemeOperator,
+  EntityExpression,
+  EssentialIdentityOperator,
+  EssentialSchemeOperator,
+  InstanceExpression,
+  LocatedConceptExpression,
+  LocatedDomainExpression,
+  LocatedEntityExpression,
+  LocatedEssenceExpression,
+  LocationalIdentityOperator,
+  LocationalSchemeOperator,
+  PhraseExpression,
+  StrandExpression,
+  StrandExpressionTail,
+} from './ast/expressions';
 import {
   AggregationOperator,
   AnchorNode,
@@ -34,33 +61,6 @@ import {
   TransformationOperator,
   ValueOperator,
 } from './ast/nodes';
-import {
-  BehaviorExpression,
-  CommonExpression,
-  CommonExpressionTail,
-  ConceptSchemeOperator,
-  ConceptualIdentityOperator,
-  DomainIdentityOperator,
-  DomainSchemeOperator,
-  EntityExpression,
-  EssentialIdentityOperator,
-  EssentialSchemeOperator,
-  InstanceExpression,
-  LocatedConceptExpression,
-  LocatedDomainExpression,
-  LocatedEntityExpression,
-  LocatedEssenceExpression,
-  LocationalIdentityOperator,
-  LocationalSchemeOperator,
-  PhraseExpression,
-  StrandExpression,
-  StrandExpressionTail,
-} from './ast/expressions';
-import { InfixExpression } from '@constructs/ast/expressions/infix/construct';
-import { PrefixExpression } from '@constructs/ast/expressions/prefix/construct';
-import { PostfixExpression } from '@constructs/ast/expressions/postfix/construct';
-import { AggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/expression';
-import { AggregationExpressionTail } from '@constructs/ast/expressions/infix/operations/aggregation/_components/tail';
 
 type ConstructorNameMap = {
   [K in ConstructKind]: typeof Construct & IConstructClass<K>;

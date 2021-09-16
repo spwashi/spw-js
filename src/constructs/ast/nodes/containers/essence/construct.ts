@@ -1,8 +1,8 @@
-import { containerComponents, ContainerNode } from '../_abstract/container';
-import { ConstructComponents } from '../../../_abstract/construct';
-import { EssentialSchemeOperator } from '@constructs/ast/nodes/containers/essence/_components/scheme/construct';
-import { EssentialIdentityOperator } from '@constructs/ast/nodes/containers/essence/_components/identity/construct';
 import { EssenceNodeKind } from '@constructs/ast/nodes/containers/essence/__types';
+import { EssentialIdentityOperator } from '@constructs/ast/nodes/containers/essence/_components/identity/construct';
+import { EssentialSchemeOperator } from '@constructs/ast/nodes/containers/essence/_components/scheme/construct';
+import { ConstructComponents } from '../../../_abstract/construct';
+import { containerComponents, ContainerNode } from '../_abstract/container';
 
 export class Essence extends ContainerNode<EssenceNodeKind> {
   static kind: EssenceNodeKind = 'essence';

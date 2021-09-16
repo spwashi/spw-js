@@ -1,10 +1,10 @@
+import { StringNode } from '@constructs/ast';
+import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '../../../../../runtime/_util/selectors';
-import { StringNode } from '@constructs/ast';
 import { Construct } from '../../../../_abstract/construct';
-import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 
 describe('String Nodes', () => {
   it('can be parsed', async (done) => {
