@@ -1,5 +1,5 @@
+import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import * as faker from 'faker';
-import { ComponentDescription } from '../_types';
 import { Construct, ConstructComponents } from '../construct';
 
 describe('Constructs', () => {

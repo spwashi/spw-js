@@ -1,4 +1,4 @@
-import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { ConstructKind } from '@constructs/ast/_types/kinds';
 import { BlockDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/block/construct';
 import { CommonDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/common/construct';

@@ -1,5 +1,5 @@
+import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { AnchorNodeKind } from '@constructs/ast/nodes/scalars/anchor/__types';
-import { ComponentDescription } from '../../../_abstract/_types';
 import { Construct, IConstructClass } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
 import { Node } from '../../_abstract/node';

@@ -1,8 +1,6 @@
-import {
-  ComponentDescription,
-  ConstructReductionConfig,
-  InteractionContext,
-} from '@constructs/ast/_abstract/_types';
+import { ConstructReductionConfig } from '@constructs/ast/_abstract/_types';
+import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
+import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 import { ReductionLifecycleController } from '@constructs/ast/_abstract/_util/reduce/_/types';
 import { defaultLifecycleGenerator } from '@constructs/ast/_abstract/_util/reduce/_/util';
 

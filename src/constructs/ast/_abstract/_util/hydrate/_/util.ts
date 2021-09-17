@@ -1,4 +1,4 @@
-import { InteractionContext } from '@constructs/ast/_abstract/_types';
+import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 import { HydratedConstruct, RawConstruct } from '@constructs/ast/_abstract/_types/internal';
 import { Construct } from '../../../construct';
 

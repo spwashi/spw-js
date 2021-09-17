@@ -5,7 +5,7 @@ import { AggregationExpressionKind } from '@constructs/ast/expressions/infix/ope
 import { AggregationTailKind } from '@constructs/ast/expressions/infix/operations/aggregation/_components/__types';
 import { PhraseExpressionKind } from '@constructs/ast/expressions/infix/phrase/__types';
 import { StrandExpressionKind } from '@constructs/ast/expressions/infix/strand/__types';
-import { StrandExpressionTailKind } from '@constructs/ast/expressions/infix/strand/_components/__types';
+import { PrefixStrandExpressionKind } from '@constructs/ast/expressions/infix/strand/_variants/prefixed/__types';
 import { PostfixExpressionKind } from '@constructs/ast/expressions/postfix/__types';
 import { PrefixExpressionKind } from '@constructs/ast/expressions/prefix/__types';
 import { BehaviorExpressionKind } from '@constructs/ast/expressions/sequence/behavior/__types';
@@ -52,11 +52,17 @@ import { BlockDelimitingOperatorKind } from '@constructs/ast/nodes/operators/sem
 import { CommonDelimitingOperatorKind } from '@constructs/ast/nodes/operators/semantic/common/__types';
 import { OperatorDelimitingOperatorKind } from '@constructs/ast/nodes/operators/semantic/node/__types';
 import { AnchorNodeKind } from '@constructs/ast/nodes/scalars/anchor/__types';
+import { EmbedmentNodeKind } from '@constructs/ast/nodes/scalars/embedment/__types';
 import { NumberNodeKind } from '@constructs/ast/nodes/scalars/number/__types';
 import { PhraseNodeKind } from '@constructs/ast/nodes/scalars/phrase/__types';
 import { StringNodeKind } from '@constructs/ast/nodes/scalars/string/__types';
 
-type ScalarKind = AnchorNodeKind | PhraseNodeKind | NumberNodeKind | StringNodeKind;
+type ScalarKind =
+  | AnchorNodeKind
+  | PhraseNodeKind
+  | NumberNodeKind
+  | StringNodeKind
+  | EmbedmentNodeKind;
 
 type DelimitingOperatorKind =
   | OperatorDelimitingOperatorKind
@@ -112,7 +118,7 @@ type ExpressionKind =
   | CommonExpressionKind
   | CommonExpressionTailKind
   | StrandExpressionKind
-  | StrandExpressionTailKind
+  | PrefixStrandExpressionKind
   | AggregationExpressionKind
   | AggregationTailKind;
 

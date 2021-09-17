@@ -46,9 +46,9 @@ function spwHead() {
         constructs: constructs,
     };
 };
-  var head        = spwHead();
+  var head = spwHead();
   var toConstruct = head.toConstruct;
-  var constructs  = head.constructs;
+  var constructs = head.constructs;
 }
 
 Top "Top"= 
@@ -77,7 +77,7 @@ Top "Top"=
 
 UnicodeWithoutQuotes "UnicodeWithoutQuotes"= 
 [-a-zA-Z \t\']
-	/ [\u0020-\u0021,\u0023-\u26FF]
+	/ [\u0020-\u0021,\u0023-\u0059,\u0061-\u26FF]
 
 Space "Space"= 
 (newlines:(
@@ -87,23 +87,19 @@ Space "Space"=
 		)+ {return constructs.space();})
 
 Node "Node"= 
-NumberNode
-	/ PhraseNode
+PhraseNode
+	/ EmbedmentNode
 	/ StringNode
+	/ NumberNode
 	/ AnchorNode
 
 AnchorNode "AnchorNode"= 
 anchor:(
-	(head:(
-				[a-zA-Z]
-				)+
-			tail:(line:(
-					"-"
-						/ "_"
-					)
-					chars:(
+	(tail:(chars:(
 						[a-zA-Z0-9]
-						)+ {return line+chars.join("");})+ {return[...head,...tail].join("");})
+							/ "-"
+							/ "_"
+						)+ {return chars.join("");})+ {return[...tail].join("");})
 		/ (head:(
 				[a-zA-Z]
 				)+
@@ -116,6 +112,25 @@ anchor:(
 	                     kind: "anchor",
 	                     label: anchor,
 	                   });
+}
+
+EmbedmentNode "EmbedmentNode"= 
+embedment:([`]
+		body:(
+			UnicodeWithoutQuotes
+				/ (Space {return null;})
+				/ [\"]
+				/ [\']
+				/ [\n]
+			)*
+		[`] {return body.join("");})
+{
+	return toConstruct({
+	  kind: 'embedment',
+	  open: '`',
+	  body: embedment,
+	  close: '`',
+	});
 }
 
 NumberNode "NumberNode"= 
@@ -153,6 +168,13 @@ phrase:(head:(
 	                   });
 }
 
+Scalar "Scalar"= 
+PhraseNode
+	/ EmbedmentNode
+	/ StringNode
+	/ NumberNode
+	/ AnchorNode
+
 StringNode "StringNode"= 
 string:(
 	([\']
@@ -180,12 +202,6 @@ string:(
 	  close: '"',
 	});
 }
-
-Scalar "Scalar"= 
-PhraseNode
-	/ NumberNode
-	/ AnchorNode
-	/ StringNode
 
 Operator "Operator"= 
 SpreadOperator
@@ -528,10 +544,12 @@ container:(
 		/ (open:DomainOpen
 			(
 				" "
+					/ [\n]
 				)*
 			body:DomainBody
 			(
 				" "
+					/ [\n]
 				)*
 			close:DomainClose {return{open:open,body:body,close:close};})
 	)
@@ -595,10 +613,12 @@ container:(
 		/ (open:EssenceOpen
 			(
 				" "
+					/ [\n]
 				)*
 			body:EssenceBody
 			(
 				" "
+					/ [\n]
 				)*
 			close:EssenceClose {return{open:open,body:body,close:close};})
 	)
@@ -662,10 +682,12 @@ container:(
 		/ (open:ConceptOpen
 			(
 				" "
+					/ [\n]
 				)*
 			body:ConceptBody
 			(
 				" "
+					/ [\n]
 				)*
 			close:ConceptClose {return{open:open,body:body,close:close};})
 	)
@@ -729,10 +751,12 @@ container:(
 		/ (open:LocationOpen
 			(
 				" "
+					/ [\n]
 				)*
 			body:LocationBody
 			(
 				" "
+					/ [\n]
 				)*
 			close:LocationClose {return{open:open,body:body,close:close};})
 	)
@@ -753,8 +777,8 @@ Block "Block"=
 items:(
 	(head:(expression:(
 					Expression
-						/ Node
 						/ Container
+						/ Node
 						/ (
 							" "
 							)*
@@ -770,8 +794,8 @@ items:(
 				)*
 			tail:(expression:(
 					Expression
-						/ Node
 						/ Container
+						/ Node
 						/ (
 							" "
 							)*
@@ -783,8 +807,8 @@ items:(
 					delimiter:BlockDelimitingOperator? {return expression;})? {return"undefined"==typeof tail?head:[...head,tail];})
 		/ (expression:(
 		Expression
-			/ Node
 			/ Container
+			/ Node
 			/ (
 				" "
 				)*
@@ -918,15 +942,20 @@ InstanceExpression
 	/ LocatedEssenceExpression
 
 StrandExpression "StrandExpression"= 
-head:Node
+head:(
+	Container
+		/ Node
+		/ ChannelOperator
+	)
 	(Space {return null;})*
 	tail:((Space {return null;})*
 			operator:TransformationOperator
 			(Space {return null;})*
 			item:(
 			Expression
+				/ Container
 				/ Node
-			) {return toConstruct({kind:"strand_expression_tail",operator:operator,item:item});})+
+			) {return toConstruct({kind:"prefixed_strand_expression",operator:operator,item:item});})+
 {
 	return toConstruct({
 	                     kind: 'strand_expression',

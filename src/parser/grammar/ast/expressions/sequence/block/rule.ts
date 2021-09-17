@@ -18,7 +18,7 @@ import { ruleName } from './ref';
 
 const _expression = {
   name: 'expression',
-  pattern: anyOf([expression, node, container, zeroOrMoreOf(space)]).named('expression'),
+  pattern: anyOf([expression, container, node, zeroOrMoreOf(space)]).named('expression'),
 };
 const _delimiter = {
   name: 'delimiter',
@@ -46,7 +46,6 @@ const _items = {
   name: Block.components.items.name,
   pattern: anyOf([
     sequenceOf([
-      //
       _head.pattern.named(_head.name),
       _optionalSpaces.pattern,
       _optionalTail.pattern.named(_optionalTail.name),

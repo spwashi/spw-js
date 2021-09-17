@@ -1,4 +1,7 @@
-import { ComponentDescription, ComponentEvaluatorObject } from '@constructs/ast/_abstract/_types';
+import {
+  ComponentDescription,
+  ComponentEvaluatorObject,
+} from '@constructs/ast/_abstract/_types/componentDescription';
 import { PhraseNodeKind } from '@constructs/ast/nodes/scalars/phrase/__types';
 import { Construct, IConstructClass } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';

@@ -1,4 +1,4 @@
-import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { NumberNodeKind } from '@constructs/ast/nodes/scalars/number/__types';
 import { Construct, IConstructClass } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';

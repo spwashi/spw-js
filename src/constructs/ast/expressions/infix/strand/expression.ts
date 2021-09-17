@@ -1,4 +1,4 @@
-import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { StrandExpressionKind } from '@constructs/ast/expressions/infix/strand/__types';

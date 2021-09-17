@@ -1,4 +1,4 @@
-import { PlainInteractionContext } from '@constructs/ast/_abstract/_types';
+import { PlainInteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/plainInteractionContext';
 import { HydrationContext } from '@constructs/ast/_abstract/_util/hydrate/_/util';
 import { RuntimeRegisters } from '@constructs/runtime/_util/_types/registers';
 import { absorbNodeIntoThis } from '@constructs/runtime/_util/initializers/hydrationContext/_util/absorbNodeIntoThis';

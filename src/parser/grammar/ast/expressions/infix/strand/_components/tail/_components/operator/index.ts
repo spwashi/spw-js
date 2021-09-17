@@ -1,7 +1,7 @@
-import { StrandExpressionTail } from '@constructs/ast/expressions/infix/strand/_components/tail';
+import { PrefixedStrandExpression } from '@constructs/ast/expressions/infix/strand/_variants/prefixed/expression';
 import { transformationOperator } from '@grammar/ast/nodes/atoms/operators/pragmatic/transformation/ref';
 
 export default {
-  name: StrandExpressionTail.components.operator.name,
+  name: PrefixedStrandExpression.components.operator.name,
   pattern: transformationOperator,
 };

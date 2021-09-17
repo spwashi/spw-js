@@ -1,4 +1,4 @@
-import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { AggregationTailKind } from '@constructs/ast/expressions/infix/operations/aggregation/_components/__types';

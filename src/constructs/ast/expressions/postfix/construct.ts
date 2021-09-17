@@ -1,4 +1,4 @@
-import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { Construct } from '@constructs/ast/_abstract/construct';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { PostfixExpressionKind } from './__types';

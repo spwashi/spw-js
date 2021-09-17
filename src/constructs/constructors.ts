@@ -25,8 +25,8 @@ import {
   LocationalIdentityOperator,
   LocationalSchemeOperator,
   PhraseExpression,
+  PrefixedStrandExpression,
   StrandExpression,
-  StrandExpressionTail,
 } from './ast/expressions';
 import {
   AggregationOperator,
@@ -43,6 +43,7 @@ import {
   DirectionOperator,
   DivergenceOperator,
   Domain,
+  EmbedmentNode,
   Essence,
   EvaluationOperator,
   InvocationOperator,
@@ -73,6 +74,7 @@ export const spwItemConstructors = {
   number: NumberNode,
   phrase: PhraseNode,
   string: StringNode,
+  embedment: EmbedmentNode,
   // standard operators
   aggregation: AggregationOperator,
   aggregation_expression: AggregationExpression,
@@ -125,7 +127,7 @@ export const spwItemConstructors = {
   // infix
   infix_expression: InfixExpression,
   strand_expression: StrandExpression,
-  strand_expression_tail: StrandExpressionTail,
+  prefixed_strand_expression: PrefixedStrandExpression,
   common_expression: CommonExpression,
   common_tail: CommonExpressionTail,
   // prefix

@@ -1,5 +1,6 @@
-import { InteractionContext, PlainInteractionContext } from '@constructs/ast/_abstract/_types';
+import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 import { RawConstruct } from '@constructs/ast/_abstract/_types/internal';
+import { PlainInteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/plainInteractionContext';
 import {
   HydrationContext,
   joinHydratedProperties,

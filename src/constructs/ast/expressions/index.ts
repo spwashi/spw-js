@@ -19,4 +19,4 @@ export { LocationalIdentityOperator } from '@constructs/ast/nodes/containers/loc
 export { LocationalSchemeOperator } from '@constructs/ast/nodes/containers/location/_components/scheme/construct';
 export { PhraseExpression } from '@constructs/ast/expressions/infix/phrase/expression';
 export { StrandExpression } from '@constructs/ast/expressions/infix/strand/expression';
-export { StrandExpressionTail } from '@constructs/ast/expressions/infix/strand/_components/tail';
+export { PrefixedStrandExpression } from '@constructs/ast/expressions/infix/strand/_variants/prefixed/expression';

@@ -1,8 +1,8 @@
 import {
   ConstructReductionConfig,
   ConstructReductionOptions,
-  InteractionContext,
 } from '@constructs/ast/_abstract/_types';
+import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 import { ReductionLifecycleController } from '@constructs/ast/_abstract/_util/reduce/_/types';
 
 export function completeConfig<C extends InteractionContext = InteractionContext>(

@@ -1,9 +1,9 @@
 import {
-  ComponentDescription,
   ConstructReductionConfig,
   ConstructReductionOptions,
-  InteractionContext,
 } from '@constructs/ast/_abstract/_types';
+import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
+import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 import { completeConfig } from '@constructs/ast/_abstract/_util/reduce/_/util';
 import { getConstructClass } from '../../../../index';
 import { RawConstruct } from '../../_types/internal';

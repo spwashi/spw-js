@@ -27,21 +27,21 @@ const anchorPattern2 = sequenceOf([
 
 // language=JavaScript
 const _anchorPattern1Action = `
-  return [...head, ...tail].join("");
+  return [
+    // ...head, 
+    ...tail
+  ].join("");
 `;
 const anchorPattern1 = sequenceOf([
-  oneOrMoreOf(regExpLike('a-zA-Z')).named('head'),
-
+  // oneOrMoreOf(regExpLike('_a-zA-Z')).named('head'),
   oneOrMoreOf(
     sequenceOf([
-      anyOf([stringLike('-'), stringLike('_')]).named('line'),
-      oneOrMoreOf(regExpLike('a-zA-Z\\d')).named('chars'),
-    ]).withAction(
+      oneOrMoreOf(anyOf([regExpLike('a-zA-Z\\d'), stringLike('-'), stringLike('_')])).named(
+        'chars',
+      ),
+    ])
       // language=JavaScript
-      `
-                                                 return line + chars.join('')
-                                               `,
-    ),
+      .withAction(`return chars.join('')`),
   ).named('tail'),
 ]).withAction(_anchorPattern1Action);
 

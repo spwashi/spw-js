@@ -1,4 +1,4 @@
-import { StrandExpressionTail } from '@constructs/ast';
+import { PrefixedStrandExpression } from '@constructs/ast';
 import { spaceNode } from '@grammar/utility/space/space.ref';
 import {
   oneOrMoreOf,
@@ -19,7 +19,7 @@ const _tailSegmentPattern = sequenceOf(_tailSequence).withAction(
   // language=JavaScript
   `
     return toConstruct({
-                         kind: '${StrandExpressionTail.kind}',
+                         kind: '${PrefixedStrandExpression.kind}',
                          ${_operator.name}: operator,
                          ${_item.name}: item,
                        });

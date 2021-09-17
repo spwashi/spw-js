@@ -1,11 +1,10 @@
+import { ConstructComponentKey, ConstructReductionOptions } from '@constructs/ast/_abstract/_types';
 import {
   ComponentDescription,
   ComponentEvaluatorObject,
-  ConstructComponentKey,
-  ConstructReductionOptions,
-  InteractionContext,
-  PlainInteractionContext,
-} from '@constructs/ast/_abstract/_types';
+} from '@constructs/ast/_abstract/_types/componentDescription';
+import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
+import { PlainInteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/plainInteractionContext';
 import { completeConfig } from '@constructs/ast/_abstract/_util/reduce/_/util';
 import { reduceConstructAsync } from '@constructs/ast/_abstract/_util/reduce/async';
 import { reduceConstructSync } from '@constructs/ast/_abstract/_util/reduce/sync';

@@ -13,8 +13,9 @@
   ],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
-    "callback-return": "warn",
-//    "import/no-relative-parent-imports": "warn"
+    "callback-return": "warn"
+    //    "import/no-cycle": "warn"
+    //    "import/no-relative-parent-imports": "warn"
   },
   "settings": {
     "import/parsers": {

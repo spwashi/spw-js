@@ -50,7 +50,7 @@ export function createContainerBodyRules(ruleName: string): Rule[] {
 
 export function createContainerPattern(ruleName: string): Combinator {
   const { open, body, close } = getContainerNodeComponentReferences(ruleName);
-  const __ = zeroOrMoreOf(space);
+  const __ = zeroOrMoreOf(anyOf([space, newline]));
 
   // language=JavaScript
   const _action = ` return { open, body, close } `;

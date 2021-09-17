@@ -1,4 +1,8 @@
-import { ComponentDescription, ComponentEvaluatorObject, InteractionGenerator } from '../_types';
+import {
+  ComponentDescription,
+  ComponentEvaluatorObject,
+} from '@constructs/ast/_abstract/_types/componentDescription';
+import { InteractionGenerator } from '@constructs/ast/_abstract/_types/interaction/sync/interactionGenerator';
 import { RawConstruct } from '../_types/internal';
 
 const defaultGenerator = function* (component, ctxt) {

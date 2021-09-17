@@ -1,4 +1,4 @@
-import { ComponentDescription } from '@constructs/ast/_abstract/_types';
+import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { Construct, ConstructComponents } from '@constructs/ast/_abstract/construct';
 import { ConstructKind } from '@constructs/ast/_types/kinds';
 import { Node } from '@constructs/ast/nodes/_abstract/node';
