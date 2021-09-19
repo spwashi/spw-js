@@ -3,6 +3,7 @@ import { rn_anchorNode, rn_container, rn_node, rn_operator, rn_stringNode_open }
 import { tokenizerState } from '../util/tokenizerState';
 import { anchorRules } from './anchorNode';
 import { containerRules } from './containers';
+import { embedmentRules } from './embedment';
 import { operatorRules } from './operators';
 import { stringRules } from './string';
 
@@ -17,4 +18,5 @@ export const nodeRules: Tokenizer = {
   ...containerRules,
   ...operatorRules,
   ...stringRules,
+  ...embedmentRules,
 };
