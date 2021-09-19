@@ -49,6 +49,13 @@ export const rn_stringBody = 'string_body';
 
 export const tok_stringQuote = rn_stringNode_open + '.quote';
 
+// embedment
+
+export const rn_embedmentNode_open = 'embedment';
+export const rn_embedmentBody = 'embedment_body';
+
+export const tok_embedmentQuote = rn_embedmentNode_open + '.quote';
+
 /***************
  ** containers
  ***************/
