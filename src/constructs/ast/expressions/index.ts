@@ -1,5 +1,4 @@
 export { AggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/expression';
-export { AggregationExpressionTail } from '@constructs/ast/expressions/infix/operations/aggregation/_components/tail';
 export { BehaviorExpression } from '@constructs/ast/expressions/sequence/behavior/construct';
 export { CommonExpression } from '@constructs/ast/expressions/infix/common/expression';
 export { CommonExpressionTail } from '@constructs/ast/expressions/infix/common/_components/tail';
@@ -18,5 +17,8 @@ export { LocatedEssenceExpression } from '@constructs/ast/expressions/sequence/l
 export { LocationalIdentityOperator } from '@constructs/ast/nodes/containers/location/_components/identity/construct';
 export { LocationalSchemeOperator } from '@constructs/ast/nodes/containers/location/_components/scheme/construct';
 export { PhraseExpression } from '@constructs/ast/expressions/infix/phrase/expression';
-export { StrandExpression } from '@constructs/ast/expressions/infix/strand/expression';
+export { PrefixedAggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/_variants/prefixed/expression';
+export { PrefixedReductionExpression } from '@constructs/ast/expressions/infix/operations/reduction/_variants/prefixed/expression';
 export { PrefixedStrandExpression } from '@constructs/ast/expressions/infix/strand/_variants/prefixed/expression';
+export { ReductionExpression } from '@constructs/ast/expressions/infix/operations/reduction/expression';
+export { StrandExpression } from '@constructs/ast/expressions/infix/strand/expression';

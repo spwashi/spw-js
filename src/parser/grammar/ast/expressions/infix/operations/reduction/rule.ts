@@ -1,4 +1,4 @@
-import { AggregationExpression } from '@constructs/ast';
+import { ReductionExpression } from '@constructs/ast';
 import { spaceNode } from '@grammar/utility/space/space.ref';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import { sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
@@ -16,10 +16,10 @@ const _action =
   // language=JavaScript
   `
           return toConstruct({
-                               kind: '${AggregationExpression.kind}',
+                               kind: '${ReductionExpression.kind}',
                                head: head,
                                tail,
                              })
         `;
 
-export const aggregationExpressionRule = new Rule(ruleName, pattern, _action);
+export const reductionExpressionRule = new Rule(ruleName, pattern, _action);

@@ -97,7 +97,6 @@ AnchorNode "AnchorNode"=
 anchor:(
 	(tail:(chars:(
 						[a-zA-Z0-9]
-							/ "-"
 							/ "_"
 						)+ {return chars.join("");})+ {return[...tail].join("");})
 		/ (head:(
@@ -1018,10 +1017,31 @@ head:(
 			item:(
 			Expression
 				/ Node
-			) {return toConstruct({kind:"aggregation_expression_tail",operator:operator,item:item});})+
+			) {return toConstruct({kind:"prefixed_aggregation_expression",operator:operator,item:item});})+
 {
 	return toConstruct({
 	                     kind: 'aggregation_expression',
+	                     head: head,
+	                     tail,
+	                   })
+}
+
+ReductionExpression "ReductionExpression"= 
+head:(
+	Container
+		/ Node
+	)
+	(Space {return null;})*
+	tail:((Space {return null;})*
+			operator:ReductionOperator
+			(Space {return null;})*
+			item:(
+			Expression
+				/ Node
+			) {return toConstruct({kind:"prefixed_reduction_expression",operator:operator,item:item});})+
+{
+	return toConstruct({
+	                     kind: 'reduction_expression',
 	                     head: head,
 	                     tail,
 	                   })
@@ -1032,6 +1052,7 @@ StrandExpression
 	/ CommonExpression
 	/ PhraseExpression
 	/ AggregationExpression
+	/ ReductionExpression
 
 PrefixExpression "PrefixExpression"= 
 operator:(

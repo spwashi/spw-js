@@ -1,14 +1,14 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
+import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
-import { AggregationTailKind } from '@constructs/ast/expressions/infix/operations/aggregation/_components/__types';
-import { Construct, IConstructClass } from '../../../../../_abstract/construct';
+import { PrefixedReductionExpressionKind } from '@constructs/ast/expressions/infix/operations/reduction/_variants/prefixed/__types';
 
-type StaticType = IConstructClass<AggregationTailKind>;
+type StaticType = IConstructClass<PrefixedReductionExpressionKind>;
 
 @staticImplements<StaticType>()
-export class AggregationExpressionTail extends Expression<AggregationTailKind> {
-  static readonly kind: AggregationTailKind = 'aggregation_expression_tail';
+export class PrefixedReductionExpression extends Expression<PrefixedReductionExpressionKind> {
+  static readonly kind: PrefixedReductionExpressionKind = 'prefixed_reduction_expression';
 
   static components = {
     operator: Construct.makeComponent({ name: 'operator' }),

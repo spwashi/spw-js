@@ -2,11 +2,11 @@ import { ComponentDescription } from '@constructs/ast/_abstract/_types/component
 import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
-import { AggregationExpressionKind } from '@constructs/ast/expressions/infix/operations/aggregation/__types';
+import { ReductionExpressionKind } from '@constructs/ast/expressions/infix/operations/reduction/__types';
 
-@staticImplements<IConstructClass<AggregationExpressionKind>>()
-export class AggregationExpression extends Expression<AggregationExpressionKind> {
-  static readonly kind = 'aggregation_expression';
+@staticImplements<IConstructClass<ReductionExpressionKind>>()
+export class ReductionExpression extends Expression<ReductionExpressionKind> {
+  static readonly kind = 'reduction_expression';
 
   static components = {
     items: Construct.makeComponent({

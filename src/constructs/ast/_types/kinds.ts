@@ -2,10 +2,12 @@ import { InfixExpressionKind } from '@constructs/ast/expressions/infix/__types';
 import { CommonExpressionKind } from '@constructs/ast/expressions/infix/common/__types';
 import { CommonExpressionTailKind } from '@constructs/ast/expressions/infix/common/_components/__types';
 import { AggregationExpressionKind } from '@constructs/ast/expressions/infix/operations/aggregation/__types';
-import { AggregationTailKind } from '@constructs/ast/expressions/infix/operations/aggregation/_components/__types';
+import { PrefixedAggregationExpressionKind } from '@constructs/ast/expressions/infix/operations/aggregation/_variants/prefixed/__types';
+import { ReductionExpressionKind } from '@constructs/ast/expressions/infix/operations/reduction/__types';
+import { PrefixedReductionExpressionKind } from '@constructs/ast/expressions/infix/operations/reduction/_variants/prefixed/__types';
 import { PhraseExpressionKind } from '@constructs/ast/expressions/infix/phrase/__types';
 import { StrandExpressionKind } from '@constructs/ast/expressions/infix/strand/__types';
-import { PrefixStrandExpressionKind } from '@constructs/ast/expressions/infix/strand/_variants/prefixed/__types';
+import { PrefixedStrandExpressionKind } from '@constructs/ast/expressions/infix/strand/_variants/prefixed/__types';
 import { PostfixExpressionKind } from '@constructs/ast/expressions/postfix/__types';
 import { PrefixExpressionKind } from '@constructs/ast/expressions/prefix/__types';
 import { BehaviorExpressionKind } from '@constructs/ast/expressions/sequence/behavior/__types';
@@ -118,9 +120,11 @@ type ExpressionKind =
   | CommonExpressionKind
   | CommonExpressionTailKind
   | StrandExpressionKind
-  | PrefixStrandExpressionKind
+  | PrefixedStrandExpressionKind
   | AggregationExpressionKind
-  | AggregationTailKind;
+  | PrefixedAggregationExpressionKind
+  | ReductionExpressionKind
+  | PrefixedReductionExpressionKind;
 
 export type ConstructKind =
   | 'unknown'

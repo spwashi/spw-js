@@ -1,1 +1,1 @@
-export type PrefixStrandExpressionKind = 'prefixed_strand_expression';
+export type PrefixedStrandExpressionKind = 'prefixed_strand_expression';

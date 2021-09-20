@@ -35,11 +35,7 @@ const _anchorPattern1Action = `
 const anchorPattern1 = sequenceOf([
   // oneOrMoreOf(regExpLike('_a-zA-Z')).named('head'),
   oneOrMoreOf(
-    sequenceOf([
-      oneOrMoreOf(anyOf([regExpLike('a-zA-Z\\d'), stringLike('-'), stringLike('_')])).named(
-        'chars',
-      ),
-    ])
+    sequenceOf([oneOrMoreOf(anyOf([regExpLike('a-zA-Z\\d'), stringLike('_')])).named('chars')])
       // language=JavaScript
       .withAction(`return chars.join('')`),
   ).named('tail'),

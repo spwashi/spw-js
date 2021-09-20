@@ -1,4 +1,4 @@
-import { PrefixedAggregationExpression } from '@constructs/ast';
+import { PrefixedReductionExpression } from '@constructs/ast';
 import { spaceNode } from '@grammar/utility/space/space.ref';
 import {
   oneOrMoreOf,
@@ -19,7 +19,7 @@ const _tailSegmentPattern = sequenceOf(_tailSequence).withAction(
   // language=JavaScript
   `
     return toConstruct({
-                         kind: '${PrefixedAggregationExpression.kind}',
+                         kind: '${PrefixedReductionExpression.kind}',
                          ${_operator.name}: operator,
                          ${_item.name}: item,
                        });

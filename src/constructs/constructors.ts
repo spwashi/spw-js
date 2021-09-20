@@ -1,8 +1,10 @@
 import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
 import { ConstructKind } from '@constructs/ast/_types/kinds';
 import { InfixExpression } from '@constructs/ast/expressions/infix/construct';
-import { AggregationExpressionTail } from '@constructs/ast/expressions/infix/operations/aggregation/_components/tail';
+import { PrefixedAggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/_variants/prefixed/expression';
 import { AggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/expression';
+import { PrefixedReductionExpression } from '@constructs/ast/expressions/infix/operations/reduction/_variants/prefixed/expression';
+import { ReductionExpression } from '@constructs/ast/expressions/infix/operations/reduction/expression';
 import { PostfixExpression } from '@constructs/ast/expressions/postfix/construct';
 import { PrefixExpression } from '@constructs/ast/expressions/prefix/construct';
 import { Block } from '@constructs/ast/expressions/sequence/block/construct';
@@ -78,7 +80,7 @@ export const spwItemConstructors = {
   // standard operators
   aggregation: AggregationOperator,
   aggregation_expression: AggregationExpression,
-  aggregation_expression_tail: AggregationExpressionTail,
+  prefixed_aggregation_expression: PrefixedAggregationExpression,
   ascent: AscentOperator,
   branch: BranchOperator,
   binding: BindingOperator,
@@ -93,6 +95,8 @@ export const spwItemConstructors = {
   perspective: PerspectiveOperator,
   range: RangeOperator,
   reduction: ReductionOperator,
+  reduction_expression: ReductionExpression,
+  prefixed_reduction_expression: PrefixedReductionExpression,
   relation: RelationOperator,
   reference: ReferenceOperator,
   spread: SpreadOperator,

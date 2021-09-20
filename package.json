@@ -1,6 +1,6 @@
 {
   "name": "@spwashi/spw",
-  "version": "0.2.0-7",
+  "version": "0.2.0-8",
   "description": "A parser and runtime for the Spw language",
   "repository": {
     "type": "git",

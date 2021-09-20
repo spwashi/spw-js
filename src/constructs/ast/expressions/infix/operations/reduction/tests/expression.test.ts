@@ -1,18 +1,18 @@
 import { StrandExpression, TransformationOperator } from '@constructs/ast';
-import { AggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/expression';
+import { ReductionExpression } from '@constructs/ast/expressions/infix/operations/reduction/expression';
 import {
   getAllNodes,
   getSalientNode,
 } from '@constructs/runtime/_util/initializers/runtime/initRuntimeWithSrc';
 
-describe('Aggregation Expression', () => {
+describe('Reduction Expression', () => {
   const op = '+';
   const trans = TransformationOperator.token;
   it('is serialized the way we expect it to be', async (done) => {
     const src = `test test test ${op}    test    ${op}    test`;
     const last = getSalientNode(src);
     const all = getAllNodes(src);
-    expect(last?.kind).toEqual(AggregationExpression.kind);
+    expect(last?.kind).toEqual(ReductionExpression.kind);
     expect(all.length).toEqual(12);
     expect(last?.key).toEqual(`test test test${op}test${op}test`);
     done();
