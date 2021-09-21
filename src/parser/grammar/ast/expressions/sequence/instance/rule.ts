@@ -2,9 +2,9 @@ import { InstanceExpression } from '@constructs/ast/expressions/sequence/instanc
 import { componentize } from '@grammar/ast/expressions/sequence/_util/componentize';
 import { behaviorExpression } from '@grammar/ast/expressions/sequence/behavior/ref';
 import { entityExpression } from '@grammar/ast/expressions/sequence/entity/ref';
-import { space } from '@grammar/utility/space/whitespace.patterns';
+import { newline, space } from '@grammar/utility/space/whitespace.patterns';
 import { Rule } from '@spwashi/language/parsers/grammar';
-import { sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
+import { anyOf, sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
 import { ruleName } from './ref';
 
 const components = InstanceExpression.components;
@@ -19,7 +19,7 @@ const _behavior = {
 };
 const __ = {
   name: 'space',
-  pattern: zeroOrMoreOf(space),
+  pattern: zeroOrMoreOf(anyOf([space, newline])),
 };
 const pattern = sequenceOf([_entity, __, _behavior].map(componentize));
 

@@ -45,7 +45,7 @@ const _ruleAction =
           const p       = _phrase.reduce((p, c) => [...p, ...makeArray(c)], []);
           return toConstruct({
                                kind: '${PhraseNode.kind}',
-                               ${PhraseNode.components.body.name}: p
+                               ${PhraseNode.components.items.name}: p
                              });
         `;
 

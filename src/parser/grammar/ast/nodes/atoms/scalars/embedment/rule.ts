@@ -14,9 +14,17 @@ const backtick = regExpLike('`');
 const doubleQuote = regExpLike(`\\"`);
 const singleQuote = regExpLike(`\\'`);
 const newline = regExpLike('\\n');
-
+const backslash = regExpLike('\\\\');
 const embedmentBody = zeroOrMoreOf(
-  anyOf([unicode_noQuotes, spaceNode, doubleQuote, singleQuote, newline]),
+  anyOf([
+    //
+    unicode_noQuotes,
+    backslash,
+    spaceNode,
+    doubleQuote,
+    singleQuote,
+    newline,
+  ]),
 );
 
 const _embedmentAction =

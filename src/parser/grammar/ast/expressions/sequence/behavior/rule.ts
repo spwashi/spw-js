@@ -5,7 +5,7 @@ import { essence } from '@grammar/ast/nodes/containers/essence/ref';
 import { location } from '@grammar/ast/nodes/containers/location/ref';
 import { space } from '@grammar/utility/space/whitespace.patterns';
 import { Rule } from '@spwashi/language/parsers/grammar';
-import { sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
+import { anyOf, sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
 import { ruleName } from './ref';
 
 const components = BehaviorExpression.components;
@@ -25,15 +25,23 @@ const __ = {
   name: undefined,
   pattern: zeroOrMoreOf(space),
 };
-const pattern = sequenceOf([_location, __, _domain, __, _essence].map(componentize));
+const pattern = anyOf([
+  sequenceOf([_location, __, _domain, __, _essence].map(componentize)),
+  sequenceOf([_location, __, _domain].map(componentize)),
+  sequenceOf([_location, __, _essence].map(componentize)),
+  sequenceOf([_domain, __, _essence].map(componentize)),
+  sequenceOf([_location].map(componentize)),
+  sequenceOf([_domain].map(componentize)),
+  sequenceOf([_essence].map(componentize)),
+]);
 
 // language=JavaScript
 const action = `
   const expression = {
     kind: '${BehaviorExpression.kind}',
-    ${_domain.name}: ${_domain.name},
-    ${_essence.name}: ${_essence.name},
-    ${_location.name}: ${_location.name}
+    ${_domain.name}: typeof ${_domain.name} !== 'undefined' ? ${_domain.name} : undefined,
+    ${_essence.name}: typeof ${_essence.name} !== 'undefined' ? ${_essence.name} : undefined,
+    ${_location.name}: typeof ${_location.name} !== 'undefined' ? ${_location.name} : undefined,
   };
   return toConstruct(expression)
 `;

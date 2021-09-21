@@ -22,15 +22,20 @@ const __ = {
   name: 'space',
   pattern: zeroOrMoreOf(space),
 };
-const pattern = sequenceOf([_concept, __, _anchor].map(componentize));
 
 // language=JavaScript
 const action = `
   const expression = {
     kind: '${EntityExpression.kind}',
     ${_anchor.name}: ${_anchor.name},
-    ${_concept.name}: ${_concept.name}
+    ${_concept.name}: typeof ${_concept.name} !== 'undefined' ? concept : undefined
   };
   return toConstruct(expression)
 `;
-export const entityExpressionRule = new Rule(ruleName, pattern, action);
+
+const pattern = anyOf([
+  sequenceOf([_concept, __, _anchor].map(componentize)).withAction(action),
+  sequenceOf([_anchor].map(componentize)).withAction(action),
+]);
+
+export const entityExpressionRule = new Rule(ruleName, pattern);

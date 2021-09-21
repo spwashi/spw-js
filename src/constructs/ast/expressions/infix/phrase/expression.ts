@@ -12,8 +12,8 @@ export class PhraseExpression extends Expression<PhraseExpressionKind> {
   static readonly kind = 'phrase_expression';
 
   static components = {
-    body: Construct.makeComponent({
-      name: 'body',
+    items: Construct.makeComponent({
+      name: 'items',
       evaluators: {
         stringify: (s) =>
           Array.from(s ?? [])
@@ -23,7 +23,7 @@ export class PhraseExpression extends Expression<PhraseExpressionKind> {
     }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {
-      yield this.body;
+      yield this.items;
     },
   };
 }

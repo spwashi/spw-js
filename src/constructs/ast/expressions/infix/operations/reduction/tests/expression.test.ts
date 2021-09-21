@@ -6,7 +6,7 @@ import {
 } from '@constructs/runtime/_util/initializers/runtime/initRuntimeWithSrc';
 
 describe('Reduction Expression', () => {
-  const op = '+';
+  const op = '-';
   const trans = TransformationOperator.token;
   it('is serialized the way we expect it to be', async (done) => {
     const src = `test test test ${op}    test    ${op}    test`;

@@ -6,7 +6,7 @@ describe('Phrase Nodes', () => {
     const raw = {
       kind: 'phrase',
       src: 'boon',
-      body: [
+      items: [
         { kind: 'string', key: '"boon"', src: '"boon"' },
         { kind: 'anchor', key: 'boon', src: 'boon' },
         { kind: 'anchor', key: 'boon', src: 'boon' },

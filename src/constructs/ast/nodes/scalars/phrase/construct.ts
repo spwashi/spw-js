@@ -14,8 +14,8 @@ export class PhraseNode extends Node<PhraseNodeKind> {
   static readonly kind: PhraseNodeKind = 'phrase';
 
   static components = {
-    body: Construct.makeComponent({
-      name: 'body',
+    items: Construct.makeComponent({
+      name: 'items',
 
       evaluators: {
         stringify: (s) =>
@@ -26,7 +26,7 @@ export class PhraseNode extends Node<PhraseNodeKind> {
     }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {
-      yield this.body;
+      yield this.items;
     },
   };
 

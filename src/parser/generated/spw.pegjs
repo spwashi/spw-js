@@ -117,6 +117,7 @@ EmbedmentNode "EmbedmentNode"=
 embedment:([`]
 		body:(
 			UnicodeWithoutQuotes
+				/ [\\]
 				/ (Space {return null;})
 				/ [\"]
 				/ [\']
@@ -163,7 +164,7 @@ phrase:(head:(
 	const p       = _phrase.reduce((p, c) => [...p, ...makeArray(c)], []);
 	return toConstruct({
 	                     kind: 'phrase',
-	                     body: p
+	                     items: p
 	                   });
 }
 
@@ -778,15 +779,16 @@ items:(
 					Expression
 						/ Container
 						/ Node
-						/ (
-							" "
-							)*
 					)
 					(
 						(Space {return null;})
 							/ [\n]
 						)*
-					delimiter:BlockDelimitingOperator {return expression;})+
+					delimiter:BlockDelimitingOperator
+					(
+						(Space {return null;})
+							/ [\n]
+						)* {return expression;})+
 			(
 				(Space {return null;})
 					/ [\n]
@@ -795,22 +797,38 @@ items:(
 					Expression
 						/ Container
 						/ Node
-						/ (
-							" "
-							)*
 					)
 					(
 						(Space {return null;})
 							/ [\n]
 						)*
-					delimiter:BlockDelimitingOperator? {return expression;})? {return"undefined"==typeof tail?head:[...head,tail];})
+					delimiter:BlockDelimitingOperator?
+					(
+						(Space {return null;})
+							/ [\n]
+						)* {return expression;})
+			(
+				(Space {return null;})
+					/ [\n]
+				)* {return"undefined"==typeof tail?head:[...head,tail];})
+		/ (head:(expression:(
+				Expression
+					/ Container
+					/ Node
+				)
+				(
+					(Space {return null;})
+						/ [\n]
+					)*
+				delimiter:BlockDelimitingOperator
+				(
+					(Space {return null;})
+						/ [\n]
+					)* {return expression;})+ {return"undefined"==typeof tail?head:[...head,tail];})
 		/ (expression:(
 		Expression
 			/ Container
 			/ Node
-			/ (
-				" "
-				)*
 		) {return[expression];})
 	)
 {
@@ -825,6 +843,7 @@ InstanceExpression "InstanceExpression"=
 entity:EntityExpression
 	space:(
 		" "
+			/ [\n]
 		)*
 	behavior:BehaviorExpression
 {
@@ -837,42 +856,64 @@ entity:EntityExpression
 }
 
 BehaviorExpression "BehaviorExpression"= 
-address:Location
-	(
-		" "
-		)*
+(
+	address:Location
+		(
+			" "
+			)*
+		domain:Domain
+		(
+			" "
+			)*
+		essence:Essence
+	)
+	/ (
+	address:Location
+		(
+			" "
+			)*
+		domain:Domain
+	)
+	/ (
+	address:Location
+		(
+			" "
+			)*
+		essence:Essence
+	)
+	/ (
 	domain:Domain
-	(
-		" "
-		)*
-	essence:Essence
+		(
+			" "
+			)*
+		essence:Essence
+	)
+	/ address:Location
+	/ domain:Domain
+	/ essence:Essence
 {
 	const expression = {
 	  kind: 'behavior_expression',
-	  domain: domain,
-	  essence: essence,
-	  address: address
+	  domain: typeof domain !== 'undefined' ? domain : undefined,
+	  essence: typeof essence !== 'undefined' ? essence : undefined,
+	  address: typeof address !== 'undefined' ? address : undefined,
 	};
 	return toConstruct(expression)
 }
 
 EntityExpression "EntityExpression"= 
-concept:Concept
-	space:(
-		" "
-		)*
-	anchor:(
-	Scalar
-		/ ReferenceOperator
-	)
-{
-	const expression = {
-	  kind: 'entity_expression',
-	  anchor: anchor,
-	  concept: concept
-	};
-	return toConstruct(expression)
-}
+(concept:Concept
+		space:(
+			" "
+			)*
+		anchor:(
+		Scalar
+			/ ReferenceOperator
+		) {const expression={kind:"entity_expression",anchor:anchor,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
+	/ (anchor:(
+		Scalar
+			/ ReferenceOperator
+		) {const expression={kind:"entity_expression",anchor:anchor,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
 
 LocatedConceptExpression "LocatedConceptExpression"= 
 address:Location
@@ -999,7 +1040,7 @@ head:(
 {
 	const phrase = {
 	  kind: 'phrase_expression',
-	  body: [head, ...tail]
+	  items: [head, ...tail]
 	};
 	
 	return toConstruct(phrase)

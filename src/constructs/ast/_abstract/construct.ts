@@ -42,8 +42,6 @@ export class Construct<
     const constructor = (<typeof Construct>this.constructor) as unknown as typeof Construct;
     this.kind = constructor.kind as K;
     this._internal = internal || null;
-
-    Object.assign(this, this._internal);
   }
 
   get internal(): U | null {
@@ -166,5 +164,13 @@ export class Construct<
     } & Partial<ComponentDescription>,
   ): ComponentDescription {
     return new LanguageComponent(override);
+  }
+
+  public toJSON(): U {
+    return {
+      kind: this.kind,
+      key: this.key,
+      ...Object(this._internal),
+    };
   }
 }

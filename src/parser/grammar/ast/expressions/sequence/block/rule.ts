@@ -5,20 +5,18 @@ import { componentize } from '@grammar/ast/expressions/sequence/_util/componenti
 import { node } from '@grammar/ast/nodes/_abstract/node.ref';
 import { blockDelimitingOperator } from '@grammar/ast/nodes/atoms/operators/delimiters/block/ref';
 import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
-import { space } from '@grammar/utility/space/whitespace.patterns';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import {
   anyOf,
   oneOrMoreOf,
   optionally,
   sequenceOf,
-  zeroOrMoreOf,
 } from '@spwashi/language/parsers/grammar/combinators';
 import { ruleName } from './ref';
 
 const _expression = {
   name: 'expression',
-  pattern: anyOf([expression, container, node, zeroOrMoreOf(space)]).named('expression'),
+  pattern: anyOf([expression, container, node]).named('expression'),
 };
 const _delimiter = {
   name: 'delimiter',
@@ -29,18 +27,18 @@ const _optionalDelimiter = optionally(_delimiter.pattern);
 const _head = {
   name: 'head',
   pattern: oneOrMoreOf(
-    sequenceOf([_expression, _optionalSpaces, _delimiter].map(componentize)).withAction(
-      `return ${_expression.name}`,
-    ),
+    sequenceOf(
+      [_expression, _optionalSpaces, _delimiter, _optionalSpaces].map(componentize),
+    ).withAction(`return ${_expression.name}`),
   ),
 };
-const _optionalTail = {
+const _tail = {
   name: 'tail',
-  pattern: optionally(
-    sequenceOf([_expression, _optionalSpaces, _optionalDelimiter].map(componentize)).withAction(
-      `return ${_expression.name}`,
-    ),
-  ).named('tail'),
+  pattern: sequenceOf([
+    sequenceOf(
+      [_expression, _optionalSpaces, _optionalDelimiter, _optionalSpaces].map(componentize),
+    ).withAction(`return ${_expression.name}`),
+  ]).named('tail'),
 };
 const _items = {
   name: Block.components.items.name,
@@ -48,10 +46,16 @@ const _items = {
     sequenceOf([
       _head.pattern.named(_head.name),
       _optionalSpaces.pattern,
-      _optionalTail.pattern.named(_optionalTail.name),
+      _tail.pattern.named(_tail.name),
+      _optionalSpaces.pattern,
     ])
       // language=JavaScript
       .withAction(`return typeof tail === 'undefined' ? head : [...head, tail];`),
+    // language=JavaScript
+    _head.pattern
+      .named(_head.name)
+      .withAction(`return typeof tail === 'undefined' ? head : [...head, tail];`),
+
     _expression.pattern.named(_expression.name).withAction(`return [${_expression.name}];`),
   ]),
 };

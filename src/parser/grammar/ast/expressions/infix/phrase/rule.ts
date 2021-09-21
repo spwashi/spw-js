@@ -13,7 +13,7 @@ const pattern = sequenceOf([head, tail]);
 const action = `
   const phrase = {
     kind: '${PhraseExpression.kind}',
-    ${PhraseExpression.components.body.name}: [${_head.name}, ...${_tail.name}]
+    ${PhraseExpression.components.items.name}: [${_head.name}, ...${_tail.name}]
   };
 
   return toConstruct(phrase)
