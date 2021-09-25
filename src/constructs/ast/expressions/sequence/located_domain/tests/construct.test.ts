@@ -18,8 +18,8 @@ describe('Node Expressions', () => {
 
     const last = selectLastAcknowledgedNodeFromRuntime(runtime);
     const all = selectAllNodesFromRuntime(runtime);
-
     if (!LocatedDomainExpression.isLocatedDomainExpression(last)) {
+      console.log(last);
       throw new Error('Expected a ' + LocatedDomainExpression.name + ' expression');
     }
 

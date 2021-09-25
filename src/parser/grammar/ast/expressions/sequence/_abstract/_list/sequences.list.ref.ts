@@ -15,6 +15,6 @@ export const sequenceExpressions = [
   behaviorExpression,
   locatedEntityExpression,
   locatedConceptExpression,
-  locatedDomainExpression,
   locatedEssenceExpression,
+  locatedDomainExpression,
 ];

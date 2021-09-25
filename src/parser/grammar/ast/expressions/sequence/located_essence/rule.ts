@@ -2,9 +2,8 @@ import { LocatedEssenceExpression } from '@constructs/ast/expressions/sequence/l
 import { componentize } from '@grammar/ast/expressions/sequence/_util/componentize';
 import { essence } from '@grammar/ast/nodes/containers/essence/ref';
 import { location } from '@grammar/ast/nodes/containers/location/ref';
-import { space } from '@grammar/utility/space/whitespace.patterns';
 import { Rule } from '@spwashi/language/parsers/grammar';
-import { sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
+import { sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
 import { ruleName } from './ref';
 
 const components = LocatedEssenceExpression.components;
@@ -16,8 +15,7 @@ const _essence = {
   name: components.essence.name,
   pattern: essence.named(components.essence.name),
 };
-const __ = { name: 'space', pattern: zeroOrMoreOf(space) };
-const pattern = sequenceOf([_location, __, _essence].map(componentize));
+const pattern = sequenceOf([_location, _essence].map(componentize));
 
 // language=JavaScript
 const action = `

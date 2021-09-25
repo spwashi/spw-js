@@ -1,6 +1,7 @@
 import { expression } from '@grammar/ast/expressions/_abstract/expression.ref';
 import { block } from '@grammar/ast/expressions/sequence/block/ref';
 import { node } from '@grammar/ast/nodes/_abstract/node.ref';
+import { channelOperator } from '@grammar/ast/nodes/atoms/operators/pragmatic/channel/ref';
 import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
 import { newline, space, spaceTab } from '@grammar/utility/space/whitespace.patterns';
 import { Rule } from '@spwashi/language/parsers/grammar';
@@ -40,25 +41,25 @@ function getEmptyBlockCombinator(
 
 export function createContainerBodyRules(ruleName: string): Rule[] {
   const bodyName = getContainerNodeComponentReferences(ruleName).body.ruleName;
-
-  // either an expression or a block
+  const __ = zeroOrMoreOf(anyOf([space, newline]));
+  const nodes = [block, channelOperator, expression, container, node, __];
+  const inner = anyOf(nodes).named('expression');
   const listOfAnyNode = sequenceOf([
-    anyOf([block, expression, container, node]).named('expression'),
+    __.named('leadingspace'),
+    inner,
+    __.named('trailingspace'),
   ]).withAction('return expression');
   return [new Rule(bodyName, listOfAnyNode)];
 }
 
 export function createContainerPattern(ruleName: string): Combinator {
   const { open, body, close } = getContainerNodeComponentReferences(ruleName);
-  const __ = zeroOrMoreOf(anyOf([space, newline]));
 
   // language=JavaScript
   const _action = ` return { open, body, close } `;
 
   return anyOf([
     getEmptyBlockCombinator(open, close),
-    sequenceOf([open.named('open'), __, body.named('body'), __, close.named('close')]).withAction(
-      _action,
-    ),
+    sequenceOf([open.named('open'), body.named('body'), close.named('close')]).withAction(_action),
   ]);
 }

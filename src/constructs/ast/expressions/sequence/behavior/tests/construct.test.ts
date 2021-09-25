@@ -20,6 +20,7 @@ describe('Behavior Expressions', () => {
     const all = selectAllNodesFromRuntime(runtime);
 
     if (!BehaviorExpression.isBehaviorExpression(last)) {
+      console.log(last);
       throw new Error('Expected a ' + BehaviorExpression.kind);
     }
 

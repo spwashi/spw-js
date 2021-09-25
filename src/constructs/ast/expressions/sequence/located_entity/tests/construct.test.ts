@@ -14,13 +14,14 @@ describe('Rule', () => {
 
 describe('LocatedEntityExpression', () => {
   it('can be parsed', async (done) => {
-    const runtime = await initRuntimeWithSrc(`(somewhere) <something>someone`);
+    const runtime = await initRuntimeWithSrc(`(somewhere)<something>someone`);
 
     const last = selectLastAcknowledgedNodeFromRuntime(runtime);
     const all = selectAllNodesFromRuntime(runtime);
 
     if (!LocatedEntityExpression.isLocatedEntityExpression(last)) {
-      throw new Error('Expected a Node expression');
+      console.log(last);
+      throw new Error('Expected a ' + LocatedEntityExpression.name + ' expression');
     }
 
     expect(last.kind).toEqual(LocatedEntityExpression.kind);

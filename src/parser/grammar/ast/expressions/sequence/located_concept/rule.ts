@@ -2,9 +2,8 @@ import { LocatedConceptExpression } from '@constructs/ast/expressions/sequence/l
 import { componentize } from '@grammar/ast/expressions/sequence/_util/componentize';
 import { concept } from '@grammar/ast/nodes/containers/concept/ref';
 import { location } from '@grammar/ast/nodes/containers/location/ref';
-import { space } from '@grammar/utility/space/whitespace.patterns';
 import { Rule } from '@spwashi/language/parsers/grammar';
-import { sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
+import { sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
 import { ruleName } from './ref';
 
 const components = LocatedConceptExpression.components;
@@ -16,11 +15,7 @@ const _concept = {
   name: components.concept.name,
   pattern: concept.named(components.concept.name),
 };
-const __ = {
-  name: 'space',
-  pattern: zeroOrMoreOf(space),
-};
-const pattern = sequenceOf([_location, __, _concept].map(componentize));
+const pattern = sequenceOf([_location, _concept].map(componentize));
 
 // language=JavaScript
 const action = `

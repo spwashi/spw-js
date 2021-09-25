@@ -45,7 +45,7 @@ Also, I've been playing around with SWI-Prolog and appreciate its style of query
 ### Now:
 (todo)
 
-## Atoms, Blocks, Strands, and Operators
+## Atoms, Blocks, Transformations, and Operators
 
 ##### Atoms (similar to variable/primitive)
 

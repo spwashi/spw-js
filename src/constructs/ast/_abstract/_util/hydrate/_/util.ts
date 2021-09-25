@@ -2,19 +2,28 @@ import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction
 import { HydratedConstruct, RawConstruct } from '@constructs/ast/_abstract/_types/internal';
 import { Construct } from '../../../construct';
 
-function _entryReducer(t: RawConstruct, [currKey, curr]: [string, any | any[]]): RawConstruct {
-  const isArray = Array.isArray(t[currKey]);
+function _entryReducer(
+  construct: RawConstruct,
+  [currKey, curr]: [string, any | any[]],
+): RawConstruct {
+  let next: any;
+  const prev = construct[currKey];
+  switch (currKey) {
+    default:
+      if (typeof prev === 'object' || currKey === 'items') {
+        if (Array.isArray(prev)) {
+          next = [...(prev as any[]), curr];
+        } else {
+          next = prev ? [prev, curr] : [curr];
+        }
+      } else {
+        next = curr;
+      }
+      break;
+  }
   return {
-    ...t,
-    [currKey]:
-      typeof t[currKey] === 'undefined'
-        ? curr
-        : // it already exists
-        typeof t[currKey] === 'object'
-        ? isArray
-          ? [...(t[currKey] as any[]), curr]
-          : [t[currKey], curr]
-        : curr,
+    ...construct,
+    [currKey]: next,
   };
 }
 

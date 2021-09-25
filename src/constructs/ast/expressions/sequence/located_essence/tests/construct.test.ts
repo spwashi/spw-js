@@ -18,8 +18,8 @@ describe('Located Essence Expressions', () => {
 
     const last = selectLastAcknowledgedNodeFromRuntime(runtime);
     const all = selectAllNodesFromRuntime(runtime);
-
     if (!LocatedEssenceExpression.isLocatedEssenceExpression(last)) {
+      console.log(last);
       throw new Error('Expected a ' + LocatedEssenceExpression.kind);
     }
 

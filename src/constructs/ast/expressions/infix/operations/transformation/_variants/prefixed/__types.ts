@@ -1,0 +1,1 @@
+export type PrefixedTransformationExpressionKind = 'prefixed_transformation_expression';

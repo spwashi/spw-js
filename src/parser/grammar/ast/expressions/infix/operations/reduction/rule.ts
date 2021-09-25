@@ -1,4 +1,4 @@
-import { ReductionExpression } from '@constructs/ast';
+import { InfixedReductionExpression } from '@constructs/ast';
 import { spaceNode } from '@grammar/utility/space/space.ref';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import { sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
@@ -16,7 +16,7 @@ const _action =
   // language=JavaScript
   `
           return toConstruct({
-                               kind: '${ReductionExpression.kind}',
+                               kind: '${InfixedReductionExpression.kind}',
                                head: head,
                                tail,
                              })

@@ -1,4 +1,4 @@
-import { StrandExpression } from '@constructs/ast';
+import { InfixedTransformationExpression } from '@constructs/ast';
 import { CommonExpression } from '@constructs/ast/expressions/infix/common/expression';
 import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 import * as util from 'util';
@@ -34,7 +34,7 @@ describe(CommonExpression.name, () => {
     const last: Construct | undefined = selectLastAcknowledgedNodeFromRuntime(runtime);
     const all: Construct[] = selectAllNodesFromRuntime(runtime);
     expect(all.length).toEqual(11);
-    expect(last?.kind).toEqual(StrandExpression.kind);
+    expect(last?.kind).toEqual(InfixedTransformationExpression.kind);
     expect(last?.key).toEqual('boon boon=>two,three');
     done();
   });

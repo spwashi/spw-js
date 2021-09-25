@@ -1,13 +1,15 @@
 import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
 import { ConstructKind } from '@constructs/ast/_types/kinds';
 import { InfixExpression } from '@constructs/ast/expressions/infix/construct';
+import { AggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/_variants/infixed/expression';
 import { PrefixedAggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/_variants/prefixed/expression';
-import { AggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/expression';
+import { InfixedBindingExpression } from '@constructs/ast/expressions/infix/operations/binding/_variants/infixed/expression';
+import { PrefixedBindingExpression } from '@constructs/ast/expressions/infix/operations/binding/_variants/prefixed/expression';
+import { InfixedReductionExpression } from '@constructs/ast/expressions/infix/operations/reduction/_variants/infixed/expression';
 import { PrefixedReductionExpression } from '@constructs/ast/expressions/infix/operations/reduction/_variants/prefixed/expression';
-import { ReductionExpression } from '@constructs/ast/expressions/infix/operations/reduction/expression';
 import { PostfixExpression } from '@constructs/ast/expressions/postfix/construct';
 import { PrefixExpression } from '@constructs/ast/expressions/prefix/construct';
-import { Block } from '@constructs/ast/expressions/sequence/block/construct';
+import { BlockExpression } from '@constructs/ast/expressions/sequence/block/construct';
 import {
   BehaviorExpression,
   CommonExpression,
@@ -19,6 +21,7 @@ import {
   EntityExpression,
   EssentialIdentityOperator,
   EssentialSchemeOperator,
+  InfixedRangeExpression,
   InstanceExpression,
   LocatedConceptExpression,
   LocatedDomainExpression,
@@ -27,8 +30,9 @@ import {
   LocationalIdentityOperator,
   LocationalSchemeOperator,
   PhraseExpression,
-  PrefixedStrandExpression,
-  StrandExpression,
+  PrefixedRangeExpression,
+  PrefixedTransformationExpression,
+  InfixedTransformationExpression,
 } from './ast/expressions';
 import {
   AggregationOperator,
@@ -77,13 +81,35 @@ export const spwItemConstructors = {
   phrase: PhraseNode,
   string: StringNode,
   embedment: EmbedmentNode,
+
   // standard operators
+  // Aggregation
   aggregation: AggregationOperator,
   aggregation_expression: AggregationExpression,
   prefixed_aggregation_expression: PrefixedAggregationExpression,
+
+  // Binding
+  binding: BindingOperator,
+  infixed_binding_expression: InfixedBindingExpression,
+  prefixed_binding_expression: PrefixedBindingExpression,
+
+  // Range
+  range: RangeOperator,
+  infixed_range_expression: InfixedRangeExpression,
+  prefixed_range_expression: PrefixedRangeExpression,
+
+  // Reduction
+  reduction: ReductionOperator,
+  infixed_reduction_expression: InfixedReductionExpression,
+  prefixed_reduction_expression: PrefixedReductionExpression,
+
+  // Transformation
+  infixed_transformation_expression: InfixedTransformationExpression,
+  prefixed_transformation_expression: PrefixedTransformationExpression,
+
+  //
   ascent: AscentOperator,
   branch: BranchOperator,
-  binding: BindingOperator,
   channel: ChannelOperator,
   convergence: ConvergenceOperator,
   descent: DescentOperator,
@@ -93,19 +119,17 @@ export const spwItemConstructors = {
   invocation: InvocationOperator,
   performance: PerformanceOperator,
   perspective: PerspectiveOperator,
-  range: RangeOperator,
-  reduction: ReductionOperator,
-  reduction_expression: ReductionExpression,
-  prefixed_reduction_expression: PrefixedReductionExpression,
   relation: RelationOperator,
   reference: ReferenceOperator,
   spread: SpreadOperator,
   transformation: TransformationOperator,
   value: ValueOperator,
+
   // delimiting operators
   operator_delimiter: NodeDelimitingOperator,
   block_delimiter: BlockDelimitingOperator,
   common_delimiter: CommonDelimitingOperator,
+
   // concept
   concept: Concept,
   concept_identity: ConceptualIdentityOperator,
@@ -126,18 +150,20 @@ export const spwItemConstructors = {
   located_domain_expression: LocatedDomainExpression,
   located_entity_expression: LocatedEntityExpression,
   located_essence_expression: LocatedEssenceExpression,
+
   // block
-  block: Block,
-  // infix
+  block: BlockExpression,
+
   infix_expression: InfixExpression,
-  strand_expression: StrandExpression,
-  prefixed_strand_expression: PrefixedStrandExpression,
   common_expression: CommonExpression,
   common_tail: CommonExpressionTail,
+
   // prefix
   prefix_expression: PrefixExpression,
+
   // postfix
   postfix_expression: PostfixExpression,
+
   // sequences
   entity_expression: EntityExpression,
   phrase_expression: PhraseExpression,

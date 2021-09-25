@@ -57,7 +57,7 @@ Top "Top"=
 			/ [\n]
 		)*
 	body:(
-	Block
+	BlockExpression
 		/ Expression
 		/ Container
 		/ Node
@@ -211,6 +211,7 @@ SpreadOperator
 	/ DirectionOperator
 	/ AggregationOperator
 	/ AscentOperator
+	/ BindingOperator
 	/ BranchOperator
 	/ ChannelOperator
 	/ EvaluationOperator
@@ -245,6 +246,20 @@ _operatorComponents:(
 {
 	return toConstruct({
 	                   kind: "ascent",
+	                   ..._operatorComponents
+	                 })
+}
+
+BindingOperator "BindingOperator"= 
+_operatorComponents:(
+	(token:":"
+			"_"
+			label:AnchorNode {return{token:token,label:label};})
+		/ ":"
+	)
+{
+	return toConstruct({
+	                   kind: "binding",
 	                   ..._operatorComponents
 	                 })
 }
@@ -524,12 +539,25 @@ DomainClose "DomainClose"=
 	/ (tok:"}" {return toConstruct({token:tok,position:"close",kind:"domain_identity"});})
 
 DomainBody "DomainBody"= 
-(expression:(
-	Block
+(leadingspace:(
+		" "
+			/ [\n]
+		)*
+	expression:(
+	BlockExpression
+		/ ChannelOperator
 		/ Expression
 		/ Container
 		/ Node
-	) {return expression;})
+		/ (
+			" "
+				/ [\n]
+			)*
+	)
+	trailingspace:(
+		" "
+			/ [\n]
+		)* {return expression;})
 
 Domain "Domain"= 
 container:(
@@ -542,15 +570,7 @@ container:(
 				)*
 			close:DomainClose {return{open:open,close:close};})
 		/ (open:DomainOpen
-			(
-				" "
-					/ [\n]
-				)*
 			body:DomainBody
-			(
-				" "
-					/ [\n]
-				)*
 			close:DomainClose {return{open:open,body:body,close:close};})
 	)
 {
@@ -593,12 +613,25 @@ EssenceClose "EssenceClose"=
 	/ (tok:"]" {return toConstruct({token:tok,position:"close",kind:"essence_identity"});})
 
 EssenceBody "EssenceBody"= 
-(expression:(
-	Block
+(leadingspace:(
+		" "
+			/ [\n]
+		)*
+	expression:(
+	BlockExpression
+		/ ChannelOperator
 		/ Expression
 		/ Container
 		/ Node
-	) {return expression;})
+		/ (
+			" "
+				/ [\n]
+			)*
+	)
+	trailingspace:(
+		" "
+			/ [\n]
+		)* {return expression;})
 
 Essence "Essence"= 
 container:(
@@ -611,15 +644,7 @@ container:(
 				)*
 			close:EssenceClose {return{open:open,close:close};})
 		/ (open:EssenceOpen
-			(
-				" "
-					/ [\n]
-				)*
 			body:EssenceBody
-			(
-				" "
-					/ [\n]
-				)*
 			close:EssenceClose {return{open:open,body:body,close:close};})
 	)
 {
@@ -662,12 +687,25 @@ ConceptClose "ConceptClose"=
 	/ (tok:">" {return toConstruct({token:tok,position:"close",kind:"concept_identity"});})
 
 ConceptBody "ConceptBody"= 
-(expression:(
-	Block
+(leadingspace:(
+		" "
+			/ [\n]
+		)*
+	expression:(
+	BlockExpression
+		/ ChannelOperator
 		/ Expression
 		/ Container
 		/ Node
-	) {return expression;})
+		/ (
+			" "
+				/ [\n]
+			)*
+	)
+	trailingspace:(
+		" "
+			/ [\n]
+		)* {return expression;})
 
 Concept "Concept"= 
 container:(
@@ -680,15 +718,7 @@ container:(
 				)*
 			close:ConceptClose {return{open:open,close:close};})
 		/ (open:ConceptOpen
-			(
-				" "
-					/ [\n]
-				)*
 			body:ConceptBody
-			(
-				" "
-					/ [\n]
-				)*
 			close:ConceptClose {return{open:open,body:body,close:close};})
 	)
 {
@@ -731,12 +761,25 @@ LocationClose "LocationClose"=
 	/ (tok:")" {return toConstruct({token:tok,position:"close",kind:"location_identity"});})
 
 LocationBody "LocationBody"= 
-(expression:(
-	Block
+(leadingspace:(
+		" "
+			/ [\n]
+		)*
+	expression:(
+	BlockExpression
+		/ ChannelOperator
 		/ Expression
 		/ Container
 		/ Node
-	) {return expression;})
+		/ (
+			" "
+				/ [\n]
+			)*
+	)
+	trailingspace:(
+		" "
+			/ [\n]
+		)* {return expression;})
 
 Location "Location"= 
 container:(
@@ -749,15 +792,7 @@ container:(
 				)*
 			close:LocationClose {return{open:open,close:close};})
 		/ (open:LocationOpen
-			(
-				" "
-					/ [\n]
-				)*
 			body:LocationBody
-			(
-				" "
-					/ [\n]
-				)*
 			close:LocationClose {return{open:open,body:body,close:close};})
 	)
 {
@@ -773,12 +808,13 @@ Expression "Expression"=
 InfixExpression
 	/ SequenceExpression
 
-Block "Block"= 
+BlockExpression "BlockExpression"= 
 items:(
 	(head:(expression:(
 					Expression
 						/ Container
 						/ Node
+						/ ChannelOperator
 					)
 					(
 						(Space {return null;})
@@ -793,28 +829,17 @@ items:(
 				(Space {return null;})
 					/ [\n]
 				)*
-			tail:(expression:(
-					Expression
-						/ Container
-						/ Node
-					)
-					(
-						(Space {return null;})
-							/ [\n]
-						)*
-					delimiter:BlockDelimitingOperator?
-					(
-						(Space {return null;})
-							/ [\n]
-						)* {return expression;})
-			(
-				(Space {return null;})
-					/ [\n]
-				)* {return"undefined"==typeof tail?head:[...head,tail];})
+			tail:(
+				Expression
+					/ Container
+					/ Node
+					/ ChannelOperator
+				) {return[...head,tail];})
 		/ (head:(expression:(
 				Expression
 					/ Container
 					/ Node
+					/ ChannelOperator
 				)
 				(
 					(Space {return null;})
@@ -824,12 +849,13 @@ items:(
 				(
 					(Space {return null;})
 						/ [\n]
-					)* {return expression;})+ {return"undefined"==typeof tail?head:[...head,tail];})
-		/ (expression:(
-		Expression
-			/ Container
-			/ Node
-		) {return[expression];})
+					)* {return expression;})+ {return[...head];})
+		/ tail:(
+			Expression
+				/ Container
+				/ Node
+				/ ChannelOperator
+			) {return[tail];}
 	)
 {
 	const block = {
@@ -856,8 +882,10 @@ entity:EntityExpression
 }
 
 BehaviorExpression "BehaviorExpression"= 
-(
-	address:Location
+(address:Location
+		domain:Domain
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
+	/ (address:Location
 		(
 			" "
 			)*
@@ -865,41 +893,12 @@ BehaviorExpression "BehaviorExpression"=
 		(
 			" "
 			)*
-		essence:Essence
-	)
-	/ (
-	address:Location
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
+	/ (domain:Domain
 		(
 			" "
 			)*
-		domain:Domain
-	)
-	/ (
-	address:Location
-		(
-			" "
-			)*
-		essence:Essence
-	)
-	/ (
-	domain:Domain
-		(
-			" "
-			)*
-		essence:Essence
-	)
-	/ address:Location
-	/ domain:Domain
-	/ essence:Essence
-{
-	const expression = {
-	  kind: 'behavior_expression',
-	  domain: typeof domain !== 'undefined' ? domain : undefined,
-	  essence: typeof essence !== 'undefined' ? essence : undefined,
-	  address: typeof address !== 'undefined' ? address : undefined,
-	};
-	return toConstruct(expression)
-}
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
 
 EntityExpression "EntityExpression"= 
 (concept:Concept
@@ -917,9 +916,6 @@ EntityExpression "EntityExpression"=
 
 LocatedConceptExpression "LocatedConceptExpression"= 
 address:Location
-	space:(
-		" "
-		)*
 	concept:Concept
 {
 	const expression = {
@@ -944,9 +940,6 @@ address:Location
 
 LocatedEntityExpression "LocatedEntityExpression"= 
 address:Location
-	(
-		" "
-		)*
 	entity:EntityExpression
 {
 	const expression = {
@@ -959,9 +952,6 @@ address:Location
 
 LocatedEssenceExpression "LocatedEssenceExpression"= 
 address:Location
-	space:(
-		" "
-		)*
 	essence:Essence
 {
 	const expression = {
@@ -978,31 +968,8 @@ InstanceExpression
 	/ BehaviorExpression
 	/ LocatedEntityExpression
 	/ LocatedConceptExpression
-	/ LocatedDomainExpression
 	/ LocatedEssenceExpression
-
-StrandExpression "StrandExpression"= 
-head:(
-	Container
-		/ Node
-		/ ChannelOperator
-	)
-	(Space {return null;})*
-	tail:((Space {return null;})*
-			operator:TransformationOperator
-			(Space {return null;})*
-			item:(
-			Expression
-				/ Container
-				/ Node
-			) {return toConstruct({kind:"prefixed_strand_expression",operator:operator,item:item});})+
-{
-	return toConstruct({
-	                     kind: 'strand_expression',
-	                     head: head,
-	                     tail,
-	                   })
-}
+	/ LocatedDomainExpression
 
 CommonExpression "CommonExpression"= 
 head:Node
@@ -1067,7 +1034,29 @@ head:(
 	                   })
 }
 
-ReductionExpression "ReductionExpression"= 
+InfixedBindingExpression "InfixedBindingExpression"= 
+head:(
+	Container
+		/ Node
+		/ ChannelOperator
+	)
+	(Space {return null;})*
+	tail:((Space {return null;})*
+			operator:BindingOperator
+			(Space {return null;})*
+			item:(
+			Expression
+				/ Node
+			) {return toConstruct({kind:"prefixed_binding_expression",operator:operator,item:item});})+
+{
+	return toConstruct({
+	                     kind: 'infixed_binding_expression',
+	                     head: head,
+	                     tail,
+	                   })
+}
+
+InfixedReductionExpression "InfixedReductionExpression"= 
 head:(
 	Container
 		/ Node
@@ -1082,18 +1071,65 @@ head:(
 			) {return toConstruct({kind:"prefixed_reduction_expression",operator:operator,item:item});})+
 {
 	return toConstruct({
-	                     kind: 'reduction_expression',
+	                     kind: 'infixed_reduction_expression',
+	                     head: head,
+	                     tail,
+	                   })
+}
+
+InfixedTransformationExpression "InfixedTransformationExpression"= 
+head:(
+	Container
+		/ Node
+		/ ChannelOperator
+	)
+	(Space {return null;})*
+	tail:((Space {return null;})*
+			operator:TransformationOperator
+			(Space {return null;})*
+			item:(
+			Expression
+				/ Container
+				/ Node
+			) {return toConstruct({kind:"prefixed_transformation_expression",operator:operator,item:item});})+
+{
+	return toConstruct({
+	                     kind: 'infixed_transformation_expression',
+	                     head: head,
+	                     tail,
+	                   })
+}
+
+InfixedRangeExpression "InfixedRangeExpression"= 
+head:(
+	Container
+		/ Node
+		/ ChannelOperator
+	)
+	(Space {return null;})*
+	tail:((Space {return null;})*
+			operator:RangeOperator
+			(Space {return null;})*
+			item:(
+			Expression
+				/ Node
+			) {return toConstruct({kind:"prefixed_range_expression",operator:operator,item:item});})+
+{
+	return toConstruct({
+	                     kind: 'infixed_range_expression',
 	                     head: head,
 	                     tail,
 	                   })
 }
 
 InfixExpression "InfixExpression"= 
-StrandExpression
-	/ CommonExpression
+CommonExpression
 	/ PhraseExpression
+	/ InfixedBindingExpression
+	/ InfixedTransformationExpression
 	/ AggregationExpression
-	/ ReductionExpression
+	/ InfixedReductionExpression
+	/ InfixedRangeExpression
 
 PrefixExpression "PrefixExpression"= 
 operator:(
@@ -1103,6 +1139,7 @@ operator:(
 		/ DirectionOperator
 		/ AggregationOperator
 		/ AscentOperator
+		/ BindingOperator
 		/ BranchOperator
 		/ ChannelOperator
 		/ EvaluationOperator

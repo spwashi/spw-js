@@ -5,7 +5,7 @@ import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { BlockExpressionKind } from './__types';
 
 @staticImplements<IConstructClass<BlockExpressionKind>>()
-export class Block extends Expression<BlockExpressionKind> {
+export class BlockExpression extends Expression<BlockExpressionKind> {
   static readonly kind: BlockExpressionKind = 'block';
 
   static components = {
@@ -13,7 +13,9 @@ export class Block extends Expression<BlockExpressionKind> {
       name: 'items',
 
       selector: (subject: any) => {
-        return subject?.items;
+        const items = subject?.items;
+        const arr = Array.isArray(items) ? items : [items];
+        return arr;
       },
 
       generator: function* (items, ctxt) {
@@ -46,7 +48,7 @@ export class Block extends Expression<BlockExpressionKind> {
     },
   };
 
-  static isBlockExpression(o: unknown): o is Block {
-    return (o as Block)?.kind === this.kind;
+  static isBlockExpression(o: unknown): o is BlockExpression {
+    return (o as BlockExpression)?.kind === this.kind;
   }
 }

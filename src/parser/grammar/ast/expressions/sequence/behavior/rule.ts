@@ -25,17 +25,8 @@ const __ = {
   name: undefined,
   pattern: zeroOrMoreOf(space),
 };
-const pattern = anyOf([
-  sequenceOf([_location, __, _domain, __, _essence].map(componentize)),
-  sequenceOf([_location, __, _domain].map(componentize)),
-  sequenceOf([_location, __, _essence].map(componentize)),
-  sequenceOf([_domain, __, _essence].map(componentize)),
-  sequenceOf([_location].map(componentize)),
-  sequenceOf([_domain].map(componentize)),
-  sequenceOf([_essence].map(componentize)),
-]);
-
 // language=JavaScript
+
 const action = `
   const expression = {
     kind: '${BehaviorExpression.kind}',
@@ -45,4 +36,9 @@ const action = `
   };
   return toConstruct(expression)
 `;
-export const behaviorExpressionRule = new Rule(ruleName, pattern, action);
+const pattern = anyOf([
+  sequenceOf([_location, _domain, _essence].map(componentize)).withAction(action),
+  sequenceOf([_location, __, _domain, __, _essence].map(componentize)).withAction(action),
+  sequenceOf([_domain, __, _essence].map(componentize)).withAction(action),
+]);
+export const behaviorExpressionRule = new Rule(ruleName, pattern);
