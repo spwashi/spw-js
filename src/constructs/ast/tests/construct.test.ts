@@ -3,10 +3,11 @@ import {
   getAllNodes,
   getSalientNode,
 } from '@constructs/runtime/_util/initializers/runtime/initRuntimeWithSrc';
+import * as util from 'util';
 
 describe('Something', () => {
   it('works', async () => {
-    const arrs = [
+    [
       `
         ( #_more; interesting ){
           #_test;
@@ -29,13 +30,19 @@ describe('Something', () => {
       .map((item) => {
         const node = getSalientNode(item);
         if (!node) return false;
-        console.log(node.key);
+        console.log(
+          util.inspect(
+            {
+              key: node.key,
+              internal: node.internal,
+            },
+            false,
+            null,
+            true,
+          ),
+        );
         return getAllNodes(item);
       })
       .filter(Boolean) as Construct[][];
-
-    arrs.forEach((nodes: Construct[]) => {
-      nodes.map((node) => console.log(node.key));
-    });
   });
 });

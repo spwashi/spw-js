@@ -1,2 +1,2 @@
-export type BlockDelimitingOperatorToken = ';';
-export type BlockDelimitingOperatorKind = 'block_delimiter';
+export type BlockDelimiterToken = ';';
+export type BlockDelimiterKind = 'block_delimiter';

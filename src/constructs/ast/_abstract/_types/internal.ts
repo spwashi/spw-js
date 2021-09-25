@@ -15,7 +15,7 @@ export interface HydratedConstruct {
 
 export interface RawConstruct {
   kind: ConstructKind;
-  location?: ConstructLocation | null;
+  srcloc?: ConstructLocation | null;
   src?: string;
 
   [k: string]: RawConstruct | RawConstruct[] | string | ConstructLocation | unknown;

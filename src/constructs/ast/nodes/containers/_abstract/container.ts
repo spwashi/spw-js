@@ -1,8 +1,8 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { ConstructKind } from '@constructs/ast/_types/kinds';
-import { BlockDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/block/construct';
-import { CommonDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/common/construct';
-import { NodeDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/node/construct';
+import { BlockDelimiter } from '@constructs/ast/nodes/operators/semantic/block/construct';
+import { CommonDelimiter } from '@constructs/ast/nodes/operators/semantic/common/construct';
+import { NodeDelimiter } from '@constructs/ast/nodes/operators/semantic/node/construct';
 import { Construct, ConstructComponents } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
 import { Node } from '../../_abstract/node';
@@ -40,10 +40,10 @@ export abstract class ContainerNode<
         return s?.open || this._fallback;
       },
       generator: function* (component, ctxt) {
-        if (!Array.isArray(component)) {
+        if (!Array.isArray(component) && Construct.isConstruct(component)) {
           yield [component, ctxt];
-          if (component?.label) {
-            yield [new NodeDelimitingOperator(), ctxt];
+          if (component?.internal?.label) {
+            yield [new NodeDelimiter(), ctxt];
           }
         } else {
           for (const item of component) {
@@ -69,14 +69,12 @@ export abstract class ContainerNode<
         let prev;
         for (const sub of body) {
           if (!first && Construct.isConstruct(sub)) {
-            const excluded = [
-              BlockDelimitingOperator,
-              NodeDelimitingOperator,
-              CommonDelimitingOperator,
-            ].map((c) => c.kind as ConstructKind);
+            const excluded = [BlockDelimiter, NodeDelimiter, CommonDelimiter].map(
+              (c) => c.kind as ConstructKind,
+            );
             if (!excluded.includes(sub?.kind) && !excluded.includes(prev?.kind)) {
-              yield [new BlockDelimitingOperator(), ctxt];
-              yield [new NodeDelimitingOperator(), ctxt];
+              yield [new BlockDelimiter(), ctxt];
+              yield [new NodeDelimiter(), ctxt];
             }
           }
           first = false;

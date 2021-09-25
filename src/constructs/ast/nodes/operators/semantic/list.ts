@@ -1,11 +1,3 @@
-import {
-  BlockDelimitingOperator,
-  CommonDelimitingOperator,
-  NodeDelimitingOperator,
-} from '@constructs/ast';
+import { BlockDelimiter, CommonDelimiter, NodeDelimiter } from '@constructs/ast';
 
-export const semanticOperators = [
-  BlockDelimitingOperator,
-  CommonDelimitingOperator,
-  NodeDelimitingOperator,
-];
+export const semanticOperators = [BlockDelimiter, CommonDelimiter, NodeDelimiter];

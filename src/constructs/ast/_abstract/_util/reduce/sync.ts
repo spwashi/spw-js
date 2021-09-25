@@ -3,6 +3,7 @@ import { ComponentDescription } from '@constructs/ast/_abstract/_types/component
 import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 import { ReductionLifecycleController } from '@constructs/ast/_abstract/_util/reduce/_/types';
 import { defaultLifecycleGenerator } from '@constructs/ast/_abstract/_util/reduce/_/util';
+import { getInternalComponentDescriptions } from '@constructs/ast/_abstract/_util/reduce/getInternalComponentDescriptions';
 
 /**
  * Reduce a construct synchronously
@@ -36,34 +37,45 @@ export function reduceConstructSync<
 
   let lastStep: [any, Context] = seed as [StartType, Context];
 
-  for (const prototype of prototypes) {
+  const componentDescriptions = [
+    // Reduce internal properties as well.
+    //  Note: this should probably be a flag
+    ...getInternalComponentDescriptions(),
+    ...prototypes,
+  ] as Iterable<ComponentDescription<Context>>;
+
+  for (const description of componentDescriptions) {
     const [, context] = lastStep;
-    const component = prototype.selector(subject);
-    const componentGenerator = prototype.generator(component, context);
+    const component = description.selector(subject);
+    const componentGenerator = description.generator(component, context);
     let yieldedItems = [] as Intermediate[];
     type _Step = [Intermediate, Context] | Context;
 
     let nextContext: Context | null = null,
-      done = false;
+      prototypeLoopFinished = false;
 
     /**
      * Loop over the prototype's componentGenerator until it stops yielding values
      */
-    while (!done) {
+    while (!prototypeLoopFinished) {
       const out = componentGenerator.next() as IteratorYieldResult<_Step>;
 
       // break if done
-      done = !!out.done;
-      if (done) {
+      prototypeLoopFinished = !!out.done;
+      if (prototypeLoopFinished) {
         nextContext = out.value as Context;
         break;
       }
 
       // init vars
-      const next = out.value as [Intermediate, Context];
-      const key = prototype.name;
-      const mutated = config.valueMapper(next[0], key, next[1], false);
-
+      const [intermediateValue, intermediateContext] = out.value as [Intermediate, Context];
+      const key = description.name;
+      const mutated = config.getValueFromSubject(
+        intermediateValue,
+        key,
+        intermediateContext,
+        false,
+      );
       // init generator
       const startEvalGenerator = lifecycle({ type: 'eval' });
       const lifecycleGenerator = startEvalGenerator([mutated, context]);
@@ -84,12 +96,12 @@ export function reduceConstructSync<
     }
 
     // normalize output
-    const normalized = config.stepNormalizer(prototype, [
+    const normalized = config.normalizeComponentReductionValues(description, [
       yieldedItems as Intermediate[],
       isContext(nextContext) ? nextContext : context,
     ] as [Intermediate[], Context]) as [ReturnType, Context];
 
-    lastStep = config.stepReducer(lastStep, normalized, false) as
+    lastStep = config.reduceStep(lastStep, normalized, false) as
       | [Intermediate, Context]
       | [ReturnType, Context];
   }

@@ -9,19 +9,20 @@ export function completeConfig<C extends InteractionContext = InteractionContext
   options: ConstructReductionOptions<C> = {},
 ): ConstructReductionConfig<C> {
   const {
-    valueMapper = () => null,
-    stepReducer = (_, next) => next,
-    stepNormalizer = (_: any, [v, c]) => {
+    getValueFromSubject = () => null,
+    reduceStep = (_, next) => next,
+    normalizeComponentReductionValues = (_: any, [v, c]) => {
       return [Array.isArray(v) ? v.pop() : v, c] as [typeof v, C];
     },
   } = options;
 
   return {
-    stepReducer: stepReducer,
-    valueMapper: valueMapper,
-    stepNormalizer,
-  };
+    reduceStep,
+    getValueFromSubject,
+    normalizeComponentReductionValues,
+  } as ConstructReductionConfig<C>;
 }
+
 export const defaultLifecycleGenerator: ReductionLifecycleController = ({ type }) => {
   switch (type) {
     case 'eval':

@@ -14,7 +14,7 @@ describe('Rule Reference', () => {
 
 describe('Domain', () => {
   it('can be parsed', async (done) => {
-    const runtime = await initRuntimeWithSrc(`{domain}`);
+    const runtime = await initRuntimeWithSrc(`{_label domain }`);
 
     const last = selectLastAcknowledgedNodeFromRuntime(runtime);
     const all = selectAllNodesFromRuntime(runtime);
@@ -24,8 +24,8 @@ describe('Domain', () => {
     }
 
     expect(last.kind).toEqual(Domain.kind);
-    expect(last.key).toEqual('{domain}');
-    expect(all.length).toEqual(4);
+    expect(last.key).toEqual('{_label domain}');
+    expect(all.length).toEqual(6);
 
     done();
   });

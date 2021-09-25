@@ -1,4 +1,4 @@
-import { NodeDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/node/construct';
+import { NodeDelimiter } from '@constructs/ast/nodes/operators/semantic/node/construct';
 import {
   anyOf,
   oneOrMoreOf,
@@ -7,7 +7,7 @@ import {
 } from '@spwashi/language/parsers/grammar/combinators';
 
 const tab = regExpLike('\\t');
-export const space = stringLike(NodeDelimitingOperator.token);
+export const space = stringLike(NodeDelimiter.token);
 export const newline = regExpLike('\\n');
 export const spaceTab = anyOf([space, tab]);
 const patterns = [tab, space, newline.named('newline')];

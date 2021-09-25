@@ -30,9 +30,9 @@ import { EssentialIdentityOperator } from '@constructs/ast/nodes/containers/esse
 import { EssentialSchemeOperator } from '@constructs/ast/nodes/containers/essence/_components/scheme/construct';
 import { LocationalIdentityOperator } from '@constructs/ast/nodes/containers/location/_components/identity/construct';
 import { LocationalSchemeOperator } from '@constructs/ast/nodes/containers/location/_components/scheme/construct';
-import { BlockDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/block/construct';
-import { CommonDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/common/construct';
-import { NodeDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/node/construct';
+import { BlockDelimiter } from '@constructs/ast/nodes/operators/semantic/block/construct';
+import { CommonDelimiter } from '@constructs/ast/nodes/operators/semantic/common/construct';
+import { NodeDelimiter } from '@constructs/ast/nodes/operators/semantic/node/construct';
 
 export const tok_whitespace = 'whitespace';
 
@@ -113,6 +113,6 @@ export const tok_spread = rn_operator + '.' + SpreadOperator.kind;
 export const tok_transformation = rn_operator + '.' + TransformationOperator.kind;
 export const tok_value = rn_operator + '.' + ValueOperator.kind;
 
-export const tok_commonDelimiter = rn_operator + '.' + CommonDelimitingOperator.kind;
-export const tok_blockDelimiter = rn_operator + '.' + BlockDelimitingOperator.kind;
-export const tok_operatorDelimiter = rn_operator + '.' + NodeDelimitingOperator.kind;
+export const tok_commonDelimiter = rn_operator + '.' + CommonDelimiter.kind;
+export const tok_blockDelimiter = rn_operator + '.' + BlockDelimiter.kind;
+export const tok_operatorDelimiter = rn_operator + '.' + NodeDelimiter.kind;

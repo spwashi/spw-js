@@ -61,14 +61,14 @@ export class Construct<
     const reduced = Ctor.reduce(
       this.internal ?? null,
       {
-        valueMapper(subject) {
+        getValueFromSubject(subject) {
           if ((typeof subject === 'string' && subject) || typeof subject === 'number') {
             return subject;
           }
           return subject?.key;
         },
 
-        stepNormalizer(prototype: Prototype, [intermediate, context]) {
+        normalizeComponentReductionValues(prototype: Prototype, [intermediate, context]) {
           const evaluator = prototype.evaluators.stringify as ComponentEvaluatorObject['stringify'];
           let evaluated: string | null;
           if (evaluator) {
@@ -79,7 +79,7 @@ export class Construct<
           return [evaluated, context] as [Output, Context];
         },
 
-        stepReducer([prev], [curr, next]) {
+        reduceStep([prev], [curr, next]) {
           return [[prev, curr].join(''), next] as [ConstructComponentKey, InteractionContext];
         },
       },
@@ -157,7 +157,7 @@ export class Construct<
    * @param override
    * @protected
    */
-  protected static makeComponent(
+  static makeComponent(
     override: {
       name: string;
       [k: string]: any;
@@ -170,7 +170,7 @@ export class Construct<
     return {
       kind: this.kind,
       key: this.key,
-      ...Object(this._internal),
+      ...Object(this.internal),
     };
   }
 }

@@ -1,2 +1,2 @@
 export type CommonDelimiterToken = ',';
-export type CommonDelimitingOperatorKind = 'common_delimiter';
+export type CommonDelimiterKind = 'common_delimiter';

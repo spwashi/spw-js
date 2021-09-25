@@ -2,8 +2,21 @@ import { ConstructReductionConfig } from '@constructs/ast/_abstract/_types';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 import { ReductionLifecycleController } from '@constructs/ast/_abstract/_util/reduce/_/types';
+import { getInternalComponentDescriptions } from '@constructs/ast/_abstract/_util/reduce/getInternalComponentDescriptions';
 import { defaultLifecycleGenerator } from './_/util';
 
+function getGeneratorFromComponent<Context extends InteractionContext>(
+  prototype: ComponentDescription<Context>,
+  component: any,
+  context: Context,
+) {
+  return (
+    prototype.asyncGenerator?.(component, context) ??
+    (async function* () {
+      yield;
+    })()
+  );
+}
 /**
  * Reduce a construct asynchronously
  *
@@ -37,17 +50,18 @@ export async function reduceConstructAsync<
     }
   }
 
-  async function promise_iife(): Promise<[ReturnType, Context]> {
+  async function internalReduceConstructAsync(): Promise<[ReturnType, Context]> {
     let promised: [any, Context] = seed as [any, Context];
 
-    for await (const prototype of prototypes) {
+    const componentDescriptions = [
+      ...getInternalComponentDescriptions(),
+      ...prototypes,
+    ] as Iterable<ComponentDescription<Context>>;
+
+    for await (const description of componentDescriptions) {
       const [, context] = promised;
-      const component = prototype.selector(subject);
-      const generator =
-        prototype.asyncGenerator?.(component, context) ??
-        (async function* () {
-          yield;
-        })();
+      const component = description.selector(subject);
+      const generator = getGeneratorFromComponent(description, component, context);
 
       const subComponents = [] as unknown as Promise<Intermediate[]>[];
 
@@ -67,7 +81,7 @@ export async function reduceConstructAsync<
             break;
           }
           const [item, ctxt] = value;
-          const mutated = await config.valueMapper(item, prototype.name, ctxt, true);
+          const mutated = await config.getValueFromSubject(item, description.name, ctxt, true);
           const startEvalGenerator = lifecycle({ type: 'eval' });
           const lifecycleGenerator = startEvalGenerator([mutated, ctxt]);
 
@@ -92,14 +106,17 @@ export async function reduceConstructAsync<
       ] as [Promise<Intermediate[]>, Context];
 
       const resolved = [await step[0], step[1]] as [Intermediate[], Context];
-      const normalized = config.stepNormalizer(prototype, resolved) as [ReturnType, Context];
+      const normalized = config.normalizeComponentReductionValues(description, resolved) as [
+        ReturnType,
+        Context,
+      ];
       const previous = await promised;
 
-      promised = (await config.stepReducer(previous, normalized, true)) as [ReturnType, Context];
+      promised = (await config.reduceStep(previous, normalized, true)) as [ReturnType, Context];
     }
 
     return promised;
   }
 
-  return promise_iife();
+  return internalReduceConstructAsync();
 }

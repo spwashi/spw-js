@@ -39,10 +39,10 @@ import {
   AnchorNode,
   AscentOperator,
   BindingOperator,
-  BlockDelimitingOperator,
+  BlockDelimiter,
   BranchOperator,
   ChannelOperator,
-  CommonDelimitingOperator,
+  CommonDelimiter,
   Concept,
   ConvergenceOperator,
   DescentOperator,
@@ -54,7 +54,7 @@ import {
   EvaluationOperator,
   InvocationOperator,
   Location,
-  NodeDelimitingOperator,
+  NodeDelimiter,
   NumberNode,
   PerformanceOperator,
   PerspectiveOperator,
@@ -126,9 +126,9 @@ export const spwItemConstructors = {
   value: ValueOperator,
 
   // delimiting operators
-  operator_delimiter: NodeDelimitingOperator,
-  block_delimiter: BlockDelimitingOperator,
-  common_delimiter: CommonDelimitingOperator,
+  node_delimiter: NodeDelimiter,
+  block_delimiter: BlockDelimiter,
+  common_delimiter: CommonDelimiter,
 
   // concept
   concept: Concept,

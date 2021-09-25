@@ -18,9 +18,9 @@ import {
   ValueOperator,
 } from '@constructs/ast';
 import { BindingOperator } from '@constructs/ast/nodes/operators/pragmatic/single-token/binding/construct';
-import { BlockDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/block/construct';
-import { CommonDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/common/construct';
-import { NodeDelimitingOperator } from '@constructs/ast/nodes/operators/semantic/node/construct';
+import { BlockDelimiter } from '@constructs/ast/nodes/operators/semantic/block/construct';
+import { CommonDelimiter } from '@constructs/ast/nodes/operators/semantic/common/construct';
+import { NodeDelimiter } from '@constructs/ast/nodes/operators/semantic/node/construct';
 import { build, escape } from 'xregexp';
 import { Tokenizer } from '../_types/types';
 import { rn_operator } from '../tokens';
@@ -58,9 +58,9 @@ const operatorTypes = [
   SpreadOperator,
   TransformationOperator,
   ValueOperator,
-  BlockDelimitingOperator,
-  CommonDelimitingOperator,
-  NodeDelimitingOperator,
+  BlockDelimiter,
+  CommonDelimiter,
+  NodeDelimiter,
 ];
 
 export const operatorRules: Tokenizer = {

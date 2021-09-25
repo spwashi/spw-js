@@ -10,7 +10,7 @@ function spwHead() {
     node) {
         return Object.assign({
             src: text(),
-            loc: location(),
+            srcloc: location(),
         }, Object.fromEntries(Object.entries(node).filter(function (e) {
             var k = e[0];
             var v = e[1];
@@ -231,9 +231,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "aggregation",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "aggregation",
+	                     ..._operatorComponents
+	                   })
 }
 
 AscentOperator "AscentOperator"= 
@@ -245,9 +245,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "ascent",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "ascent",
+	                     ..._operatorComponents
+	                   })
 }
 
 BindingOperator "BindingOperator"= 
@@ -259,9 +259,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "binding",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "binding",
+	                     ..._operatorComponents
+	                   })
 }
 
 BranchOperator "BranchOperator"= 
@@ -273,9 +273,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "branch",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "branch",
+	                     ..._operatorComponents
+	                   })
 }
 
 ChannelOperator "ChannelOperator"= 
@@ -287,9 +287,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "channel",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "channel",
+	                     ..._operatorComponents
+	                   })
 }
 
 DescentOperator "DescentOperator"= 
@@ -301,9 +301,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "descent",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "descent",
+	                     ..._operatorComponents
+	                   })
 }
 
 DirectionOperator "DirectionOperator"= 
@@ -315,9 +315,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "direction",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "direction",
+	                     ..._operatorComponents
+	                   })
 }
 
 EvaluationOperator "EvaluationOperator"= 
@@ -329,9 +329,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "evaluation",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "evaluation",
+	                     ..._operatorComponents
+	                   })
 }
 
 InvocationOperator "InvocationOperator"= 
@@ -343,9 +343,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "invocation",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "invocation",
+	                     ..._operatorComponents
+	                   })
 }
 
 PerformanceOperator "PerformanceOperator"= 
@@ -357,9 +357,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "performance",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "performance",
+	                     ..._operatorComponents
+	                   })
 }
 
 PerspectiveOperator "PerspectiveOperator"= 
@@ -371,9 +371,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "perspective",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "perspective",
+	                     ..._operatorComponents
+	                   })
 }
 
 RangeOperator "RangeOperator"= 
@@ -385,9 +385,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "range",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "range",
+	                     ..._operatorComponents
+	                   })
 }
 
 ReductionOperator "ReductionOperator"= 
@@ -399,9 +399,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "reduction",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "reduction",
+	                     ..._operatorComponents
+	                   })
 }
 
 ReferenceOperator "ReferenceOperator"= 
@@ -413,9 +413,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "reference",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "reference",
+	                     ..._operatorComponents
+	                   })
 }
 
 SpreadOperator "SpreadOperator"= 
@@ -427,9 +427,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "spread",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "spread",
+	                     ..._operatorComponents
+	                   })
 }
 
 TransformationOperator "TransformationOperator"= 
@@ -441,9 +441,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "transformation",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "transformation",
+	                     ..._operatorComponents
+	                   })
 }
 
 ValueOperator "ValueOperator"= 
@@ -455,12 +455,12 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "value",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "value",
+	                     ..._operatorComponents
+	                   })
 }
 
-BlockDelimitingOperator "BlockDelimitingOperator"= 
+BlockDelimiter "BlockDelimiter"= 
 _operatorComponents:(
 	(token:";"
 			"_"
@@ -469,12 +469,12 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "block_delimiter",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "block_delimiter",
+	                     ..._operatorComponents
+	                   })
 }
 
-CommonDelimitingOperator "CommonDelimitingOperator"= 
+CommonDelimiter "CommonDelimiter"= 
 _operatorComponents:(
 	(token:","
 			"_"
@@ -483,12 +483,12 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "common_delimiter",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "common_delimiter",
+	                     ..._operatorComponents
+	                   })
 }
 
-NodeDelimitingOperator "NodeDelimitingOperator"= 
+NodeDelimiter "NodeDelimiter"= 
 _operatorComponents:(
 	(token:" "
 			"_"
@@ -497,9 +497,9 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                   kind: "operator_delimiter",
-	                   ..._operatorComponents
-	                 })
+	                     kind: "node_delimiter",
+	                     ..._operatorComponents
+	                   })
 }
 
 Container "Container"= 
@@ -820,7 +820,7 @@ items:(
 						(Space {return null;})
 							/ [\n]
 						)*
-					delimiter:BlockDelimitingOperator
+					delimiter:BlockDelimiter
 					(
 						(Space {return null;})
 							/ [\n]
@@ -845,7 +845,7 @@ items:(
 					(Space {return null;})
 						/ [\n]
 					)*
-				delimiter:BlockDelimitingOperator
+				delimiter:BlockDelimiter
 				(
 					(Space {return null;})
 						/ [\n]
@@ -974,7 +974,7 @@ InstanceExpression
 CommonExpression "CommonExpression"= 
 head:Node
 	(Space {return null;})*
-	tail:(operator:CommonDelimitingOperator
+	tail:(operator:CommonDelimiter
 			(Space {return null;})*
 			item:(
 			Expression
@@ -1169,7 +1169,7 @@ operands:(
 					/ InfixExpression
 					/ Node
 				)
-				NodeDelimitingOperator
+				NodeDelimiter
 				(Space {return null;})* {return operand;})*
 		/ (
 		PrefixExpression

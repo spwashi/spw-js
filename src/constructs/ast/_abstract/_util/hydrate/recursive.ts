@@ -11,11 +11,11 @@ type ConstructObject = { [k: string]: ConstructComponentValue };
 
 /**
  * Add the current location to the
- * @param location
+ * @param srcloc
  * @param context
  */
-function normalizeLocation(location: ConstructLocation | null | undefined) {
-  return location ? { ...location } : null;
+function normalizeLocation(srcloc: ConstructLocation | null | undefined) {
+  return srcloc ? { ...srcloc } : null;
 }
 
 /**
@@ -28,21 +28,37 @@ function hydrateConstruct(n: Partial<RawConstruct>, context: HydrationContext) {
   const node = n as RawConstruct;
   if (!n.kind) throw new Error('trying to hydrate without a kind');
 
+  const propertiesToIgnore = ['kind', 'key'] as (keyof RawConstruct)[];
+  const ignoreProperties = ([k]: [string, any]) => !propertiesToIgnore.includes(k);
   const prehydrated = Object.entries(node)
-    .filter(([k]) => !['kind', 'loc', 'src', 'key'].includes(k))
+    .filter(ignoreProperties)
     .reduce(
-      (all, [key, value]) => ({
-        ...all,
-        [key]: !value ? value : hydrateRecursively(value as HydrationInput, context),
-      }),
+      (all, [key, value]) => {
+        const propertiesNotToHydrate = [
+          //
+          'src',
+          'srcloc',
+        ];
+        if (([...propertiesNotToHydrate] as (keyof RawConstruct)[]).includes(key)) {
+          return {
+            ...all,
+            [key]: value,
+          };
+        }
+        return {
+          ...all,
+          [key]: !value ? value : hydrateRecursively(value as HydrationInput, context),
+        };
+      },
       {
         kind: node.kind,
-        location: normalizeLocation(node.location),
+        srcloc: normalizeLocation(node.srcloc),
       },
     ) as Partial<HydratedConstruct>;
 
-  // note: avoid a loop here if undesired
-  return context.hydrate(prehydrated, context);
+  const posthydrated = context.hydrate(prehydrated, context);
+
+  return posthydrated;
 }
 
 /**
@@ -84,7 +100,6 @@ export function hydrateRecursively(
       .reduce((acc: Construct[], val) => acc.concat(val as Construct), []);
   }
 
-  // hydrate objects
   return !node?.kind
     ? hydratePrimitive(node, hydrationContext)
     : hydrateConstruct(node, hydrationContext);

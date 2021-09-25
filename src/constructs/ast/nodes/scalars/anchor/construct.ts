@@ -13,7 +13,9 @@ export class AnchorNode extends Node<AnchorNodeKind> {
   static components = {
     label: Construct.makeComponent({
       name: 'label',
-      selector: (s) => s.label,
+      selector: (s) => {
+        return s.label;
+      },
     }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {

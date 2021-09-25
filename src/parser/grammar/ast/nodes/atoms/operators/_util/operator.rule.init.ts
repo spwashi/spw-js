@@ -1,3 +1,4 @@
+import { IConstructClass } from '@constructs/ast/_abstract/construct';
 import { ITokenOperatorClass } from '@constructs/ast/nodes/operators/_abstract/_types/atomic';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import {
@@ -8,18 +9,17 @@ import {
   StringCombinator,
   stringLike,
 } from '@spwashi/language/parsers/grammar/combinators';
-import { IConstructClass } from '../../../../../../../constructs/ast/_abstract/construct';
 import { anchorNode } from '../../scalars/anchor/ref';
 
 function init(token: StringCombinator, ruleName: string, nodeName: string, doLabel = true): Rule {
   const _labeledTokenAction =
     // language=JavaScript
     `
-              return {
-                token,
-                label
-              }
-            `;
+            return {
+              token,
+              label
+            }
+          `;
 
   const labeledToken = !doLabel
     ? token
@@ -32,11 +32,11 @@ function init(token: StringCombinator, ruleName: string, nodeName: string, doLab
   const _ruleAction =
     // language=JavaScript
     `
-              return toConstruct({
+            return toConstruct({
                                  kind: "${nodeName}",
                                  ..._operatorComponents
                                })
-            `;
+          `;
 
   return new Rule(ruleName, sequenceOf([pattern.named('_operatorComponents')]), _ruleAction);
 }

@@ -54,9 +54,9 @@ import { ReductionOperatorKind } from '@constructs/ast/nodes/operators/pragmatic
 import { ReferenceOperatorKind } from '@constructs/ast/nodes/operators/pragmatic/single-token/reference/__types';
 import { RelationOperatorKind } from '@constructs/ast/nodes/operators/pragmatic/single-token/relation/__types';
 import { ValueOperatorKind } from '@constructs/ast/nodes/operators/pragmatic/single-token/value/__types';
-import { BlockDelimitingOperatorKind } from '@constructs/ast/nodes/operators/semantic/block/__types';
-import { CommonDelimitingOperatorKind } from '@constructs/ast/nodes/operators/semantic/common/__types';
-import { OperatorDelimitingOperatorKind } from '@constructs/ast/nodes/operators/semantic/node/__types';
+import { BlockDelimiterKind } from '@constructs/ast/nodes/operators/semantic/block/__types';
+import { CommonDelimiterKind } from '@constructs/ast/nodes/operators/semantic/common/__types';
+import { NodeDelimterKind } from '@constructs/ast/nodes/operators/semantic/node/__types';
 import { AnchorNodeKind } from '@constructs/ast/nodes/scalars/anchor/__types';
 import { EmbedmentNodeKind } from '@constructs/ast/nodes/scalars/embedment/__types';
 import { NumberNodeKind } from '@constructs/ast/nodes/scalars/number/__types';
@@ -70,10 +70,10 @@ type ScalarKind =
   | StringNodeKind
   | EmbedmentNodeKind;
 
-type DelimitingOperatorKind =
-  | OperatorDelimitingOperatorKind
-  | CommonDelimitingOperatorKind
-  | BlockDelimitingOperatorKind
+type DelimiterKind =
+  | NodeDelimterKind
+  | CommonDelimiterKind
+  | BlockDelimiterKind
   | DomainSchemeOperatorKind
   | DomainIdentityOperatorKind
   | EssentialSchemeKind
@@ -90,7 +90,7 @@ type OperatorKind =
   | BindingOperatorKind
   | ChannelOperatorKind
   | ConvergenceOperatorKind
-  | DelimitingOperatorKind
+  | DelimiterKind
   | DescentOperatorKind
   | DivergenceOperatorKind
   | DirectionOperatorKind
@@ -139,5 +139,5 @@ export type ConstructKind =
   | ScalarKind
   | OperatorKind
   | ContainerNodeKind
-  | DelimitingOperatorKind
+  | DelimiterKind
   | ExpressionKind;

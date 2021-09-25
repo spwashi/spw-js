@@ -3,7 +3,7 @@ import { expression } from '@grammar/ast/expressions/_abstract/expression.ref';
 import _optionalSpaces from '@grammar/ast/expressions/prefix/_abstract/_components/spaces';
 import { componentize } from '@grammar/ast/expressions/sequence/_util/componentize';
 import { node } from '@grammar/ast/nodes/_abstract/node.ref';
-import { blockDelimitingOperator } from '@grammar/ast/nodes/atoms/operators/delimiters/block/ref';
+import { blockDelimiter } from '@grammar/ast/nodes/atoms/operators/delimiters/block_delimiter/ref';
 import { channelOperator } from '@grammar/ast/nodes/atoms/operators/pragmatic/channel/ref';
 import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
 import { Rule } from '@spwashi/language/parsers/grammar';
@@ -16,7 +16,7 @@ const _expression = {
 };
 const _delimiter = {
   name: 'delimiter',
-  pattern: blockDelimitingOperator.named('delimiter'),
+  pattern: blockDelimiter.named('delimiter'),
 };
 const _head = {
   name: 'head',

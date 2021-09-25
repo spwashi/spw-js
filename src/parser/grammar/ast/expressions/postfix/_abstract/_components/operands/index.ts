@@ -1,7 +1,7 @@
 import { infixExpression } from '@grammar/ast/expressions/infix/_abstract/infix.ref';
 import { prefixExpression } from '@grammar/ast/expressions/prefix/_abstract/prefix.ref';
 import { node } from '@grammar/ast/nodes/_abstract/node.ref';
-import { nodeDelimiter } from '@grammar/ast/nodes/atoms/operators/delimiters/operator/ref';
+import { nodeDelimiter } from '@grammar/ast/nodes/atoms/operators/delimiters/node_delimiter/ref';
 import { spaceNode } from '@grammar/utility/space/space.ref';
 import { anyOf, sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
 

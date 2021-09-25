@@ -12,32 +12,31 @@ export type ConstructReductionConfig<
   // The expected return type
   ReductionOutput = any,
   // What's passed to the evaluator; the result of generating values
-  Intermediate extends any | null | undefined = any,
+  ReductionValue extends any | null | undefined = any,
   // An item that might be returned from the generator after mutation
   InternalComponent extends any = any,
 > = {
   /**
    *
-   * @param o
+   * @param subject
    * @param key
    * @param context
    * @param isAsync
    */
-  valueMapper: (
-    o: any,
+  getValueFromSubject: (
+    subject: any,
     key: ComponentKey,
     context: Context | null,
     isAsync: boolean,
   ) => InternalComponent;
   /**
    *
-   * @param c
-   * @param intermediateValue
-   * @param context
+   * @param componentDescription
+   * @param intermediateReductionStep
    */
-  stepNormalizer: (
+  normalizeComponentReductionValues: (
     componentDescription: ComponentDescription<Context>,
-    [intermediateValue, context]: [Intermediate[], Context | null],
+    intermediateReductionStep: [ReductionValue[], Context | null],
   ) => [ReductionOutput, Context];
   /**
    *
@@ -45,7 +44,7 @@ export type ConstructReductionConfig<
    * @param current
    * @param isAsync
    */
-  stepReducer: (
+  reduceStep: (
     previous: [ReductionOutput | any, Context | null],
     current: [ReductionOutput | null | undefined, Context | null],
     isAsync?: boolean | null,

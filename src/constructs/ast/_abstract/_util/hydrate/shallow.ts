@@ -17,7 +17,7 @@ import { HydrationContext, joinHydratedProperties } from './_/util';
  * @param context
  * @param isAsync
  */
-const _hydrationValueMapper: ConstructReductionConfig['valueMapper'] = (
+const _hydrationValueMapper: ConstructReductionConfig['getValueFromSubject'] = (
   value: any,
   key: any,
   context: InteractionContext | undefined | null,
@@ -39,7 +39,7 @@ function _getHydrationStepNormalizer<Context extends InteractionContext>() {
       }),
       context,
     ];
-  }) as ConstructReductionConfig<Context>['stepNormalizer'];
+  }) as ConstructReductionConfig<Context>['normalizeComponentReductionValues'];
 }
 
 /**
@@ -49,7 +49,7 @@ function _getHydrationStepNormalizer<Context extends InteractionContext>() {
  * @param step
  * @param isAsync
  */
-const _hydrationStepReducer: ConstructReductionConfig<HydrationContext>['stepReducer'] = function (
+const _hydrationStepReducer: ConstructReductionConfig<HydrationContext>['reduceStep'] = function (
   [prev],
   step,
   isAsync,
@@ -94,19 +94,20 @@ export function hydrateShallow<
   const seed: [SeedValue, Context] = [[], context];
 
   const options = {
-    valueMapper: _hydrationValueMapper,
-    stepReducer: _hydrationStepReducer,
-    stepNormalizer: _getHydrationStepNormalizer<Context>(),
+    getValueFromSubject: _hydrationValueMapper,
+    reduceStep: _hydrationStepReducer,
+    normalizeComponentReductionValues: _getHydrationStepNormalizer<Context>(),
   } as ConstructReductionOptions<Context>;
 
   const config = completeConfig<Context>(options);
-  const Ctor = getConstructClass((node as RawConstruct)?.kind);
-  const stepSync = Ctor.reduce<Out[], Out, SeedValue, Unhydrated, Context>(node, options, seed);
-
-  const intermediate = stepSync[0];
-  const hydratedNode = new Ctor(joinHydratedProperties(intermediate));
-  const stepInter = config.stepReducer(stepSync, stepSync, null);
-  const promise = Ctor.reduceAsync<Context>(node, config, stepInter) as Promise<[Output, Context]>;
+  const Construct = getConstructClass((node as RawConstruct)?.kind);
+  const stepSync = Construct.reduce<Out[], Out, SeedValue, Unhydrated, Context>(node, config, seed);
+  const [deconstructedNode] = stepSync;
+  const joinedProperties = joinHydratedProperties(deconstructedNode);
+  const hydratedNode = new Construct(joinedProperties);
+  const promise = Construct.reduceAsync<Context>(node, config, stepSync) as Promise<
+    [Output, Context]
+  >;
   context.absorb && context.absorb(hydratedNode);
   return {
     node: hydratedNode,

@@ -2,16 +2,16 @@ import { staticImplements } from '@constructs/ast/_util/typescript/staticImpleme
 import { operatorComponents } from '@constructs/ast/nodes/operators/_abstract/operator';
 import { Delimiter } from '@constructs/ast/nodes/operators/semantic/_abstract/delimiter';
 import {
-  OperatorDelimitingOperatorKind,
-  OperatorDelimitingOperatorToken,
+  NodeDelimiterToken,
+  NodeDelimterKind,
 } from '@constructs/ast/nodes/operators/semantic/node/__types';
 import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
 
-@staticImplements<IConstructClass<OperatorDelimitingOperatorKind>>()
-export class NodeDelimitingOperator extends Delimiter<OperatorDelimitingOperatorKind> {
-  static kind: OperatorDelimitingOperatorKind = 'operator_delimiter';
+@staticImplements<IConstructClass<NodeDelimterKind>>()
+export class NodeDelimiter extends Delimiter<NodeDelimterKind> {
+  static kind: NodeDelimterKind = 'node_delimiter';
 
-  static token: OperatorDelimitingOperatorToken = ' ';
+  static token: NodeDelimiterToken = ' ';
 
-  static components: ConstructComponents = operatorComponents(NodeDelimitingOperator);
+  static components: ConstructComponents = operatorComponents(NodeDelimiter);
 }

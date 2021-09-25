@@ -31,7 +31,7 @@ function spwHead() {
     return Object.assign(
       {
         src: text(),
-        loc: location(),
+        srcloc: location(),
       },
       Object.fromEntries(
         Object.entries(node).filter((e) => {

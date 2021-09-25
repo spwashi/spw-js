@@ -1,2 +1,2 @@
-export type OperatorDelimitingOperatorToken = ' ';
-export type OperatorDelimitingOperatorKind = 'operator_delimiter';
+export type NodeDelimiterToken = ' ';
+export type NodeDelimterKind = 'node_delimiter';

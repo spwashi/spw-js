@@ -3,15 +3,15 @@ import { operatorComponents } from '@constructs/ast/nodes/operators/_abstract/op
 import { Delimiter } from '@constructs/ast/nodes/operators/semantic/_abstract/delimiter';
 import {
   CommonDelimiterToken,
-  CommonDelimitingOperatorKind,
+  CommonDelimiterKind,
 } from '@constructs/ast/nodes/operators/semantic/common/__types';
 import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
 
-@staticImplements<IConstructClass<CommonDelimitingOperatorKind>>()
-export class CommonDelimitingOperator extends Delimiter<CommonDelimitingOperatorKind> {
-  static kind: CommonDelimitingOperatorKind = 'common_delimiter';
+@staticImplements<IConstructClass<CommonDelimiterKind>>()
+export class CommonDelimiter extends Delimiter<CommonDelimiterKind> {
+  static kind: CommonDelimiterKind = 'common_delimiter';
 
   static token: CommonDelimiterToken = ',';
 
-  static components: ConstructComponents = operatorComponents(CommonDelimitingOperator);
+  static components: ConstructComponents = operatorComponents(CommonDelimiter);
 }
