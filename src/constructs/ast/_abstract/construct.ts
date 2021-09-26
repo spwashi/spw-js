@@ -5,9 +5,9 @@ import {
 } from '@constructs/ast/_abstract/_types/componentDescription';
 import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 import { PlainInteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/plainInteractionContext';
-import { completeConfig } from '@constructs/ast/_abstract/_util/reduce/_/util';
-import { reduceConstructAsync } from '@constructs/ast/_abstract/_util/reduce/async';
-import { reduceConstructSync } from '@constructs/ast/_abstract/_util/reduce/sync';
+import { completeConstructReductionConfig } from '@constructs/ast/_abstract/_util/reduce/_util/config/completeConfig';
+import { reduceConstructAsync } from '@constructs/ast/_abstract/_util/reduce/async/reduceConstructAsync';
+import { reduceConstructSync } from '@constructs/ast/_abstract/_util/reduce/sync/reduceConstructSync';
 import { LanguageComponent } from '@constructs/ast/_abstract/component';
 import { ConstructKind } from '../_types/kinds';
 
@@ -61,14 +61,14 @@ export class Construct<
     const reduced = Ctor.reduce(
       this.internal ?? null,
       {
-        getValueFromSubject(subject) {
+        deriveSubject(subject) {
           if ((typeof subject === 'string' && subject) || typeof subject === 'number') {
             return subject;
           }
           return subject?.key;
         },
 
-        normalizeComponentReductionValues(prototype: Prototype, [intermediate, context]) {
+        normalizeStep(prototype: Prototype, [intermediate, context]) {
           const evaluator = prototype.evaluators.stringify as ComponentEvaluatorObject['stringify'];
           let evaluated: string | null;
           if (evaluator) {
@@ -116,7 +116,7 @@ export class Construct<
   ): _Output {
     return reduceConstructSync<ReductionContext>(
       subject,
-      completeConfig<ReductionContext>(options ?? {}),
+      completeConstructReductionConfig<ReductionContext>(options ?? {}),
       seed,
       (this.components ?? []) as ComponentDescription<ReductionContext>[],
     ) as _Output;
@@ -146,7 +146,7 @@ export class Construct<
   ): Promise<_Output> {
     return reduceConstructAsync<ReductionContext>(
       subject,
-      completeConfig<ReductionContext>(options ?? {}),
+      completeConstructReductionConfig<ReductionContext>(options ?? {}),
       seed,
       (this.components ?? []) as ComponentDescription<ReductionContext>[],
     ) as Promise<_Output>;

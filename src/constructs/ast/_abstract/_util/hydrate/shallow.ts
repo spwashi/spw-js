@@ -4,7 +4,7 @@ import {
 } from '@constructs/ast/_abstract/_types';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
-import { completeConfig } from '@constructs/ast/_abstract/_util/reduce/_/util';
+import { completeConstructReductionConfig } from '@constructs/ast/_abstract/_util/reduce/_util/config/completeConfig';
 import { getConstructClass } from '../../../../index';
 import { RawConstruct } from '../../_types/internal';
 import { Construct } from '../../construct';
@@ -17,7 +17,7 @@ import { HydrationContext, joinHydratedProperties } from './_/util';
  * @param context
  * @param isAsync
  */
-const _hydrationValueMapper: ConstructReductionConfig['getValueFromSubject'] = (
+const _hydrationValueMapper: ConstructReductionConfig['deriveSubject'] = (
   value: any,
   key: any,
   context: InteractionContext | undefined | null,
@@ -39,7 +39,7 @@ function _getHydrationStepNormalizer<Context extends InteractionContext>() {
       }),
       context,
     ];
-  }) as ConstructReductionConfig<Context>['normalizeComponentReductionValues'];
+  }) as ConstructReductionConfig<Context>['normalizeStep'];
 }
 
 /**
@@ -94,12 +94,12 @@ export function hydrateShallow<
   const seed: [SeedValue, Context] = [[], context];
 
   const options = {
-    getValueFromSubject: _hydrationValueMapper,
+    deriveSubject: _hydrationValueMapper,
     reduceStep: _hydrationStepReducer,
-    normalizeComponentReductionValues: _getHydrationStepNormalizer<Context>(),
+    normalizeStep: _getHydrationStepNormalizer<Context>(),
   } as ConstructReductionOptions<Context>;
 
-  const config = completeConfig<Context>(options);
+  const config = completeConstructReductionConfig<Context>(options);
   const Construct = getConstructClass((node as RawConstruct)?.kind);
   const stepSync = Construct.reduce<Out[], Out, SeedValue, Unhydrated, Context>(node, config, seed);
   const [deconstructedNode] = stepSync;

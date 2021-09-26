@@ -23,7 +23,7 @@ export type ConstructReductionConfig<
    * @param context
    * @param isAsync
    */
-  getValueFromSubject: (
+  deriveSubject: (
     subject: any,
     key: ComponentKey,
     context: Context | null,
@@ -34,7 +34,7 @@ export type ConstructReductionConfig<
    * @param componentDescription
    * @param intermediateReductionStep
    */
-  normalizeComponentReductionValues: (
+  normalizeStep: (
     componentDescription: ComponentDescription<Context>,
     intermediateReductionStep: [ReductionValue[], Context | null],
   ) => [ReductionOutput, Context];
