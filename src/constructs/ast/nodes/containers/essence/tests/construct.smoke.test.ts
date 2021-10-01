@@ -25,7 +25,7 @@ describe('Essence', () => {
 
     expect(last.kind).toEqual(Essence.kind);
     expect(last.key).toEqual('[essence]');
-    expect(all.length).toEqual(4);
+    expect(all.length).toEqual(5);
 
     done();
   });

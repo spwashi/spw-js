@@ -38,7 +38,7 @@ export class BlockExpression extends Expression<BlockExpressionKind> {
           const key = Array.from(items ?? [])
             .filter(Boolean)
             .join('; ');
-          return key ? key + ';' : '';
+          return key ? key + ((items?.length ?? 0) > 1 ? ';' : '') : '';
         },
       },
     }),

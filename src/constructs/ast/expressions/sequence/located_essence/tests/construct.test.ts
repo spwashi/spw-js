@@ -3,7 +3,7 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { locatedEssenceExpressionRule } from '@grammar/ast/expressions/sequence/located_essence/rule';
+import { locatedEssenceExpressionRule } from '@grammar/ast/expressions/sequences/located_essence/rule';
 import { LocatedEssenceExpression } from '../construct';
 
 describe('Rule', () => {
@@ -25,7 +25,7 @@ describe('Located Essence Expressions', () => {
 
     expect(last.kind).toEqual(LocatedEssenceExpression.kind);
     expect(last.key).toEqual(`(location)[essence]`);
-    expect(all.length).toEqual(9);
+    expect(all.length).toEqual(11);
 
     done();
   });

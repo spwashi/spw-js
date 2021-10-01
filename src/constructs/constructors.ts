@@ -1,14 +1,14 @@
 import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
 import { ConstructKind } from '@constructs/ast/_types/kinds';
-import { InfixExpression } from '@constructs/ast/expressions/infix/construct';
-import { AggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/_variants/infixed/expression';
-import { PrefixedAggregationExpression } from '@constructs/ast/expressions/infix/operations/aggregation/_variants/prefixed/expression';
-import { InfixedBindingExpression } from '@constructs/ast/expressions/infix/operations/binding/_variants/infixed/expression';
-import { PrefixedBindingExpression } from '@constructs/ast/expressions/infix/operations/binding/_variants/prefixed/expression';
-import { InfixedReductionExpression } from '@constructs/ast/expressions/infix/operations/reduction/_variants/infixed/expression';
-import { PrefixedReductionExpression } from '@constructs/ast/expressions/infix/operations/reduction/_variants/prefixed/expression';
-import { PostfixExpression } from '@constructs/ast/expressions/postfix/construct';
-import { PrefixExpression } from '@constructs/ast/expressions/prefix/construct';
+import { InfixedExpression } from '@constructs/ast/expressions/infixed/construct';
+import { InfixedAggregationExpression } from '@constructs/ast/expressions/infixed/operations/aggregation/_variants/infixed/expression';
+import { PrefixedAggregationExpression } from '@constructs/ast/expressions/infixed/operations/aggregation/_variants/prefixed/expression';
+import { InfixedBindingExpression } from '@constructs/ast/expressions/infixed/operations/binding/_variants/infixed/expression';
+import { PrefixedBindingExpression } from '@constructs/ast/expressions/infixed/operations/binding/_variants/prefixed/expression';
+import { InfixedReductionExpression } from '@constructs/ast/expressions/infixed/operations/reduction/_variants/infixed/expression';
+import { PrefixedReductionExpression } from '@constructs/ast/expressions/infixed/operations/reduction/_variants/prefixed/expression';
+import { PostfixExpression } from '@constructs/ast/expressions/postfixed/construct';
+import { PrefixExpression } from '@constructs/ast/expressions/prefixed/construct';
 import { BlockExpression } from '@constructs/ast/expressions/sequence/block/construct';
 import {
   BehaviorExpression,
@@ -85,7 +85,7 @@ export const spwItemConstructors = {
   // standard operators
   // Aggregation
   aggregation: AggregationOperator,
-  aggregation_expression: AggregationExpression,
+  infixed_aggregation_expression: InfixedAggregationExpression,
   prefixed_aggregation_expression: PrefixedAggregationExpression,
 
   // Binding
@@ -154,7 +154,7 @@ export const spwItemConstructors = {
   // block
   block: BlockExpression,
 
-  infix_expression: InfixExpression,
+  infix_expression: InfixedExpression,
   common_expression: CommonExpression,
   common_tail: CommonExpressionTail,
 

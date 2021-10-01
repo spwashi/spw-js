@@ -3,7 +3,7 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { locatedEntityExpressionRule } from '@grammar/ast/expressions/sequence/located_entity/rule';
+import { locatedEntityExpressionRule } from '@grammar/ast/expressions/sequences/located_entity/rule';
 import { LocatedEntityExpression } from '../construct';
 
 describe('Rule', () => {
@@ -26,7 +26,7 @@ describe('LocatedEntityExpression', () => {
 
     expect(last.kind).toEqual(LocatedEntityExpression.kind);
     expect(last.key).toEqual('(somewhere)<something>someone');
-    expect(all.length).toEqual(11);
+    expect(all.length).toEqual(13);
 
     done();
   });

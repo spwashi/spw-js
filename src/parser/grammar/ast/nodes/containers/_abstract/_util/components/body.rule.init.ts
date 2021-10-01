@@ -1,8 +1,4 @@
-import { expression } from '@grammar/ast/expressions/_abstract/expression.ref';
-import { block } from '@grammar/ast/expressions/sequence/block/ref';
-import { node } from '@grammar/ast/nodes/_abstract/node.ref';
-import { channelOperator } from '@grammar/ast/nodes/atoms/operators/pragmatic/channel/ref';
-import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
+import { block } from '@grammar/ast/expressions/sequences/block/ref';
 import { newline, space, spaceTab } from '@grammar/utility/space/whitespace.patterns';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import {
@@ -42,7 +38,7 @@ function getEmptyBlockCombinator(
 export function createContainerBodyRules(ruleName: string): Rule[] {
   const bodyName = getContainerNodeComponentReferences(ruleName).body.ruleName;
   const __ = zeroOrMoreOf(anyOf([space, newline]));
-  const nodes = [block, channelOperator, expression, container, node, __];
+  const nodes = [block];
   const inner = anyOf(nodes).named('expression');
   const listOfAnyNode = sequenceOf([
     __.named('leadingspace'),

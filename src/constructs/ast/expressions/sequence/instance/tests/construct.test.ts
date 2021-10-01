@@ -3,7 +3,7 @@ import {
   getAllNodes,
   getSalientNode,
 } from '@constructs/runtime/_util/initializers/runtime/initRuntimeWithSrc';
-import { instanceExpressionRule } from '@grammar/ast/expressions/sequence/instance/rule';
+import { instanceExpressionRule } from '@grammar/ast/expressions/sequences/instance/rule';
 import { InstanceExpression } from '../construct';
 
 describe('Rule', () => {
@@ -40,7 +40,7 @@ describe('Complex InstanceExpression', () => {
     const test_expectedKey = `(<>something(){}[]) is (<>something(){}[])`;
 
     const all = getAllNodes(test_input, cache);
-    expect(all.length).toEqual(40);
+    expect(all.length).toEqual(42);
 
     const last = getSalientNode(test_input, cache);
     expect(last?.kind).toEqual(PhraseExpression.kind);
@@ -52,7 +52,7 @@ describe('Complex InstanceExpression', () => {
     const test_expectedKey = `(<concept>something(location,location){domain}[essence]) is (<concept>something(){}[])`;
 
     const all = getAllNodes(test_input, cache);
-    expect(all.length).toEqual(49);
+    expect(all.length).toEqual(56);
 
     const last = getSalientNode(test_input, cache);
     expect(last?.kind).toEqual(PhraseExpression.kind);

@@ -25,7 +25,7 @@ describe('Location', () => {
 
     expect(last.kind).toEqual(Location.kind);
     expect(last.key).toEqual('(location)');
-    expect(all.length).toEqual(4);
+    expect(all.length).toEqual(5);
 
     done();
   });

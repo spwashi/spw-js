@@ -11,7 +11,7 @@ function spwHead() {
         return Object.assign({
             src: text(),
             srcloc: location(),
-        }, Object.fromEntries(Object.entries(node).filter(function (e) {
+        }, Object.fromEntries(Object.entries(node).filter((e) => {
             var k = e[0];
             var v = e[1];
             return k === 'key' ? true : v !== undefined;
@@ -42,8 +42,8 @@ function spwHead() {
         },
     };
     return {
-        toConstruct: toConstruct,
-        constructs: constructs,
+        toConstruct,
+        constructs,
     };
 };
   var head = spwHead();
@@ -53,7 +53,10 @@ function spwHead() {
 
 Top "Top"= 
 (
-		(Space {return null;})
+		(
+			" "
+				/ [\t]
+			)
 			/ [\n]
 		)*
 	body:(
@@ -63,7 +66,10 @@ Top "Top"=
 		/ Node
 	)
 	(
-		(Space {return null;})
+		(
+			" "
+				/ [\t]
+			)
 			/ [\n]
 		)*
 {
@@ -543,17 +549,7 @@ DomainBody "DomainBody"=
 		" "
 			/ [\n]
 		)*
-	expression:(
-	BlockExpression
-		/ ChannelOperator
-		/ Expression
-		/ Container
-		/ Node
-		/ (
-			" "
-				/ [\n]
-			)*
-	)
+	expression:BlockExpression
 	trailingspace:(
 		" "
 			/ [\n]
@@ -617,17 +613,7 @@ EssenceBody "EssenceBody"=
 		" "
 			/ [\n]
 		)*
-	expression:(
-	BlockExpression
-		/ ChannelOperator
-		/ Expression
-		/ Container
-		/ Node
-		/ (
-			" "
-				/ [\n]
-			)*
-	)
+	expression:BlockExpression
 	trailingspace:(
 		" "
 			/ [\n]
@@ -691,17 +677,7 @@ ConceptBody "ConceptBody"=
 		" "
 			/ [\n]
 		)*
-	expression:(
-	BlockExpression
-		/ ChannelOperator
-		/ Expression
-		/ Container
-		/ Node
-		/ (
-			" "
-				/ [\n]
-			)*
-	)
+	expression:BlockExpression
 	trailingspace:(
 		" "
 			/ [\n]
@@ -765,17 +741,7 @@ LocationBody "LocationBody"=
 		" "
 			/ [\n]
 		)*
-	expression:(
-	BlockExpression
-		/ ChannelOperator
-		/ Expression
-		/ Container
-		/ Node
-		/ (
-			" "
-				/ [\n]
-			)*
-	)
+	expression:BlockExpression
 	trailingspace:(
 		" "
 			/ [\n]
@@ -805,7 +771,8 @@ container:(
 }
 
 Expression "Expression"= 
-InfixExpression
+PrefixExpression
+	/ InfixedExpression
 	/ SequenceExpression
 
 BlockExpression "BlockExpression"= 
@@ -817,18 +784,22 @@ items:(
 						/ ChannelOperator
 					)
 					(
-						(Space {return null;})
+						" "
 							/ [\n]
+							/ (
+							" "
+								/ [\t]
+							)
 						)*
 					delimiter:BlockDelimiter
 					(
-						(Space {return null;})
+						" "
 							/ [\n]
+							/ (
+							" "
+								/ [\t]
+							)
 						)* {return expression;})+
-			(
-				(Space {return null;})
-					/ [\n]
-				)*
 			tail:(
 				Expression
 					/ Container
@@ -842,13 +813,21 @@ items:(
 					/ ChannelOperator
 				)
 				(
-					(Space {return null;})
+					" "
 						/ [\n]
+						/ (
+						" "
+							/ [\t]
+						)
 					)*
 				delimiter:BlockDelimiter
 				(
-					(Space {return null;})
+					" "
 						/ [\n]
+						/ (
+						" "
+							/ [\t]
+						)
 					)* {return expression;})+ {return[...head];})
 		/ tail:(
 			Expression
@@ -971,6 +950,15 @@ InstanceExpression
 	/ LocatedEssenceExpression
 	/ LocatedDomainExpression
 
+InfixedExpression "InfixedExpression"= 
+CommonExpression
+	/ PhraseExpression
+	/ InfixedBindingExpression
+	/ InfixedTransformationExpression
+	/ InfixedAggregationExpression
+	/ InfixedReductionExpression
+	/ InfixedRangeExpression
+
 CommonExpression "CommonExpression"= 
 head:Node
 	(Space {return null;})*
@@ -1013,177 +1001,279 @@ head:(
 	return toConstruct(phrase)
 }
 
-AggregationExpression "AggregationExpression"= 
+InfixedAggregationExpression "InfixedAggregationExpression"= 
 head:(
-	Container
+	SequenceExpression
+		/ Container
 		/ Node
+		/ ChannelOperator
 	)
 	(Space {return null;})*
-	tail:((Space {return null;})*
-			operator:AggregationOperator
-			(Space {return null;})*
-			item:(
-			Expression
-				/ Node
-			) {return toConstruct({kind:"prefixed_aggregation_expression",operator:operator,item:item});})+
+	tail:(
+	(Space {return null;})*
+		PrefixedAggregationExpression
+	)
 {
 	return toConstruct({
-	                     kind: 'aggregation_expression',
+	                     kind: 'infixed_aggregation_expression',
 	                     head: head,
-	                     tail,
+	                     tail: tail,
 	                   })
 }
 
 InfixedBindingExpression "InfixedBindingExpression"= 
 head:(
-	Container
+	SequenceExpression
+		/ Container
 		/ Node
 		/ ChannelOperator
 	)
 	(Space {return null;})*
-	tail:((Space {return null;})*
-			operator:BindingOperator
-			(Space {return null;})*
-			item:(
-			Expression
-				/ Node
-			) {return toConstruct({kind:"prefixed_binding_expression",operator:operator,item:item});})+
+	tail:(
+	(Space {return null;})*
+		PrefixedBindingExpression
+	)
 {
 	return toConstruct({
 	                     kind: 'infixed_binding_expression',
 	                     head: head,
-	                     tail,
+	                     tail: tail,
 	                   })
 }
 
 InfixedReductionExpression "InfixedReductionExpression"= 
 head:(
-	Container
+	SequenceExpression
+		/ Container
 		/ Node
+		/ ChannelOperator
 	)
 	(Space {return null;})*
-	tail:((Space {return null;})*
-			operator:ReductionOperator
-			(Space {return null;})*
-			item:(
-			Expression
-				/ Node
-			) {return toConstruct({kind:"prefixed_reduction_expression",operator:operator,item:item});})+
+	tail:(
+	(Space {return null;})*
+		PrefixedReductionExpression
+	)
 {
 	return toConstruct({
 	                     kind: 'infixed_reduction_expression',
 	                     head: head,
-	                     tail,
+	                     tail: tail,
 	                   })
 }
 
 InfixedTransformationExpression "InfixedTransformationExpression"= 
 head:(
-	Container
+	SequenceExpression
+		/ Container
 		/ Node
 		/ ChannelOperator
 	)
 	(Space {return null;})*
-	tail:((Space {return null;})*
-			operator:TransformationOperator
-			(Space {return null;})*
-			item:(
-			Expression
-				/ Container
-				/ Node
-			) {return toConstruct({kind:"prefixed_transformation_expression",operator:operator,item:item});})+
+	tail:(
+	(Space {return null;})*
+		PrefixedTransformationExpression
+	)
 {
 	return toConstruct({
 	                     kind: 'infixed_transformation_expression',
 	                     head: head,
-	                     tail,
+	                     tail: tail,
 	                   })
 }
 
 InfixedRangeExpression "InfixedRangeExpression"= 
 head:(
-	Container
+	SequenceExpression
+		/ Container
 		/ Node
 		/ ChannelOperator
 	)
 	(Space {return null;})*
-	tail:((Space {return null;})*
-			operator:RangeOperator
-			(Space {return null;})*
-			item:(
-			Expression
-				/ Node
-			) {return toConstruct({kind:"prefixed_range_expression",operator:operator,item:item});})+
+	tail:(
+	(Space {return null;})*
+		PrefixedRangeExpression
+	)
 {
 	return toConstruct({
 	                     kind: 'infixed_range_expression',
 	                     head: head,
-	                     tail,
+	                     tail: tail,
 	                   })
 }
 
-InfixExpression "InfixExpression"= 
-CommonExpression
-	/ PhraseExpression
-	/ InfixedBindingExpression
-	/ InfixedTransformationExpression
-	/ AggregationExpression
-	/ InfixedReductionExpression
-	/ InfixedRangeExpression
-
-PrefixExpression "PrefixExpression"= 
-operator:(
-	SpreadOperator
-		/ RangeOperator
-		/ DescentOperator
-		/ DirectionOperator
-		/ AggregationOperator
-		/ AscentOperator
-		/ BindingOperator
-		/ BranchOperator
-		/ ChannelOperator
-		/ EvaluationOperator
-		/ InvocationOperator
-		/ PerformanceOperator
-		/ PerspectiveOperator
-		/ ReductionOperator
-		/ ReferenceOperator
-		/ ValueOperator
-	)
+PrefixedAggregationExpression "PrefixedAggregationExpression"= 
+(head:AggregationOperator
 	(
-		(Space {return null;})
+		(
+			" "
+				/ [\t]
+			)
 			/ [\n]
 		)*
-	operands:(
-	Expression
+	tail:(
+	CommonExpression
+		/ PhraseExpression
+		/ InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedReductionExpression
+		/ InfixedRangeExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ Container
 		/ Node
+		/ ChannelOperator
 	)
-{
-	return toConstruct({ kind: 'prefix_expression', operator, operands });
-}
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)* {return toConstruct({kind:"prefixed_aggregation_expression",head:head,tail:tail});})
 
-PostfixExpression "PostfixExpression"= 
-operands:(
-	(operand:(
-				PrefixExpression
-					/ InfixExpression
-					/ Node
-				)
-				NodeDelimiter
-				(Space {return null;})* {return operand;})*
-		/ (
-		PrefixExpression
-			/ InfixExpression
-			/ Node
-		)
+PrefixedBindingExpression "PrefixedBindingExpression"= 
+(head:BindingOperator
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:(
+	CommonExpression
+		/ PhraseExpression
+		/ InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedReductionExpression
+		/ InfixedRangeExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ Container
+		/ Node
+		/ ChannelOperator
 	)
-	(Space {return null;})*
-	operator:Operator
-{
-	const expression = {
-	  kind: 'postfix_expression',
-	  operator,
-	  operands
-	};
-	return toConstruct(expression);
-}
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)* {return toConstruct({kind:"prefixed_binding_expression",head:head,tail:tail});})
+
+PrefixedRangeExpression "PrefixedRangeExpression"= 
+(head:RangeOperator
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:(
+	CommonExpression
+		/ PhraseExpression
+		/ InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedReductionExpression
+		/ InfixedRangeExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ Container
+		/ Node
+		/ ChannelOperator
+	)
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)* {return toConstruct({kind:"prefixed_range_expression",head:head,tail:tail});})
+
+PrefixedReductionExpression "PrefixedReductionExpression"= 
+(head:ReductionOperator
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:(
+	CommonExpression
+		/ PhraseExpression
+		/ InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedReductionExpression
+		/ InfixedRangeExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ Container
+		/ Node
+		/ ChannelOperator
+	)
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)* {return toConstruct({kind:"prefixed_reduction_expression",head:head,tail:tail});})
+
+PrefixedTransformationExpression "PrefixedTransformationExpression"= 
+(head:TransformationOperator
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:(
+	CommonExpression
+		/ PhraseExpression
+		/ InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedReductionExpression
+		/ InfixedRangeExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ Container
+		/ Node
+		/ ChannelOperator
+	)
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)* {return toConstruct({kind:"prefixed_transformation_expression",head:head,tail:tail});})
+
+PrefixExpression "PrefixExpression"= 
+PrefixedAggregationExpression
+	/ PrefixedBindingExpression
+	/ PrefixedRangeExpression
+	/ PrefixedReductionExpression
+	/ PrefixedTransformationExpression

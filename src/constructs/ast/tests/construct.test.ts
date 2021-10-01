@@ -10,7 +10,7 @@ describe('Something', () => {
     [
       `
         ( #_more; interesting ){
-          #_test;
+          test => #_test;
           #_test => test;
           test test;
         }[];

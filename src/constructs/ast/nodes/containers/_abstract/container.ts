@@ -1,7 +1,6 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { ConstructKind } from '@constructs/ast/_types/kinds';
-import { BlockDelimiter } from '@constructs/ast/nodes/operators/semantic/block/construct';
-import { CommonDelimiter } from '@constructs/ast/nodes/operators/semantic/common/construct';
+import { BlockExpression } from '@constructs/ast/expressions/sequence/block/construct';
 import { NodeDelimiter } from '@constructs/ast/nodes/operators/semantic/node/construct';
 import { Construct, ConstructComponents } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
@@ -63,24 +62,11 @@ export abstract class ContainerNode<
       name: 'body',
 
       generator: function* (_body, ctxt) {
-        const body = !(Symbol.iterator in Object(_body)) ? (_body ? [_body] : []) : _body;
-
-        let first = true;
-        let prev;
-        for (const sub of body) {
-          if (!first && Construct.isConstruct(sub)) {
-            const excluded = [BlockDelimiter, NodeDelimiter, CommonDelimiter].map(
-              (c) => c.kind as ConstructKind,
-            );
-            if (!excluded.includes(sub?.kind) && !excluded.includes(prev?.kind)) {
-              yield [new BlockDelimiter(), ctxt];
-              yield [new NodeDelimiter(), ctxt];
-            }
-          }
-          first = false;
-          yield [sub, ctxt];
-          prev = sub;
+        if (_body && !BlockExpression.isBlockExpression(_body)) {
+          _body = new BlockExpression({ items: [_body] });
         }
+
+        yield [_body, ctxt];
 
         return null;
       },

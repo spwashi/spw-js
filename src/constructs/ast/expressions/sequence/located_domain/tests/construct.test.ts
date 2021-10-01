@@ -3,7 +3,7 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { locatedDomainExpressionRule } from '@grammar/ast/expressions/sequence/located_domain/rule';
+import { locatedDomainExpressionRule } from '@grammar/ast/expressions/sequences/located_domain/rule';
 import { LocatedDomainExpression } from '../construct';
 
 describe('Rule', () => {
@@ -25,7 +25,7 @@ describe('Node Expressions', () => {
 
     expect(last.kind).toEqual(LocatedDomainExpression.kind);
     expect(last.key).toEqual('(location){domain}');
-    expect(all.length).toEqual(9);
+    expect(all.length).toEqual(11);
 
     done();
   });

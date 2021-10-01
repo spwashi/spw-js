@@ -1,6 +1,6 @@
 export { BehaviorExpression } from '@constructs/ast/expressions/sequence/behavior/construct';
-export { CommonExpression } from '@constructs/ast/expressions/infix/common/expression';
-export { CommonExpressionTail } from '@constructs/ast/expressions/infix/common/_components/tail';
+export { CommonExpression } from '@constructs/ast/expressions/infixed/common/expression';
+export { CommonExpressionTail } from '@constructs/ast/expressions/infixed/common/_components/tail';
 export { ConceptSchemeOperator } from '@constructs/ast/nodes/containers/concept/_components/scheme/construct';
 export { ConceptualIdentityOperator } from '@constructs/ast/nodes/containers/concept/_components/identity/construct';
 export { DomainIdentityOperator } from '@constructs/ast/nodes/containers/domain/_components/identity/construct';
@@ -15,5 +15,5 @@ export { LocatedEntityExpression } from '@constructs/ast/expressions/sequence/lo
 export { LocatedEssenceExpression } from '@constructs/ast/expressions/sequence/located_essence/construct';
 export { LocationalIdentityOperator } from '@constructs/ast/nodes/containers/location/_components/identity/construct';
 export { LocationalSchemeOperator } from '@constructs/ast/nodes/containers/location/_components/scheme/construct';
-export { PhraseExpression } from '@constructs/ast/expressions/infix/phrase/expression';
-export * from './infix/operations';
+export { PhraseExpression } from '@constructs/ast/expressions/infixed/phrase/expression';
+export * from './infixed/operations';

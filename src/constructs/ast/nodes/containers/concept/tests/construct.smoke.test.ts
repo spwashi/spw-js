@@ -25,7 +25,7 @@ describe('Concept', () => {
 
     expect(last.kind).toEqual(Concept.kind);
     expect(last.key).toEqual('<concept>');
-    expect(all.length).toEqual(4);
+    expect(all.length).toEqual(5);
 
     done();
   });

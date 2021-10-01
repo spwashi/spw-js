@@ -36,16 +36,16 @@ export class Construct<
 
   readonly kind: K = 'unknown' as K;
 
-  protected readonly _internal: U | null;
+  readonly #internal: U | null;
 
   constructor(internal?: U) {
     const constructor = (<typeof Construct>this.constructor) as unknown as typeof Construct;
     this.kind = constructor.kind as K;
-    this._internal = internal || null;
+    this.#internal = internal || null;
   }
 
   get internal(): U | null {
-    return this._internal;
+    return this.#internal;
   }
 
   get key(): ConstructComponentKey {

@@ -1,7 +1,7 @@
 import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 import { getSalientNode } from '@constructs/runtime/_util/initializers/runtime/initRuntimeWithSrc';
 import { selectAllNodesFromRuntime } from '@constructs/runtime/_util/selectors';
-import { entityExpressionRule } from '@grammar/ast/expressions/sequence/entity/rule';
+import { entityExpressionRule } from '@grammar/ast/expressions/sequences/entity/rule';
 import { EntityExpression } from '../construct';
 
 describe('Rule', () => {
@@ -26,7 +26,7 @@ describe('EntityExpression', () => {
 
     expect(last?.kind).toEqual(EntityExpression.kind);
     expect(last?.key).toEqual('<conceptual_anchor>name');
-    expect(all.length).toEqual(6);
+    expect(all.length).toEqual(7);
 
     done();
   });

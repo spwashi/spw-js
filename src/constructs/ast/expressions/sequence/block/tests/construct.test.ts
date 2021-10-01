@@ -1,6 +1,6 @@
 import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 import { selectAllNodesFromRuntime } from '@constructs/runtime/_util/selectors';
-import { blockExpressionRule } from '@grammar/ast/expressions/sequence/block/rule';
+import { blockExpressionRule } from '@grammar/ast/expressions/sequences/block/rule';
 import { BlockExpression } from '../construct';
 
 describe('Rule', () => {

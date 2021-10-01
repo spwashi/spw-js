@@ -3,7 +3,7 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { locatedConceptExpressionRule } from '@grammar/ast/expressions/sequence/located_concept/rule';
+import { locatedConceptExpressionRule } from '@grammar/ast/expressions/sequences/located_concept/rule';
 import { LocatedConceptExpression } from '../construct';
 
 describe('Rule', () => {
@@ -25,7 +25,7 @@ describe('LocatedConceptExpression', () => {
 
     expect(last.kind).toEqual(LocatedConceptExpression.kind);
     expect(last.key).toEqual('(somewhere)<something>');
-    expect(all.length).toEqual(9);
+    expect(all.length).toEqual(11);
 
     done();
   });

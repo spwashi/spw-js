@@ -3,7 +3,7 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { behaviorExpressionRule } from '@grammar/ast/expressions/sequence/behavior/rule';
+import { behaviorExpressionRule } from '@grammar/ast/expressions/sequences/behavior/rule';
 import { BehaviorExpression } from '../construct';
 
 describe('Rule', () => {
@@ -26,7 +26,7 @@ describe('Behavior Expressions', () => {
 
     expect(last.kind).toEqual(BehaviorExpression.kind);
     expect(last.key).toEqual(`(location){domain}[essence]`);
-    expect(all.length).toEqual(13);
+    expect(all.length).toEqual(16);
 
     done();
   });
