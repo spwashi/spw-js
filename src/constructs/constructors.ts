@@ -22,6 +22,7 @@ import {
   EssentialIdentityOperator,
   EssentialSchemeOperator,
   InfixedRangeExpression,
+  InfixedTransformationExpression,
   InstanceExpression,
   LocatedConceptExpression,
   LocatedDomainExpression,
@@ -32,7 +33,6 @@ import {
   PhraseExpression,
   PrefixedRangeExpression,
   PrefixedTransformationExpression,
-  InfixedTransformationExpression,
 } from './ast/expressions';
 import {
   AggregationOperator,
@@ -84,22 +84,22 @@ export const spwItemConstructors = {
 
   // standard operators
   // Aggregation
-  aggregation: AggregationOperator,
+  aggregation_operator: AggregationOperator,
   infixed_aggregation_expression: InfixedAggregationExpression,
   prefixed_aggregation_expression: PrefixedAggregationExpression,
 
   // Binding
-  binding: BindingOperator,
+  binding_operator: BindingOperator,
   infixed_binding_expression: InfixedBindingExpression,
   prefixed_binding_expression: PrefixedBindingExpression,
 
   // Range
-  range: RangeOperator,
+  range_operator: RangeOperator,
   infixed_range_expression: InfixedRangeExpression,
   prefixed_range_expression: PrefixedRangeExpression,
 
   // Reduction
-  reduction: ReductionOperator,
+  reduction_operator: ReductionOperator,
   infixed_reduction_expression: InfixedReductionExpression,
   prefixed_reduction_expression: PrefixedReductionExpression,
 
@@ -108,22 +108,22 @@ export const spwItemConstructors = {
   prefixed_transformation_expression: PrefixedTransformationExpression,
 
   //
-  ascent: AscentOperator,
-  branch: BranchOperator,
-  channel: ChannelOperator,
-  convergence: ConvergenceOperator,
-  descent: DescentOperator,
-  direction: DirectionOperator,
-  divergence: DivergenceOperator,
-  evaluation: EvaluationOperator,
-  invocation: InvocationOperator,
-  performance: PerformanceOperator,
-  perspective: PerspectiveOperator,
-  relation: RelationOperator,
-  reference: ReferenceOperator,
-  spread: SpreadOperator,
-  transformation: TransformationOperator,
-  value: ValueOperator,
+  ascent_operator: AscentOperator,
+  branch_operator: BranchOperator,
+  channel_operator: ChannelOperator,
+  convergence_operator: ConvergenceOperator,
+  descent_operator: DescentOperator,
+  direction_operator: DirectionOperator,
+  divergence_operator: DivergenceOperator,
+  evaluation_operator: EvaluationOperator,
+  invocation_operator: InvocationOperator,
+  performance_operator: PerformanceOperator,
+  perspective_operator: PerspectiveOperator,
+  relation_operator: RelationOperator,
+  reference_operator: ReferenceOperator,
+  spread_operator: SpreadOperator,
+  transformation_operator: TransformationOperator,
+  value_operator: ValueOperator,
 
   // delimiting operators
   node_delimiter: NodeDelimiter,
@@ -131,19 +131,19 @@ export const spwItemConstructors = {
   common_delimiter: CommonDelimiter,
 
   // concept
-  concept: Concept,
+  concept_container: Concept,
   concept_identity: ConceptualIdentityOperator,
   concept_scheme: ConceptSchemeOperator,
   // domain
-  domain: Domain,
+  domain_container: Domain,
   domain_identity: DomainIdentityOperator,
   domain_scheme: DomainSchemeOperator,
   // essence
-  essence: Essence,
+  essence_container: Essence,
   essence_identity: EssentialIdentityOperator,
   essence_scheme: EssentialSchemeOperator,
   // location
-  location: Location,
+  location_container: Location,
   location_identity: LocationalIdentityOperator,
   location_scheme: LocationalSchemeOperator,
   located_concept_expression: LocatedConceptExpression,

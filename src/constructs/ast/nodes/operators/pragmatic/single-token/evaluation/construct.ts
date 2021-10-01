@@ -4,9 +4,9 @@ import { ITokenOperatorClass } from '@constructs/ast/nodes/operators/_abstract/_
 import { Operator, operatorComponents } from '@constructs/ast/nodes/operators/_abstract/operator';
 import { EvaluationOperatorKind, EvaluationOperatorToken } from './__types';
 
-@staticImplements<IConstructClass<'evaluation'> & ITokenOperatorClass<'?'>>()
+@staticImplements<IConstructClass<'evaluation_operator'> & ITokenOperatorClass<'?'>>()
 export class EvaluationOperator extends Operator<EvaluationOperatorKind> {
-  static readonly kind: EvaluationOperatorKind = 'evaluation';
+  static readonly kind: EvaluationOperatorKind = 'evaluation_operator';
 
   static readonly token: EvaluationOperatorToken = '?';
 

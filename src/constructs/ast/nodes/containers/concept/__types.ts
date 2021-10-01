@@ -1,1 +1,1 @@
-export type ConceptNodeKind = 'concept';
+export type ConceptNodeKind = 'concept_container';

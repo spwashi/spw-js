@@ -9,7 +9,7 @@ type StaticType = IConstructClass<ReferenceOperatorKind> &
 
 @staticImplements<StaticType>()
 export class ReferenceOperator extends Operator<ReferenceOperatorKind> {
-  static kind: ReferenceOperatorKind = 'reference';
+  static kind: ReferenceOperatorKind = 'reference_operator';
 
   static token: ReferenceOperatorToken = '&';
 

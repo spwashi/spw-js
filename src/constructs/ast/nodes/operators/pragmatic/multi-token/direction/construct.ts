@@ -9,7 +9,7 @@ type StaticType = IConstructClass<DirectionOperatorKind> &
 
 @staticImplements<StaticType>()
 export class DirectionOperator extends Operator<DirectionOperatorKind> {
-  static kind: DirectionOperatorKind = 'direction';
+  static kind: DirectionOperatorKind = 'direction_operator';
 
   static token: DirectionOperatorToken = '.-';
 

@@ -1,2 +1,2 @@
 export type ConvergenceOperatorToken = '>';
-export type ConvergenceOperatorKind = 'convergence';
+export type ConvergenceOperatorKind = 'convergence_operator';

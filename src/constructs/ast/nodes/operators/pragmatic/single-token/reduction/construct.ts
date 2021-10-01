@@ -9,7 +9,7 @@ type StaticType = IConstructClass<ReductionOperatorKind> &
 
 @staticImplements<StaticType>()
 export class ReductionOperator extends Operator<ReductionOperatorKind> {
-  static kind: ReductionOperatorKind = 'reduction';
+  static kind: ReductionOperatorKind = 'reduction_operator';
 
   static token: ReductionOperatorToken = '-';
 

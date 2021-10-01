@@ -8,7 +8,7 @@ type StaticType = IConstructClass<AscentOperatorKind> & ITokenOperatorClass<Asce
 
 @staticImplements<StaticType>()
 export class AscentOperator extends Operator<AscentOperatorKind> {
-  static kind: AscentOperatorKind = 'ascent';
+  static kind: AscentOperatorKind = 'ascent_operator';
 
   static token: AscentOperatorToken = '^';
 

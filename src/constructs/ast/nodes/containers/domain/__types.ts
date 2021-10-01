@@ -1,1 +1,1 @@
-export type DomainNodeKind = 'domain';
+export type DomainNodeKind = 'domain_container';

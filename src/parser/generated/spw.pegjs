@@ -237,7 +237,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "aggregation",
+	                     kind: "aggregation_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -251,7 +251,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "ascent",
+	                     kind: "ascent_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -265,7 +265,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "binding",
+	                     kind: "binding_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -279,7 +279,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "branch",
+	                     kind: "branch_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -293,7 +293,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "channel",
+	                     kind: "channel_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -307,7 +307,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "descent",
+	                     kind: "descent_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -321,7 +321,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "direction",
+	                     kind: "direction_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -335,7 +335,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "evaluation",
+	                     kind: "evaluation_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -349,7 +349,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "invocation",
+	                     kind: "invocation_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -363,7 +363,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "performance",
+	                     kind: "performance_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -377,7 +377,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "perspective",
+	                     kind: "perspective_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -391,7 +391,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "range",
+	                     kind: "range_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -405,7 +405,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "reduction",
+	                     kind: "reduction_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -419,7 +419,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "reference",
+	                     kind: "reference_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -433,7 +433,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "spread",
+	                     kind: "spread_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -447,7 +447,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "transformation",
+	                     kind: "transformation_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -461,7 +461,7 @@ _operatorComponents:(
 	)
 {
 	return toConstruct({
-	                     kind: "value",
+	                     kind: "value_operator",
 	                     ..._operatorComponents
 	                   })
 }
@@ -518,7 +518,11 @@ DomainOpen "DomainOpen"=
 (token:"{"
 		"_"
 		node:(anchor:(
-				AnchorNode
+				PhraseNode
+					/ EmbedmentNode
+					/ StringNode
+					/ NumberNode
+					/ AnchorNode
 					/ Concept
 					/ Location
 					/ Domain
@@ -530,7 +534,7 @@ DomainOpen "DomainOpen"=
 							/ Domain
 							/ Essence
 						)? {return{anchor:anchor,description:description};})
-		(Space {return null;}) {return toConstruct({token:token,position:"open",label:node.anchor,description:node.description,kind:"domain_scheme"});})
+		(Space {return null;}) {return toConstruct({token:token,label:node.anchor,kind:"domain_scheme"});})
 	/ (tok:"{" {return toConstruct({token:tok,position:"open",kind:"domain_scheme"});})
 
 DomainClose "DomainClose"= 
@@ -571,7 +575,7 @@ container:(
 	)
 {
 	return toConstruct({
-	                     kind: 'domain',
+	                     kind: 'domain_container',
 	                     open: container.open,
 	                     body: container.body,
 	                     close: container.close,
@@ -582,7 +586,11 @@ EssenceOpen "EssenceOpen"=
 (token:"["
 		"_"
 		node:(anchor:(
-				AnchorNode
+				PhraseNode
+					/ EmbedmentNode
+					/ StringNode
+					/ NumberNode
+					/ AnchorNode
 					/ Concept
 					/ Location
 					/ Domain
@@ -594,7 +602,7 @@ EssenceOpen "EssenceOpen"=
 							/ Domain
 							/ Essence
 						)? {return{anchor:anchor,description:description};})
-		(Space {return null;}) {return toConstruct({token:token,position:"open",label:node.anchor,description:node.description,kind:"essence_scheme"});})
+		(Space {return null;}) {return toConstruct({token:token,label:node.anchor,kind:"essence_scheme"});})
 	/ (tok:"[" {return toConstruct({token:tok,position:"open",kind:"essence_scheme"});})
 
 EssenceClose "EssenceClose"= 
@@ -635,7 +643,7 @@ container:(
 	)
 {
 	return toConstruct({
-	                     kind: 'essence',
+	                     kind: 'essence_container',
 	                     open: container.open,
 	                     body: container.body,
 	                     close: container.close,
@@ -646,7 +654,11 @@ ConceptOpen "ConceptOpen"=
 (token:"<"
 		"_"
 		node:(anchor:(
-				AnchorNode
+				PhraseNode
+					/ EmbedmentNode
+					/ StringNode
+					/ NumberNode
+					/ AnchorNode
 					/ Concept
 					/ Location
 					/ Domain
@@ -658,7 +670,7 @@ ConceptOpen "ConceptOpen"=
 							/ Domain
 							/ Essence
 						)? {return{anchor:anchor,description:description};})
-		(Space {return null;}) {return toConstruct({token:token,position:"open",label:node.anchor,description:node.description,kind:"concept_scheme"});})
+		(Space {return null;}) {return toConstruct({token:token,label:node.anchor,kind:"concept_scheme"});})
 	/ (tok:"<" {return toConstruct({token:tok,position:"open",kind:"concept_scheme"});})
 
 ConceptClose "ConceptClose"= 
@@ -699,7 +711,7 @@ container:(
 	)
 {
 	return toConstruct({
-	                     kind: 'concept',
+	                     kind: 'concept_container',
 	                     open: container.open,
 	                     body: container.body,
 	                     close: container.close,
@@ -710,7 +722,11 @@ LocationOpen "LocationOpen"=
 (token:"("
 		"_"
 		node:(anchor:(
-				AnchorNode
+				PhraseNode
+					/ EmbedmentNode
+					/ StringNode
+					/ NumberNode
+					/ AnchorNode
 					/ Concept
 					/ Location
 					/ Domain
@@ -722,7 +738,7 @@ LocationOpen "LocationOpen"=
 							/ Domain
 							/ Essence
 						)? {return{anchor:anchor,description:description};})
-		(Space {return null;}) {return toConstruct({token:token,position:"open",label:node.anchor,description:node.description,kind:"location_scheme"});})
+		(Space {return null;}) {return toConstruct({token:token,label:node.anchor,kind:"location_scheme"});})
 	/ (tok:"(" {return toConstruct({token:tok,position:"open",kind:"location_scheme"});})
 
 LocationClose "LocationClose"= 
@@ -763,7 +779,7 @@ container:(
 	)
 {
 	return toConstruct({
-	                     kind: 'location',
+	                     kind: 'location_container',
 	                     open: container.open,
 	                     body: container.body,
 	                     close: container.close,

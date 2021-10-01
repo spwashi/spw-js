@@ -8,7 +8,7 @@ type StaticType = IConstructClass<BindingOperatorKind> & ITokenOperatorClass<Bin
 
 @staticImplements<StaticType>()
 export class BindingOperator extends Operator<BindingOperatorKind> {
-  static kind: BindingOperatorKind = 'binding';
+  static kind: BindingOperatorKind = 'binding_operator';
 
   static token: BindingOperatorToken = ':';
 

@@ -8,7 +8,7 @@ type StaticType = IConstructClass<RangeOperatorKind> & ITokenOperatorClass<Range
 
 @staticImplements<StaticType>()
 export class RangeOperator extends Operator<RangeOperatorKind> {
-  static kind: RangeOperatorKind = 'range';
+  static kind: RangeOperatorKind = 'range_operator';
 
   static token: RangeOperatorToken = '..';
 

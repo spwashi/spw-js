@@ -6,7 +6,7 @@ import { DivergenceOperatorKind, DivergenceOperatorToken } from './__types';
 
 @staticImplements<IConstructClass<DivergenceOperatorKind> & ITokenOperatorClass<'<'>>()
 export class DivergenceOperator extends Operator<DivergenceOperatorKind> {
-  static kind: DivergenceOperatorKind = 'divergence';
+  static kind: DivergenceOperatorKind = 'divergence_operator';
 
   static token: DivergenceOperatorToken = '<';
 

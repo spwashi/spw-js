@@ -8,7 +8,7 @@ type StaticType = IConstructClass<ValueOperatorKind> & ITokenOperatorClass<Value
 
 @staticImplements<StaticType>()
 export class ValueOperator extends Operator<ValueOperatorKind> {
-  static kind: ValueOperatorKind = 'value';
+  static kind: ValueOperatorKind = 'value_operator';
 
   static token: ValueOperatorToken = '*';
 

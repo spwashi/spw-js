@@ -6,7 +6,7 @@ import { ConvergenceOperatorKind, ConvergenceOperatorToken } from './__types';
 
 @staticImplements<IConstructClass<ConvergenceOperatorKind> & ITokenOperatorClass<'>'>>()
 export class ConvergenceOperator extends Operator<ConvergenceOperatorKind> {
-  static kind: ConvergenceOperatorKind = 'convergence';
+  static kind: ConvergenceOperatorKind = 'convergence_operator';
 
   static token: ConvergenceOperatorToken = '>';
 

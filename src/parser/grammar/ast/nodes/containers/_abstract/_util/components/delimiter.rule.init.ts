@@ -1,3 +1,4 @@
+import { scalars } from '@grammar/ast/nodes/atoms/scalars/_abstract/_list/scalar.list.ref';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import {
   anyOf,
@@ -16,7 +17,7 @@ function opener(delimiter: IDelimiter): SequenceCombinator {
 
   const underscore = stringLike('_');
 
-  const headAnchor = anyOf([anchorNode, ...containerNodes]);
+  const headAnchor = anyOf([...scalars, ...containerNodes]);
 
   const headDescription = optionally(sequenceOf([anyOf(containerNodes)]));
 
@@ -38,14 +39,14 @@ function opener(delimiter: IDelimiter): SequenceCombinator {
   ]);
   // language=JavaScript
   const action = `
-                  return toConstruct({
-                                       token:       token,
-                                       position:    'open',
-                                       label:       node.anchor,
-                                       description: node.description,
-                                       kind:        '${delimiter.kind}'
-                                   })
-              `;
+    return toConstruct(
+      {
+        token: token,
+        label: node.anchor,
+        kind: '${delimiter.kind}'
+      }
+    )
+  `;
   return combinator.withAction(action);
 }
 function closer(delimiter: IDelimiter): SequenceCombinator {
@@ -62,13 +63,13 @@ function closer(delimiter: IDelimiter): SequenceCombinator {
   const _patternAction =
     // language=JavaScript
     `
-                  return toConstruct({
-                                       token:    token,
-                                       position: 'close',
-                                       label:    node,
-                                       kind:     '${delimiter.kind}'
-                                   })
-              `;
+            return toConstruct({
+                                 token: token,
+                                 position: 'close',
+                                 label: node,
+                                 kind: '${delimiter.kind}'
+                               })
+          `;
   return anyOf([pattern1.withAction(_patternAction), pattern2.withAction(_patternAction)]);
 }
 export type IDelimiter = { token: string; kind: string };
@@ -79,10 +80,10 @@ function plain(delimiter: IDelimiter, index: 'open' | 'close') {
       // language=JavaScript
       .withAction(
         `return toConstruct({
-                                  token:    tok,
-                                  position: '${index}',
-                                  kind:     '${delimiter.kind}'
-                              })`,
+                              token: tok,
+                              position: '${index}',
+                              kind: '${delimiter.kind}'
+                            })`,
       )
   );
 }

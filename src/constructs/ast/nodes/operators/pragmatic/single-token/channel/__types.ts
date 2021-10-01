@@ -1,2 +1,2 @@
 export type ChannelOperatorToken = '#';
-export type ChannelOperatorKind = 'channel';
+export type ChannelOperatorKind = 'channel_operator';

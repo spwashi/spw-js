@@ -8,7 +8,7 @@ type StaticType = IConstructClass<BranchOperatorKind> & ITokenOperatorClass<Bran
 
 @staticImplements<StaticType>()
 export class BranchOperator extends Operator<BranchOperatorKind> {
-  static kind: BranchOperatorKind = 'branch';
+  static kind: BranchOperatorKind = 'branch_operator';
 
   static token: BranchOperatorToken = '|';
 

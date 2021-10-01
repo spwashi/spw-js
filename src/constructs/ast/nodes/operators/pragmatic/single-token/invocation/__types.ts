@@ -1,2 +1,2 @@
 export type InvocationOperatorToken = '~';
-export type InvocationOperatorKind = 'invocation';
+export type InvocationOperatorKind = 'invocation_operator';

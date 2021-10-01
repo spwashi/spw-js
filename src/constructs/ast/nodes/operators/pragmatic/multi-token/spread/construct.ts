@@ -8,7 +8,7 @@ type StaticType = IConstructClass<SpreadOperatorKind> & ITokenOperatorClass<'...
 
 @staticImplements<StaticType>()
 export class SpreadOperator extends Operator<SpreadOperatorKind> {
-  static kind: SpreadOperatorKind = 'spread';
+  static kind: SpreadOperatorKind = 'spread_operator';
 
   static token: SpreadOperatorToken = '...';
 

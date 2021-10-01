@@ -1,2 +1,2 @@
 export type TransformationOperatorToken = '=>';
-export type TransformationOperatorKind = 'transformation';
+export type TransformationOperatorKind = 'transformation_operator';

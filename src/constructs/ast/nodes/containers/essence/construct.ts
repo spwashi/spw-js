@@ -5,7 +5,7 @@ import { ConstructComponents } from '../../../_abstract/construct';
 import { containerComponents, ContainerNode } from '../_abstract/container';
 
 export class Essence extends ContainerNode<EssenceNodeKind> {
-  static kind: EssenceNodeKind = 'essence';
+  static kind: EssenceNodeKind = 'essence_container';
 
   static readonly openDelimiter = EssentialSchemeOperator;
 

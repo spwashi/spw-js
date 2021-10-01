@@ -1,2 +1,2 @@
 export type BindingOperatorToken = ':';
-export type BindingOperatorKind = 'binding';
+export type BindingOperatorKind = 'binding_operator';

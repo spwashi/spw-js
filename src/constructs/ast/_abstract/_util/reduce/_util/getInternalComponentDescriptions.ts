@@ -5,14 +5,10 @@ import { Construct } from '@constructs/ast/_abstract/construct';
 export function getInternalComponentDescriptions(): ComponentDescription<InteractionContext>[] {
   return [
     Construct.makeComponent({
-      name: 'outerNodeContext',
+      name: 'nodeScope',
       generator: function* (i, c) {
-        const outer = c?.parent?.outerNodeContext ?? null;
+        const outer = c?.parent?.nodeScope ?? null;
         if (!outer) return null;
-
-        if (outer.parent.raw) {
-          delete outer.parent.raw;
-        }
 
         yield [outer, null];
         return null;

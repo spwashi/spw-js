@@ -246,7 +246,7 @@ const generatedParser = /*
         peg$c58 = function(token, label) {return{token:token,label:label};},
         peg$c59 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "aggregation",
+        	                     kind: "aggregation_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -255,7 +255,7 @@ const generatedParser = /*
         peg$c62 = peg$literalExpectation("^", false),
         peg$c63 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "ascent",
+        	                     kind: "ascent_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -264,7 +264,7 @@ const generatedParser = /*
         peg$c66 = peg$literalExpectation(":", false),
         peg$c67 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "binding",
+        	                     kind: "binding_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -273,7 +273,7 @@ const generatedParser = /*
         peg$c70 = peg$literalExpectation("|", false),
         peg$c71 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "branch",
+        	                     kind: "branch_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -282,7 +282,7 @@ const generatedParser = /*
         peg$c74 = peg$literalExpectation("#", false),
         peg$c75 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "channel",
+        	                     kind: "channel_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -291,7 +291,7 @@ const generatedParser = /*
         peg$c78 = peg$literalExpectation(".", false),
         peg$c79 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "descent",
+        	                     kind: "descent_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -300,7 +300,7 @@ const generatedParser = /*
         peg$c82 = peg$literalExpectation(".-", false),
         peg$c83 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "direction",
+        	                     kind: "direction_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -309,7 +309,7 @@ const generatedParser = /*
         peg$c86 = peg$literalExpectation("?", false),
         peg$c87 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "evaluation",
+        	                     kind: "evaluation_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -318,7 +318,7 @@ const generatedParser = /*
         peg$c90 = peg$literalExpectation("~", false),
         peg$c91 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "invocation",
+        	                     kind: "invocation_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -327,7 +327,7 @@ const generatedParser = /*
         peg$c94 = peg$literalExpectation("!", false),
         peg$c95 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "performance",
+        	                     kind: "performance_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -336,7 +336,7 @@ const generatedParser = /*
         peg$c98 = peg$literalExpectation("@", false),
         peg$c99 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "perspective",
+        	                     kind: "perspective_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -345,7 +345,7 @@ const generatedParser = /*
         peg$c102 = peg$literalExpectation("..", false),
         peg$c103 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "range",
+        	                     kind: "range_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -354,7 +354,7 @@ const generatedParser = /*
         peg$c106 = peg$literalExpectation("-", false),
         peg$c107 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "reduction",
+        	                     kind: "reduction_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -363,7 +363,7 @@ const generatedParser = /*
         peg$c110 = peg$literalExpectation("&", false),
         peg$c111 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "reference",
+        	                     kind: "reference_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -372,7 +372,7 @@ const generatedParser = /*
         peg$c114 = peg$literalExpectation("...", false),
         peg$c115 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "spread",
+        	                     kind: "spread_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -381,7 +381,7 @@ const generatedParser = /*
         peg$c118 = peg$literalExpectation("=>", false),
         peg$c119 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "transformation",
+        	                     kind: "transformation_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -390,7 +390,7 @@ const generatedParser = /*
         peg$c122 = peg$literalExpectation("*", false),
         peg$c123 = function(_operatorComponents) {
         	return toConstruct({
-        	                     kind: "value",
+        	                     kind: "value_operator",
         	                     ..._operatorComponents
         	                   })
         },
@@ -425,7 +425,7 @@ const generatedParser = /*
         peg$c137 = peg$literalExpectation("{", false),
         peg$c138 = function(token, anchor, description) {return{anchor:anchor,description:description};},
         peg$c139 = function(token, node) {return null;},
-        peg$c140 = function(token, node) {return toConstruct({token:token,position:"open",label:node.anchor,description:node.description,kind:"domain_scheme"});},
+        peg$c140 = function(token, node) {return toConstruct({token:token,label:node.anchor,kind:"domain_scheme"});},
         peg$c141 = function(tok) {return toConstruct({token:tok,position:"open",kind:"domain_scheme"});},
         peg$c142 = peg$otherExpectation("DomainClose"),
         peg$c143 = "}",
@@ -442,7 +442,7 @@ const generatedParser = /*
         peg$c154 = function(open, body, close) {return{open:open,body:body,close:close};},
         peg$c155 = function(container) {
         	return toConstruct({
-        	                     kind: 'domain',
+        	                     kind: 'domain_container',
         	                     open: container.open,
         	                     body: container.body,
         	                     close: container.close,
@@ -451,7 +451,7 @@ const generatedParser = /*
         peg$c156 = peg$otherExpectation("EssenceOpen"),
         peg$c157 = "[",
         peg$c158 = peg$literalExpectation("[", false),
-        peg$c159 = function(token, node) {return toConstruct({token:token,position:"open",label:node.anchor,description:node.description,kind:"essence_scheme"});},
+        peg$c159 = function(token, node) {return toConstruct({token:token,label:node.anchor,kind:"essence_scheme"});},
         peg$c160 = function(tok) {return toConstruct({token:tok,position:"open",kind:"essence_scheme"});},
         peg$c161 = peg$otherExpectation("EssenceClose"),
         peg$c162 = "]",
@@ -463,7 +463,7 @@ const generatedParser = /*
         peg$c168 = peg$otherExpectation("Essence"),
         peg$c169 = function(container) {
         	return toConstruct({
-        	                     kind: 'essence',
+        	                     kind: 'essence_container',
         	                     open: container.open,
         	                     body: container.body,
         	                     close: container.close,
@@ -472,7 +472,7 @@ const generatedParser = /*
         peg$c170 = peg$otherExpectation("ConceptOpen"),
         peg$c171 = "<",
         peg$c172 = peg$literalExpectation("<", false),
-        peg$c173 = function(token, node) {return toConstruct({token:token,position:"open",label:node.anchor,description:node.description,kind:"concept_scheme"});},
+        peg$c173 = function(token, node) {return toConstruct({token:token,label:node.anchor,kind:"concept_scheme"});},
         peg$c174 = function(tok) {return toConstruct({token:tok,position:"open",kind:"concept_scheme"});},
         peg$c175 = peg$otherExpectation("ConceptClose"),
         peg$c176 = ">",
@@ -484,7 +484,7 @@ const generatedParser = /*
         peg$c182 = peg$otherExpectation("Concept"),
         peg$c183 = function(container) {
         	return toConstruct({
-        	                     kind: 'concept',
+        	                     kind: 'concept_container',
         	                     open: container.open,
         	                     body: container.body,
         	                     close: container.close,
@@ -493,7 +493,7 @@ const generatedParser = /*
         peg$c184 = peg$otherExpectation("LocationOpen"),
         peg$c185 = "(",
         peg$c186 = peg$literalExpectation("(", false),
-        peg$c187 = function(token, node) {return toConstruct({token:token,position:"open",label:node.anchor,description:node.description,kind:"location_scheme"});},
+        peg$c187 = function(token, node) {return toConstruct({token:token,label:node.anchor,kind:"location_scheme"});},
         peg$c188 = function(tok) {return toConstruct({token:tok,position:"open",kind:"location_scheme"});},
         peg$c189 = peg$otherExpectation("LocationClose"),
         peg$c190 = ")",
@@ -505,7 +505,7 @@ const generatedParser = /*
         peg$c196 = peg$otherExpectation("Location"),
         peg$c197 = function(container) {
         	return toConstruct({
-        	                     kind: 'location',
+        	                     kind: 'location_container',
         	                     open: container.open,
         	                     body: container.body,
         	                     close: container.close,
@@ -3657,15 +3657,27 @@ const generatedParser = /*
         }
         if (s2 !== peg$FAILED) {
           s3 = peg$currPos;
-          s4 = peg$parseAnchorNode();
+          s4 = peg$parsePhraseNode();
           if (s4 === peg$FAILED) {
-            s4 = peg$parseConcept();
+            s4 = peg$parseEmbedmentNode();
             if (s4 === peg$FAILED) {
-              s4 = peg$parseLocation();
+              s4 = peg$parseStringNode();
               if (s4 === peg$FAILED) {
-                s4 = peg$parseDomain();
+                s4 = peg$parseNumberNode();
                 if (s4 === peg$FAILED) {
-                  s4 = peg$parseEssence();
+                  s4 = peg$parseAnchorNode();
+                  if (s4 === peg$FAILED) {
+                    s4 = peg$parseConcept();
+                    if (s4 === peg$FAILED) {
+                      s4 = peg$parseLocation();
+                      if (s4 === peg$FAILED) {
+                        s4 = peg$parseDomain();
+                        if (s4 === peg$FAILED) {
+                          s4 = peg$parseEssence();
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -4189,15 +4201,27 @@ const generatedParser = /*
         }
         if (s2 !== peg$FAILED) {
           s3 = peg$currPos;
-          s4 = peg$parseAnchorNode();
+          s4 = peg$parsePhraseNode();
           if (s4 === peg$FAILED) {
-            s4 = peg$parseConcept();
+            s4 = peg$parseEmbedmentNode();
             if (s4 === peg$FAILED) {
-              s4 = peg$parseLocation();
+              s4 = peg$parseStringNode();
               if (s4 === peg$FAILED) {
-                s4 = peg$parseDomain();
+                s4 = peg$parseNumberNode();
                 if (s4 === peg$FAILED) {
-                  s4 = peg$parseEssence();
+                  s4 = peg$parseAnchorNode();
+                  if (s4 === peg$FAILED) {
+                    s4 = peg$parseConcept();
+                    if (s4 === peg$FAILED) {
+                      s4 = peg$parseLocation();
+                      if (s4 === peg$FAILED) {
+                        s4 = peg$parseDomain();
+                        if (s4 === peg$FAILED) {
+                          s4 = peg$parseEssence();
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -4721,15 +4745,27 @@ const generatedParser = /*
         }
         if (s2 !== peg$FAILED) {
           s3 = peg$currPos;
-          s4 = peg$parseAnchorNode();
+          s4 = peg$parsePhraseNode();
           if (s4 === peg$FAILED) {
-            s4 = peg$parseConcept();
+            s4 = peg$parseEmbedmentNode();
             if (s4 === peg$FAILED) {
-              s4 = peg$parseLocation();
+              s4 = peg$parseStringNode();
               if (s4 === peg$FAILED) {
-                s4 = peg$parseDomain();
+                s4 = peg$parseNumberNode();
                 if (s4 === peg$FAILED) {
-                  s4 = peg$parseEssence();
+                  s4 = peg$parseAnchorNode();
+                  if (s4 === peg$FAILED) {
+                    s4 = peg$parseConcept();
+                    if (s4 === peg$FAILED) {
+                      s4 = peg$parseLocation();
+                      if (s4 === peg$FAILED) {
+                        s4 = peg$parseDomain();
+                        if (s4 === peg$FAILED) {
+                          s4 = peg$parseEssence();
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -5253,15 +5289,27 @@ const generatedParser = /*
         }
         if (s2 !== peg$FAILED) {
           s3 = peg$currPos;
-          s4 = peg$parseAnchorNode();
+          s4 = peg$parsePhraseNode();
           if (s4 === peg$FAILED) {
-            s4 = peg$parseConcept();
+            s4 = peg$parseEmbedmentNode();
             if (s4 === peg$FAILED) {
-              s4 = peg$parseLocation();
+              s4 = peg$parseStringNode();
               if (s4 === peg$FAILED) {
-                s4 = peg$parseDomain();
+                s4 = peg$parseNumberNode();
                 if (s4 === peg$FAILED) {
-                  s4 = peg$parseEssence();
+                  s4 = peg$parseAnchorNode();
+                  if (s4 === peg$FAILED) {
+                    s4 = peg$parseConcept();
+                    if (s4 === peg$FAILED) {
+                      s4 = peg$parseLocation();
+                      if (s4 === peg$FAILED) {
+                        s4 = peg$parseDomain();
+                        if (s4 === peg$FAILED) {
+                          s4 = peg$parseEssence();
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }

@@ -4,9 +4,9 @@ import { Operator, operatorComponents } from '@constructs/ast/nodes/operators/_a
 import { ITokenOperatorClass } from '../../../_abstract/_types/atomic';
 import { InvocationOperatorKind, InvocationOperatorToken } from './__types';
 
-@staticImplements<IConstructClass<'invocation'> & ITokenOperatorClass<'~'>>()
+@staticImplements<IConstructClass<'invocation_operator'> & ITokenOperatorClass<'~'>>()
 export class InvocationOperator extends Operator<InvocationOperatorKind> {
-  static readonly kind: InvocationOperatorKind = 'invocation';
+  static readonly kind: InvocationOperatorKind = 'invocation_operator';
 
   static readonly token: InvocationOperatorToken = '~';
 

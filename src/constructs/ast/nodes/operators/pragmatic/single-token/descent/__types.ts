@@ -1,2 +1,2 @@
 export type DescentOperatorToken = '.';
-export type DescentOperatorKind = 'descent';
+export type DescentOperatorKind = 'descent_operator';

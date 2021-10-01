@@ -4,9 +4,9 @@ import { ITokenOperatorClass } from '@constructs/ast/nodes/operators/_abstract/_
 import { Operator, operatorComponents } from '@constructs/ast/nodes/operators/_abstract/operator';
 import { PerformanceOperatorKind, PerformanceOperatorToken } from './__types';
 
-@staticImplements<IConstructClass<'performance'> & ITokenOperatorClass<'!'>>()
+@staticImplements<IConstructClass<'performance_operator'> & ITokenOperatorClass<'!'>>()
 export class PerformanceOperator extends Operator<PerformanceOperatorKind> {
-  static readonly kind: PerformanceOperatorKind = 'performance';
+  static readonly kind: PerformanceOperatorKind = 'performance_operator';
 
   static readonly token: PerformanceOperatorToken = '!';
 

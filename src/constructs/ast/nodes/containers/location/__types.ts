@@ -1,1 +1,1 @@
-export type LocationNodeKind = 'location';
+export type LocationNodeKind = 'location_container';

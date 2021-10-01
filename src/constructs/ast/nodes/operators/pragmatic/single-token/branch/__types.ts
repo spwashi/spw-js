@@ -1,2 +1,2 @@
 export type BranchOperatorToken = '|';
-export type BranchOperatorKind = 'branch';
+export type BranchOperatorKind = 'branch_operator';

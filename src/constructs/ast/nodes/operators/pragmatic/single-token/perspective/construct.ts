@@ -4,9 +4,9 @@ import { ITokenOperatorClass } from '@constructs/ast/nodes/operators/_abstract/_
 import { Operator, operatorComponents } from '@constructs/ast/nodes/operators/_abstract/operator';
 import { PerspectiveOperatorKind, PerspectiveOperatorToken } from './__types';
 
-@staticImplements<IConstructClass<'perspective'> & ITokenOperatorClass<'@'>>()
+@staticImplements<IConstructClass<'perspective_operator'> & ITokenOperatorClass<'@'>>()
 export class PerspectiveOperator extends Operator<PerspectiveOperatorKind> {
-  static readonly kind: PerspectiveOperatorKind = 'perspective';
+  static readonly kind: PerspectiveOperatorKind = 'perspective_operator';
 
   static readonly token: PerspectiveOperatorToken = '@';
 

@@ -5,7 +5,7 @@ import { containerComponents, ContainerNode } from '../_abstract/container';
 import { LocationalIdentityOperator } from './_components/identity/construct';
 
 export class Location extends ContainerNode<LocationNodeKind> {
-  static kind: LocationNodeKind = 'location';
+  static kind: LocationNodeKind = 'location_container';
 
   static readonly openDelimiter = LocationalSchemeOperator;
 

@@ -9,7 +9,7 @@ type StaticType = IConstructClass<RelationOperatorKind> &
 
 @staticImplements<StaticType>()
 export class RelationOperator extends Operator<RelationOperatorKind> {
-  static kind: RelationOperatorKind = 'relation';
+  static kind: RelationOperatorKind = 'relation_operator';
 
   static token: RelationOperatorToken = '=';
 

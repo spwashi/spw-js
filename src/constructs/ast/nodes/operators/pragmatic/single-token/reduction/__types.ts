@@ -1,2 +1,2 @@
 export type ReductionOperatorToken = '-';
-export type ReductionOperatorKind = 'reduction';
+export type ReductionOperatorKind = 'reduction_operator';

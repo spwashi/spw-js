@@ -5,7 +5,7 @@ import { ConstructComponents } from '../../../_abstract/construct';
 import { containerComponents, ContainerNode } from '../_abstract/container';
 
 export class Concept extends ContainerNode<ConceptNodeKind> {
-  static kind: ConceptNodeKind = 'concept';
+  static kind: ConceptNodeKind = 'concept_container';
 
   static readonly openDelimiter = ConceptSchemeOperator;
 

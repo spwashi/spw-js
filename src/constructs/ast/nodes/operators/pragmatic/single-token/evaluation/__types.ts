@@ -1,2 +1,2 @@
 export type EvaluationOperatorToken = '?';
-export type EvaluationOperatorKind = 'evaluation';
+export type EvaluationOperatorKind = 'evaluation_operator';

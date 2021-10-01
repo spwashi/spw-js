@@ -8,8 +8,8 @@ type StaticType = IConstructClass<TransformationOperatorKind> &
   ITokenOperatorClass<TransformationOperatorToken>;
 
 @staticImplements<StaticType>()
-export class TransformationOperator extends Operator<'transformation'> {
-  static kind: TransformationOperatorKind = 'transformation';
+export class TransformationOperator extends Operator<'transformation_operator'> {
+  static kind: TransformationOperatorKind = 'transformation_operator';
 
   static token: TransformationOperatorToken = '=>';
 

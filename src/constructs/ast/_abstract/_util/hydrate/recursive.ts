@@ -18,6 +18,9 @@ function normalizeLocation(srcloc: ConstructLocation | null | undefined) {
   return srcloc ? { ...srcloc } : null;
 }
 
+export type NodeScope = {
+  parent: null | Construct;
+};
 /**
  * The non-recursive "hydrate" action
  *
@@ -25,12 +28,8 @@ function normalizeLocation(srcloc: ConstructLocation | null | undefined) {
  * @param context
  */
 function hydrateConstruct(raw: Partial<RawConstruct>, _context: HydrationContext) {
-  const outerNodeContext = { parent: { raw: raw, node: null } } as {
-    parent: {
-      [k: string]: null | Partial<RawConstruct> | Construct;
-    };
-  };
-  const context = _context.enter({ outerNodeContext });
+  const nodeScope = { parent: null } as NodeScope;
+  const context = _context.enter({ nodeScope });
 
   const node = raw as RawConstruct;
   if (!raw.kind) throw new Error('trying to hydrate without a kind');
@@ -64,7 +63,7 @@ function hydrateConstruct(raw: Partial<RawConstruct>, _context: HydrationContext
     ) as Partial<HydratedConstruct>;
 
   const posthydrated = context.hydrate(prehydrated, context);
-  outerNodeContext.parent.node = posthydrated;
+  nodeScope.parent = posthydrated;
   return posthydrated;
 }
 

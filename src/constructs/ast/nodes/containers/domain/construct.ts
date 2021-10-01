@@ -5,7 +5,7 @@ import { ConstructComponents } from '../../../_abstract/construct';
 import { containerComponents, ContainerNode } from '../_abstract/container';
 
 export class Domain extends ContainerNode<DomainNodeKind> {
-  static kind: DomainNodeKind = 'domain';
+  static kind: DomainNodeKind = 'domain_container';
 
   static readonly openDelimiter = DomainSchemeOperator;
 

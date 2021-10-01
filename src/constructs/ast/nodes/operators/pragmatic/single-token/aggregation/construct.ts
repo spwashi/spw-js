@@ -9,7 +9,7 @@ type StaticType = IConstructClass<AggregationOperatorKind> &
 
 @staticImplements<StaticType>()
 export class AggregationOperator extends Operator<AggregationOperatorKind> {
-  static kind: AggregationOperatorKind = 'aggregation';
+  static kind: AggregationOperatorKind = 'aggregation_operator';
 
   static token: AggregationOperatorToken = '+';
 

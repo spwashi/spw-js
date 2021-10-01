@@ -1,7 +1,6 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { ConstructKind } from '@constructs/ast/_types/kinds';
 import { BlockExpression } from '@constructs/ast/expressions/sequence/block/construct';
-import { NodeDelimiter } from '@constructs/ast/nodes/operators/semantic/node/construct';
 import { Construct, ConstructComponents } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
 import { Node } from '../../_abstract/node';
@@ -41,9 +40,9 @@ export abstract class ContainerNode<
       generator: function* (component, ctxt) {
         if (!Array.isArray(component) && Construct.isConstruct(component)) {
           yield [component, ctxt];
-          if (component?.internal?.label) {
-            yield [new NodeDelimiter(), ctxt];
-          }
+          // if (component?.internal?.label) {
+          //   yield [new NodeDelimiter(), ctxt];
+          // }
         } else {
           for (const item of component) {
             yield [item, ctxt];
@@ -54,7 +53,8 @@ export abstract class ContainerNode<
 
       evaluators: {
         stringify: function (els = []) {
-          return els.join('');
+          // add a space after complex delimiters
+          return els.join('') + (els.length > 1 ? ' ' : '');
         },
       },
     }),

@@ -7,8 +7,8 @@ import { DescentOperatorKind, DescentOperatorToken } from './__types';
 type StaticType = IConstructClass<DescentOperatorKind> & ITokenOperatorClass<DescentOperatorToken>;
 
 @staticImplements<StaticType>()
-export class DescentOperator extends Operator<'descent'> {
-  static kind: DescentOperatorKind = 'descent';
+export class DescentOperator extends Operator<'descent_operator'> {
+  static kind: DescentOperatorKind = 'descent_operator';
 
   static token: DescentOperatorToken = '.';
 
