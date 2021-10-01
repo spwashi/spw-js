@@ -3,8 +3,8 @@ import {
   ComponentDescription,
   ComponentEvaluatorObject,
 } from '@constructs/ast/_abstract/_types/componentDescription';
+import { initInteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/initInteractionContext';
 import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
-import { PlainInteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/plainInteractionContext';
 import { completeConstructReductionConfig } from '@constructs/ast/_abstract/_util/reduce/_util/config/completeConfig';
 import { reduceConstructAsync } from '@constructs/ast/_abstract/_util/reduce/async/reduceConstructAsync';
 import { reduceConstructSync } from '@constructs/ast/_abstract/_util/reduce/sync/reduceConstructSync';
@@ -54,7 +54,7 @@ export class Construct<
     type Prototype = ComponentDescription;
     type Seed = KeyReductionSeed;
 
-    const context = PlainInteractionContext().enter();
+    const context = initInteractionContext({ kind: 'keyingContext' });
     const Ctor = this.constructor as typeof Construct;
     const seed: Seed = ['', context];
 

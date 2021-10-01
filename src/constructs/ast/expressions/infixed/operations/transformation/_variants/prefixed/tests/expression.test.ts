@@ -16,7 +16,6 @@ describe('Transformation Expressions', () => {
       last = selectLastAcknowledgedNodeFromRuntime(runtime);
       all = selectAllNodesFromRuntime(runtime);
       expect(last?.kind).toEqual(PrefixedTransformationExpression.kind);
-      console.log(all[0].internal);
       expect(all.length).toEqual(7);
       expect(last?.key).toEqual(`=>test=>test`);
       done();

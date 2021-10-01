@@ -24,9 +24,16 @@ function normalizeLocation(srcloc: ConstructLocation | null | undefined) {
  * @param node
  * @param context
  */
-function hydrateConstruct(n: Partial<RawConstruct>, context: HydrationContext) {
-  const node = n as RawConstruct;
-  if (!n.kind) throw new Error('trying to hydrate without a kind');
+function hydrateConstruct(raw: Partial<RawConstruct>, _context: HydrationContext) {
+  const outerNodeContext = { parent: { raw: raw, node: null } } as {
+    parent: {
+      [k: string]: null | Partial<RawConstruct> | Construct;
+    };
+  };
+  const context = _context.enter({ outerNodeContext });
+
+  const node = raw as RawConstruct;
+  if (!raw.kind) throw new Error('trying to hydrate without a kind');
 
   const propertiesToIgnore = ['kind', 'key'] as (keyof RawConstruct)[];
   const ignoreProperties = ([k]: [string, any]) => !propertiesToIgnore.includes(k);
@@ -57,7 +64,7 @@ function hydrateConstruct(n: Partial<RawConstruct>, context: HydrationContext) {
     ) as Partial<HydratedConstruct>;
 
   const posthydrated = context.hydrate(prehydrated, context);
-
+  outerNodeContext.parent.node = posthydrated;
   return posthydrated;
 }
 

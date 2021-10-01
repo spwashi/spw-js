@@ -30,10 +30,9 @@ function parseIntoRuntime(
     return cached;
   }
 
-  return (cache.added[src] = hydrateRecursively(raw, context) as
-    | HydratedConstruct
-    | Construct
-    | null);
+  const hydrated = hydrateRecursively(raw, context) as Construct | null;
+
+  return (cache.added[src] = hydrated);
 }
 
 type MutableRuntimeCache = {

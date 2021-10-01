@@ -58,10 +58,6 @@ const _hydrationStepReducer: ConstructReductionConfig<HydrationContext>['reduceS
   if (isAsync === null) {
     return [curr ?? [], context];
   }
-  if (typeof context?.enter !== 'function') {
-    console.error(context);
-    throw new Error('Wrong context');
-  }
   return [
     [
       ...prev,
@@ -73,7 +69,7 @@ const _hydrationStepReducer: ConstructReductionConfig<HydrationContext>['reduceS
         })
         .filter(([, n]: [string, any]) => n != void 0),
     ],
-    context.enter() as HydrationContext,
+    context as HydrationContext,
   ];
 };
 

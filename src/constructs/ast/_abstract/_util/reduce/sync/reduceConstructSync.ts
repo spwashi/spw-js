@@ -28,9 +28,9 @@ export function reduceConstructSync<
   prototypes: Iterable<ComponentDescription<Context>> = [],
   lifecycle: ReductionLifecycleController = defaultLifecycleController,
 ): [ReturnType, Context] {
-  runReductionBeginLifecycleSync(lifecycle, seed, subject);
   const reduceConstruct = getConstructReducerSync<Context>(config, lifecycle, prototypes);
-  const lastStep = reduceConstruct(seed, subject);
-  runReductionEndLifecycleSync(lifecycle, lastStep);
-  return lastStep;
+  runReductionBeginLifecycleSync(lifecycle, seed, subject);
+  const end = reduceConstruct(seed, subject);
+  runReductionEndLifecycleSync(lifecycle, end);
+  return end;
 }

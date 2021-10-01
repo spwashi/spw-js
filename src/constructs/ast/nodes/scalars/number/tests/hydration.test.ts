@@ -1,19 +1,17 @@
+import { initInteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/initInteractionContext';
 import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 import { RawConstruct } from '@constructs/ast/_abstract/_types/internal';
-import { PlainInteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/plainInteractionContext';
 import {
   HydrationContext,
   joinHydratedProperties,
 } from '@constructs/ast/_abstract/_util/hydrate/_/util';
-import { hydrateRecursively } from '@constructs/ast/_abstract/_util/hydrate/recursive';
 import { hydrateShallow } from '@constructs/ast/_abstract/_util/hydrate/shallow';
 import { NumberNode } from '@constructs/ast/nodes/scalars/number/construct';
-import { Construct } from '../../../../_abstract/construct';
 
 describe('Number', () => {
   it('should be hydrate-able', async function () {
     const raw = { value: '4', kind: 'number' };
-    const context = initHydrationContext();
+    const context = initInteractionContext() as HydrationContext;
     const { node, promise } = hydrateNumber(raw, context);
 
     NumberNode.components.value.asyncGenerator = async function* (
@@ -29,19 +27,6 @@ describe('Number', () => {
     expect(out.internal.value).toEqual(4000);
   });
 });
-
-/**
- * Initialize a hydration context that will let us test this Node
- */
-function initHydrationContext(): HydrationContext {
-  const fragment = {
-    hydrate: (raw: RawConstruct, context: HydrationContext) =>
-      hydrateRecursively(raw, context) as Construct | null,
-  } as Partial<HydrationContext>;
-
-  const context = PlainInteractionContext().enter(fragment) as HydrationContext;
-  return context;
-}
 
 /**
  * Function for hydrating

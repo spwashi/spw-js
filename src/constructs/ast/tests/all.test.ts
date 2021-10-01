@@ -7,7 +7,14 @@ import * as util from 'util';
 
 describe('Something', () => {
   it('works', async () => {
-    [
+    const items = [
+      `( {} => {
+        s => {
+            s => {
+            
+            }
+        }
+      }  )`,
       `
         ( #_more; interesting ){
           test => #_test;
@@ -26,7 +33,8 @@ describe('Something', () => {
             ]
           };
        `,
-    ]
+    ];
+    [items[0]]
       .map((item) => {
         const node = getSalientNode(item);
         if (!node) return false;
@@ -34,7 +42,7 @@ describe('Something', () => {
           util.inspect(
             {
               key: node.key,
-              internal: node.internal,
+              internal: getAllNodes(item).map((n) => n.internal),
             },
             false,
             null,
