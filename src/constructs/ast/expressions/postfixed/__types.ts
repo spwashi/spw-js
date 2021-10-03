@@ -1,1 +1,1 @@
-export type PostfixExpressionKind = 'postfix_expression';
+export type PostfixExpressionKind = 'postfixed_expression';

@@ -791,10 +791,48 @@ container:(
 }
 
 Expression "Expression"= 
-PostfixExpression
+PostfixedExpression
 	/ PrefixExpression
 	/ InfixedExpression
 	/ SequenceExpression
+
+BehaviorExpression "BehaviorExpression"= 
+(location:Location
+		domain:Domain
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (location:Location
+		domain:Domain {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (location:Location
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (location:Location
+		(
+			" "
+			)*
+		domain:Domain
+		(
+			" "
+			)*
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (location:Location
+		(
+			" "
+			)*
+		domain:Domain {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (location:Location
+		(
+			" "
+			)*
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (domain:Domain
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (domain:Domain
+		(
+			" "
+			)*
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (location:Location {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (domain:Domain {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
 
 BlockExpression "BlockExpression"= 
 items:(
@@ -865,6 +903,117 @@ items:(
 	return toConstruct(block)
 }
 
+CommonExpression "CommonExpression"= 
+head:Node
+	(Space {return null;})*
+	tail:(operator:CommonDelimiter
+			(Space {return null;})*
+			item:(
+			Expression
+				/ Node
+			)
+			(Space {return null;})* {return toConstruct({kind:"common_tail",operator:operator,item:item});})+
+{
+	return toConstruct({
+	                     kind: 'common_expression',
+	                     head,
+	                     tail,
+	                   });
+}
+
+EntityExpression "EntityExpression"= 
+(concept:Concept
+		space:(
+			" "
+			)*
+		anchor:Scalar {const expression={kind:"entity_expression",anchor:"undefined"!=typeof anchor?anchor:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
+	/ (concept:Concept {const expression={kind:"entity_expression",anchor:"undefined"!=typeof anchor?anchor:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
+	/ (anchor:Scalar {const expression={kind:"entity_expression",anchor:"undefined"!=typeof anchor?anchor:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
+
+InfixedAggregationExpression "InfixedAggregationExpression"= 
+head:Node
+	(Space {return null;})*
+	tail:(
+	(Space {return null;})*
+		PrefixedAggregationExpression
+	)
+{
+	return toConstruct({
+	                     kind: 'infixed_aggregation_expression',
+	                     head: head,
+	                     tail: tail,
+	                   })
+}
+
+InfixedBindingExpression "InfixedBindingExpression"= 
+head:Node
+	(Space {return null;})*
+	tail:(
+	(Space {return null;})*
+		PrefixedBindingExpression
+	)
+{
+	return toConstruct({
+	                     kind: 'infixed_binding_expression',
+	                     head: head,
+	                     tail: tail,
+	                   })
+}
+
+InfixedExpression "InfixedExpression"= 
+InfixedBindingExpression
+	/ InfixedTransformationExpression
+	/ InfixedAggregationExpression
+	/ InfixedReductionExpression
+	/ InfixedRangeExpression
+	/ CommonExpression
+	/ PhraseExpression
+
+InfixedRangeExpression "InfixedRangeExpression"= 
+head:Node
+	(Space {return null;})*
+	tail:(
+	(Space {return null;})*
+		PrefixedRangeExpression
+	)
+{
+	return toConstruct({
+	                     kind: 'infixed_range_expression',
+	                     head: head,
+	                     tail: tail,
+	                   })
+}
+
+InfixedReductionExpression "InfixedReductionExpression"= 
+head:Node
+	(Space {return null;})*
+	tail:(
+	(Space {return null;})*
+		PrefixedReductionExpression
+	)
+{
+	return toConstruct({
+	                     kind: 'infixed_reduction_expression',
+	                     head: head,
+	                     tail: tail,
+	                   })
+}
+
+InfixedTransformationExpression "InfixedTransformationExpression"= 
+head:Node
+	(Space {return null;})*
+	tail:(
+	(Space {return null;})*
+		PrefixedTransformationExpression
+	)
+{
+	return toConstruct({
+	                     kind: 'infixed_transformation_expression',
+	                     head: head,
+	                     tail: tail,
+	                   })
+}
+
 InstanceExpression "InstanceExpression"= 
 entity:EntityExpression
 	space:(
@@ -885,53 +1034,6 @@ entity:EntityExpression
 	};
 	return toConstruct(expression)
 }
-
-BehaviorExpression "BehaviorExpression"= 
-(location:Location
-		domain:Domain
-		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
-	/ (location:Location
-		domain:Domain {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
-	/ (location:Location
-		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
-	/ (location:Location
-		(
-			" "
-			)*
-		domain:Domain
-		(
-			" "
-			)*
-		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
-	/ (location:Location
-		(
-			" "
-			)*
-		domain:Domain {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
-	/ (location:Location
-		(
-			" "
-			)*
-		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
-	/ (domain:Domain
-		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
-	/ (domain:Domain
-		(
-			" "
-			)*
-		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
-	/ (location:Location {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
-	/ (domain:Domain {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
-	/ (essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
-
-EntityExpression "EntityExpression"= 
-(concept:Concept
-		space:(
-			" "
-			)*
-		anchor:Scalar {const expression={kind:"entity_expression",anchor:"undefined"!=typeof anchor?anchor:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
-	/ (concept:Concept {const expression={kind:"entity_expression",anchor:"undefined"!=typeof anchor?anchor:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
-	/ (anchor:Scalar {const expression={kind:"entity_expression",anchor:"undefined"!=typeof anchor?anchor:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
 
 LocatedConceptExpression "LocatedConceptExpression"= 
 location:Location
@@ -981,11 +1083,32 @@ location:Location
 	return toConstruct(expression)
 }
 
-SequenceExpression "SequenceExpression"= 
-InstanceExpression
-	/ EntityExpression
-	/ BehaviorExpression
-	/ LocatedEntityExpression
+PhraseExpression "PhraseExpression"= 
+head:(
+	SequenceExpression
+		/ Container
+		/ Node
+	)
+	tail:((
+				" "
+					/ [\t]
+				)+
+			tail:(
+			SequenceExpression
+				/ Container
+				/ Node
+			) {return tail;})+
+{
+	const phrase = {
+	  kind: 'phrase_expression',
+	  items: [head, ...tail]
+	};
+	
+	return toConstruct(phrase)
+}
+
+PostfixedExpression "PostfixedExpression"= 
+PostfixedTransformationExpression
 
 PostfixedTransformationExpression "PostfixedTransformationExpression"= 
 (head:(
@@ -1015,135 +1138,6 @@ PostfixedTransformationExpression "PostfixedTransformationExpression"=
 			/ [\n]
 		)*
 	tail:TransformationOperator {return toConstruct({kind:"postfixed_transformation_expression",tail:tail,head:head});})
-
-PostfixExpression "PostfixExpression"= 
-PostfixedTransformationExpression
-
-InfixedExpression "InfixedExpression"= 
-InfixedBindingExpression
-	/ InfixedTransformationExpression
-	/ InfixedAggregationExpression
-	/ InfixedReductionExpression
-	/ InfixedRangeExpression
-	/ CommonExpression
-	/ PhraseExpression
-
-CommonExpression "CommonExpression"= 
-head:Node
-	(Space {return null;})*
-	tail:(operator:CommonDelimiter
-			(Space {return null;})*
-			item:(
-			Expression
-				/ Node
-			)
-			(Space {return null;})* {return toConstruct({kind:"common_tail",operator:operator,item:item});})+
-{
-	return toConstruct({
-	                     kind: 'common_expression',
-	                     head,
-	                     tail,
-	                   });
-}
-
-PhraseExpression "PhraseExpression"= 
-head:(
-	SequenceExpression
-		/ Container
-		/ Node
-	)
-	tail:((
-				" "
-					/ [\t]
-				)+
-			tail:(
-			SequenceExpression
-				/ Container
-				/ Node
-			) {return tail;})+
-{
-	const phrase = {
-	  kind: 'phrase_expression',
-	  items: [head, ...tail]
-	};
-	
-	return toConstruct(phrase)
-}
-
-InfixedAggregationExpression "InfixedAggregationExpression"= 
-head:Node
-	(Space {return null;})*
-	tail:(
-	(Space {return null;})*
-		PrefixedAggregationExpression
-	)
-{
-	return toConstruct({
-	                     kind: 'infixed_aggregation_expression',
-	                     head: head,
-	                     tail: tail,
-	                   })
-}
-
-InfixedBindingExpression "InfixedBindingExpression"= 
-head:Node
-	(Space {return null;})*
-	tail:(
-	(Space {return null;})*
-		PrefixedBindingExpression
-	)
-{
-	return toConstruct({
-	                     kind: 'infixed_binding_expression',
-	                     head: head,
-	                     tail: tail,
-	                   })
-}
-
-InfixedReductionExpression "InfixedReductionExpression"= 
-head:Node
-	(Space {return null;})*
-	tail:(
-	(Space {return null;})*
-		PrefixedReductionExpression
-	)
-{
-	return toConstruct({
-	                     kind: 'infixed_reduction_expression',
-	                     head: head,
-	                     tail: tail,
-	                   })
-}
-
-InfixedTransformationExpression "InfixedTransformationExpression"= 
-head:Node
-	(Space {return null;})*
-	tail:(
-	(Space {return null;})*
-		PrefixedTransformationExpression
-	)
-{
-	return toConstruct({
-	                     kind: 'infixed_transformation_expression',
-	                     head: head,
-	                     tail: tail,
-	                   })
-}
-
-InfixedRangeExpression "InfixedRangeExpression"= 
-head:Node
-	(Space {return null;})*
-	tail:(
-	(Space {return null;})*
-		PrefixedRangeExpression
-	)
-{
-	return toConstruct({
-	                     kind: 'infixed_range_expression',
-	                     head: head,
-	                     tail: tail,
-	                   })
-}
 
 PrefixedAggregationExpression "PrefixedAggregationExpression"= 
 (head:AggregationOperator
@@ -1304,3 +1298,9 @@ PrefixedAggregationExpression
 	/ PrefixedRangeExpression
 	/ PrefixedReductionExpression
 	/ PrefixedTransformationExpression
+
+SequenceExpression "SequenceExpression"= 
+InstanceExpression
+	/ EntityExpression
+	/ BehaviorExpression
+	/ LocatedEntityExpression

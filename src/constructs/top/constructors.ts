@@ -6,7 +6,7 @@ import { InfixedBindingExpression } from '@constructs/ast/expressions/operations
 import { PrefixedBindingExpression } from '@constructs/ast/expressions/operations/binding/_variants/prefixed/expression';
 import { InfixedReductionExpression } from '@constructs/ast/expressions/operations/reduction/_variants/infixed/expression';
 import { PrefixedReductionExpression } from '@constructs/ast/expressions/operations/reduction/_variants/prefixed/expression';
-import { PostfixExpression } from '@constructs/ast/expressions/postfixed/construct';
+import { PostfixedExpression } from '@constructs/ast/expressions/postfixed/construct';
 import { PrefixExpression } from '@constructs/ast/expressions/prefixed/construct';
 import { BlockExpression } from '@constructs/ast/expressions/sequence/block/construct';
 import { ConstructKind } from '@constructs/top/kinds';
@@ -164,7 +164,7 @@ export const spwItemConstructors = {
   prefix_expression: PrefixExpression,
 
   // postfix
-  postfix_expression: PostfixExpression,
+  postfixed_expression: PostfixedExpression,
 
   // sequences
   entity_expression: EntityExpression,

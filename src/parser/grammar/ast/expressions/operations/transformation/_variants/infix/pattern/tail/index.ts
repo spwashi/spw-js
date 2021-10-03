@@ -1,7 +1,11 @@
 import { InfixedTransformationExpression } from '@constructs/ast';
-import { pattern } from '@grammar/ast/expressions/operations/transformation/_variants/infix/pattern/tail/pattern';
+import { flat } from '@grammar/ast/expressions/_util/componentize';
+import { spaceNode } from '@grammar/utility/space/space.ref';
+import { sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
+import { prefixedTransformationExpression } from '../../../prefix/ref';
 
+const __ = zeroOrMoreOf(spaceNode);
 export const tailComponent = {
   name: InfixedTransformationExpression.components.tail.name,
-  pattern: pattern,
+  pattern: sequenceOf([__, prefixedTransformationExpression].map(flat)),
 };
