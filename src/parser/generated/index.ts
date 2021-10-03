@@ -1187,15 +1187,39 @@ const generatedParser = /*
       }
 
       peg$silentFails++;
-      s0 = peg$parsePhraseNode();
+      s0 = peg$parseInstanceExpression();
       if (s0 === peg$FAILED) {
-        s0 = peg$parseEmbedmentNode();
+        s0 = peg$parseBehaviorExpression();
         if (s0 === peg$FAILED) {
-          s0 = peg$parseStringNode();
+          s0 = peg$parseEntityExpression();
           if (s0 === peg$FAILED) {
-            s0 = peg$parseNumberNode();
+            s0 = peg$parsePhraseNode();
             if (s0 === peg$FAILED) {
-              s0 = peg$parseAnchorNode();
+              s0 = peg$parseEmbedmentNode();
+              if (s0 === peg$FAILED) {
+                s0 = peg$parseStringNode();
+                if (s0 === peg$FAILED) {
+                  s0 = peg$parseNumberNode();
+                  if (s0 === peg$FAILED) {
+                    s0 = peg$parseAnchorNode();
+                    if (s0 === peg$FAILED) {
+                      s0 = peg$parseConcept();
+                      if (s0 === peg$FAILED) {
+                        s0 = peg$parseLocation();
+                        if (s0 === peg$FAILED) {
+                          s0 = peg$parseDomain();
+                          if (s0 === peg$FAILED) {
+                            s0 = peg$parseEssence();
+                            if (s0 === peg$FAILED) {
+                              s0 = peg$parseChannelOperator();
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -3663,24 +3687,21 @@ const generatedParser = /*
         }
         if (s2 !== peg$FAILED) {
           s3 = peg$currPos;
-          s4 = peg$parsePhraseNode();
+          s4 = peg$parseEmbedmentNode();
           if (s4 === peg$FAILED) {
-            s4 = peg$parseEmbedmentNode();
+            s4 = peg$parseStringNode();
             if (s4 === peg$FAILED) {
-              s4 = peg$parseStringNode();
+              s4 = peg$parseNumberNode();
               if (s4 === peg$FAILED) {
-                s4 = peg$parseNumberNode();
+                s4 = peg$parseAnchorNode();
                 if (s4 === peg$FAILED) {
-                  s4 = peg$parseAnchorNode();
+                  s4 = peg$parseConcept();
                   if (s4 === peg$FAILED) {
-                    s4 = peg$parseConcept();
+                    s4 = peg$parseLocation();
                     if (s4 === peg$FAILED) {
-                      s4 = peg$parseLocation();
+                      s4 = peg$parseDomain();
                       if (s4 === peg$FAILED) {
-                        s4 = peg$parseDomain();
-                        if (s4 === peg$FAILED) {
-                          s4 = peg$parseEssence();
-                        }
+                        s4 = peg$parseEssence();
                       }
                     }
                   }
@@ -4207,24 +4228,21 @@ const generatedParser = /*
         }
         if (s2 !== peg$FAILED) {
           s3 = peg$currPos;
-          s4 = peg$parsePhraseNode();
+          s4 = peg$parseEmbedmentNode();
           if (s4 === peg$FAILED) {
-            s4 = peg$parseEmbedmentNode();
+            s4 = peg$parseStringNode();
             if (s4 === peg$FAILED) {
-              s4 = peg$parseStringNode();
+              s4 = peg$parseNumberNode();
               if (s4 === peg$FAILED) {
-                s4 = peg$parseNumberNode();
+                s4 = peg$parseAnchorNode();
                 if (s4 === peg$FAILED) {
-                  s4 = peg$parseAnchorNode();
+                  s4 = peg$parseConcept();
                   if (s4 === peg$FAILED) {
-                    s4 = peg$parseConcept();
+                    s4 = peg$parseLocation();
                     if (s4 === peg$FAILED) {
-                      s4 = peg$parseLocation();
+                      s4 = peg$parseDomain();
                       if (s4 === peg$FAILED) {
-                        s4 = peg$parseDomain();
-                        if (s4 === peg$FAILED) {
-                          s4 = peg$parseEssence();
-                        }
+                        s4 = peg$parseEssence();
                       }
                     }
                   }
@@ -4751,24 +4769,21 @@ const generatedParser = /*
         }
         if (s2 !== peg$FAILED) {
           s3 = peg$currPos;
-          s4 = peg$parsePhraseNode();
+          s4 = peg$parseEmbedmentNode();
           if (s4 === peg$FAILED) {
-            s4 = peg$parseEmbedmentNode();
+            s4 = peg$parseStringNode();
             if (s4 === peg$FAILED) {
-              s4 = peg$parseStringNode();
+              s4 = peg$parseNumberNode();
               if (s4 === peg$FAILED) {
-                s4 = peg$parseNumberNode();
+                s4 = peg$parseAnchorNode();
                 if (s4 === peg$FAILED) {
-                  s4 = peg$parseAnchorNode();
+                  s4 = peg$parseConcept();
                   if (s4 === peg$FAILED) {
-                    s4 = peg$parseConcept();
+                    s4 = peg$parseLocation();
                     if (s4 === peg$FAILED) {
-                      s4 = peg$parseLocation();
+                      s4 = peg$parseDomain();
                       if (s4 === peg$FAILED) {
-                        s4 = peg$parseDomain();
-                        if (s4 === peg$FAILED) {
-                          s4 = peg$parseEssence();
-                        }
+                        s4 = peg$parseEssence();
                       }
                     }
                   }
@@ -5295,24 +5310,21 @@ const generatedParser = /*
         }
         if (s2 !== peg$FAILED) {
           s3 = peg$currPos;
-          s4 = peg$parsePhraseNode();
+          s4 = peg$parseEmbedmentNode();
           if (s4 === peg$FAILED) {
-            s4 = peg$parseEmbedmentNode();
+            s4 = peg$parseStringNode();
             if (s4 === peg$FAILED) {
-              s4 = peg$parseStringNode();
+              s4 = peg$parseNumberNode();
               if (s4 === peg$FAILED) {
-                s4 = peg$parseNumberNode();
+                s4 = peg$parseAnchorNode();
                 if (s4 === peg$FAILED) {
-                  s4 = peg$parseAnchorNode();
+                  s4 = peg$parseConcept();
                   if (s4 === peg$FAILED) {
-                    s4 = peg$parseConcept();
+                    s4 = peg$parseLocation();
                     if (s4 === peg$FAILED) {
-                      s4 = peg$parseLocation();
+                      s4 = peg$parseDomain();
                       if (s4 === peg$FAILED) {
-                        s4 = peg$parseDomain();
-                        if (s4 === peg$FAILED) {
-                          s4 = peg$parseEssence();
-                        }
+                        s4 = peg$parseEssence();
                       }
                     }
                   }
@@ -7768,16 +7780,7 @@ const generatedParser = /*
 
       peg$silentFails++;
       s0 = peg$currPos;
-      s1 = peg$parseSequenceExpression();
-      if (s1 === peg$FAILED) {
-        s1 = peg$parseContainer();
-        if (s1 === peg$FAILED) {
-          s1 = peg$parseNode();
-          if (s1 === peg$FAILED) {
-            s1 = peg$parseChannelOperator();
-          }
-        }
-      }
+      s1 = peg$parseNode();
       if (s1 !== peg$FAILED) {
         s2 = [];
         s3 = peg$currPos;
@@ -7871,16 +7874,7 @@ const generatedParser = /*
 
       peg$silentFails++;
       s0 = peg$currPos;
-      s1 = peg$parseSequenceExpression();
-      if (s1 === peg$FAILED) {
-        s1 = peg$parseContainer();
-        if (s1 === peg$FAILED) {
-          s1 = peg$parseNode();
-          if (s1 === peg$FAILED) {
-            s1 = peg$parseChannelOperator();
-          }
-        }
-      }
+      s1 = peg$parseNode();
       if (s1 !== peg$FAILED) {
         s2 = [];
         s3 = peg$currPos;
@@ -7974,16 +7968,7 @@ const generatedParser = /*
 
       peg$silentFails++;
       s0 = peg$currPos;
-      s1 = peg$parseSequenceExpression();
-      if (s1 === peg$FAILED) {
-        s1 = peg$parseContainer();
-        if (s1 === peg$FAILED) {
-          s1 = peg$parseNode();
-          if (s1 === peg$FAILED) {
-            s1 = peg$parseChannelOperator();
-          }
-        }
-      }
+      s1 = peg$parseNode();
       if (s1 !== peg$FAILED) {
         s2 = [];
         s3 = peg$currPos;
@@ -8077,16 +8062,7 @@ const generatedParser = /*
 
       peg$silentFails++;
       s0 = peg$currPos;
-      s1 = peg$parseSequenceExpression();
-      if (s1 === peg$FAILED) {
-        s1 = peg$parseContainer();
-        if (s1 === peg$FAILED) {
-          s1 = peg$parseNode();
-          if (s1 === peg$FAILED) {
-            s1 = peg$parseChannelOperator();
-          }
-        }
-      }
+      s1 = peg$parseNode();
       if (s1 !== peg$FAILED) {
         s2 = [];
         s3 = peg$currPos;
@@ -8180,16 +8156,7 @@ const generatedParser = /*
 
       peg$silentFails++;
       s0 = peg$currPos;
-      s1 = peg$parseSequenceExpression();
-      if (s1 === peg$FAILED) {
-        s1 = peg$parseContainer();
-        if (s1 === peg$FAILED) {
-          s1 = peg$parseNode();
-          if (s1 === peg$FAILED) {
-            s1 = peg$parseChannelOperator();
-          }
-        }
-      }
+      s1 = peg$parseNode();
       if (s1 !== peg$FAILED) {
         s2 = [];
         s3 = peg$currPos;
@@ -8364,19 +8331,7 @@ const generatedParser = /*
                               if (s3 === peg$FAILED) {
                                 s3 = peg$parsePrefixedTransformationExpression();
                                 if (s3 === peg$FAILED) {
-                                  s3 = peg$parseInstanceExpression();
-                                  if (s3 === peg$FAILED) {
-                                    s3 = peg$parseBehaviorExpression();
-                                    if (s3 === peg$FAILED) {
-                                      s3 = peg$parseContainer();
-                                      if (s3 === peg$FAILED) {
-                                        s3 = peg$parseNode();
-                                        if (s3 === peg$FAILED) {
-                                          s3 = peg$parseChannelOperator();
-                                        }
-                                      }
-                                    }
-                                  }
+                                  s3 = peg$parseNode();
                                 }
                               }
                             }
@@ -8570,19 +8525,7 @@ const generatedParser = /*
                               if (s3 === peg$FAILED) {
                                 s3 = peg$parsePrefixedTransformationExpression();
                                 if (s3 === peg$FAILED) {
-                                  s3 = peg$parseInstanceExpression();
-                                  if (s3 === peg$FAILED) {
-                                    s3 = peg$parseBehaviorExpression();
-                                    if (s3 === peg$FAILED) {
-                                      s3 = peg$parseContainer();
-                                      if (s3 === peg$FAILED) {
-                                        s3 = peg$parseNode();
-                                        if (s3 === peg$FAILED) {
-                                          s3 = peg$parseChannelOperator();
-                                        }
-                                      }
-                                    }
-                                  }
+                                  s3 = peg$parseNode();
                                 }
                               }
                             }
@@ -8776,19 +8719,7 @@ const generatedParser = /*
                               if (s3 === peg$FAILED) {
                                 s3 = peg$parsePrefixedTransformationExpression();
                                 if (s3 === peg$FAILED) {
-                                  s3 = peg$parseInstanceExpression();
-                                  if (s3 === peg$FAILED) {
-                                    s3 = peg$parseBehaviorExpression();
-                                    if (s3 === peg$FAILED) {
-                                      s3 = peg$parseContainer();
-                                      if (s3 === peg$FAILED) {
-                                        s3 = peg$parseNode();
-                                        if (s3 === peg$FAILED) {
-                                          s3 = peg$parseChannelOperator();
-                                        }
-                                      }
-                                    }
-                                  }
+                                  s3 = peg$parseNode();
                                 }
                               }
                             }
@@ -8982,19 +8913,7 @@ const generatedParser = /*
                               if (s3 === peg$FAILED) {
                                 s3 = peg$parsePrefixedTransformationExpression();
                                 if (s3 === peg$FAILED) {
-                                  s3 = peg$parseInstanceExpression();
-                                  if (s3 === peg$FAILED) {
-                                    s3 = peg$parseBehaviorExpression();
-                                    if (s3 === peg$FAILED) {
-                                      s3 = peg$parseContainer();
-                                      if (s3 === peg$FAILED) {
-                                        s3 = peg$parseNode();
-                                        if (s3 === peg$FAILED) {
-                                          s3 = peg$parseChannelOperator();
-                                        }
-                                      }
-                                    }
-                                  }
+                                  s3 = peg$parseNode();
                                 }
                               }
                             }
@@ -9188,19 +9107,7 @@ const generatedParser = /*
                               if (s3 === peg$FAILED) {
                                 s3 = peg$parsePrefixedTransformationExpression();
                                 if (s3 === peg$FAILED) {
-                                  s3 = peg$parseInstanceExpression();
-                                  if (s3 === peg$FAILED) {
-                                    s3 = peg$parseBehaviorExpression();
-                                    if (s3 === peg$FAILED) {
-                                      s3 = peg$parseContainer();
-                                      if (s3 === peg$FAILED) {
-                                        s3 = peg$parseNode();
-                                        if (s3 === peg$FAILED) {
-                                          s3 = peg$parseChannelOperator();
-                                        }
-                                      }
-                                    }
-                                  }
+                                  s3 = peg$parseNode();
                                 }
                               }
                             }

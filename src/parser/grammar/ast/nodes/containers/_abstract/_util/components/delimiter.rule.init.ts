@@ -1,4 +1,8 @@
 import { scalars } from '@grammar/ast/nodes/atoms/scalars/_abstract/_list/scalar.list.ref';
+import { anchorNode } from '@grammar/ast/nodes/atoms/scalars/anchor/ref';
+import { phraseNode } from '@grammar/ast/nodes/atoms/scalars/phrase/ref';
+import { containerNodes } from '@grammar/ast/nodes/containers/_abstract/_list/container.list.ref';
+import { spaceNode } from '@grammar/utility/space/space.ref';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import {
   anyOf,
@@ -7,9 +11,6 @@ import {
   sequenceOf,
   stringLike,
 } from '@spwashi/language/parsers/grammar/combinators';
-import { spaceNode } from '../../../../../../utility/space/space.ref';
-import { anchorNode } from '../../../../atoms/scalars/anchor/ref';
-import { containerNodes } from '../../_list/container.list.ref';
 import { getContainerNodeComponentReferences } from '../container.ref.init';
 
 function opener(delimiter: IDelimiter): SequenceCombinator {
@@ -17,7 +18,7 @@ function opener(delimiter: IDelimiter): SequenceCombinator {
 
   const underscore = stringLike('_');
 
-  const headAnchor = anyOf([...scalars, ...containerNodes]);
+  const headAnchor = anyOf([...scalars.filter((n) => n !== phraseNode), ...containerNodes]);
 
   const headDescription = optionally(sequenceOf([anyOf(containerNodes)]));
 

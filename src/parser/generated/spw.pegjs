@@ -93,11 +93,19 @@ Space "Space"=
 		)+ {return constructs.space();})
 
 Node "Node"= 
-PhraseNode
+InstanceExpression
+	/ BehaviorExpression
+	/ EntityExpression
+	/ PhraseNode
 	/ EmbedmentNode
 	/ StringNode
 	/ NumberNode
 	/ AnchorNode
+	/ Concept
+	/ Location
+	/ Domain
+	/ Essence
+	/ ChannelOperator
 
 AnchorNode "AnchorNode"= 
 anchor:(
@@ -518,8 +526,7 @@ DomainOpen "DomainOpen"=
 (token:"{"
 		"_"
 		node:(anchor:(
-				PhraseNode
-					/ EmbedmentNode
+				EmbedmentNode
 					/ StringNode
 					/ NumberNode
 					/ AnchorNode
@@ -586,8 +593,7 @@ EssenceOpen "EssenceOpen"=
 (token:"["
 		"_"
 		node:(anchor:(
-				PhraseNode
-					/ EmbedmentNode
+				EmbedmentNode
 					/ StringNode
 					/ NumberNode
 					/ AnchorNode
@@ -654,8 +660,7 @@ ConceptOpen "ConceptOpen"=
 (token:"<"
 		"_"
 		node:(anchor:(
-				PhraseNode
-					/ EmbedmentNode
+				EmbedmentNode
 					/ StringNode
 					/ NumberNode
 					/ AnchorNode
@@ -722,8 +727,7 @@ LocationOpen "LocationOpen"=
 (token:"("
 		"_"
 		node:(anchor:(
-				PhraseNode
-					/ EmbedmentNode
+				EmbedmentNode
 					/ StringNode
 					/ NumberNode
 					/ AnchorNode
@@ -1034,12 +1038,7 @@ head:(
 }
 
 InfixedAggregationExpression "InfixedAggregationExpression"= 
-head:(
-	SequenceExpression
-		/ Container
-		/ Node
-		/ ChannelOperator
-	)
+head:Node
 	(Space {return null;})*
 	tail:(
 	(Space {return null;})*
@@ -1054,12 +1053,7 @@ head:(
 }
 
 InfixedBindingExpression "InfixedBindingExpression"= 
-head:(
-	SequenceExpression
-		/ Container
-		/ Node
-		/ ChannelOperator
-	)
+head:Node
 	(Space {return null;})*
 	tail:(
 	(Space {return null;})*
@@ -1074,12 +1068,7 @@ head:(
 }
 
 InfixedReductionExpression "InfixedReductionExpression"= 
-head:(
-	SequenceExpression
-		/ Container
-		/ Node
-		/ ChannelOperator
-	)
+head:Node
 	(Space {return null;})*
 	tail:(
 	(Space {return null;})*
@@ -1094,12 +1083,7 @@ head:(
 }
 
 InfixedTransformationExpression "InfixedTransformationExpression"= 
-head:(
-	SequenceExpression
-		/ Container
-		/ Node
-		/ ChannelOperator
-	)
+head:Node
 	(Space {return null;})*
 	tail:(
 	(Space {return null;})*
@@ -1114,12 +1098,7 @@ head:(
 }
 
 InfixedRangeExpression "InfixedRangeExpression"= 
-head:(
-	SequenceExpression
-		/ Container
-		/ Node
-		/ ChannelOperator
-	)
+head:Node
 	(Space {return null;})*
 	tail:(
 	(Space {return null;})*
@@ -1155,11 +1134,7 @@ PrefixedAggregationExpression "PrefixedAggregationExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
-		/ InstanceExpression
-		/ BehaviorExpression
-		/ Container
 		/ Node
-		/ ChannelOperator
 	)
 	(
 		(
@@ -1191,11 +1166,7 @@ PrefixedBindingExpression "PrefixedBindingExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
-		/ InstanceExpression
-		/ BehaviorExpression
-		/ Container
 		/ Node
-		/ ChannelOperator
 	)
 	(
 		(
@@ -1227,11 +1198,7 @@ PrefixedRangeExpression "PrefixedRangeExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
-		/ InstanceExpression
-		/ BehaviorExpression
-		/ Container
 		/ Node
-		/ ChannelOperator
 	)
 	(
 		(
@@ -1263,11 +1230,7 @@ PrefixedReductionExpression "PrefixedReductionExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
-		/ InstanceExpression
-		/ BehaviorExpression
-		/ Container
 		/ Node
-		/ ChannelOperator
 	)
 	(
 		(
@@ -1299,11 +1262,7 @@ PrefixedTransformationExpression "PrefixedTransformationExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
-		/ InstanceExpression
-		/ BehaviorExpression
-		/ Container
 		/ Node
-		/ ChannelOperator
 	)
 	(
 		(

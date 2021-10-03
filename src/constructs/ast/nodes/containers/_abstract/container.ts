@@ -54,8 +54,9 @@ export abstract class ContainerNode<
 
       evaluators: {
         stringify: function (els = []) {
+          const delimiter = els.join('');
           // add a space after complex delimiters
-          return els.join('') + (els.length > 1 ? ' ' : '');
+          return delimiter + (delimiter.length > 1 ? ' ' : '');
         },
       },
     }),

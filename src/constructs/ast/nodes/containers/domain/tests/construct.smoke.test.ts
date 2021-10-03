@@ -18,7 +18,7 @@ describe('Domain', () => {
 
     expect(last.kind).toEqual(Domain.kind);
     expect(last.key).toEqual('{_label domain}');
-    expect(all.length).toEqual(7);
+    expect(all.length).toEqual(6);
 
     done();
   });
