@@ -909,13 +909,15 @@ BehaviorExpression "BehaviorExpression"=
 			)*
 		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
 	/ (domain:Domain
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (domain:Domain
 		(
 			" "
 			)*
 		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
-	/ (domain:Domain
-		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
 	/ (location:Location {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (domain:Domain {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
 
 EntityExpression "EntityExpression"= 
 (concept:Concept
@@ -1153,6 +1155,8 @@ PrefixedAggregationExpression "PrefixedAggregationExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
+		/ InstanceExpression
+		/ BehaviorExpression
 		/ Container
 		/ Node
 		/ ChannelOperator
@@ -1187,6 +1191,8 @@ PrefixedBindingExpression "PrefixedBindingExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
+		/ InstanceExpression
+		/ BehaviorExpression
 		/ Container
 		/ Node
 		/ ChannelOperator
@@ -1221,6 +1227,8 @@ PrefixedRangeExpression "PrefixedRangeExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
+		/ InstanceExpression
+		/ BehaviorExpression
 		/ Container
 		/ Node
 		/ ChannelOperator
@@ -1255,6 +1263,8 @@ PrefixedReductionExpression "PrefixedReductionExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
+		/ InstanceExpression
+		/ BehaviorExpression
 		/ Container
 		/ Node
 		/ ChannelOperator
@@ -1289,6 +1299,8 @@ PrefixedTransformationExpression "PrefixedTransformationExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
+		/ InstanceExpression
+		/ BehaviorExpression
 		/ Container
 		/ Node
 		/ ChannelOperator

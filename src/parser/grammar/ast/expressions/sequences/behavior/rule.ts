@@ -43,8 +43,10 @@ const pattern = anyOf([
   sequenceOf([_location, __, _domain, __, _essence].map(flat)).withAction(action),
   sequenceOf([_location, __, _domain].map(flat)).withAction(action),
   sequenceOf([_location, __, _essence].map(flat)).withAction(action),
-  sequenceOf([_domain, __, _essence].map(flat)).withAction(action),
   sequenceOf([_domain, _essence].map(flat)).withAction(action),
+  sequenceOf([_domain, __, _essence].map(flat)).withAction(action),
   sequenceOf([_location].map(flat)).withAction(action),
+  sequenceOf([_domain].map(flat)).withAction(action),
+  sequenceOf([_essence].map(flat)).withAction(action),
 ]);
 export const behaviorExpressionRule = new Rule(ruleName, pattern);
