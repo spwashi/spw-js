@@ -19,9 +19,9 @@ import { BlockExpressionKind } from '@constructs/ast/expressions/sequence/block/
 import { EntityExpressionKind } from '@constructs/ast/expressions/sequence/entity/__types';
 import { InstanceExpressionKind } from '@constructs/ast/expressions/sequence/instance/__types';
 import { LocatedConceptExpressionKind } from '@constructs/ast/expressions/sequence/located_concept/__types';
-import { LocatedDomainExpressionKind } from '@constructs/ast/expressions/sequence/located_domain/__types';
-import { LocatedEntityExpressionKind } from '@constructs/ast/expressions/sequence/located_entity/__types';
-import { LocatedEssenceExpressionKind } from '@constructs/ast/expressions/sequence/located_essence/__types';
+import { LocatedDomainExpressionKind } from '@constructs/ast/expressions/sequence/behavior/sub/located_domain/__types';
+import { LocatedEntityExpressionKind } from '@constructs/ast/expressions/sequence/behavior/sub/located_entity/__types';
+import { LocatedEssenceExpressionKind } from '@constructs/ast/expressions/sequence/behavior/sub/located_essence/__types';
 import { ConceptNodeKind } from '@constructs/ast/nodes/containers/concept/__types';
 import { ConceptualIdentityOperatorKind } from '@constructs/ast/nodes/containers/concept/_components/identity/__types';
 import { ConceptualSchemeOperatorKind } from '@constructs/ast/nodes/containers/concept/_components/scheme/__types';

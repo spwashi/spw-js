@@ -1,4 +1,4 @@
-import { LocatedEssenceExpression } from '@constructs/ast/expressions/sequence/located_essence/construct';
+import { LocatedEssenceExpression } from '@constructs/ast/expressions/sequence/behavior/sub/located_essence/construct';
 import { flat } from '@grammar/ast/expressions/_util/componentize';
 import { essence } from '@grammar/ast/nodes/containers/essence/ref';
 import { location } from '@grammar/ast/nodes/containers/location/ref';
@@ -8,8 +8,8 @@ import { ruleName } from './ref';
 
 const components = LocatedEssenceExpression.components;
 const _location = {
-  name: components.address.name,
-  pattern: location.named(components.address.name),
+  name: components.location.name,
+  pattern: location.named(components.location.name),
 };
 const _essence = {
   name: components.essence.name,

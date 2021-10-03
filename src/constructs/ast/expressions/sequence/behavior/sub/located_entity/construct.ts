@@ -3,18 +3,18 @@ import { ConstructComponent } from '@constructs/ast/_abstract/component/componen
 import { IConstructClass } from '@constructs/ast/_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
-import { LocatedEntityExpressionKind } from '@constructs/ast/expressions/sequence/located_entity/__types';
+import { LocatedEntityExpressionKind } from '@constructs/ast/expressions/sequence/behavior/sub/located_entity/__types';
 
 @staticImplements<IConstructClass<LocatedEntityExpressionKind>>()
 export class LocatedEntityExpression extends Expression<LocatedEntityExpressionKind> {
   static readonly kind: LocatedEntityExpressionKind = 'located_entity_expression';
 
   static components = {
-    address: new ConstructComponent({ name: 'address' }),
+    location: new ConstructComponent({ name: 'location' }),
     entity: new ConstructComponent({ name: 'entity' }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {
-      yield this.address;
+      yield this.location;
       yield this.entity;
     },
   };

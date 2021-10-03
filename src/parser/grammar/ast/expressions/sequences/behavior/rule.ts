@@ -18,8 +18,8 @@ const _essence = {
   pattern: essence.named(components.essence.name),
 };
 const _location = {
-  name: components.address.name,
-  pattern: location.named(components.address.name),
+  name: components.location.name,
+  pattern: location.named(components.location.name),
 };
 const __ = {
   name: undefined,
@@ -44,6 +44,7 @@ const pattern = anyOf([
   sequenceOf([_location, __, _domain].map(flat)).withAction(action),
   sequenceOf([_location, __, _essence].map(flat)).withAction(action),
   sequenceOf([_domain, __, _essence].map(flat)).withAction(action),
+  sequenceOf([_domain, _essence].map(flat)).withAction(action),
   sequenceOf([_location].map(flat)).withAction(action),
 ]);
 export const behaviorExpressionRule = new Rule(ruleName, pattern);

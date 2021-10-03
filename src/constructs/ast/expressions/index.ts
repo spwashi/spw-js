@@ -10,9 +10,9 @@ export { EssentialIdentityOperator } from '@constructs/ast/nodes/containers/esse
 export { EssentialSchemeOperator } from '@constructs/ast/nodes/containers/essence/_components/scheme/construct';
 export { InstanceExpression } from '@constructs/ast/expressions/sequence/instance/construct';
 export { LocatedConceptExpression } from '@constructs/ast/expressions/sequence/located_concept/construct';
-export { LocatedDomainExpression } from '@constructs/ast/expressions/sequence/located_domain/construct';
-export { LocatedEntityExpression } from '@constructs/ast/expressions/sequence/located_entity/construct';
-export { LocatedEssenceExpression } from '@constructs/ast/expressions/sequence/located_essence/construct';
+export { LocatedDomainExpression } from '@constructs/ast/expressions/sequence/behavior/sub/located_domain/construct';
+export { LocatedEntityExpression } from '@constructs/ast/expressions/sequence/behavior/sub/located_entity/construct';
+export { LocatedEssenceExpression } from '@constructs/ast/expressions/sequence/behavior/sub/located_essence/construct';
 export { LocationalIdentityOperator } from '@constructs/ast/nodes/containers/location/_components/identity/construct';
 export { LocationalSchemeOperator } from '@constructs/ast/nodes/containers/location/_components/scheme/construct';
 export { PhraseExpression } from '@constructs/ast/expressions/infixed/phrase/expression';

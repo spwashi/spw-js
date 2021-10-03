@@ -1,4 +1,4 @@
-import { LocatedEntityExpression } from '@constructs/ast/expressions/sequence/located_entity/construct';
+import { LocatedEntityExpression } from '@constructs/ast/expressions/sequence/behavior/sub/located_entity/construct';
 import { referenceTo } from '@spwashi/language/parsers/grammar/combinators';
 
 export const ruleName = LocatedEntityExpression.name;

@@ -8,8 +8,8 @@ import { ruleName } from './ref';
 
 const components = LocatedConceptExpression.components;
 const _location = {
-  name: components.address.name,
-  pattern: location.named(components.address.name),
+  name: components.location.name,
+  pattern: location.named(components.location.name),
 };
 const _concept = {
   name: components.concept.name,

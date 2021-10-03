@@ -1,6 +1,5 @@
 import { EntityExpression } from '@constructs/ast';
 import { flat } from '@grammar/ast/expressions/_util/componentize';
-import { referenceOperator } from '@grammar/ast/nodes/atoms/operators/pragmatic/reference/ref';
 import { scalar } from '@grammar/ast/nodes/atoms/scalars/_abstract/scalar.ref';
 import { concept } from '@grammar/ast/nodes/containers/concept/ref';
 import { space } from '@grammar/utility/space/whitespace.patterns';
@@ -13,7 +12,7 @@ const _concept = {
 };
 const _anchor = {
   name: components.anchor.name,
-  pattern: anyOf([scalar, referenceOperator]).named(components.anchor.name),
+  pattern: anyOf([scalar]).named(components.anchor.name),
 };
 const __ = {
   name: 'space',
@@ -23,12 +22,13 @@ const __ = {
 const action = `
   const expression = {
     kind: '${EntityExpression.kind}',
-    ${_anchor.name}: ${_anchor.name},
-    ${_concept.name}: typeof ${_concept.name} !== 'undefined' ? concept : undefined
+    ${_anchor.name}: typeof ${_anchor.name} !== 'undefined' ? ${_anchor.name} : undefined,
+    ${_concept.name}: typeof ${_concept.name} !== 'undefined' ? ${_concept.name} : undefined
   };
   return toConstruct(expression)
 `;
 export const pattern = anyOf([
   sequenceOf([_concept, __, _anchor].map(flat)).withAction(action),
+  sequenceOf([_concept].map(flat)).withAction(action),
   sequenceOf([_anchor].map(flat)).withAction(action),
 ]);

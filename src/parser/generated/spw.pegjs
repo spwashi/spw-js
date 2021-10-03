@@ -870,6 +870,7 @@ entity:EntityExpression
 	BehaviorExpression
 		/ LocatedDomainExpression
 		/ LocatedEntityExpression
+		/ LocatedEssenceExpression
 	)
 {
 	const expression = {
@@ -881,14 +882,14 @@ entity:EntityExpression
 }
 
 BehaviorExpression "BehaviorExpression"= 
-(address:Location
+(location:Location
 		domain:Domain
-		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
-	/ (address:Location
-		domain:Domain {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
-	/ (address:Location
-		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
-	/ (address:Location
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (location:Location
+		domain:Domain {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (location:Location
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (location:Location
 		(
 			" "
 			)*
@@ -896,81 +897,78 @@ BehaviorExpression "BehaviorExpression"=
 		(
 			" "
 			)*
-		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
-	/ (address:Location
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (location:Location
 		(
 			" "
 			)*
-		domain:Domain {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
-	/ (address:Location
+		domain:Domain {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (location:Location
 		(
 			" "
 			)*
-		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
 	/ (domain:Domain
 		(
 			" "
 			)*
-		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
-	/ (address:Location {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (domain:Domain
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
+	/ (location:Location {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,location:"undefined"!=typeof location?location:void 0};return toConstruct(expression);})
 
 EntityExpression "EntityExpression"= 
 (concept:Concept
 		space:(
 			" "
 			)*
-		anchor:(
-		Scalar
-			/ ReferenceOperator
-		) {const expression={kind:"entity_expression",anchor:anchor,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
-	/ (anchor:(
-		Scalar
-			/ ReferenceOperator
-		) {const expression={kind:"entity_expression",anchor:anchor,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
+		anchor:Scalar {const expression={kind:"entity_expression",anchor:"undefined"!=typeof anchor?anchor:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
+	/ (concept:Concept {const expression={kind:"entity_expression",anchor:"undefined"!=typeof anchor?anchor:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
+	/ (anchor:Scalar {const expression={kind:"entity_expression",anchor:"undefined"!=typeof anchor?anchor:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
 
 LocatedConceptExpression "LocatedConceptExpression"= 
-address:Location
+location:Location
 	concept:Concept
 {
 	const expression = {
 	  kind: 'located_concept_expression',
-	  address: typeof address !== 'undefined' ? address : undefined,
+	  location: typeof location !== 'undefined' ? location : undefined,
 	  concept: typeof concept !== 'undefined' ? concept : undefined,
 	};
 	return toConstruct(expression)
 }
 
 LocatedDomainExpression "LocatedDomainExpression"= 
-address:Location
+location:Location
 	domain:Domain
 {
 	const expression = {
 	  kind: 'located_domain_expression',
-	  address: address,
+	  location: location,
 	  domain: domain,
 	};
 	return toConstruct(expression)
 }
 
 LocatedEntityExpression "LocatedEntityExpression"= 
-address:Location
+location:Location
 	entity:EntityExpression
 {
 	const expression = {
 	  kind: 'located_entity_expression',
-	  address: typeof address !== 'undefined' ? address : undefined,
+	  location: typeof location !== 'undefined' ? location : undefined,
 	  entity: typeof entity !== 'undefined' ? entity : undefined,
 	};
 	return toConstruct(expression)
 }
 
 LocatedEssenceExpression "LocatedEssenceExpression"= 
-address:Location
+location:Location
 	essence:Essence
 {
 	const expression = {
 	  kind: 'located_essence_expression',
-	  address: typeof address !== 'undefined' ? address : undefined,
+	  location: typeof location !== 'undefined' ? location : undefined,
 	  essence: typeof essence !== 'undefined' ? essence : undefined,
 	};
 	return toConstruct(expression)

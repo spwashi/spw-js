@@ -10,11 +10,11 @@ export class LocatedConceptExpression extends Expression<LocatedConceptExpressio
   static readonly kind: LocatedConceptExpressionKind = 'located_concept_expression';
 
   static components = {
-    address: new ConstructComponent({ name: 'address' }),
+    location: new ConstructComponent({ name: 'location' }),
     concept: new ConstructComponent({ name: 'concept' }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {
-      yield this.address;
+      yield this.location;
       yield this.concept;
     },
   };

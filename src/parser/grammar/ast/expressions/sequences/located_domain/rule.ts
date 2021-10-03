@@ -1,4 +1,4 @@
-import { LocatedDomainExpression } from '@constructs/ast/expressions/sequence/located_domain/construct';
+import { LocatedDomainExpression } from '@constructs/ast/expressions/sequence/behavior/sub/located_domain/construct';
 import { flat } from '@grammar/ast/expressions/_util/componentize';
 import { domain } from '@grammar/ast/nodes/containers/domain/ref';
 import { location } from '@grammar/ast/nodes/containers/location/ref';
@@ -8,8 +8,8 @@ import { ruleName } from './ref';
 
 const components = LocatedDomainExpression.components;
 const _location = {
-  name: components.address.name,
-  pattern: location.named(components.address.name),
+  name: components.location.name,
+  pattern: location.named(components.location.name),
 };
 const _domain = {
   name: components.domain.name,

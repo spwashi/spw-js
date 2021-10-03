@@ -29,7 +29,7 @@ describe('Something', () => {
           _something {
             (11..12) => [
               #_purpose     => do something interesting;
-              #_replacement => "InvoiceItems";
+              #_replacement => "InvoiceItems"
             ]
           };
        `,
@@ -38,16 +38,17 @@ describe('Something', () => {
       .map((item) => {
         const node = getSalientNode(item);
         if (!node) return false;
-        console.log(
-          util.inspect(
-            {
-              key: node.key,
-            },
-            false,
-            null,
-            true,
-          ),
+        const inspect = util.inspect(
+          {
+            key: node.key,
+          },
+          false,
+          null,
+          true,
         );
+        const doinspect = false;
+        console.log(node.key);
+        doinspect && console.log(inspect);
         return getAllNodes(item);
       })
       .filter(Boolean) as Construct[][];

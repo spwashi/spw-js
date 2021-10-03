@@ -1,4 +1,4 @@
-import { LocatedEntityExpression } from '@constructs/ast/expressions/sequence/located_entity/construct';
+import { LocatedEntityExpression } from '@constructs/ast/expressions/sequence/behavior/sub/located_entity/construct';
 import { entityExpression } from '@grammar/ast/expressions/sequences/entity/ref';
 import { location } from '@grammar/ast/nodes/containers/location/ref';
 import { Rule } from '@spwashi/language/parsers/grammar';
@@ -7,8 +7,8 @@ import { ruleName } from './ref';
 
 const components = LocatedEntityExpression.components;
 const _location = {
-  name: components.address.name,
-  pattern: location.named(components.address.name),
+  name: components.location.name,
+  pattern: location.named(components.location.name),
 };
 const _entity = {
   name: components.entity.name,

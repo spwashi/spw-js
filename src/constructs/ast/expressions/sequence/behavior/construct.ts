@@ -10,12 +10,12 @@ export class BehaviorExpression extends Expression<BehaviorExpressionKind> {
   static readonly kind: BehaviorExpressionKind = 'behavior_expression';
 
   static components = {
-    address: new ConstructComponent({ name: 'address' }),
+    location: new ConstructComponent({ name: 'location' }),
     domain: new ConstructComponent({ name: 'domain' }),
     essence: new ConstructComponent({ name: 'essence' }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {
-      yield this.address;
+      yield this.location;
       yield this.domain;
       yield this.essence;
     },
