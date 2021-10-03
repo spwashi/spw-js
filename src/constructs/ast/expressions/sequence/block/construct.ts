@@ -1,5 +1,6 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
-import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
+import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { IConstructClass } from '@constructs/ast/_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { BlockExpressionKind } from './__types';
@@ -9,7 +10,7 @@ export class BlockExpression extends Expression<BlockExpressionKind> {
   static readonly kind: BlockExpressionKind = 'block';
 
   static components = {
-    items: Construct.makeComponent({
+    items: new ConstructComponent({
       name: 'items',
 
       selector: (subject: any) => {

@@ -2,8 +2,9 @@ import {
   ComponentDescription,
   ComponentEvaluatorObject,
 } from '@constructs/ast/_abstract/_types/componentDescription';
+import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { EmbedmentNodeKind } from '@constructs/ast/nodes/scalars/embedment/__types';
-import { Construct, IConstructClass } from '../../../_abstract/construct';
+import { IConstructClass } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
 import { Node } from '../../_abstract/node';
 
@@ -14,13 +15,13 @@ export class EmbedmentNode extends Node<EmbedmentNodeKind> {
   static readonly kind: EmbedmentNodeKind = 'embedment';
 
   static components = {
-    open: Construct.makeComponent({
+    open: new ConstructComponent({
       name: 'open',
 
       selector: () => '`',
     }),
 
-    body: Construct.makeComponent({
+    body: new ConstructComponent({
       name: 'body',
 
       evaluators: {
@@ -31,7 +32,7 @@ export class EmbedmentNode extends Node<EmbedmentNodeKind> {
       } as ComponentEvaluatorObject,
     }),
 
-    close: Construct.makeComponent({
+    close: new ConstructComponent({
       name: 'close',
 
       selector: () => '`',

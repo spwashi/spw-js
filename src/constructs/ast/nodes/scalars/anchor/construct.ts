@@ -1,6 +1,7 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
+import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { AnchorNodeKind } from '@constructs/ast/nodes/scalars/anchor/__types';
-import { Construct, IConstructClass } from '../../../_abstract/construct';
+import { IConstructClass } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
 import { Node } from '../../_abstract/node';
 
@@ -11,7 +12,7 @@ export class AnchorNode extends Node<AnchorNodeKind> {
   static readonly kind: AnchorNodeKind = 'anchor';
 
   static components = {
-    label: Construct.makeComponent({
+    label: new ConstructComponent({
       name: 'label',
       selector: (s) => {
         return s.label;

@@ -1,5 +1,6 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
-import { Construct, ConstructComponents } from '@constructs/ast/_abstract/construct';
+import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { ConstructComponents } from '@constructs/ast/_abstract/construct';
 import { ConstructKind } from '@constructs/ast/_types/kinds';
 import { Node } from '@constructs/ast/nodes/_abstract/node';
 
@@ -9,16 +10,15 @@ import { Node } from '@constructs/ast/nodes/_abstract/node';
  */
 export abstract class Operator<Kind extends ConstructKind = any> extends Node<Kind> {
   static components: ConstructComponents = {
-    token: Construct.makeComponent({
-      _fallback: null as any,
+    _fallback: null,
+    token: new ConstructComponent({
       name: 'token',
       selector: function (s) {
         return s?.token ?? this._fallback;
       },
     }),
-    label: Construct.makeComponent({
+    label: new ConstructComponent({
       name: 'label',
-
       evaluators: {
         stringify: function ([...l] = []) {
           const label = l.join('');

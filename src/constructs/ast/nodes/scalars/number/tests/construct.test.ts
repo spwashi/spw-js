@@ -4,7 +4,7 @@ import { RawConstruct } from '@constructs/ast/_abstract/_types/internal';
 import {
   HydrationContext,
   joinHydratedProperties,
-} from '@constructs/ast/_abstract/_util/hydrate/_/util';
+} from '@constructs/ast/_abstract/_util/hydrate/_util/util';
 import { hydrateShallow } from '@constructs/ast/_abstract/_util/hydrate/shallow';
 import { NumberNode } from '@constructs/ast/nodes/scalars/number/construct';
 

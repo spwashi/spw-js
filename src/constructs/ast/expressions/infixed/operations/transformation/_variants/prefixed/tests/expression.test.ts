@@ -4,8 +4,8 @@ import * as util from 'util';
 import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
-} from '../../../../../../../../runtime/_util/selectors';
-import { Construct } from '../../../../../../../_abstract/construct';
+} from '@constructs/runtime/_util/selectors';
+import { Construct } from '@constructs/ast/_abstract/construct';
 
 describe('Transformation Expressions', () => {
   it('is serialized the way we expect it to be', async (done) => {

@@ -3,14 +3,7 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { locatedDomainExpressionRule } from '@grammar/ast/expressions/sequences/located_domain/rule';
 import { LocatedDomainExpression } from '../construct';
-
-describe('Rule', () => {
-  it('should exist', function () {
-    expect(locatedDomainExpressionRule.ruleName).toEqual(LocatedDomainExpression.name);
-  });
-});
 
 describe('Node Expressions', () => {
   it('can be parsed', async (done) => {

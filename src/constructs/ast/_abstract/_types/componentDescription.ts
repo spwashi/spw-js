@@ -2,7 +2,6 @@ import { AsyncInteractionGenerator } from '@constructs/ast/_abstract/_types/inte
 import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 import { InteractionGenerator } from '@constructs/ast/_abstract/_types/interaction/sync/interactionGenerator';
 import { RawConstruct } from '@constructs/ast/_abstract/_types/internal';
-import { Construct } from '@constructs/ast/_abstract/construct';
 
 type SerializationReducer<
   Intermediate,
@@ -30,14 +29,14 @@ export type ComponentEvaluatorObject<
   Intermediate = Output[],
   //
 > = {
-  hydrate?: Hydrator<Output, Intermediate | RawConstruct[]>;
+  toHydrated?: Hydrator<Output, Intermediate | RawConstruct[]>;
 
   stringify?: SerializationReducer<Intermediate, string>;
 
   toString?: SerializationReducer<undefined, string>;
 
   [k: string]:
-    | SerializationReducer<Intermediate, Output | Construct | string>
+    | SerializationReducer<Intermediate, Output | string>
     | SerializationReducer<undefined, string>
     | undefined;
 };
@@ -58,12 +57,11 @@ export type ComponentDescription<
   // Function or identifier for a component
   name: string;
   // Function or identifier for a component
-  selector: (s: Owner) => Component;
+  selector: (s: Owner) => Component | any;
   // Generator that produces elements of a component
-  generator: InteractionGenerator<SubComponent, Context>;
-  asyncGenerator?: AsyncInteractionGenerator<SubComponent, Context>;
+  generator: InteractionGenerator<SubComponent | any, Context>;
+  asyncGenerator: AsyncInteractionGenerator<SubComponent | any, Context> | null;
   // Object that contains instructions for how to evaluate a component
   evaluators: ComponentEvaluatorObject<SubComponent, SubComponentTupleOrList>;
-  // catchall
-  [k: string]: any;
+  _fallback?: any;
 };

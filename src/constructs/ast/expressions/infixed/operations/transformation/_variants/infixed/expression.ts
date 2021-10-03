@@ -1,5 +1,6 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
-import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
+import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { IConstructClass } from '@constructs/ast/_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { InfixedTransformationExpressionKind } from '@constructs/ast/expressions/infixed/operations/transformation/_variants/infixed/__types';
@@ -9,8 +10,8 @@ export class InfixedTransformationExpression extends Expression<InfixedTransform
   static readonly kind: InfixedTransformationExpressionKind = 'infixed_transformation_expression';
 
   static components = {
-    head: Construct.makeComponent({ name: 'head' }),
-    tail: Construct.makeComponent({ name: 'tail' }),
+    head: new ConstructComponent({ name: 'head' }),
+    tail: new ConstructComponent({ name: 'tail' }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {
       yield this.head;

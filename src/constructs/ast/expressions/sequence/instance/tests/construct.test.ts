@@ -3,14 +3,7 @@ import {
   getAllNodes,
   getSalientNode,
 } from '@constructs/runtime/_util/initializers/runtime/initRuntimeWithSrc';
-import { instanceExpressionRule } from '@grammar/ast/expressions/sequences/instance/rule';
 import { InstanceExpression } from '../construct';
-
-describe('Rule', () => {
-  it('should exist', function () {
-    expect(instanceExpressionRule.ruleName).toEqual(InstanceExpression.name);
-  });
-});
 
 describe('Basic InstanceExpression', () => {
   it('can be parsed', async () => {

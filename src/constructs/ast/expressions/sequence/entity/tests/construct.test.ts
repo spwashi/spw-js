@@ -1,14 +1,7 @@
 import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 import { getSalientNode } from '@constructs/runtime/_util/initializers/runtime/initRuntimeWithSrc';
 import { selectAllNodesFromRuntime } from '@constructs/runtime/_util/selectors';
-import { entityExpressionRule } from '@grammar/ast/expressions/sequences/entity/rule';
 import { EntityExpression } from '../construct';
-
-describe('Rule', () => {
-  it('should exist', function () {
-    expect(entityExpressionRule.ruleName).toEqual(EntityExpression.name);
-  });
-});
 
 describe('EntityExpression', () => {
   it('can be parsed', async (done) => {

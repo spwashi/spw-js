@@ -1,5 +1,6 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
-import { Construct, IConstructClass } from '@constructs/ast/_abstract/construct';
+import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { IConstructClass } from '@constructs/ast/_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { LocatedConceptExpressionKind } from '@constructs/ast/expressions/sequence/located_concept/__types';
@@ -9,8 +10,8 @@ export class LocatedConceptExpression extends Expression<LocatedConceptExpressio
   static readonly kind: LocatedConceptExpressionKind = 'located_concept_expression';
 
   static components = {
-    address: Construct.makeComponent({ name: 'address' }),
-    concept: Construct.makeComponent({ name: 'concept' }),
+    address: new ConstructComponent({ name: 'address' }),
+    concept: new ConstructComponent({ name: 'concept' }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {
       yield this.address;

@@ -8,7 +8,7 @@ import { completeConstructReductionConfig } from '@constructs/ast/_abstract/_uti
 import { getConstructClass } from '../../../../index';
 import { RawConstruct } from '../../_types/internal';
 import { Construct } from '../../construct';
-import { HydrationContext, joinHydratedProperties } from './_/util';
+import { HydrationContext, joinHydratedProperties } from './_util/util';
 
 /**
  * For each value, resolve the promise if we're in "async" mode
@@ -32,9 +32,8 @@ function _getHydrationStepNormalizer<Context extends InteractionContext>() {
   return ((prototype: ComponentDescription<Context>, [entries, context]) => {
     return [
       entries.map(([key, value]) => {
-        const hydrated = prototype.evaluators.hydrate
-          ? prototype.evaluators.hydrate(value, context)
-          : value;
+        const toHydrated = prototype.evaluators.hydrate;
+        const hydrated = toHydrated ? toHydrated(value, context) : value;
         return [key, hydrated];
       }),
       context,

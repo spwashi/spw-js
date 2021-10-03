@@ -1,7 +1,7 @@
 import { ConstructReductionConfig } from '@constructs/ast/_abstract/_types';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
-import { getInternalComponentDescriptions } from '@constructs/ast/_abstract/_util/reduce/_util/getInternalComponentDescriptions';
+import { getInternalComponents } from '@constructs/ast/_abstract/component/_util/internal';
 import { ReductionLifecycleController } from '@constructs/ast/_abstract/_util/reduce/_util/lifecycle/types';
 import { getComponentProcessor } from '@constructs/ast/_abstract/_util/reduce/async/_util/getComponentProcessor';
 
@@ -43,7 +43,7 @@ export function getConstructReducerAsync<
   type I_CD = Iterable<ComponentDescription<Context>>;
 
   const componentProcessor = getComponentProcessor(reductionConfig, lifecycle);
-  const allPrototypes = [...getInternalComponentDescriptions(), ...prototypes] as I_CD;
+  const allPrototypes = [...getInternalComponents(), ...prototypes] as I_CD;
 
   const constructReducer = async (
     seed: [StartType | null, Context | null],

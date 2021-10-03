@@ -3,14 +3,7 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { locatedEntityExpressionRule } from '@grammar/ast/expressions/sequences/located_entity/rule';
 import { LocatedEntityExpression } from '../construct';
-
-describe('Rule', () => {
-  it('should exist', function () {
-    expect(locatedEntityExpressionRule.ruleName).toEqual(LocatedEntityExpression.name);
-  });
-});
 
 describe('LocatedEntityExpression', () => {
   it('can be parsed', async (done) => {

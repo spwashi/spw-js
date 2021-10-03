@@ -3,14 +3,7 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { location } from '@grammar/ast/nodes/containers/location/ref';
 import { Location } from '../construct';
-
-describe('Rule Reference', () => {
-  it('should exist', function () {
-    expect(location.ruleName).toEqual(Location.name);
-  });
-});
 
 describe('Location', () => {
   it('can be parsed', async (done) => {

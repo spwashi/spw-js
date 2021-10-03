@@ -3,14 +3,7 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { locatedConceptExpressionRule } from '@grammar/ast/expressions/sequences/located_concept/rule';
 import { LocatedConceptExpression } from '../construct';
-
-describe('Rule', () => {
-  it('should exist', function () {
-    expect(locatedConceptExpressionRule.ruleName).toEqual(LocatedConceptExpression.name);
-  });
-});
 
 describe('LocatedConceptExpression', () => {
   it('can be parsed', async (done) => {

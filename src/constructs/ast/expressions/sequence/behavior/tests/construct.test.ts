@@ -3,14 +3,7 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { behaviorExpressionRule } from '@grammar/ast/expressions/sequences/behavior/rule';
 import { BehaviorExpression } from '../construct';
-
-describe('Rule', () => {
-  it('should exist', function () {
-    expect(behaviorExpressionRule.ruleName).toEqual(BehaviorExpression.name);
-  });
-});
 
 describe('Behavior Expressions', () => {
   it('can be parsed', async (done) => {

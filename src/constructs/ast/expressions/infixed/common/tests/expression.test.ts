@@ -5,7 +5,7 @@ import * as util from 'util';
 import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
-} from '../../../../../runtime/_util/selectors';
+} from '@constructs/runtime/_util/selectors';
 import { Construct } from '../../../../_abstract/construct';
 
 describe(CommonExpression.name, () => {

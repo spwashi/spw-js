@@ -1,5 +1,5 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
-import { Construct } from '@constructs/ast/_abstract/construct';
+import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { PostfixExpressionKind } from './__types';
 
@@ -7,9 +7,9 @@ export class PostfixExpression extends Expression<PostfixExpressionKind> {
   static kind: PostfixExpressionKind = 'postfix_expression';
 
   static components = {
-    operator: Construct.makeComponent({ name: 'operator' }),
+    operator: new ConstructComponent({ name: 'operator' }),
 
-    operands: Construct.makeComponent({
+    operands: new ConstructComponent({
       name: 'operands',
       evaluators: {
         stringify: (operands = []) => operands.join(', '),

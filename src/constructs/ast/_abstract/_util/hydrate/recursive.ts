@@ -3,7 +3,10 @@ import {
   HydratedConstruct,
   RawConstruct,
 } from '@constructs/ast/_abstract/_types/internal';
-import { HydrationContext, HydrationInput } from '@constructs/ast/_abstract/_util/hydrate/_/util';
+import {
+  HydrationContext,
+  HydrationInput,
+} from '@constructs/ast/_abstract/_util/hydrate/_util/util';
 import { ConstructLocation } from '@constructs/ast/_util/ast/location';
 import { Construct } from '../../construct';
 

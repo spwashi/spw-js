@@ -8,7 +8,6 @@ import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction
 import { completeConstructReductionConfig } from '@constructs/ast/_abstract/_util/reduce/_util/config/completeConfig';
 import { reduceConstructAsync } from '@constructs/ast/_abstract/_util/reduce/async/reduceConstructAsync';
 import { reduceConstructSync } from '@constructs/ast/_abstract/_util/reduce/sync/reduceConstructSync';
-import { LanguageComponent } from '@constructs/ast/_abstract/component';
 import { ConstructKind } from '../_types/kinds';
 
 export interface IConstructClass<K extends ConstructKind = ConstructKind> {
@@ -150,20 +149,6 @@ export class Construct<
       seed,
       (this.components ?? []) as ComponentDescription<ReductionContext>[],
     ) as Promise<_Output>;
-  }
-
-  /**
-   * create a Construct component
-   * @param override
-   * @protected
-   */
-  static makeComponent(
-    override: {
-      name: string;
-      [k: string]: any;
-    } & Partial<ComponentDescription>,
-  ): ComponentDescription {
-    return new LanguageComponent(override);
   }
 
   public toJSON(): U {

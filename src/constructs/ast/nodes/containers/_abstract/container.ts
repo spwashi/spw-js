@@ -1,4 +1,5 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
+import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { ConstructKind } from '@constructs/ast/_types/kinds';
 import { BlockExpression } from '@constructs/ast/expressions/sequence/block/construct';
 import { Construct, ConstructComponents } from '../../../_abstract/construct';
@@ -31,9 +32,9 @@ export abstract class ContainerNode<
   static readonly closeDelimiter: Delimiter = null;
 
   static components: ConstructComponents = {
-    open: Construct.makeComponent({
-      _fallback: null as Delimiter | null,
+    open: new ConstructComponent({
       name: 'open',
+      _fallback: null,
       selector: function (s) {
         return s?.open || this._fallback;
       },
@@ -58,7 +59,7 @@ export abstract class ContainerNode<
         },
       },
     }),
-    body: Construct.makeComponent({
+    body: new ConstructComponent({
       name: 'body',
 
       generator: function* (_body, ctxt) {
@@ -77,8 +78,8 @@ export abstract class ContainerNode<
         },
       },
     }),
-    close: Construct.makeComponent({
-      _fallback: null as Delimiter | null,
+    close: new ConstructComponent({
+      _fallback: null,
       name: 'close',
       selector: function (s) {
         return s?.close || this._fallback;

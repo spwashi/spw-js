@@ -3,14 +3,7 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { concept } from '@grammar/ast/nodes/containers/concept/ref';
 import { Concept } from '../construct';
-
-describe('Rule Reference', () => {
-  it('should exist', function () {
-    expect(concept.ruleName).toEqual(Concept.name);
-  });
-});
 
 describe('Concept', () => {
   it('can be parsed', async (done) => {

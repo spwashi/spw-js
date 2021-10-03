@@ -1,9 +1,9 @@
 import { ConstructComponentKey } from '@constructs/ast/_abstract/_types';
 import { HydratedConstruct } from '@constructs/ast/_abstract/_types/internal';
-import { AbsorbInput, AbsorbOutput } from '@constructs/ast/_abstract/_util/hydrate/_/util';
+import { AbsorbInput, AbsorbOutput } from '@constructs/ast/_abstract/_util/hydrate/_util/util';
 import { RuntimeRegisters } from '@constructs/runtime/_util/_types/registers';
 import { Register } from '@constructs/runtime/register/register';
-import { Construct } from '../../../../../ast/_abstract/construct';
+import { Construct } from '@constructs/ast/_abstract/construct';
 
 function appendToIndexRegister(
   registers: RuntimeRegisters,

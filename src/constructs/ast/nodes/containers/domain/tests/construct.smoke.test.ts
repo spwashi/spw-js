@@ -3,14 +3,7 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { domain } from '@grammar/ast/nodes/containers/domain/ref';
 import { Domain } from '../construct';
-
-describe('Rule Reference', () => {
-  it('should exist', function () {
-    expect(domain.ruleName).toEqual(Domain.name);
-  });
-});
 
 describe('Domain', () => {
   it('can be parsed', async (done) => {

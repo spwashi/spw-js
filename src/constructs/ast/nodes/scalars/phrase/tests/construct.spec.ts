@@ -3,7 +3,7 @@ import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runti
 import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
-} from '../../../../../runtime/_util/selectors';
+} from '@constructs/runtime/_util/selectors';
 import { Construct } from '../../../../_abstract/construct';
 
 describe('Phrase Nodes', () => {

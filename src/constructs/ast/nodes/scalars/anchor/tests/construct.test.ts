@@ -4,7 +4,7 @@ import faker from 'faker';
 import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
-} from '../../../../../runtime/_util/selectors';
+} from '@constructs/runtime/_util/selectors';
 
 describe('AnchorNodes', () => {
   it('Can be parsed', async () => {

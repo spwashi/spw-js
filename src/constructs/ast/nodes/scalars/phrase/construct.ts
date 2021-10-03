@@ -2,8 +2,9 @@ import {
   ComponentDescription,
   ComponentEvaluatorObject,
 } from '@constructs/ast/_abstract/_types/componentDescription';
+import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { PhraseNodeKind } from '@constructs/ast/nodes/scalars/phrase/__types';
-import { Construct, IConstructClass } from '../../../_abstract/construct';
+import { IConstructClass } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
 import { Node } from '../../_abstract/node';
 
@@ -14,7 +15,7 @@ export class PhraseNode extends Node<PhraseNodeKind> {
   static readonly kind: PhraseNodeKind = 'phrase';
 
   static components = {
-    items: Construct.makeComponent({
+    items: new ConstructComponent({
       name: 'items',
 
       evaluators: {

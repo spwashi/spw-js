@@ -1,13 +1,6 @@
 import { initRuntimeWithSrc } from '@constructs/runtime/_util/initializers/runtime';
 import { selectAllNodesFromRuntime } from '@constructs/runtime/_util/selectors';
-import { blockExpressionRule } from '@grammar/ast/expressions/sequences/block/rule';
 import { BlockExpression } from '../construct';
-
-describe('Rule', () => {
-  it('should exist', function () {
-    expect(blockExpressionRule.ruleName).toEqual(BlockExpression.name);
-  });
-});
 
 describe('BlockExpression', () => {
   it('Simple; Exact', async (done) => {
