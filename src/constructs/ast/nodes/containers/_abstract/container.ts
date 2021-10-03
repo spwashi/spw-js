@@ -61,21 +61,12 @@ export abstract class ContainerNode<
     }),
     body: new ConstructComponent({
       name: 'body',
-
-      generator: function* (_body, ctxt) {
-        if (_body && !BlockExpression.isBlockExpression(_body)) {
-          _body = new BlockExpression({ items: [_body] });
+      selector: function (s) {
+        let body = s?.body;
+        if (!BlockExpression.isBlockExpression(body)) {
+          body = new BlockExpression({ items: [body].filter(Boolean) });
         }
-
-        yield [_body, ctxt];
-
-        return null;
-      },
-      evaluators: {
-        stringify: function (items) {
-          const filtered = Array.from(items ?? []).filter(Boolean);
-          return filtered.join('');
-        },
+        return body || this._fallback;
       },
     }),
     close: new ConstructComponent({

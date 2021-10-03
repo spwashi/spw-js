@@ -34,7 +34,7 @@ describe('Something', () => {
           };
        `,
     ];
-    [items[0]]
+    items
       .map((item) => {
         const node = getSalientNode(item);
         if (!node) return false;
@@ -42,7 +42,6 @@ describe('Something', () => {
           util.inspect(
             {
               key: node.key,
-              internal: getAllNodes(item).map((n) => n.internal),
             },
             false,
             null,

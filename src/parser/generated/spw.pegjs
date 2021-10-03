@@ -866,7 +866,11 @@ entity:EntityExpression
 		" "
 			/ [\n]
 		)*
-	behavior:BehaviorExpression
+	behavior:(
+	BehaviorExpression
+		/ LocatedDomainExpression
+		/ LocatedEntityExpression
+	)
 {
 	const expression = {
 	  kind: 'instance_expression',
@@ -881,10 +885,24 @@ BehaviorExpression "BehaviorExpression"=
 		domain:Domain
 		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
 	/ (address:Location
+		domain:Domain {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
+	/ (address:Location
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
+	/ (address:Location
 		(
 			" "
 			)*
 		domain:Domain
+		(
+			" "
+			)*
+		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
+	/ (address:Location
+		(
+			" "
+			)*
+		domain:Domain {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
+	/ (address:Location
 		(
 			" "
 			)*
@@ -894,6 +912,7 @@ BehaviorExpression "BehaviorExpression"=
 			" "
 			)*
 		essence:Essence {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
+	/ (address:Location {const expression={kind:"behavior_expression",domain:"undefined"!=typeof domain?domain:void 0,essence:"undefined"!=typeof essence?essence:void 0,address:"undefined"!=typeof address?address:void 0};return toConstruct(expression);})
 
 EntityExpression "EntityExpression"= 
 (concept:Concept
@@ -962,9 +981,6 @@ InstanceExpression
 	/ EntityExpression
 	/ BehaviorExpression
 	/ LocatedEntityExpression
-	/ LocatedConceptExpression
-	/ LocatedEssenceExpression
-	/ LocatedDomainExpression
 
 InfixedExpression "InfixedExpression"= 
 CommonExpression

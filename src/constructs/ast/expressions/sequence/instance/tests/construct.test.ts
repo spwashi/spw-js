@@ -13,7 +13,7 @@ describe('Basic InstanceExpression', () => {
     const last = getSalientNode(test_input, cache);
     const all = getAllNodes(test_input, cache);
     expect(last?.key).toEqual(test_expectedKey);
-    expect(all.length).toEqual(16);
+    expect(all.length).toEqual(20);
   });
   it('can be identified', async () => {
     const test_input = `< >something( ){ }[ ]`;
@@ -30,10 +30,10 @@ describe('Complex InstanceExpression', () => {
   it('can be parsed as expected (1)', async () => {
     const cache = {};
     const test_input = `(< >something( ){ }[ ]) is (< >something( ){ }[ ])`;
-    const test_expectedKey = `(<>something(){}[]) is (<>something(){}[])`;
+    const test_expectedKey = `(<>something(){}[]) is(<>something(){}[])`;
 
     const all = getAllNodes(test_input, cache);
-    expect(all.length).toEqual(42);
+    expect(all.length).toEqual(51);
 
     const last = getSalientNode(test_input, cache);
     expect(last?.kind).toEqual(PhraseExpression.kind);
@@ -42,10 +42,10 @@ describe('Complex InstanceExpression', () => {
   it('can be parsed as expected (2)', async () => {
     const cache = {};
     const test_input = `(< concept >something( location, location ){ domain }[ essence ]) is (< concept >something( ){ }[ ])`;
-    const test_expectedKey = `(<concept>something(location,location){domain}[essence]) is (<concept>something(){}[])`;
+    const test_expectedKey = `(<concept>something(location,location){domain}[essence]) is(<concept>something(){}[])`;
 
     const all = getAllNodes(test_input, cache);
-    expect(all.length).toEqual(56);
+    expect(all.length).toEqual(60);
 
     const last = getSalientNode(test_input, cache);
     expect(last?.kind).toEqual(PhraseExpression.kind);

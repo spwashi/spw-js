@@ -13,10 +13,10 @@ describe('Phrase Expressions', () => {
     );
     const last: Construct | undefined = selectLastAcknowledgedNodeFromRuntime(runtime);
     const all: Construct[] = selectAllNodesFromRuntime(runtime);
-    expect(all.length).toEqual(23);
+    expect(all.length).toEqual(24);
     expect(last?.kind).toEqual(PhraseExpression.kind);
     expect(last?.key).toEqual(
-      'something <something>something (something){something} something something',
+      'something <something>something(something){something} something something',
     );
     done();
   });
