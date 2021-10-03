@@ -1,15 +1,15 @@
 import { PrefixedAggregationExpression } from '@constructs/ast';
-import { itemComponent as item } from './tail';
-import { operatorComponent as operator } from './head';
+import { headComponent as head } from './head';
+import { tailComponent as tail } from './tail';
 
 export const action =
   // language=JavaScript
   `
-          return toConstruct(
-            {
-              kind: '${PrefixedAggregationExpression.kind}',
-              ${operator.name}: ${operator.name},
-              ${item.name}: ${item.name},
-            }
-          );
-        `;
+                 return toConstruct(
+                   {
+                     kind: '${PrefixedAggregationExpression.kind}',
+                     ${head.name}: ${head.name},
+                     ${tail.name}: ${tail.name},
+                   }
+                 );
+               `;

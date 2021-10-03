@@ -1,6 +1,6 @@
 import { PrefixedBindingExpression } from '@constructs/ast';
-import { itemComponent as item } from './tail';
-import { operatorComponent as operator } from './head';
+import { tailComponent as tail } from './tail';
+import { headComponent as head } from './head';
 
 export const action =
   // language=JavaScript
@@ -8,8 +8,8 @@ export const action =
           return toConstruct(
             {
               kind: '${PrefixedBindingExpression.kind}',
-              ${operator.name}: ${operator.name},
-              ${item.name}: ${item.name},
+              ${head.name}: ${head.name},
+              ${tail.name}: ${tail.name},
             }
           );
         `;

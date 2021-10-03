@@ -16,4 +16,4 @@ export { LocatedEssenceExpression } from '@constructs/ast/expressions/sequence/b
 export { LocationalIdentityOperator } from '@constructs/ast/nodes/containers/location/_components/identity/construct';
 export { LocationalSchemeOperator } from '@constructs/ast/nodes/containers/location/_components/scheme/construct';
 export { PhraseExpression } from '@constructs/ast/expressions/infixed/phrase/expression';
-export * from './infixed/operations';
+export * from './operations';

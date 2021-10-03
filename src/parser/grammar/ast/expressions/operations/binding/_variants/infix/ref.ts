@@ -1,4 +1,4 @@
-import { InfixedBindingExpression } from '@constructs/ast/expressions/infixed/operations/binding/_variants/infixed/expression';
+import { InfixedBindingExpression } from '@constructs/ast/expressions/operations/binding/_variants/infixed/expression';
 import { referenceTo } from '@spwashi/language/parsers/grammar/combinators';
 
 export const ruleName = InfixedBindingExpression.name;

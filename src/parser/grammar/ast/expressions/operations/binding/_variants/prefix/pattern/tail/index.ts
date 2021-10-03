@@ -1,10 +1,8 @@
 import { PrefixedBindingExpression } from '@constructs/ast';
-import { expressions } from '@grammar/ast/expressions/_abstract/_list/expressions.list.ref';
-import { sequenceExpressions } from '@grammar/ast/expressions/sequences/_abstract/_list/sequences.list.ref';
-import { node } from '@grammar/ast/nodes/_abstract/node.ref';
+import { stdPrefixExpNodes } from '@grammar/ast/expressions/operations/_util/prefixed/tail';
 import { anyOf } from '@spwashi/language/parsers/grammar/combinators';
 
-export const itemComponent = {
+export const tailComponent = {
   name: PrefixedBindingExpression.components.tail.name,
-  pattern: anyOf([...expressions.filter((i) => ![...sequenceExpressions].includes(i)), node]),
+  pattern: anyOf(stdPrefixExpNodes),
 };

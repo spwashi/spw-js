@@ -1,7 +1,7 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { ConstructComponents } from '@constructs/ast/_abstract/construct';
-import { ConstructKind } from '@constructs/ast/_types/kinds';
+import { ConstructKind } from '@constructs/top/kinds';
 import { Node } from '@constructs/ast/nodes/_abstract/node';
 
 /**

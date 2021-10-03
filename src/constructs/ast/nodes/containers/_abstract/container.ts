@@ -1,6 +1,6 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
-import { ConstructKind } from '@constructs/ast/_types/kinds';
+import { ConstructKind } from '@constructs/top/kinds';
 import { BlockExpression } from '@constructs/ast/expressions/sequence/block/construct';
 import { Construct, ConstructComponents } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';

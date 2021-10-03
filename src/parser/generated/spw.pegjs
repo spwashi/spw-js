@@ -791,7 +791,8 @@ container:(
 }
 
 Expression "Expression"= 
-PrefixExpression
+PostfixExpression
+	/ PrefixExpression
 	/ InfixedExpression
 	/ SequenceExpression
 
@@ -986,14 +987,46 @@ InstanceExpression
 	/ BehaviorExpression
 	/ LocatedEntityExpression
 
+PostfixedTransformationExpression "PostfixedTransformationExpression"= 
+(head:(
+	InfixedTransformationExpression
+		/ PrefixedTransformationExpression
+		/ InstanceExpression
+		/ EntityExpression
+		/ BehaviorExpression
+		/ LocatedEntityExpression
+		/ InfixedBindingExpression
+		/ InfixedAggregationExpression
+		/ InfixedReductionExpression
+		/ InfixedRangeExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ Node
+	)
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:TransformationOperator {return toConstruct({kind:"postfixed_transformation_expression",tail:tail,head:head});})
+
+PostfixExpression "PostfixExpression"= 
+PostfixedTransformationExpression
+
 InfixedExpression "InfixedExpression"= 
-CommonExpression
-	/ PhraseExpression
-	/ InfixedBindingExpression
+InfixedBindingExpression
 	/ InfixedTransformationExpression
 	/ InfixedAggregationExpression
 	/ InfixedReductionExpression
 	/ InfixedRangeExpression
+	/ CommonExpression
+	/ PhraseExpression
 
 CommonExpression "CommonExpression"= 
 head:Node
@@ -1122,13 +1155,13 @@ PrefixedAggregationExpression "PrefixedAggregationExpression"=
 			/ [\n]
 		)*
 	tail:(
-	CommonExpression
-		/ PhraseExpression
-		/ InfixedBindingExpression
+	InfixedBindingExpression
 		/ InfixedTransformationExpression
 		/ InfixedAggregationExpression
 		/ InfixedReductionExpression
 		/ InfixedRangeExpression
+		/ CommonExpression
+		/ PhraseExpression
 		/ PrefixedAggregationExpression
 		/ PrefixedBindingExpression
 		/ PrefixedRangeExpression
@@ -1154,13 +1187,13 @@ PrefixedBindingExpression "PrefixedBindingExpression"=
 			/ [\n]
 		)*
 	tail:(
-	CommonExpression
-		/ PhraseExpression
-		/ InfixedBindingExpression
+	InfixedBindingExpression
 		/ InfixedTransformationExpression
 		/ InfixedAggregationExpression
 		/ InfixedReductionExpression
 		/ InfixedRangeExpression
+		/ CommonExpression
+		/ PhraseExpression
 		/ PrefixedAggregationExpression
 		/ PrefixedBindingExpression
 		/ PrefixedRangeExpression
@@ -1186,13 +1219,13 @@ PrefixedRangeExpression "PrefixedRangeExpression"=
 			/ [\n]
 		)*
 	tail:(
-	CommonExpression
-		/ PhraseExpression
-		/ InfixedBindingExpression
+	InfixedBindingExpression
 		/ InfixedTransformationExpression
 		/ InfixedAggregationExpression
 		/ InfixedReductionExpression
 		/ InfixedRangeExpression
+		/ CommonExpression
+		/ PhraseExpression
 		/ PrefixedAggregationExpression
 		/ PrefixedBindingExpression
 		/ PrefixedRangeExpression
@@ -1218,13 +1251,13 @@ PrefixedReductionExpression "PrefixedReductionExpression"=
 			/ [\n]
 		)*
 	tail:(
-	CommonExpression
-		/ PhraseExpression
-		/ InfixedBindingExpression
+	InfixedBindingExpression
 		/ InfixedTransformationExpression
 		/ InfixedAggregationExpression
 		/ InfixedReductionExpression
 		/ InfixedRangeExpression
+		/ CommonExpression
+		/ PhraseExpression
 		/ PrefixedAggregationExpression
 		/ PrefixedBindingExpression
 		/ PrefixedRangeExpression
@@ -1250,27 +1283,20 @@ PrefixedTransformationExpression "PrefixedTransformationExpression"=
 			/ [\n]
 		)*
 	tail:(
-	CommonExpression
-		/ PhraseExpression
-		/ InfixedBindingExpression
+	InfixedBindingExpression
 		/ InfixedTransformationExpression
 		/ InfixedAggregationExpression
 		/ InfixedReductionExpression
 		/ InfixedRangeExpression
+		/ CommonExpression
+		/ PhraseExpression
 		/ PrefixedAggregationExpression
 		/ PrefixedBindingExpression
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
 		/ Node
-	)
-	(
-		(
-			" "
-				/ [\t]
-			)
-			/ [\n]
-		)* {return toConstruct({kind:"prefixed_transformation_expression",head:head,tail:tail});})
+	) {return toConstruct({kind:"prefixed_transformation_expression",head:head,tail:tail});})
 
 PrefixExpression "PrefixExpression"= 
 PrefixedAggregationExpression

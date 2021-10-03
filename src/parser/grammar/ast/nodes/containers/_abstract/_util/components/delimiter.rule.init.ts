@@ -1,7 +1,7 @@
-import { scalars } from '@grammar/ast/nodes/atoms/scalars/_abstract/_list/scalar.list.ref';
+import { scalars } from '@grammar/ast/nodes/atoms/scalars/_abstract/_list/refs';
 import { anchorNode } from '@grammar/ast/nodes/atoms/scalars/anchor/ref';
 import { phraseNode } from '@grammar/ast/nodes/atoms/scalars/phrase/ref';
-import { containerNodes } from '@grammar/ast/nodes/containers/_abstract/_list/container.list.ref';
+import { containerNodes } from '@grammar/ast/nodes/containers/_abstract/_list/refs';
 import { spaceNode } from '@grammar/utility/space/space.ref';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import {

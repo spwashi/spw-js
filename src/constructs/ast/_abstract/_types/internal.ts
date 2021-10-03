@@ -1,4 +1,4 @@
-import { ConstructKind } from '@constructs/ast/_types/kinds';
+import { ConstructKind } from '@constructs/top/kinds';
 import { ConstructLocation } from '../../_util/ast/location';
 
 export interface HydratedConstruct {

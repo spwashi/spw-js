@@ -8,7 +8,7 @@ import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction
 import { completeConstructReductionConfig } from '@constructs/ast/_abstract/_util/reduce/_util/config/completeConfig';
 import { reduceConstructAsync } from '@constructs/ast/_abstract/_util/reduce/async/reduceConstructAsync';
 import { reduceConstructSync } from '@constructs/ast/_abstract/_util/reduce/sync/reduceConstructSync';
-import { ConstructKind } from '../_types/kinds';
+import { ConstructKind } from '../../top/kinds';
 
 export interface IConstructClass<K extends ConstructKind = ConstructKind> {
   readonly kind: K;
