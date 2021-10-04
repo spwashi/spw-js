@@ -1,10 +1,7 @@
-import { InstanceExpression } from '@constructs/ast/expressions/sequence/instance/construct';
+import { InstanceExpression } from '@constructs/ast/expressions/sequences/instance/construct';
 import { flat } from '@grammar/ast/expressions/_util/componentize';
 import { behaviorExpression } from '@grammar/ast/expressions/sequences/behavior/ref';
 import { entityExpression } from '@grammar/ast/expressions/sequences/entity/ref';
-import { locatedDomainExpression } from '@grammar/ast/expressions/sequences/located_domain/ref';
-import { locatedEntityExpression } from '@grammar/ast/expressions/sequences/located_entity/ref';
-import { locatedEssenceExpression } from '@grammar/ast/expressions/sequences/located_essence/ref';
 import { newline, space } from '@grammar/utility/space/whitespace.patterns';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import { anyOf, sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';
@@ -18,12 +15,7 @@ const _entity = {
 };
 const _behavior = {
   name: components.behavior.name,
-  pattern: anyOf([
-    behaviorExpression,
-    locatedDomainExpression,
-    locatedEntityExpression,
-    locatedEssenceExpression,
-  ]).named(components.behavior.name),
+  pattern: behaviorExpression.named(components.behavior.name),
 };
 const __ = {
   name: 'space',

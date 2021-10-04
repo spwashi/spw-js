@@ -3,19 +3,21 @@ import { ConstructComponent } from '@constructs/ast/_abstract/component/componen
 import { IConstructClass } from '@constructs/ast/_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
-import { InfixedAggregationExpressionKind } from '@constructs/ast/expressions/operations/aggregation/_variants/infixed/__types';
+import { PostfixedBindingExpressionKind } from '@constructs/ast/expressions/operations/binding/_variants/postfixed/__types';
 
-@staticImplements<IConstructClass<InfixedAggregationExpressionKind>>()
-export class InfixedAggregationExpression extends Expression<InfixedAggregationExpressionKind> {
-  static readonly kind: InfixedAggregationExpressionKind = 'infixed_aggregation_expression';
+type StaticType = IConstructClass<PostfixedBindingExpressionKind>;
+
+@staticImplements<StaticType>()
+export class PostfixedBindingExpression extends Expression<PostfixedBindingExpressionKind> {
+  static readonly kind: PostfixedBindingExpressionKind = 'postfixed_binding_expression';
 
   static components = {
     head: new ConstructComponent({ name: 'head' }),
     tail: new ConstructComponent({ name: 'tail' }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {
-      yield this.head;
-      yield this.tail;
+      if (this.head) yield this.head;
+      if (this.tail) yield this.tail;
     },
   };
 }

@@ -1,4 +1,4 @@
-import { BlockExpression } from '@constructs/ast/expressions/sequence/block/construct';
+import { BlockExpression } from '@constructs/ast/expressions/groups/block/construct';
 import { pattern1 } from '@grammar/ast/expressions/sequences/block/pattern/pattern1';
 import { pattern2 } from '@grammar/ast/expressions/sequences/block/pattern/pattern2';
 import { pattern3 } from '@grammar/ast/expressions/sequences/block/pattern/pattern3';

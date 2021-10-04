@@ -17,10 +17,6 @@ import { behaviorExpressionRule } from '@grammar/ast/expressions/sequences/behav
 import { blockExpressionRule } from '@grammar/ast/expressions/sequences/block/rule';
 import { entityExpressionRule } from '@grammar/ast/expressions/sequences/entity/rule';
 import { instanceExpressionRule } from '@grammar/ast/expressions/sequences/instance/rule';
-import { locatedConceptExpressionRule } from '@grammar/ast/expressions/sequences/located_concept/rule';
-import { locatedDomainExpressionRule } from '@grammar/ast/expressions/sequences/located_domain/rule';
-import { locatedEntityExpressionRule } from '@grammar/ast/expressions/sequences/located_entity/rule';
-import { locatedEssenceExpressionRule } from '@grammar/ast/expressions/sequences/located_essence/rule';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import { expressionRule } from '../expression.rule';
 
@@ -37,10 +33,6 @@ export const expressionRules: Rule[] = [
     infixedRangeExpressionRule,
     infixedReductionExpressionRule,
     instanceExpressionRule,
-    locatedConceptExpressionRule,
-    locatedDomainExpressionRule,
-    locatedEntityExpressionRule,
-    locatedEssenceExpressionRule,
     phraseExpressionRule,
     postfixedExpressionRule,
     prefixedAggregationExpressionRule,

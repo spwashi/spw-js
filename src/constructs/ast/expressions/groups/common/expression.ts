@@ -1,13 +1,13 @@
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
-import { IConstructClass } from '@constructs/ast/_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
-import { InfixedAggregationExpressionKind } from '@constructs/ast/expressions/operations/aggregation/_variants/infixed/__types';
+import { CommonExpressionKind } from '@constructs/ast/expressions/groups/common/__types';
+import { IConstructClass } from '../../../_abstract/construct';
 
-@staticImplements<IConstructClass<InfixedAggregationExpressionKind>>()
-export class InfixedAggregationExpression extends Expression<InfixedAggregationExpressionKind> {
-  static readonly kind: InfixedAggregationExpressionKind = 'infixed_aggregation_expression';
+@staticImplements<IConstructClass<CommonExpressionKind>>()
+export class CommonExpression extends Expression<CommonExpressionKind> {
+  static readonly kind: CommonExpressionKind = 'common_expression';
 
   static components = {
     head: new ConstructComponent({ name: 'head' }),

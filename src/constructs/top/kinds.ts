@@ -1,28 +1,28 @@
-import { InfixExpressionKind } from '@constructs/ast/expressions/infixed/__types';
-import { CommonExpressionKind } from '@constructs/ast/expressions/infixed/common/__types';
-import { CommonExpressionTailKind } from '@constructs/ast/expressions/infixed/common/_components/__types';
-import { PhraseExpressionKind } from '@constructs/ast/expressions/infixed/phrase/__types';
-import { AggregationExpressionKind } from '@constructs/ast/expressions/operations/aggregation/_variants/infixed/__types';
+import { InfixExpressionKind } from '@constructs/ast/expressions/_abstract/infixed/__types';
+import { PostfixExpressionKind } from '@constructs/ast/expressions/_abstract/postfixed/__types';
+import { PrefixExpressionKind } from '@constructs/ast/expressions/_abstract/prefixed/__types';
+import { BlockExpressionKind } from '@constructs/ast/expressions/groups/block/__types';
+import { CommonExpressionKind } from '@constructs/ast/expressions/groups/common/__types';
+import { CommonExpressionTailKind } from '@constructs/ast/expressions/groups/common/_components/__types';
+import { PhraseExpressionKind } from '@constructs/ast/expressions/groups/phrase/__types';
+import { InfixedAggregationExpressionKind } from '@constructs/ast/expressions/operations/aggregation/_variants/infixed/__types';
+import { PostfixedAggregationExpressionKind } from '@constructs/ast/expressions/operations/aggregation/_variants/postfixed/__types';
 import { PrefixedAggregationExpressionKind } from '@constructs/ast/expressions/operations/aggregation/_variants/prefixed/__types';
 import { InfixedBindingExpressionKind } from '@constructs/ast/expressions/operations/binding/_variants/infixed/__types';
+import { PostfixedBindingExpressionKind } from '@constructs/ast/expressions/operations/binding/_variants/postfixed/__types';
 import { PrefixedBindingExpressionKind } from '@constructs/ast/expressions/operations/binding/_variants/prefixed/__types';
 import { InfixedRangeExpressionKind } from '@constructs/ast/expressions/operations/range/_variants/infixed/__types';
+import { PostfixedRangeExpressionKind } from '@constructs/ast/expressions/operations/range/_variants/postfixed/__types';
 import { PrefixedRangeExpressionKind } from '@constructs/ast/expressions/operations/range/_variants/prefixed/__types';
-import { ReductionExpressionKind } from '@constructs/ast/expressions/operations/reduction/_variants/infixed/__types';
+import { InfixedReductionExpressionKind } from '@constructs/ast/expressions/operations/reduction/_variants/infixed/__types';
+import { PostfixedReductionExpressionKind } from '@constructs/ast/expressions/operations/reduction/_variants/postfixed/__types';
 import { PrefixedReductionExpressionKind } from '@constructs/ast/expressions/operations/reduction/_variants/prefixed/__types';
 import { InfixedTransformationExpressionKind } from '@constructs/ast/expressions/operations/transformation/_variants/infixed/__types';
 import { PostfixedTransformationExpressionKind } from '@constructs/ast/expressions/operations/transformation/_variants/postfixed/__types';
 import { PrefixedTransformationExpressionKind } from '@constructs/ast/expressions/operations/transformation/_variants/prefixed/__types';
-import { PostfixExpressionKind } from '@constructs/ast/expressions/postfixed/__types';
-import { PrefixExpressionKind } from '@constructs/ast/expressions/prefixed/__types';
-import { BehaviorExpressionKind } from '@constructs/ast/expressions/sequence/behavior/__types';
-import { LocatedDomainExpressionKind } from '@constructs/ast/expressions/sequence/behavior/sub/located_domain/__types';
-import { LocatedEntityExpressionKind } from '@constructs/ast/expressions/sequence/behavior/sub/located_entity/__types';
-import { LocatedEssenceExpressionKind } from '@constructs/ast/expressions/sequence/behavior/sub/located_essence/__types';
-import { BlockExpressionKind } from '@constructs/ast/expressions/sequence/block/__types';
-import { EntityExpressionKind } from '@constructs/ast/expressions/sequence/entity/__types';
-import { InstanceExpressionKind } from '@constructs/ast/expressions/sequence/instance/__types';
-import { LocatedConceptExpressionKind } from '@constructs/ast/expressions/sequence/located_concept/__types';
+import { BehaviorExpressionKind } from '@constructs/ast/expressions/sequences/behavior/__types';
+import { EntityExpressionKind } from '@constructs/ast/expressions/sequences/entity/__types';
+import { InstanceExpressionKind } from '@constructs/ast/expressions/sequences/instance/__types';
 import { ConceptNodeKind } from '@constructs/ast/nodes/containers/concept/__types';
 import { ConceptualIdentityOperatorKind } from '@constructs/ast/nodes/containers/concept/_components/identity/__types';
 import { ConceptualSchemeOperatorKind } from '@constructs/ast/nodes/containers/concept/_components/scheme/__types';
@@ -116,25 +116,25 @@ type ExpressionKind =
   | BehaviorExpressionKind
   | EntityExpressionKind
   | InstanceExpressionKind
-  | LocatedEssenceExpressionKind
-  | LocatedDomainExpressionKind
-  | LocatedConceptExpressionKind
-  | LocatedEntityExpressionKind
   | PhraseExpressionKind
   | BlockExpressionKind
   | CommonExpressionKind
   | CommonExpressionTailKind
-  | InfixedTransformationExpressionKind
-  | PrefixedTransformationExpressionKind
-  | PostfixedTransformationExpressionKind
-  | AggregationExpressionKind
+  | InfixedAggregationExpressionKind
   | PrefixedAggregationExpressionKind
+  | PostfixedAggregationExpressionKind
   | InfixedBindingExpressionKind
   | PrefixedBindingExpressionKind
+  | PostfixedBindingExpressionKind
   | InfixedRangeExpressionKind
   | PrefixedRangeExpressionKind
-  | ReductionExpressionKind
-  | PrefixedReductionExpressionKind;
+  | PostfixedRangeExpressionKind
+  | InfixedReductionExpressionKind
+  | PrefixedReductionExpressionKind
+  | PostfixedReductionExpressionKind
+  | InfixedTransformationExpressionKind
+  | PrefixedTransformationExpressionKind
+  | PostfixedTransformationExpressionKind;
 
 export type ConstructKind =
   | 'unknown'

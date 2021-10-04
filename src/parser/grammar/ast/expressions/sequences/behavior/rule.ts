@@ -1,4 +1,4 @@
-import { BehaviorExpression } from '@constructs/ast/expressions/sequence/behavior/construct';
+import { BehaviorExpression } from '@constructs/ast/expressions/sequences/behavior/construct';
 import { flat } from '@grammar/ast/expressions/_util/componentize';
 import { domain } from '@grammar/ast/nodes/containers/domain/ref';
 import { essence } from '@grammar/ast/nodes/containers/essence/ref';

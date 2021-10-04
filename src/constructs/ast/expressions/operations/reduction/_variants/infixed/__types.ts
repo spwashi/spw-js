@@ -1,1 +1,1 @@
-export type ReductionExpressionKind = 'infixed_reduction_expression';
+export type InfixedReductionExpressionKind = 'infixed_reduction_expression';

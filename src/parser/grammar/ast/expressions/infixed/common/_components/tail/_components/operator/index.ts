@@ -1,4 +1,4 @@
-import { CommonExpressionTail } from '@constructs/ast/expressions/infixed/common/_components/tail';
+import { CommonExpressionTail } from '@constructs/ast/expressions/groups/common/_components/tail';
 import { commonDelimiter } from '@grammar/ast/nodes/atoms/operators/delimiters/common_delimiter/ref';
 
 const _operator = {

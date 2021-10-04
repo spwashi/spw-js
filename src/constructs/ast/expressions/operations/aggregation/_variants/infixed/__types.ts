@@ -1,1 +1,1 @@
-export type AggregationExpressionKind = 'infixed_aggregation_expression';
+export type InfixedAggregationExpressionKind = 'infixed_aggregation_expression';

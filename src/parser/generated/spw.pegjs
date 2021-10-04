@@ -792,7 +792,7 @@ container:(
 
 Expression "Expression"= 
 PostfixedExpression
-	/ PrefixExpression
+	/ PrefixedExpression
 	/ InfixedExpression
 	/ SequenceExpression
 
@@ -1020,65 +1020,12 @@ entity:EntityExpression
 		" "
 			/ [\n]
 		)*
-	behavior:(
-	BehaviorExpression
-		/ LocatedDomainExpression
-		/ LocatedEntityExpression
-		/ LocatedEssenceExpression
-	)
+	behavior:BehaviorExpression
 {
 	const expression = {
 	  kind: 'instance_expression',
 	  entity: entity,
 	  behavior: behavior
-	};
-	return toConstruct(expression)
-}
-
-LocatedConceptExpression "LocatedConceptExpression"= 
-location:Location
-	concept:Concept
-{
-	const expression = {
-	  kind: 'located_concept_expression',
-	  location: typeof location !== 'undefined' ? location : undefined,
-	  concept: typeof concept !== 'undefined' ? concept : undefined,
-	};
-	return toConstruct(expression)
-}
-
-LocatedDomainExpression "LocatedDomainExpression"= 
-location:Location
-	domain:Domain
-{
-	const expression = {
-	  kind: 'located_domain_expression',
-	  location: location,
-	  domain: domain,
-	};
-	return toConstruct(expression)
-}
-
-LocatedEntityExpression "LocatedEntityExpression"= 
-location:Location
-	entity:EntityExpression
-{
-	const expression = {
-	  kind: 'located_entity_expression',
-	  location: typeof location !== 'undefined' ? location : undefined,
-	  entity: typeof entity !== 'undefined' ? entity : undefined,
-	};
-	return toConstruct(expression)
-}
-
-LocatedEssenceExpression "LocatedEssenceExpression"= 
-location:Location
-	essence:Essence
-{
-	const expression = {
-	  kind: 'located_essence_expression',
-	  location: typeof location !== 'undefined' ? location : undefined,
-	  essence: typeof essence !== 'undefined' ? essence : undefined,
 	};
 	return toConstruct(expression)
 }
@@ -1117,7 +1064,6 @@ PostfixedTransformationExpression "PostfixedTransformationExpression"=
 		/ InstanceExpression
 		/ EntityExpression
 		/ BehaviorExpression
-		/ LocatedEntityExpression
 		/ InfixedBindingExpression
 		/ InfixedAggregationExpression
 		/ InfixedReductionExpression
@@ -1202,6 +1148,13 @@ PrefixedBindingExpression "PrefixedBindingExpression"=
 			)
 			/ [\n]
 		)* {return toConstruct({kind:"prefixed_binding_expression",head:head,tail:tail});})
+
+PrefixedExpression "PrefixedExpression"= 
+PrefixedAggregationExpression
+	/ PrefixedBindingExpression
+	/ PrefixedRangeExpression
+	/ PrefixedReductionExpression
+	/ PrefixedTransformationExpression
 
 PrefixedRangeExpression "PrefixedRangeExpression"= 
 (head:RangeOperator
@@ -1292,15 +1245,7 @@ PrefixedTransformationExpression "PrefixedTransformationExpression"=
 		/ Node
 	) {return toConstruct({kind:"prefixed_transformation_expression",head:head,tail:tail});})
 
-PrefixExpression "PrefixExpression"= 
-PrefixedAggregationExpression
-	/ PrefixedBindingExpression
-	/ PrefixedRangeExpression
-	/ PrefixedReductionExpression
-	/ PrefixedTransformationExpression
-
 SequenceExpression "SequenceExpression"= 
 InstanceExpression
 	/ EntityExpression
 	/ BehaviorExpression
-	/ LocatedEntityExpression
