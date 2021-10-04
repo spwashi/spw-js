@@ -16,8 +16,8 @@ export class PrefixedRangeExpression extends Expression<PrefixedRangeExpressionK
     tail: new ConstructComponent({ name: 'tail' }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {
-      if (this.head) yield this.head;
-      if (this.tail) yield this.tail;
+      yield this.head;
+      yield this.tail;
     },
   };
 }
