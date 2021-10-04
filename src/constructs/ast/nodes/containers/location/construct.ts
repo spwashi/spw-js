@@ -1,15 +1,15 @@
 import { LocationNodeKind } from '@constructs/ast/nodes/containers/location/__types';
-import { LocationalSchemeOperator } from '@constructs/ast/nodes/containers/location/_components/scheme/construct';
+import { LocationSchemeOperator } from '@constructs/ast/nodes/containers/location/_components/scheme/construct';
 import { ConstructComponents } from '../../../_abstract/construct';
 import { containerComponents, ContainerNode } from '../_abstract/container';
-import { LocationalIdentityOperator } from '@constructs/ast';
+import { LocationIdentityOperator } from '@constructs/ast';
 
 export class Location extends ContainerNode<LocationNodeKind> {
   static kind: LocationNodeKind = 'location_container';
 
-  static readonly openDelimiter = LocationalSchemeOperator;
+  static readonly openDelimiter = LocationSchemeOperator;
 
-  static readonly closeDelimiter = LocationalIdentityOperator;
+  static readonly closeDelimiter = LocationIdentityOperator;
 
   static components: ConstructComponents = containerComponents(Location);
 

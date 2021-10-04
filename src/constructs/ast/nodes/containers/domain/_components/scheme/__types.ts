@@ -1,2 +1,2 @@
 export type DomainSchemeToken = '{';
-export type DomainSchemeOperatorKind = 'domain_scheme';
+export type DomainSchemeKind = 'domain_scheme';

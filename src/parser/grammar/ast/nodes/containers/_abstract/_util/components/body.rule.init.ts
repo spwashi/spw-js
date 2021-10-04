@@ -1,4 +1,4 @@
-import { block } from '@grammar/ast/expressions/sequences/block/ref';
+import { block } from '@grammar/ast/expressions/infixed/block/ref';
 import { newline, space, spaceTab } from '@grammar/utility/space/whitespace.patterns';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import {

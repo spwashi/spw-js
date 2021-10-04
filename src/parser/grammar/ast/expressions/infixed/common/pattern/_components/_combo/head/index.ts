@@ -1,8 +1,8 @@
 import { flat } from '@grammar/ast/expressions/_util/componentize';
-import { delimiterComponent } from '@grammar/ast/expressions/sequences/block/pattern/_components/_util/delimiter';
-import { expressionComponent } from '@grammar/ast/expressions/sequences/block/pattern/_components/_util/expression';
-import { __ } from '@grammar/ast/expressions/sequences/block/pattern/_components/_util/space';
 import { oneOrMoreOf, sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
+import { delimiterComponent } from '../../_util/delimiter';
+import { expressionComponent } from '../../_util/expression';
+import { __ } from '../../_util/space';
 
 // language=JavaScript
 const actionString = `return ${expressionComponent.name}`;

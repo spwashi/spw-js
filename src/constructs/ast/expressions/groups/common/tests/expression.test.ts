@@ -17,7 +17,7 @@ describe(CommonExpression.name, () => {
       items = selectLastAcknowledgedNodeFromRuntime(runtime);
       all = selectAllNodesFromRuntime(runtime);
       expect(items?.kind).toEqual(CommonExpression.kind);
-      expect(all.length).toEqual(7);
+      expect(all.length).toEqual(5);
       expect(items?.key).toEqual(`test test,test`);
       done();
     } catch (e) {
@@ -33,7 +33,7 @@ describe(CommonExpression.name, () => {
 
     const last: Construct | undefined = selectLastAcknowledgedNodeFromRuntime(runtime);
     const all: Construct[] = selectAllNodesFromRuntime(runtime);
-    expect(all.length).toEqual(11);
+    expect(all.length).toEqual(9);
     expect(last?.kind).toEqual(InfixedTransformationExpression.kind);
     expect(last?.key).toEqual('boon boon=>two,three');
     done();

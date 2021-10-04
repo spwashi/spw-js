@@ -1,3 +1,4 @@
+import { BlockDelimiter } from '@constructs/ast';
 import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { IConstructClass } from '@constructs/ast/_abstract/construct';
@@ -38,8 +39,8 @@ export class BlockExpression extends Expression<BlockExpressionKind> {
         stringify: function (items) {
           const key = Array.from(items ?? [])
             .filter(Boolean)
-            .join('; ');
-          return key ? key + ((items?.length ?? 0) > 1 ? ';' : '') : '';
+            .join(BlockDelimiter.token + ' ');
+          return key ? key + ((items?.length ?? 0) > 1 ? BlockDelimiter.token : '') : '';
         },
       },
     }),

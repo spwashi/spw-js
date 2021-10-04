@@ -1,9 +1,9 @@
 import { BlockExpression } from '@constructs/ast/expressions/groups/block/construct';
-import { pattern1 } from '@grammar/ast/expressions/sequences/block/pattern/pattern1';
-import { pattern2 } from '@grammar/ast/expressions/sequences/block/pattern/pattern2';
-import { pattern3 } from '@grammar/ast/expressions/sequences/block/pattern/pattern3';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import { anyOf, sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
+import { pattern1 } from './pattern/pattern1';
+import { pattern2 } from './pattern/pattern2';
+import { pattern3 } from './pattern/pattern3';
 import { ruleName } from './ref';
 
 const _items = {

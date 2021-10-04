@@ -10,10 +10,10 @@ type StaticType = IConstructClass<EssentialIdentityKind> &
   ITokenOperatorClass<EssentialIdentityToken>;
 
 @staticImplements<StaticType>()
-export class EssentialIdentityOperator extends Delimiter<EssentialIdentityKind> {
+export class EssenceIdentityOperator extends Delimiter<EssentialIdentityKind> {
   static kind: EssentialIdentityKind = 'essence_identity';
 
   static token: EssentialIdentityToken = ']';
 
-  static components: ConstructComponents = operatorComponents(EssentialIdentityOperator);
+  static components: ConstructComponents = operatorComponents(EssenceIdentityOperator);
 }

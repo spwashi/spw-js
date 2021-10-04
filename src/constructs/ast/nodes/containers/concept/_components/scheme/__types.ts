@@ -1,2 +1,2 @@
 export type ConceptIntroductionOperator = '<';
-export type ConceptualSchemeOperatorKind = 'concept_scheme';
+export type ConceptualSchemeKind = 'concept_scheme';

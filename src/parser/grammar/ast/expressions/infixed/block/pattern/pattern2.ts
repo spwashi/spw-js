@@ -1,4 +1,4 @@
-import { headComponent } from '@grammar/ast/expressions/sequences/block/pattern/_components/_combo/head';
+import { headComponent } from './_components/_combo/head';
 
 // Only Head
 // language=JavaScript

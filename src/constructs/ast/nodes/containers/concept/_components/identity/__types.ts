@@ -1,2 +1,2 @@
 export type ConceptConvergenceToken = '>';
-export type ConceptualIdentityOperatorKind = 'concept_identity';
+export type ConceptualIdentityKind = 'concept_identity';

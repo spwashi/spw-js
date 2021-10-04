@@ -904,21 +904,60 @@ items:(
 }
 
 CommonExpression "CommonExpression"= 
-head:Node
-	(Space {return null;})*
-	tail:(operator:CommonDelimiter
-			(Space {return null;})*
-			item:(
-			Expression
-				/ Node
-			)
-			(Space {return null;})* {return toConstruct({kind:"common_tail",operator:operator,item:item});})+
+items:(
+	(head:(expression:(
+					Container
+						/ Scalar
+					)
+					(
+						" "
+							/ [\n]
+							/ (
+							" "
+								/ [\t]
+							)
+						)*
+					delimiter:CommonDelimiter
+					(
+						" "
+							/ [\n]
+							/ (
+							" "
+								/ [\t]
+							)
+						)* {return expression;})+
+			tail:(
+				Container
+					/ Scalar
+				) {return[...head,tail];})
+		/ (head:(expression:(
+				Container
+					/ Scalar
+				)
+				(
+					" "
+						/ [\n]
+						/ (
+						" "
+							/ [\t]
+						)
+					)*
+				delimiter:CommonDelimiter
+				(
+					" "
+						/ [\n]
+						/ (
+						" "
+							/ [\t]
+						)
+					)* {return expression;})+ {return[...head];})
+	)
 {
-	return toConstruct({
-	                     kind: 'common_expression',
-	                     head,
-	                     tail,
-	                   });
+	const common = {
+	  kind: 'common_expression',
+	  items: typeof items !== "undefined" ? items : undefined,
+	};
+	return toConstruct(common)
 }
 
 EntityExpression "EntityExpression"= 

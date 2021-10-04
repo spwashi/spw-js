@@ -22,14 +22,14 @@ import {
 } from '@constructs/ast';
 import { Node } from '@constructs/ast/nodes/_abstract/node';
 import { ContainerNode } from '@constructs/ast/nodes/containers/_abstract/container';
-import { ConceptualIdentityOperator } from '@constructs/ast/nodes/containers/concept/_components/identity/construct';
+import { ConceptIdentityOperator } from '@constructs/ast/nodes/containers/concept/_components/identity/construct';
 import { ConceptSchemeOperator } from '@constructs/ast/nodes/containers/concept/_components/scheme/construct';
 import { DomainIdentityOperator } from '@constructs/ast/nodes/containers/domain/_components/identity/construct';
 import { DomainSchemeOperator } from '@constructs/ast/nodes/containers/domain/_components/scheme/construct';
-import { EssentialIdentityOperator } from '@constructs/ast/nodes/containers/essence/_components/identity/construct';
-import { EssentialSchemeOperator } from '@constructs/ast/nodes/containers/essence/_components/scheme/construct';
-import { LocationalIdentityOperator } from '@constructs/ast/nodes/containers/location/_components/identity/construct';
-import { LocationalSchemeOperator } from '@constructs/ast/nodes/containers/location/_components/scheme/construct';
+import { EssenceIdentityOperator } from '@constructs/ast/nodes/containers/essence/_components/identity/construct';
+import { EssenceSchemeOperator } from '@constructs/ast/nodes/containers/essence/_components/scheme/construct';
+import { LocationIdentityOperator } from '@constructs/ast/nodes/containers/location/_components/identity/construct';
+import { LocationSchemeOperator } from '@constructs/ast/nodes/containers/location/_components/scheme/construct';
 import { BlockDelimiter } from '@constructs/ast/nodes/operators/semantic/block/construct';
 import { CommonDelimiter } from '@constructs/ast/nodes/operators/semantic/common/construct';
 import { NodeDelimiter } from '@constructs/ast/nodes/operators/semantic/node/construct';
@@ -70,17 +70,17 @@ export const tok_domain = rn_container + '.' + Domain.kind;
 
 // essence
 
-export const rn_essence_open = EssentialSchemeOperator.kind;
-export const rn_essence_body = EssentialSchemeOperator.kind + suffix_body;
-export const rn_essence_close = EssentialIdentityOperator.kind;
+export const rn_essence_open = EssenceSchemeOperator.kind;
+export const rn_essence_body = EssenceSchemeOperator.kind + suffix_body;
+export const rn_essence_close = EssenceIdentityOperator.kind;
 
 export const tok_essence = rn_container + '.' + Essence.kind;
 
 // location
 
-export const rn_location_open = LocationalSchemeOperator.kind;
+export const rn_location_open = LocationSchemeOperator.kind;
 export const rn_location_body = Location.kind + suffix_body;
-export const rn_location_close = LocationalIdentityOperator.kind;
+export const rn_location_close = LocationIdentityOperator.kind;
 
 export const tok_location = rn_container + '.' + Location.kind;
 
@@ -88,7 +88,7 @@ export const tok_location = rn_container + '.' + Location.kind;
 
 export const rn_concept_open = ConceptSchemeOperator.kind;
 export const rn_concept_body = Concept.kind + suffix_body;
-export const rn_concept_close = ConceptualIdentityOperator.kind;
+export const rn_concept_close = ConceptIdentityOperator.kind;
 
 export const tok_concept = rn_container + '.' + Concept.kind;
 

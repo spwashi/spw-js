@@ -1,4 +1,4 @@
-import { tailComponent } from '@grammar/ast/expressions/sequences/block/pattern/_components/_combo/tail';
+import { tailComponent } from './_components/_combo/tail';
 
 // Only Tail
 // language=JavaScript

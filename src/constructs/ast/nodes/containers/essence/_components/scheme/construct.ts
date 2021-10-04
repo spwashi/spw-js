@@ -9,10 +9,10 @@ import { Delimiter } from '@constructs/ast/nodes/operators/semantic/_abstract/de
 type StaticType = IConstructClass<EssentialSchemeKind> & ITokenOperatorClass<EssentialSchemeToken>;
 
 @staticImplements<StaticType>()
-export class EssentialSchemeOperator extends Delimiter<EssentialSchemeKind> {
+export class EssenceSchemeOperator extends Delimiter<EssentialSchemeKind> {
   static kind: EssentialSchemeKind = 'essence_scheme';
 
   static token: EssentialSchemeToken = '[';
 
-  static components: ConstructComponents = operatorComponents(EssentialSchemeOperator);
+  static components: ConstructComponents = operatorComponents(EssenceSchemeOperator);
 }

@@ -24,17 +24,17 @@ import { BehaviorExpressionKind } from '@constructs/ast/expressions/sequences/be
 import { EntityExpressionKind } from '@constructs/ast/expressions/sequences/entity/__types';
 import { InstanceExpressionKind } from '@constructs/ast/expressions/sequences/instance/__types';
 import { ConceptNodeKind } from '@constructs/ast/nodes/containers/concept/__types';
-import { ConceptualIdentityOperatorKind } from '@constructs/ast/nodes/containers/concept/_components/identity/__types';
-import { ConceptualSchemeOperatorKind } from '@constructs/ast/nodes/containers/concept/_components/scheme/__types';
+import { ConceptualIdentityKind } from '@constructs/ast/nodes/containers/concept/_components/identity/__types';
+import { ConceptualSchemeKind } from '@constructs/ast/nodes/containers/concept/_components/scheme/__types';
 import { DomainNodeKind } from '@constructs/ast/nodes/containers/domain/__types';
-import { DomainIdentityOperatorKind } from '@constructs/ast/nodes/containers/domain/_components/identity/__types';
-import { DomainSchemeOperatorKind } from '@constructs/ast/nodes/containers/domain/_components/scheme/__types';
+import { DomainIdentityKind } from '@constructs/ast/nodes/containers/domain/_components/identity/__types';
+import { DomainSchemeKind } from '@constructs/ast/nodes/containers/domain/_components/scheme/__types';
 import { EssenceNodeKind } from '@constructs/ast/nodes/containers/essence/__types';
 import { EssentialIdentityKind } from '@constructs/ast/nodes/containers/essence/_components/identity/__types';
 import { EssentialSchemeKind } from '@constructs/ast/nodes/containers/essence/_components/scheme/__types';
 import { LocationNodeKind } from '@constructs/ast/nodes/containers/location/__types';
-import { LocationIdentityOperatorKind } from '@constructs/ast/nodes/containers/location/_components/identity/__types';
-import { LocationSchemeOperatorKind } from '@constructs/ast/nodes/containers/location/_components/scheme/__types';
+import { LocationIdentityKind } from '@constructs/ast/nodes/containers/location/_components/identity/__types';
+import { LocationSchemeKind } from '@constructs/ast/nodes/containers/location/_components/scheme/__types';
 import { DirectionOperatorKind } from '@constructs/ast/nodes/operators/pragmatic/multi-token/direction/__types';
 import { RangeOperatorKind } from '@constructs/ast/nodes/operators/pragmatic/multi-token/range/__types';
 import { SpreadOperatorKind } from '@constructs/ast/nodes/operators/pragmatic/multi-token/spread/__types';
@@ -64,34 +64,32 @@ import { NumberNodeKind } from '@constructs/ast/nodes/scalars/number/__types';
 import { PhraseNodeKind } from '@constructs/ast/nodes/scalars/phrase/__types';
 import { StringNodeKind } from '@constructs/ast/nodes/scalars/string/__types';
 
-type ScalarKind =
+export type ScalarKind =
   | AnchorNodeKind
   | PhraseNodeKind
   | NumberNodeKind
   | StringNodeKind
   | EmbedmentNodeKind;
 
-type DelimiterKind =
-  | NodeDelimterKind
-  | CommonDelimiterKind
-  | BlockDelimiterKind
-  | DomainSchemeOperatorKind
-  | DomainIdentityOperatorKind
+export type ContainerDelimiterKind =
+  | DomainSchemeKind
+  | DomainIdentityKind
   | EssentialSchemeKind
   | EssentialIdentityKind
-  | ConceptualSchemeOperatorKind
-  | ConceptualIdentityOperatorKind
-  | LocationSchemeOperatorKind
-  | LocationIdentityOperatorKind;
+  | ConceptualSchemeKind
+  | ConceptualIdentityKind
+  | LocationSchemeKind
+  | LocationIdentityKind;
 
-type OperatorKind =
+export type DelimiterKind = NodeDelimterKind | CommonDelimiterKind | BlockDelimiterKind;
+
+export type OperatorKind =
   | AggregationOperatorKind
   | AscentOperatorKind
   | BranchOperatorKind
   | BindingOperatorKind
   | ChannelOperatorKind
   | ConvergenceOperatorKind
-  | DelimiterKind
   | DescentOperatorKind
   | DivergenceOperatorKind
   | DirectionOperatorKind
@@ -107,15 +105,21 @@ type OperatorKind =
   | TransformationOperatorKind
   | ValueOperatorKind;
 
-type ContainerNodeKind = ConceptNodeKind | DomainNodeKind | EssenceNodeKind | LocationNodeKind;
+export type ContainerKind = ConceptNodeKind | DomainNodeKind | EssenceNodeKind | LocationNodeKind;
 
-type ExpressionKind =
+export type AbstractOperationExpressionKind =
   | PrefixExpressionKind
   | InfixExpressionKind
-  | PostfixExpressionKind
+  | PostfixExpressionKind;
+
+export type SequenceExpressionKind =
   | BehaviorExpressionKind
   | EntityExpressionKind
-  | InstanceExpressionKind
+  | InstanceExpressionKind;
+
+export type ExpressionKind =
+  | AbstractOperationExpressionKind
+  | SequenceExpressionKind
   | PhraseExpressionKind
   | BlockExpressionKind
   | CommonExpressionKind
@@ -140,6 +144,7 @@ export type ConstructKind =
   | 'unknown'
   | ScalarKind
   | OperatorKind
-  | ContainerNodeKind
+  | ContainerKind
+  | ContainerDelimiterKind
   | DelimiterKind
   | ExpressionKind;

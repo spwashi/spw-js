@@ -1,6 +1,6 @@
 import { sequenceExpression } from '@grammar/ast/expressions/sequences/_abstract/ref';
 import { node } from '@grammar/ast/nodes/_abstract/node.ref';
-import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
+import { container } from '@grammar/ast/nodes/containers/_abstract/ref';
 import { spaceTab } from '@grammar/utility/space/whitespace.patterns';
 import { anyOf, oneOrMoreOf, sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
 

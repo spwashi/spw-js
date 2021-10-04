@@ -1,2 +1,2 @@
 export type LocationSchemeOperatorToken = '(';
-export type LocationSchemeOperatorKind = 'location_scheme';
+export type LocationSchemeKind = 'location_scheme';

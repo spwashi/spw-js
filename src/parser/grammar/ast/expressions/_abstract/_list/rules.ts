@@ -14,7 +14,7 @@ import { postfixedExpressionRule } from '@grammar/ast/expressions/postfixed/_abs
 import { prefixedExpressionRule } from '@grammar/ast/expressions/prefixed/_abstract/rule';
 import { sequenceExpressionRule } from '@grammar/ast/expressions/sequences/_abstract/rule';
 import { behaviorExpressionRule } from '@grammar/ast/expressions/sequences/behavior/rule';
-import { blockExpressionRule } from '@grammar/ast/expressions/sequences/block/rule';
+import { blockExpressionRule } from '@grammar/ast/expressions/infixed/block/rule';
 import { entityExpressionRule } from '@grammar/ast/expressions/sequences/entity/rule';
 import { instanceExpressionRule } from '@grammar/ast/expressions/sequences/instance/rule';
 import { Rule } from '@spwashi/language/parsers/grammar';

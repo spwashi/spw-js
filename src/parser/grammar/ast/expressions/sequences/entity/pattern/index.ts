@@ -1,6 +1,6 @@
 import { EntityExpression } from '@constructs/ast';
 import { flat } from '@grammar/ast/expressions/_util/componentize';
-import { scalar } from '@grammar/ast/nodes/atoms/scalars/_abstract/scalar.ref';
+import { scalar } from '@grammar/ast/nodes/atoms/scalars/_abstract/ref';
 import { concept } from '@grammar/ast/nodes/containers/concept/ref';
 import { space } from '@grammar/utility/space/whitespace.patterns';
 import { anyOf, sequenceOf, zeroOrMoreOf } from '@spwashi/language/parsers/grammar/combinators';

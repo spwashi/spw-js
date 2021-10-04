@@ -45,7 +45,7 @@ describe('Complex InstanceExpression', () => {
     const test_expectedKey = `(<concept>something(location,location){domain}[essence]) is(<concept>something(){}[])`;
 
     const all = getAllNodes(test_input, cache);
-    expect(all.length).toEqual(60);
+    expect(all.length).toEqual(58);
 
     const last = getSalientNode(test_input, cache);
     expect(last?.kind).toEqual(PhraseExpression.kind);

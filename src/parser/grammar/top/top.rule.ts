@@ -1,7 +1,7 @@
 import { expression } from '@grammar/ast/expressions/_abstract/expression.ref';
-import { block } from '@grammar/ast/expressions/sequences/block/ref';
+import { block } from '@grammar/ast/expressions/infixed/block/ref';
 import { node } from '@grammar/ast/nodes/_abstract/node.ref';
-import { container } from '@grammar/ast/nodes/containers/_abstract/container.ref';
+import { container } from '@grammar/ast/nodes/containers/_abstract/ref';
 import { ruleName } from '@grammar/top/top.ref';
 import { newline, spaceTab } from '@grammar/utility/space/whitespace.patterns';
 import { Rule } from '@spwashi/language/parsers/grammar';
