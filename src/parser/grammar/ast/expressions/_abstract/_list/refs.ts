@@ -9,8 +9,8 @@ import { sequenceExpression } from '@grammar/ast/expressions/sequences/_abstract
 
 export const expressionGroups = [
   postfixedExpression,
-  prefixedExpression,
   infixedExpression,
+  prefixedExpression,
   sequenceExpression,
 ];
 

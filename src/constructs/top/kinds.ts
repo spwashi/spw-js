@@ -11,6 +11,21 @@ import { PrefixedAggregationExpressionKind } from '@constructs/ast/expressions/o
 import { InfixedBindingExpressionKind } from '@constructs/ast/expressions/operations/binding/_variants/infixed/__types';
 import { PostfixedBindingExpressionKind } from '@constructs/ast/expressions/operations/binding/_variants/postfixed/__types';
 import { PrefixedBindingExpressionKind } from '@constructs/ast/expressions/operations/binding/_variants/prefixed/__types';
+import { InfixedChannelExpressionKind } from '@constructs/ast/expressions/operations/channel/_variants/infixed/__types';
+import { PostfixedChannelExpressionKind } from '@constructs/ast/expressions/operations/channel/_variants/postfixed/__types';
+import { PrefixedChannelExpressionKind } from '@constructs/ast/expressions/operations/channel/_variants/prefixed/__types';
+import { InfixedEvaluationExpressionKind } from '@constructs/ast/expressions/operations/evaluation/_variants/infixed/__types';
+import { PostfixedEvaluationExpressionKind } from '@constructs/ast/expressions/operations/evaluation/_variants/postfixed/__types';
+import { PrefixedEvaluationExpressionKind } from '@constructs/ast/expressions/operations/evaluation/_variants/prefixed/__types';
+import { InfixedInvocationExpressionKind } from '@constructs/ast/expressions/operations/invocation/_variants/infixed/__types';
+import { PostfixedInvocationExpressionKind } from '@constructs/ast/expressions/operations/invocation/_variants/postfixed/__types';
+import { PrefixedInvocationExpressionKind } from '@constructs/ast/expressions/operations/invocation/_variants/prefixed/__types';
+import { InfixedPerformanceExpressionKind } from '@constructs/ast/expressions/operations/performance/_variants/infixed/__types';
+import { PostfixedPerformanceExpressionKind } from '@constructs/ast/expressions/operations/performance/_variants/postfixed/__types';
+import { PrefixedPerformanceExpressionKind } from '@constructs/ast/expressions/operations/performance/_variants/prefixed/__types';
+import { InfixedPerspectiveExpressionKind } from '@constructs/ast/expressions/operations/perspective/_variants/infixed/__types';
+import { PostfixedPerspectiveExpressionKind } from '@constructs/ast/expressions/operations/perspective/_variants/postfixed/__types';
+import { PrefixedPerspectiveExpressionKind } from '@constructs/ast/expressions/operations/perspective/_variants/prefixed/__types';
 import { InfixedRangeExpressionKind } from '@constructs/ast/expressions/operations/range/_variants/infixed/__types';
 import { PostfixedRangeExpressionKind } from '@constructs/ast/expressions/operations/range/_variants/postfixed/__types';
 import { PrefixedRangeExpressionKind } from '@constructs/ast/expressions/operations/range/_variants/prefixed/__types';
@@ -117,6 +132,47 @@ export type SequenceExpressionKind =
   | EntityExpressionKind
   | InstanceExpressionKind;
 
+type AggregationExpressionKind =
+  | InfixedAggregationExpressionKind
+  | PrefixedAggregationExpressionKind
+  | PostfixedAggregationExpressionKind;
+type BindingExpressionKind =
+  | InfixedBindingExpressionKind
+  | PrefixedBindingExpressionKind
+  | PostfixedBindingExpressionKind;
+type ChannelExpressionKind =
+  | PrefixedChannelExpressionKind
+  | InfixedChannelExpressionKind
+  | PostfixedChannelExpressionKind;
+type EvaluationExpressionKind =
+  | PrefixedEvaluationExpressionKind
+  | InfixedEvaluationExpressionKind
+  | PostfixedEvaluationExpressionKind;
+type InvocationExpressionKind =
+  | PrefixedInvocationExpressionKind
+  | InfixedInvocationExpressionKind
+  | PostfixedInvocationExpressionKind;
+type RangeExpressionKind =
+  | InfixedRangeExpressionKind
+  | PrefixedRangeExpressionKind
+  | PostfixedRangeExpressionKind;
+type ReductionExpressionKind =
+  | InfixedReductionExpressionKind
+  | PrefixedReductionExpressionKind
+  | PostfixedReductionExpressionKind;
+type PerformanceExpressionKind =
+  | PrefixedPerformanceExpressionKind
+  | InfixedPerformanceExpressionKind
+  | PostfixedPerformanceExpressionKind;
+type PerspectiveExpressionKind =
+  | PrefixedPerspectiveExpressionKind
+  | InfixedPerspectiveExpressionKind
+  | PostfixedPerspectiveExpressionKind;
+type TransformationExpressionKind =
+  | InfixedTransformationExpressionKind
+  | PrefixedTransformationExpressionKind
+  | PostfixedTransformationExpressionKind;
+
 export type ExpressionKind =
   | AbstractOperationExpressionKind
   | SequenceExpressionKind
@@ -124,21 +180,16 @@ export type ExpressionKind =
   | BlockExpressionKind
   | CommonExpressionKind
   | CommonExpressionTailKind
-  | InfixedAggregationExpressionKind
-  | PrefixedAggregationExpressionKind
-  | PostfixedAggregationExpressionKind
-  | InfixedBindingExpressionKind
-  | PrefixedBindingExpressionKind
-  | PostfixedBindingExpressionKind
-  | InfixedRangeExpressionKind
-  | PrefixedRangeExpressionKind
-  | PostfixedRangeExpressionKind
-  | InfixedReductionExpressionKind
-  | PrefixedReductionExpressionKind
-  | PostfixedReductionExpressionKind
-  | InfixedTransformationExpressionKind
-  | PrefixedTransformationExpressionKind
-  | PostfixedTransformationExpressionKind;
+  | AggregationExpressionKind
+  | BindingExpressionKind
+  | RangeExpressionKind
+  | ReductionExpressionKind
+  | TransformationExpressionKind
+  | ChannelExpressionKind
+  | EvaluationExpressionKind
+  | InvocationExpressionKind
+  | PerformanceExpressionKind
+  | PerspectiveExpressionKind;
 
 export type ConstructKind =
   | 'unknown'

@@ -1,4 +1,4 @@
-import { expression } from '@grammar/ast/expressions/_abstract/expression.ref';
+import { expression } from '@grammar/ast/expressions/_abstract/ref';
 import { block } from '@grammar/ast/expressions/infixed/block/ref';
 import { node } from '@grammar/ast/nodes/_abstract/node.ref';
 import { container } from '@grammar/ast/nodes/containers/_abstract/ref';

@@ -105,7 +105,6 @@ InstanceExpression
 	/ Location
 	/ Domain
 	/ Essence
-	/ ChannelOperator
 
 AnchorNode "AnchorNode"= 
 anchor:(
@@ -792,8 +791,8 @@ container:(
 
 Expression "Expression"= 
 PostfixedExpression
-	/ PrefixedExpression
 	/ InfixedExpression
+	/ PrefixedExpression
 	/ SequenceExpression
 
 BehaviorExpression "BehaviorExpression"= 
@@ -999,14 +998,94 @@ head:Node
 	                   })
 }
 
+InfixedChannelExpression "InfixedChannelExpression"= 
+head:Node
+	(Space {return null;})*
+	tail:(
+	(Space {return null;})*
+		PrefixedChannelExpression
+	)
+{
+	return toConstruct({
+	                     kind: 'infixed_channel_expression',
+	                     head: head,
+	                     tail: tail,
+	                   })
+}
+
+InfixedEvaluationExpression "InfixedEvaluationExpression"= 
+head:Node
+	(Space {return null;})*
+	tail:(
+	(Space {return null;})*
+		PrefixedEvaluationExpression
+	)
+{
+	return toConstruct({
+	                     kind: 'infixed_evaluation_expression',
+	                     head: head,
+	                     tail: tail,
+	                   })
+}
+
 InfixedExpression "InfixedExpression"= 
 InfixedBindingExpression
 	/ InfixedTransformationExpression
 	/ InfixedAggregationExpression
-	/ InfixedReductionExpression
+	/ InfixedChannelExpression
+	/ InfixedEvaluationExpression
+	/ InfixedInvocationExpression
+	/ InfixedPerformanceExpression
+	/ InfixedPerspectiveExpression
 	/ InfixedRangeExpression
+	/ InfixedReductionExpression
 	/ CommonExpression
 	/ PhraseExpression
+
+InfixedInvocationExpression "InfixedInvocationExpression"= 
+head:Node
+	(Space {return null;})*
+	tail:(
+	(Space {return null;})*
+		PrefixedInvocationExpression
+	)
+{
+	return toConstruct({
+	                     kind: 'infixed_invocation_expression',
+	                     head: head,
+	                     tail: tail,
+	                   })
+}
+
+InfixedPerformanceExpression "InfixedPerformanceExpression"= 
+head:Node
+	(Space {return null;})*
+	tail:(
+	(Space {return null;})*
+		PrefixedPerformanceExpression
+	)
+{
+	return toConstruct({
+	                     kind: 'infixed_performance_expression',
+	                     head: head,
+	                     tail: tail,
+	                   })
+}
+
+InfixedPerspectiveExpression "InfixedPerspectiveExpression"= 
+head:Node
+	(Space {return null;})*
+	tail:(
+	(Space {return null;})*
+		PrefixedPerspectiveExpression
+	)
+{
+	return toConstruct({
+	                     kind: 'infixed_perspective_expression',
+	                     head: head,
+	                     tail: tail,
+	                   })
+}
 
 InfixedRangeExpression "InfixedRangeExpression"= 
 head:Node
@@ -1102,14 +1181,24 @@ PostfixedAggregationExpression "PostfixedAggregationExpression"=
 		/ BehaviorExpression
 		/ InfixedBindingExpression
 		/ InfixedTransformationExpression
-		/ InfixedReductionExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
 		/ InfixedRangeExpression
+		/ InfixedReductionExpression
 		/ CommonExpression
 		/ PhraseExpression
 		/ PrefixedBindingExpression
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
 		/ Node
 	)
 	(
@@ -1130,14 +1219,24 @@ PostfixedBindingExpression "PostfixedBindingExpression"=
 		/ BehaviorExpression
 		/ InfixedTransformationExpression
 		/ InfixedAggregationExpression
-		/ InfixedReductionExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
 		/ InfixedRangeExpression
+		/ InfixedReductionExpression
 		/ CommonExpression
 		/ PhraseExpression
 		/ PrefixedAggregationExpression
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
 		/ Node
 	)
 	(
@@ -1149,12 +1248,207 @@ PostfixedBindingExpression "PostfixedBindingExpression"=
 		)*
 	tail:BindingOperator {return toConstruct({kind:"postfixed_binding_expression",tail:tail,head:head});})
 
+PostfixedChannelExpression "PostfixedChannelExpression"= 
+(head:(
+	InfixedChannelExpression
+		/ PrefixedChannelExpression
+		/ InstanceExpression
+		/ EntityExpression
+		/ BehaviorExpression
+		/ InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
+		/ InfixedRangeExpression
+		/ InfixedReductionExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
+		/ Node
+	)
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:ChannelOperator {return toConstruct({kind:"postfixed_channel_expression",tail:tail,head:head});})
+
+PostfixedEvaluationExpression "PostfixedEvaluationExpression"= 
+(head:(
+	InfixedEvaluationExpression
+		/ PrefixedEvaluationExpression
+		/ InstanceExpression
+		/ EntityExpression
+		/ BehaviorExpression
+		/ InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedChannelExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
+		/ InfixedRangeExpression
+		/ InfixedReductionExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
+		/ Node
+	)
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:EvaluationOperator {return toConstruct({kind:"postfixed_evaluation_expression",tail:tail,head:head});})
+
 PostfixedExpression "PostfixedExpression"= 
 PostfixedAggregationExpression
 	/ PostfixedBindingExpression
+	/ PostfixedChannelExpression
+	/ PostfixedEvaluationExpression
+	/ PostfixedInvocationExpression
+	/ PostfixedPerformanceExpression
+	/ PostfixedPerspectiveExpression
 	/ PostfixedRangeExpression
 	/ PostfixedReductionExpression
 	/ PostfixedTransformationExpression
+
+PostfixedInvocationExpression "PostfixedInvocationExpression"= 
+(head:(
+	InfixedInvocationExpression
+		/ PrefixedInvocationExpression
+		/ InstanceExpression
+		/ EntityExpression
+		/ BehaviorExpression
+		/ InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
+		/ InfixedRangeExpression
+		/ InfixedReductionExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
+		/ Node
+	)
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:InvocationOperator {return toConstruct({kind:"postfixed_invocation_expression",tail:tail,head:head});})
+
+PostfixedPerformanceExpression "PostfixedPerformanceExpression"= 
+(head:(
+	InfixedPerformanceExpression
+		/ PrefixedPerformanceExpression
+		/ InstanceExpression
+		/ EntityExpression
+		/ BehaviorExpression
+		/ InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerspectiveExpression
+		/ InfixedRangeExpression
+		/ InfixedReductionExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerspectiveExpression
+		/ Node
+	)
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:PerformanceOperator {return toConstruct({kind:"postfixed_performance_expression",tail:tail,head:head});})
+
+PostfixedPerspectiveExpression "PostfixedPerspectiveExpression"= 
+(head:(
+	InfixedPerspectiveExpression
+		/ PrefixedPerspectiveExpression
+		/ InstanceExpression
+		/ EntityExpression
+		/ BehaviorExpression
+		/ InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedRangeExpression
+		/ InfixedReductionExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ Node
+	)
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:PerspectiveOperator {return toConstruct({kind:"postfixed_perspective_expression",tail:tail,head:head});})
 
 PostfixedRangeExpression "PostfixedRangeExpression"= 
 (head:(
@@ -1166,6 +1460,11 @@ PostfixedRangeExpression "PostfixedRangeExpression"=
 		/ InfixedBindingExpression
 		/ InfixedTransformationExpression
 		/ InfixedAggregationExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
 		/ InfixedReductionExpression
 		/ CommonExpression
 		/ PhraseExpression
@@ -1173,6 +1472,11 @@ PostfixedRangeExpression "PostfixedRangeExpression"=
 		/ PrefixedBindingExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
 		/ Node
 	)
 	(
@@ -1194,6 +1498,11 @@ PostfixedReductionExpression "PostfixedReductionExpression"=
 		/ InfixedBindingExpression
 		/ InfixedTransformationExpression
 		/ InfixedAggregationExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
 		/ InfixedRangeExpression
 		/ CommonExpression
 		/ PhraseExpression
@@ -1201,6 +1510,11 @@ PostfixedReductionExpression "PostfixedReductionExpression"=
 		/ PrefixedBindingExpression
 		/ PrefixedRangeExpression
 		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
 		/ Node
 	)
 	(
@@ -1221,14 +1535,24 @@ PostfixedTransformationExpression "PostfixedTransformationExpression"=
 		/ BehaviorExpression
 		/ InfixedBindingExpression
 		/ InfixedAggregationExpression
-		/ InfixedReductionExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
 		/ InfixedRangeExpression
+		/ InfixedReductionExpression
 		/ CommonExpression
 		/ PhraseExpression
 		/ PrefixedAggregationExpression
 		/ PrefixedBindingExpression
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
 		/ Node
 	)
 	(
@@ -1253,8 +1577,13 @@ PrefixedAggregationExpression "PrefixedAggregationExpression"=
 	InfixedBindingExpression
 		/ InfixedTransformationExpression
 		/ InfixedAggregationExpression
-		/ InfixedReductionExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
 		/ InfixedRangeExpression
+		/ InfixedReductionExpression
 		/ CommonExpression
 		/ PhraseExpression
 		/ PrefixedAggregationExpression
@@ -1262,6 +1591,11 @@ PrefixedAggregationExpression "PrefixedAggregationExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
 		/ Node
 	)
 	(
@@ -1285,8 +1619,13 @@ PrefixedBindingExpression "PrefixedBindingExpression"=
 	InfixedBindingExpression
 		/ InfixedTransformationExpression
 		/ InfixedAggregationExpression
-		/ InfixedReductionExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
 		/ InfixedRangeExpression
+		/ InfixedReductionExpression
 		/ CommonExpression
 		/ PhraseExpression
 		/ PrefixedAggregationExpression
@@ -1294,6 +1633,11 @@ PrefixedBindingExpression "PrefixedBindingExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
 		/ Node
 	)
 	(
@@ -1304,12 +1648,192 @@ PrefixedBindingExpression "PrefixedBindingExpression"=
 			/ [\n]
 		)* {return toConstruct({kind:"prefixed_binding_expression",head:head,tail:tail});})
 
+PrefixedChannelExpression "PrefixedChannelExpression"= 
+(head:ChannelOperator
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:(
+	InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
+		/ InfixedRangeExpression
+		/ InfixedReductionExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
+		/ Node
+	) {return toConstruct({kind:"prefixed_channel_expression",head:head,tail:tail});})
+
+PrefixedEvaluationExpression "PrefixedEvaluationExpression"= 
+(head:EvaluationOperator
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:(
+	InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
+		/ InfixedRangeExpression
+		/ InfixedReductionExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
+		/ Node
+	) {return toConstruct({kind:"prefixed_evaluation_expression",head:head,tail:tail});})
+
 PrefixedExpression "PrefixedExpression"= 
 PrefixedAggregationExpression
 	/ PrefixedBindingExpression
 	/ PrefixedRangeExpression
 	/ PrefixedReductionExpression
 	/ PrefixedTransformationExpression
+	/ PrefixedChannelExpression
+	/ PrefixedInvocationExpression
+	/ PrefixedEvaluationExpression
+	/ PrefixedPerformanceExpression
+	/ PrefixedPerspectiveExpression
+
+PrefixedInvocationExpression "PrefixedInvocationExpression"= 
+(head:InvocationOperator
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:(
+	InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
+		/ InfixedRangeExpression
+		/ InfixedReductionExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
+		/ Node
+	) {return toConstruct({kind:"prefixed_invocation_expression",head:head,tail:tail});})
+
+PrefixedPerformanceExpression "PrefixedPerformanceExpression"= 
+(head:PerformanceOperator
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:(
+	InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
+		/ InfixedRangeExpression
+		/ InfixedReductionExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
+		/ Node
+	) {return toConstruct({kind:"prefixed_performance_expression",head:head,tail:tail});})
+
+PrefixedPerspectiveExpression "PrefixedPerspectiveExpression"= 
+(head:PerspectiveOperator
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:(
+	InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
+		/ InfixedRangeExpression
+		/ InfixedReductionExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
+		/ Node
+	) {return toConstruct({kind:"prefixed_perspective_expression",head:head,tail:tail});})
 
 PrefixedRangeExpression "PrefixedRangeExpression"= 
 (head:RangeOperator
@@ -1324,8 +1848,13 @@ PrefixedRangeExpression "PrefixedRangeExpression"=
 	InfixedBindingExpression
 		/ InfixedTransformationExpression
 		/ InfixedAggregationExpression
-		/ InfixedReductionExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
 		/ InfixedRangeExpression
+		/ InfixedReductionExpression
 		/ CommonExpression
 		/ PhraseExpression
 		/ PrefixedAggregationExpression
@@ -1333,6 +1862,11 @@ PrefixedRangeExpression "PrefixedRangeExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
 		/ Node
 	)
 	(
@@ -1356,8 +1890,13 @@ PrefixedReductionExpression "PrefixedReductionExpression"=
 	InfixedBindingExpression
 		/ InfixedTransformationExpression
 		/ InfixedAggregationExpression
-		/ InfixedReductionExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
 		/ InfixedRangeExpression
+		/ InfixedReductionExpression
 		/ CommonExpression
 		/ PhraseExpression
 		/ PrefixedAggregationExpression
@@ -1365,6 +1904,11 @@ PrefixedReductionExpression "PrefixedReductionExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
 		/ Node
 	)
 	(
@@ -1388,8 +1932,13 @@ PrefixedTransformationExpression "PrefixedTransformationExpression"=
 	InfixedBindingExpression
 		/ InfixedTransformationExpression
 		/ InfixedAggregationExpression
-		/ InfixedReductionExpression
+		/ InfixedChannelExpression
+		/ InfixedEvaluationExpression
+		/ InfixedInvocationExpression
+		/ InfixedPerformanceExpression
+		/ InfixedPerspectiveExpression
 		/ InfixedRangeExpression
+		/ InfixedReductionExpression
 		/ CommonExpression
 		/ PhraseExpression
 		/ PrefixedAggregationExpression
@@ -1397,6 +1946,11 @@ PrefixedTransformationExpression "PrefixedTransformationExpression"=
 		/ PrefixedRangeExpression
 		/ PrefixedReductionExpression
 		/ PrefixedTransformationExpression
+		/ PrefixedChannelExpression
+		/ PrefixedInvocationExpression
+		/ PrefixedEvaluationExpression
+		/ PrefixedPerformanceExpression
+		/ PrefixedPerspectiveExpression
 		/ Node
 	) {return toConstruct({kind:"prefixed_transformation_expression",head:head,tail:tail});})
 
