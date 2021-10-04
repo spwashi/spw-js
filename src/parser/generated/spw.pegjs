@@ -1093,8 +1093,124 @@ head:(
 	return toConstruct(phrase)
 }
 
+PostfixedAggregationExpression "PostfixedAggregationExpression"= 
+(head:(
+	InfixedAggregationExpression
+		/ PrefixedAggregationExpression
+		/ InstanceExpression
+		/ EntityExpression
+		/ BehaviorExpression
+		/ InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedReductionExpression
+		/ InfixedRangeExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ Node
+	)
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:AggregationOperator {return toConstruct({kind:"postfixed_aggregation_expression",tail:tail,head:head});})
+
+PostfixedBindingExpression "PostfixedBindingExpression"= 
+(head:(
+	InfixedBindingExpression
+		/ PrefixedBindingExpression
+		/ InstanceExpression
+		/ EntityExpression
+		/ BehaviorExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedReductionExpression
+		/ InfixedRangeExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedRangeExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ Node
+	)
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:BindingOperator {return toConstruct({kind:"postfixed_binding_expression",tail:tail,head:head});})
+
 PostfixedExpression "PostfixedExpression"= 
-PostfixedTransformationExpression
+PostfixedAggregationExpression
+	/ PostfixedBindingExpression
+	/ PostfixedRangeExpression
+	/ PostfixedReductionExpression
+	/ PostfixedTransformationExpression
+
+PostfixedRangeExpression "PostfixedRangeExpression"= 
+(head:(
+	InfixedRangeExpression
+		/ PrefixedRangeExpression
+		/ InstanceExpression
+		/ EntityExpression
+		/ BehaviorExpression
+		/ InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedReductionExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedReductionExpression
+		/ PrefixedTransformationExpression
+		/ Node
+	)
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:RangeOperator {return toConstruct({kind:"postfixed_range_expression",tail:tail,head:head});})
+
+PostfixedReductionExpression "PostfixedReductionExpression"= 
+(head:(
+	InfixedReductionExpression
+		/ PrefixedReductionExpression
+		/ InstanceExpression
+		/ EntityExpression
+		/ BehaviorExpression
+		/ InfixedBindingExpression
+		/ InfixedTransformationExpression
+		/ InfixedAggregationExpression
+		/ InfixedRangeExpression
+		/ CommonExpression
+		/ PhraseExpression
+		/ PrefixedAggregationExpression
+		/ PrefixedBindingExpression
+		/ PrefixedRangeExpression
+		/ PrefixedTransformationExpression
+		/ Node
+	)
+	(
+		(
+			" "
+				/ [\t]
+			)
+			/ [\n]
+		)*
+	tail:ReductionOperator {return toConstruct({kind:"postfixed_reduction_expression",tail:tail,head:head});})
 
 PostfixedTransformationExpression "PostfixedTransformationExpression"= 
 (head:(
