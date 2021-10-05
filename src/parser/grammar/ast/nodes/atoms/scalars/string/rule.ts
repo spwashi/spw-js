@@ -1,48 +1,46 @@
-import { StringNode } from '@constructs/ast';
-import { Rule } from '@spwashi/language/parsers/grammar';
-import {
-  anyOf,
-  regExpLike,
-  sequenceOf,
-  stringLike,
-  zeroOrMoreOf,
-} from '@spwashi/language/parsers/grammar/combinators';
-import { unicode_noQuotes } from '../../../../../utility/unicode/unicode.ref';
-import { ruleName } from './ref';
+import { StringNode } from "@constructs/ast";
+import { Rule } from "@spwashi/language/parsers/grammar";
+import { anyOf, regExpLike, sequenceOf, stringLike, zeroOrMoreOf } from "@spwashi/language/parsers/grammar/combinators";
+import { unicode_noQuotes } from "../../../../../utility/unicode/unicode.ref";
+import { ruleName } from "./ref";
 
 const doubleQuote = regExpLike(`\\"`);
 const singleQuote = regExpLike(`\\'`);
-const backslash = stringLike('\\\\');
-const newline = regExpLike('\\n');
+const backslash   = stringLike("\\\\");
+const newline     = regExpLike("\\n");
 
 const _escapedDoubleQuoteAction =
-  // language=JavaScript
-  `
-          return "\\""
-        `;
+          // language=JavaScript
+          `
+            return "\\""
+          `;
 
 const escapedDoubleQuote = sequenceOf([backslash, doubleQuote]).withAction(
-  _escapedDoubleQuoteAction,
+    _escapedDoubleQuoteAction
 );
 
-const singleQuoteBody = zeroOrMoreOf(anyOf([unicode_noQuotes, newline, doubleQuote]));
-
+const under           = stringLike("_");
+const singleQuoteBody = zeroOrMoreOf(anyOf([unicode_noQuotes, newline, under, doubleQuote]));
 const doubleQuoteBody = zeroOrMoreOf(
-  anyOf([escapedDoubleQuote, unicode_noQuotes, newline, singleQuote]),
+    anyOf([escapedDoubleQuote, unicode_noQuotes, under, newline, singleQuote])
 );
 
 const _stringAction =
-  // language=JavaScript
-  `
-          return body.join("");
-        `;
+          // language=JavaScript
+          `
+            return body.join("");
+          `;
 
 const pattern = sequenceOf([
-  anyOf([
-    sequenceOf([singleQuote, singleQuoteBody.named('body'), singleQuote]).withAction(_stringAction),
-    sequenceOf([doubleQuote, doubleQuoteBody.named('body'), doubleQuote]).withAction(_stringAction),
-  ]).named('string'),
-]);
+                               anyOf([
+                                         sequenceOf([
+                                                        singleQuote, singleQuoteBody.named("body"), singleQuote
+                                                    ]).withAction(_stringAction),
+                                         sequenceOf([
+                                                        doubleQuote, doubleQuoteBody.named("body"), doubleQuote
+                                                    ]).withAction(_stringAction)
+                                     ]).named("string")
+                           ]);
 
 // language=JavaScript
 const action = `return toConstruct({

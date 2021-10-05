@@ -8,7 +8,7 @@ import { Construct } from '../../../../_abstract/construct';
 
 describe('String Nodes', () => {
   it('can be parsed', async (done) => {
-    const runtime = await initRuntimeWithSrc(`"this is a string"`);
+    const runtime = await initRuntimeWithSrc(` "this is a string $ - > [] _ . {}!@#$%^&*()_+1234567890-=''" `);
     const last: Construct | undefined = selectLastAcknowledgedNodeFromRuntime(runtime);
     const all: Construct[] = selectAllNodesFromRuntime(runtime);
     if (!StringNode.isStringNode(last)) {
@@ -16,7 +16,7 @@ describe('String Nodes', () => {
     }
     expect(last.kind).toEqual(StringNode.kind);
     expect(last.kind).toEqual(StringNode.kind);
-    expect(last.key).toEqual('"this is a string"');
+    expect(last.key).toEqual(`"this is a string $ - > [] _ . {}!@#$%^&*()_+1234567890-=''"`);
     expect(all.length).toEqual(1);
 
     done();

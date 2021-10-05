@@ -83,6 +83,23 @@ Top "Top"=
 
 UnicodeWithoutQuotes "UnicodeWithoutQuotes"= 
 [-a-zA-Z \t\']
+	/ "_"
+	/ "["
+	/ "]"
+	/ "<"
+	/ "}"
+	/ "("
+	/ ")"
+	/ "$"
+	/ "."
+	/ "!"
+	/ "@"
+	/ "#"
+	/ "$"
+	/ "%"
+	/ "^"
+	/ "&"
+	/ "*"
 	/ [\u0020-\u0021,\u0023-\u0059,\u0061-\u26FF]
 
 Space "Space"= 
@@ -130,6 +147,7 @@ EmbedmentNode "EmbedmentNode"=
 embedment:([`]
 		body:(
 			UnicodeWithoutQuotes
+				/ "_"
 				/ [\\]
 				/ (Space {return null;})
 				/ [\"]
@@ -194,6 +212,7 @@ string:(
 			body:(
 				UnicodeWithoutQuotes
 					/ [\n]
+					/ "_"
 					/ [\"]
 				)*
 			[\'] {return body.join("");})
@@ -202,6 +221,7 @@ string:(
 				("\\"
 						[\"] {return'"';})
 					/ UnicodeWithoutQuotes
+					/ "_"
 					/ [\n]
 					/ [\']
 				)*
