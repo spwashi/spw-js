@@ -4,7 +4,7 @@ import {
   selectAllNodesFromRuntime,
   selectLastAcknowledgedNodeFromRuntime,
 } from '@constructs/runtime/_util/selectors';
-import { Construct } from '../../../../_abstract/construct';
+import { Construct } from "@constructs/ast/_abstract/construct";
 
 describe('String Nodes', () => {
   it('can be parsed', async (done) => {
