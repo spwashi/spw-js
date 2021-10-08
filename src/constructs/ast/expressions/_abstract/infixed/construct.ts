@@ -11,7 +11,7 @@ export class InfixedExpression extends Expression<InfixExpressionKind> {
 
     operands: new ConstructComponent({
       name: 'operands',
-      evaluators: {
+      subjectEvaluators: {
         stringify: (operands = []) => operands.join(', '),
       },
     }),

@@ -1,6 +1,6 @@
 import {
   ComponentDescription,
-  ComponentEvaluatorObject,
+  ComponentSubjectEvaluatorObject,
 } from '@constructs/ast/_abstract/_types/componentDescription';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { StringNodeKind } from '@constructs/ast/nodes/scalars/string/__types';
@@ -18,24 +18,24 @@ export class StringNode extends Node<StringNodeKind> {
     open: new ConstructComponent({
       name: 'open',
 
-      selector: () => '"',
+      valueSelector: () => '"',
     }),
 
     body: new ConstructComponent({
       name: 'body',
 
-      evaluators: {
+      subjectEvaluators: {
         stringify: (s: string[] | undefined) =>
           Array.from(s ?? [])
             .filter(Boolean)
             .join(''),
-      } as ComponentEvaluatorObject,
+      } as ComponentSubjectEvaluatorObject,
     }),
 
     close: new ConstructComponent({
       name: 'close',
 
-      selector: () => '"',
+      valueSelector: () => '"',
     }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {

@@ -14,7 +14,7 @@ export class AnchorNode extends Node<AnchorNodeKind> {
   static components = {
     label: new ConstructComponent({
       name: 'label',
-      selector: (s) => {
+      valueSelector: (s) => {
         return s.label;
       },
     }),

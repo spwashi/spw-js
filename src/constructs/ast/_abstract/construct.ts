@@ -1,7 +1,7 @@
 import { ConstructComponentKey, ConstructReductionOptions } from '@constructs/ast/_abstract/_types';
 import {
   ComponentDescription,
-  ComponentEvaluatorObject,
+  ComponentSubjectEvaluatorObject,
 } from '@constructs/ast/_abstract/_types/componentDescription';
 import { initInteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/initInteractionContext';
 import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
@@ -68,7 +68,7 @@ export class Construct<
         },
 
         normalizeStep(prototype: Prototype, [intermediate, context]) {
-          const evaluator = prototype.evaluators.stringify as ComponentEvaluatorObject['stringify'];
+          const evaluator = prototype.subjectEvaluators.stringify as ComponentSubjectEvaluatorObject['stringify'];
           let evaluated: string | null;
           if (evaluator) {
             evaluated = evaluator(intermediate, context);

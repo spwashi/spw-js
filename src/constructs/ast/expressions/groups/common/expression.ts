@@ -14,13 +14,13 @@ export class CommonExpression extends Expression<CommonExpressionKind> {
     items: new ConstructComponent({
       name: 'items',
 
-      selector: (subject: any) => {
+      valueSelector: (subject: any) => {
         const items = subject?.items;
         const arr = Array.isArray(items) ? items : [items];
         return arr;
       },
 
-      generator: function* (items, ctxt) {
+      locationGenerator: function* (items, ctxt) {
         const [head, ...tail] = Array.isArray(items) ? items : [items];
         yield [head, ctxt];
 
@@ -35,7 +35,7 @@ export class CommonExpression extends Expression<CommonExpressionKind> {
         return null;
       },
 
-      evaluators: {
+      subjectEvaluators: {
         stringify: function (items) {
           const key = Array.from(items ?? [])
             .filter(Boolean)

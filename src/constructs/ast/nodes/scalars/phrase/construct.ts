@@ -1,6 +1,6 @@
 import {
   ComponentDescription,
-  ComponentEvaluatorObject,
+  ComponentSubjectEvaluatorObject,
 } from '@constructs/ast/_abstract/_types/componentDescription';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { PhraseNodeKind } from '@constructs/ast/nodes/scalars/phrase/__types';
@@ -18,12 +18,12 @@ export class PhraseNode extends Node<PhraseNodeKind> {
     items: new ConstructComponent({
       name: 'items',
 
-      evaluators: {
+      subjectEvaluators: {
         stringify: (s) =>
           Array.from(s ?? [])
             .filter(Boolean)
             .join(' '),
-      } as ComponentEvaluatorObject,
+      } as ComponentSubjectEvaluatorObject,
     }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {

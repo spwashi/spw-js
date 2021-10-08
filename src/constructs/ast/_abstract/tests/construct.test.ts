@@ -26,8 +26,8 @@ describe('Constructs', () => {
             name: randName_1,
           });
           yield new ConstructComponent({
-            name: randName_2,
-            selector: () => '!!!',
+            name:          randName_2,
+            valueSelector: () => '!!!',
           });
         },
       };

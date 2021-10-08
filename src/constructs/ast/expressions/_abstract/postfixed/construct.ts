@@ -11,7 +11,7 @@ export class PostfixedExpression extends Expression<PostfixExpressionKind> {
 
     operands: new ConstructComponent({
       name: 'operands',
-      evaluators: {
+      subjectEvaluators: {
         stringify: (operands = []) => '(' + operands.join(', ') + ')',
       },
     }),

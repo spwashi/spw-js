@@ -10,15 +10,16 @@ import { HydrationContext, joinHydratedProperties } from "./_util/util";
 const nonNull = ([, n]: [any, any]) => n != void 0;
 
 /**
- * Hydrates a node without probing
+ * Hydrates a node without probing further.
+ * Only takes the node's properties and
  *
  * @param node
  * @param context
  */
-export function hydrateShallow<Unhydrated extends RawConstruct | any,
+export function hydrateShallowInContext<Unhydrated extends RawConstruct | any,
     Context extends HydrationContext = HydrationContext,
     Out extends [string, any] = [string, any],
-    >(node: Unhydrated, context: Context): { node: Construct; promise: Promise<[Out[], Context]> } {
+    >([node, context]: [node: Unhydrated, context: Context]): { node: Construct; promise: Promise<[Out[], Context]> } {
     type Output = Out[];
     type SeedValue = [];
 
@@ -66,7 +67,7 @@ export function hydrateShallow<Unhydrated extends RawConstruct | any,
                               return [
                                   entries
                                       .map(([key, value]) => {
-                                          const toHydrated = prototype.evaluators.hydrate;
+                                          const toHydrated = prototype.subjectEvaluators.hydrate;
                                           const hydrated   = toHydrated ? toHydrated(value, context) : value;
                                           return [key, hydrated];
                                       }),
@@ -80,8 +81,26 @@ export function hydrateShallow<Unhydrated extends RawConstruct | any,
     const [deconstructedNode] = stepSync;
     const joinedProperties    = joinHydratedProperties(deconstructedNode);
     const hydratedNode        = new Construct(joinedProperties);
-    const promise             = Construct.reduceAsync<Context>(node, config, stepSync) as Promise<[Output, Context]>;
+
+    const logger = (() => !true);
+
+    const key = hydratedNode.key;
+
+    (context.top.arr = context.top.arr ?? []).push(key);
+
+    logger()
+    && console.log("hydrated node -- '", key, "'");
+
+    const promise = Construct.reduceAsync<Context>(hydratedNode, config, stepSync) as Promise<[Output, Context]>;
+    (context.top.promises = context.top.promises ?? []).push(promise);
+
+    logger()
+    && console.log("start promise -- '", key, "'");
+
     context.absorb && context.absorb(hydratedNode);
+
+    logger() && console.log("absorbed node -- '", key, "'");
+
     return {
         node: hydratedNode,
         promise

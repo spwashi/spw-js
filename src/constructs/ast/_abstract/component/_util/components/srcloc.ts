@@ -2,6 +2,6 @@ import { invisibleEvaluators } from '@constructs/ast/_abstract/component/_util/e
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 
 export const srclocConstructComponent = new ConstructComponent({
-  name: 'srcloc',
-  evaluators: invisibleEvaluators,
+  name:              'srcloc',
+  subjectEvaluators: invisibleEvaluators,
 });

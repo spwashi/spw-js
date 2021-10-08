@@ -11,7 +11,7 @@ export class PrefixedExpression extends Expression<PrefixExpressionKind> {
 
     operands: new ConstructComponent({
       name: 'operands',
-      evaluators: {
+      subjectEvaluators: {
         stringify: (operands = []) => operands.join(', '),
       },
     }),

@@ -1,6 +1,6 @@
 import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 
-export type AsyncInteractionGenerator<
+export type AsyncLocationGenerator<
   //
   //
   YieldOutput = any,

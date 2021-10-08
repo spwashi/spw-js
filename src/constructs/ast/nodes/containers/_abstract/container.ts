@@ -35,10 +35,10 @@ export abstract class ContainerNode<
     open: new ConstructComponent({
       name: 'open',
       _fallback: null,
-      selector: function (s) {
+      valueSelector: function (s) {
         return s?.open || this._fallback;
       },
-      generator: function* (component, ctxt) {
+      locationGenerator: function* (component, ctxt) {
         if (!Array.isArray(component) && Construct.isConstruct(component)) {
           yield [component, ctxt];
           // if (component?.internal?.label) {
@@ -52,7 +52,7 @@ export abstract class ContainerNode<
         return null;
       },
 
-      evaluators: {
+      subjectEvaluators: {
         stringify: function (els = []) {
           const delimiter = els.join('');
           // add a space after complex delimiters
@@ -62,7 +62,7 @@ export abstract class ContainerNode<
     }),
     body: new ConstructComponent({
       name: 'body',
-      selector: function (s) {
+      valueSelector: function (s) {
         let body = s?.body;
         if (!BlockExpression.isBlockExpression(body)) {
           body = new BlockExpression({ items: [body].filter(Boolean) });
@@ -73,7 +73,7 @@ export abstract class ContainerNode<
     close: new ConstructComponent({
       _fallback: null,
       name: 'close',
-      selector: function (s) {
+      valueSelector: function (s) {
         return s?.close || this._fallback;
       },
     }),

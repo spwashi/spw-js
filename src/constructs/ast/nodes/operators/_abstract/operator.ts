@@ -13,13 +13,13 @@ export abstract class Operator<Kind extends ConstructKind = any> extends Node<Ki
     _fallback: null,
     token: new ConstructComponent({
       name: 'token',
-      selector: function (s) {
+      valueSelector: function (s) {
         return s?.token ?? this._fallback;
       },
     }),
     label: new ConstructComponent({
       name: 'label',
-      evaluators: {
+      subjectEvaluators: {
         stringify: function ([...l] = []) {
           const label = l.join('');
           return label.length ? `_${label}` : label;

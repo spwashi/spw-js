@@ -1,6 +1,6 @@
 import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 
-export type InteractionGenerator<
+export type ComponentLocationGenerator<
   YieldOutput = any,
   Context extends InteractionContext = InteractionContext,
 > = (

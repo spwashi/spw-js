@@ -14,7 +14,7 @@ export class NumberNode extends Node<NumberNodeKind> {
   static components = {
     value: new ConstructComponent({
       name: 'value',
-      evaluators: {
+      subjectEvaluators: {
         toHydrated: (s) => parseInt(s as any),
       },
     }),

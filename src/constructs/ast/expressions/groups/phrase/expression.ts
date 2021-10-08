@@ -1,6 +1,6 @@
 import {
   ComponentDescription,
-  ComponentEvaluatorObject,
+  ComponentSubjectEvaluatorObject,
 } from '@constructs/ast/_abstract/_types/componentDescription';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
@@ -15,12 +15,12 @@ export class PhraseExpression extends Expression<PhraseExpressionKind> {
   static components = {
     items: new ConstructComponent({
       name: 'items',
-      evaluators: {
+      subjectEvaluators: {
         stringify: (s) =>
           Array.from(s ?? [])
             .filter(Boolean)
             .join(' '),
-      } as ComponentEvaluatorObject,
+      } as ComponentSubjectEvaluatorObject,
     }),
 
     *[Symbol.iterator](): Generator<ComponentDescription> {

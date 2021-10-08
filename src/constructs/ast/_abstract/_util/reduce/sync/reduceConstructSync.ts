@@ -32,5 +32,6 @@ export function reduceConstructSync<
   runReductionBeginLifecycleSync(lifecycle, seed, subject);
   const end = reduceConstruct(seed, subject);
   runReductionEndLifecycleSync(lifecycle, end);
+  // console.log(end[0]);
   return end;
 }
