@@ -10,7 +10,7 @@ import { spwParser } from "../../../../../../parser/generated";
 
 describe("String Nodes", () => {
     it("test", async (done) => {
-        const src      = `[_out {_in something } ]`;
+        const src      = `[_out {_in somethign;something } ]`;
         const raw      = spwParser.parse(src, {}) as RawConstruct;
         const context  = initHydrationContext(initRuntimeRegisters());
         const hydrated = hydrateRecursively(raw, context) as Construct | null;

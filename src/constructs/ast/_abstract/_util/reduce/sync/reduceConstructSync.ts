@@ -1,11 +1,12 @@
-import { ConstructReductionConfig } from '@constructs/ast/_abstract/_types';
-import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
-import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
-import { defaultLifecycleController } from '@constructs/ast/_abstract/_util/reduce/_util/lifecycle/default';
-import { ReductionLifecycleController } from '@constructs/ast/_abstract/_util/reduce/_util/lifecycle/types';
-import { getConstructReducerSync } from '@constructs/ast/_abstract/_util/reduce/sync/_util/getConstructReducerSync';
-import { runReductionBeginLifecycleSync } from '@constructs/ast/_abstract/_util/reduce/sync/_util/lifecycle/beginReduction';
-import { runReductionEndLifecycleSync } from '@constructs/ast/_abstract/_util/reduce/sync/_util/lifecycle/endReduction';
+import { ConstructReductionConfig } from "@constructs/ast/_abstract/_types";
+import { ComponentDescription } from "@constructs/ast/_abstract/_types/componentDescription";
+import { initInteractionContext } from "@constructs/ast/_abstract/_types/interaction/context/initInteractionContext";
+import { InteractionContext } from "@constructs/ast/_abstract/_types/interaction/context/interactionContext";
+import { defaultLifecycleController } from "@constructs/ast/_abstract/_util/reduce/_util/lifecycle/default";
+import { ReductionLifecycleController } from "@constructs/ast/_abstract/_util/reduce/_util/lifecycle/types";
+import { getConstructReducerSync } from "@constructs/ast/_abstract/_util/reduce/sync/_util/getConstructReducerSync";
+import { runReductionBeginLifecycleSync } from "@constructs/ast/_abstract/_util/reduce/sync/_util/lifecycle/beginReduction";
+import { runReductionEndLifecycleSync } from "@constructs/ast/_abstract/_util/reduce/sync/_util/lifecycle/endReduction";
 
 /**
  * Reduce a construct synchronously
@@ -16,22 +17,19 @@ import { runReductionEndLifecycleSync } from '@constructs/ast/_abstract/_util/re
  * @param prototypes
  * @param lifecycle
  */
-export function reduceConstructSync<
-  Context extends InteractionContext = InteractionContext,
-  Subject = any,
-  StartType = any | null,
-  ReturnType = any,
->(
-  subject: Subject | null,
-  config: ConstructReductionConfig<Context>,
-  seed: [StartType | null, Context | null] = [null, null],
-  prototypes: Iterable<ComponentDescription<Context>> = [],
-  lifecycle: ReductionLifecycleController = defaultLifecycleController,
+export function reduceConstructSync<Context extends InteractionContext = InteractionContext,
+    Subject = any,
+    StartType = any | null,
+    ReturnType = any,
+    >(
+    subject: Subject | null,
+    config: ConstructReductionConfig<Context>,
+    seed: [StartType | null, Context]                   = [null, initInteractionContext()],
+    prototypes: Iterable<ComponentDescription<Context>> = [],
+    lifecycle: ReductionLifecycleController             = defaultLifecycleController
 ): [ReturnType, Context] {
-  const reduceConstruct = getConstructReducerSync<Context>(config, lifecycle, prototypes);
-  runReductionBeginLifecycleSync(lifecycle, seed, subject);
-  const end = reduceConstruct(seed, subject);
-  runReductionEndLifecycleSync(lifecycle, end);
-  // console.log(end[0]);
-  return end;
+    const reduceConstruct = getConstructReducerSync<Context>(config, lifecycle, prototypes);
+    const begin           = runReductionBeginLifecycleSync(lifecycle, seed);
+    const end             = reduceConstruct(begin, subject);
+    return runReductionEndLifecycleSync(lifecycle, end);
 }

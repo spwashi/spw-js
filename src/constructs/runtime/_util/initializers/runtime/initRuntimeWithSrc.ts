@@ -45,6 +45,7 @@ function _getRuntime(cache: MutableRuntimeCache = {}) {
   cache.runtime = cache.runtime ?? ({ registers } as Runtime);
   return cache.runtime;
 }
+
 /**
  * Initialize a runtime, optionally providing a "seed" source
  * @param src
@@ -54,6 +55,7 @@ export default function initRuntimeWithSrc(src?: string, cache: MutableRuntimeCa
   src && parseIntoRuntime(runtime, src);
   return runtime;
 }
+
 /**
  * Get the most salient node from a src string.
  * Returns the last acknowledged node.

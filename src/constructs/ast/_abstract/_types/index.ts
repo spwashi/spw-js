@@ -34,9 +34,8 @@ export type ConstructReductionConfig<//
          * @see {ComponentDescription.generator}
          * @see {ComponentDescription.asyncGenerator}
          */
-        location: any,
+        step: [location: any, context: Context | null],
         key: ComponentKey,
-        context: Context | null,
         isAsync: boolean
     ) => InternalComponent;
     /**

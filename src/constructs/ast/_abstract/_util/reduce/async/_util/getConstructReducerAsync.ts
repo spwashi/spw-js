@@ -2,21 +2,8 @@ import { ConstructReductionConfig } from "@constructs/ast/_abstract/_types";
 import { ComponentDescription } from "@constructs/ast/_abstract/_types/componentDescription";
 import { InteractionContext } from "@constructs/ast/_abstract/_types/interaction/context/interactionContext";
 import { ReductionLifecycleController } from "@constructs/ast/_abstract/_util/reduce/_util/lifecycle/types";
-import { getComponentProcessor } from "@constructs/ast/_abstract/_util/reduce/async/_util/getComponentProcessor";
+import { getValueGenerationProcessorAsync } from "@constructs/ast/_abstract/_util/reduce/async/_util/getValueGenerationProcessorAsync";
 import { getInternalComponents } from "@constructs/ast/_abstract/component/_util/internal";
-
-function getValueGenerator<Context extends InteractionContext>(
-    component: ComponentDescription<Context>,
-    subject: any,
-    context: Context
-): AsyncGenerator {
-    return (
-        component.asyncLocationGenerator?.(component.valueSelector(subject), context) ??
-        (async function* () {
-            yield;
-        })()
-    );
-}
 
 interface AsyncConstructReducer<Context extends InteractionContext = InteractionContext,
     Subject = any,
@@ -30,60 +17,41 @@ export function getConstructReducerAsync<Context extends InteractionContext = In
     Subject = any,
     StartType = any,
     ReturnType = any,
-    Intermediate = any,
     >(
     reductionConfig: ConstructReductionConfig<Context>,
-    lifecycle: ReductionLifecycleController,
-    prototypes: Iterable<ComponentDescription<Context>>
-): AsyncConstructReducer<Context, Subject, StartType, ReturnType> {
+    lifecycle: ReductionLifecycleController, prototypes: Iterable<ComponentDescription<Context>>): AsyncConstructReducer<Context, Subject, StartType, ReturnType> {
     type I_CD = Iterable<ComponentDescription<Context>>;
 
-    const processComponent = getComponentProcessor(reductionConfig, lifecycle);
-    const allPrototypes    =
-              [
-                  ...getInternalComponents(),
-                  ...prototypes
-              ] as I_CD;
+    const allPrototypes    = [...getInternalComponents(), ...prototypes] as I_CD;
+    const processComponent = getValueGenerationProcessorAsync(reductionConfig, lifecycle);
 
+    const all = (input: any[]) => Promise.all(input);
     return async (
         seed: [StartType | null, Context | null],
         subject: Subject | null
     ): Promise<[ReturnType, Context]> => {
-        const mut =
-                  {
-                      step: seed
-                  } as {
-                      step: [any, Context]
-                  };
+        const mut = { step: seed } as { step: [any, Context] };
 
         // loop over each component
         for await (const component of allPrototypes) {
             const [, context] = mut.step;
 
             const [
-                      intermediateComponentOutput,
+                      intermediate,
                       nextContext
                   ] =
                       await processComponent({
                                                  component,
                                                  context,
-                                                 valueGenerator:
-                                                     getValueGenerator(
-                                                         component,
-                                                         subject,
-                                                         context
-                                                     )
+                                                 subject
                                              });
 
-            const resolved =
-                      [
-                          await Promise.all(intermediateComponentOutput),
-                          nextContext
-                      ] as [Intermediate[], Context];
-
-            const normalized = reductionConfig.normalizeStep(component, resolved);
-
-            const reduced = await reductionConfig.reduceStep(mut.step, normalized, true);
+            const normalized = reductionConfig.normalizeStep(component,
+                                                             [
+                                                                 await all(intermediate),
+                                                                 nextContext
+                                                             ]);
+            const reduced    = await reductionConfig.reduceStep(mut.step, normalized, true);
 
             mut.step = reduced as [ReturnType, Context];
         }

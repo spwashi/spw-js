@@ -3,9 +3,9 @@ import { InteractionContext } from "@constructs/ast/_abstract/_types/interaction
 
 export type AsyncComponentProcessingScope<Context extends InteractionContext = InteractionContext> = {
     context: Context;
-    valueGenerator: AsyncGenerator;
+    subject: any;
     component: ComponentDescription<Context>;
 };
-export type AsyncComponentProcessor<Context extends InteractionContext = InteractionContext,
+export type ComponentValueGenerationProcessorAsync<Context extends InteractionContext = InteractionContext,
     Intermediate = any,
     > = (config: AsyncComponentProcessingScope<Context>) => Promise<[Promise<Intermediate>[], Context]>;

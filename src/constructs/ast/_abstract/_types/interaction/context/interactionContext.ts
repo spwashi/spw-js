@@ -1,6 +1,8 @@
 type O = { [k: string]: any };
 
 export interface InteractionContext extends O {
+    kind?: "hydrationContext" | "keyingContext";
+
     top: {
         promise: Promise<any>;
         [k: string]: any

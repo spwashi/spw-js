@@ -2,12 +2,22 @@ import { ConstructReductionOptions } from "@constructs/ast/_abstract/_types";
 import { ComponentDescription } from "@constructs/ast/_abstract/_types/componentDescription";
 import { InteractionContext } from "@constructs/ast/_abstract/_types/interaction/context/interactionContext";
 import { completeConstructReductionConfig } from "@constructs/ast/_abstract/_util/reduce/_util/config/completeConfig";
+import { reduceConstructAsync } from "@constructs/ast/_abstract/_util/reduce/async/reduceConstructAsync";
+import { reduceConstructSync } from "@constructs/ast/_abstract/_util/reduce/sync/reduceConstructSync";
 import { getConstructClass } from "../../../../index";
 import { RawConstruct } from "../../_types/internal";
 import { Construct } from "../../construct";
-import { HydrationContext, joinHydratedProperties } from "./_util/util";
+import { HydrationContext } from "./_util/util";
 
 const nonNull = ([, n]: [any, any]) => n != void 0;
+
+function key(context: InteractionContext, hydratedNode: Construct) {
+    (context.top.arr = context.top.arr ?? []).push(hydratedNode.key);
+}
+function promise<Context>(context: InteractionContext, promisedNode: Promise<[any, Context]>) {
+    (context.top.promises = context.top.promises ?? []).push(promisedNode);
+}
+
 
 /**
  * Hydrates a node without probing further.
@@ -16,20 +26,17 @@ const nonNull = ([, n]: [any, any]) => n != void 0;
  * @param node
  * @param context
  */
-export function hydrateShallowInContext<Unhydrated extends RawConstruct | any,
-    Context extends HydrationContext = HydrationContext,
-    Out extends [string, any] = [string, any],
-    >([node, context]: [node: Unhydrated, context: Context]): { node: Construct; promise: Promise<[Out[], Context]> } {
-    type Output = Out[];
-    type SeedValue = [];
-
-    const seed: [SeedValue, Context] = [[], context];
-
-    const config              =
+export function hydrateShallowInContext<Unhydrated extends RawConstruct | any, Context extends HydrationContext = HydrationContext>(
+    [node, context]: [node: Unhydrated, context: Context]
+): {
+    node: Construct;
+    promise: Promise<[any, Context]>
+} {
+    const reductionConfig =
               completeConstructReductionConfig<Context>(
                   {
                       deriveSubject:
-                          (value: any, key: any, context: InteractionContext | null, isAsync: boolean) => {
+                          ([value], key: any, isAsync: boolean) => {
                               const resolveStep = (key: any, value: any) => (async () => [
                                   key as string, await value
                               ])();
@@ -38,26 +45,42 @@ export function hydrateShallowInContext<Unhydrated extends RawConstruct | any,
                               ] : Promise.resolve(resolveStep(key, value));
                           },
                       reduceStep:
-                          function([prevVals], step, isAsync) {
-                              const [currVal, currCtxt] = step;
+                          function(prevStep, currStep, isAsync) {
+                              const [prevVals]               = prevStep;
+                              const [currVal, activeContext] = currStep;
 
                               if (isAsync === null) {
-                                  return [currVal ?? [], currCtxt];
+                                  return [
+                                      currVal,
+                                      activeContext
+                                  ];
                               }
 
                               const absorbConstruct =
-                                        ([key, n]: [string, any]) => [
-                                            key,
-                                            Construct.isConstruct(n)
-                                            ? (<HydrationContext>currCtxt).absorb?.(n)
-                                            : n
-                                        ];
+                                        ([key, n]: [string, any]) => {
+                                            const value =
+                                                      Construct.isConstruct(n)
+                                                      ? (<HydrationContext>activeContext).absorb?.(n)
+                                                      : n;
+
+                                            return [key, value];
+                                        };
+
+                              const absorbedNodes =
+                                        currVal
+                                            .map(absorbConstruct)
+                                            .filter(nonNull);
+
                               const reducedElements =
                                         [
-                                            ...prevVals,
-                                            ...(currVal ?? []).map(absorbConstruct).filter(nonNull)
+                                            ...prevVals ?? [],
+                                            ...absorbedNodes
                                         ];
-                              return [reducedElements, currCtxt as HydrationContext];
+
+                              return [
+                                  reducedElements,
+                                  activeContext as HydrationContext
+                              ];
                           },
                       normalizeStep:
                           (
@@ -69,40 +92,59 @@ export function hydrateShallowInContext<Unhydrated extends RawConstruct | any,
                                       .map(([key, value]) => {
                                           const toHydrated = prototype.subjectEvaluators.hydrate;
                                           const hydrated   = toHydrated ? toHydrated(value, context) : value;
-                                          return [key, hydrated];
+                                          return [
+                                              key, hydrated
+                                          ];
                                       }),
                                   context
                               ];
                           }
                   } as ConstructReductionOptions<Context>
               );
-    const Construct           = getConstructClass((node as RawConstruct)?.kind);
-    const stepSync            = Construct.reduce<Out[], Out, SeedValue, Unhydrated, Context>(node, config, seed);
-    const [deconstructedNode] = stepSync;
-    const joinedProperties    = joinHydratedProperties(deconstructedNode);
-    const hydratedNode        = new Construct(joinedProperties);
 
-    const logger = (() => !true);
+    const doKey     = false;
+    const doPromise = false;
 
-    const key = hydratedNode.key;
+    try {
+        const Construct  = getConstructClass((node as RawConstruct)?.kind);
+        const components = Construct.components as ComponentDescription<Context>[];
 
-    (context.top.arr = context.top.arr ?? []).push(key);
+        const step =
+                  reduceConstructSync<Context>(
+                      node,
+                      reductionConfig,
+                      [[], context],
+                      components
+                  );
 
-    logger()
-    && console.log("hydrated node -- '", key, "'");
+        const hydratedNode =
+                  new Construct(step[0]);
 
-    const promise = Construct.reduceAsync<Context>(hydratedNode, config, stepSync) as Promise<[Output, Context]>;
-    (context.top.promises = context.top.promises ?? []).push(promise);
+        const promisedNode =
+                  reduceConstructAsync<Context>(
+                      hydratedNode,
+                      reductionConfig,
+                      [null, context],
+                      components
+                  )
+                      .catch(
+                          e => {
+                              console.log(e);
+                              return [hydratedNode, context] as [Construct, Context];
+                          }
+                      );
 
-    logger()
-    && console.log("start promise -- '", key, "'");
+        doKey && key(context, hydratedNode);
+        doPromise && promise(context, promisedNode);
 
-    context.absorb && context.absorb(hydratedNode);
+        context.absorb && context.absorb(hydratedNode);
 
-    logger() && console.log("absorbed node -- '", key, "'");
-
-    return {
-        node: hydratedNode,
-        promise
-    };
+        return {
+            node:    hydratedNode,
+            promise: promisedNode
+        };
+    } catch (e) {
+        console.error(e);
+        throw e;
+    }
 }
