@@ -37,7 +37,7 @@ export type ComponentSubjectEvaluatorObject<//
 /**
  *
  */
-export type ComponentDescription<Context extends InteractionContext = InteractionContext,
+export type IConstructComponent<Context extends InteractionContext = InteractionContext,
     // an item of a Construct
     Component extends any = any,
     // subcomponents in order

@@ -8,6 +8,7 @@ describe("Number", () => {
     it("should be hydrate-able", async function() {
         const raw               = { value: "4", kind: "number" };
         const context           = initInteractionContext() as HydrationContext;
+        context.doPromise       = true;
         const { node, promise } = hydrateNumber(raw, context);
 
         NumberNode.components.value.asyncLocationGenerator = async function* (

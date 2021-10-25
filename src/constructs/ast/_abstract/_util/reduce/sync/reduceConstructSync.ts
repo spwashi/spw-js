@@ -1,5 +1,5 @@
 import { ConstructReductionConfig } from "@constructs/ast/_abstract/_types";
-import { ComponentDescription } from "@constructs/ast/_abstract/_types/componentDescription";
+import { IConstructComponent } from "../../../_types/IConstructComponent";
 import { initInteractionContext } from "@constructs/ast/_abstract/_types/interaction/context/initInteractionContext";
 import { InteractionContext } from "@constructs/ast/_abstract/_types/interaction/context/interactionContext";
 import { defaultLifecycleController } from "@constructs/ast/_abstract/_util/reduce/_util/lifecycle/default";
@@ -24,9 +24,9 @@ export function reduceConstructSync<Context extends InteractionContext = Interac
     >(
     subject: Subject | null,
     config: ConstructReductionConfig<Context>,
-    seed: [StartType | null, Context]                   = [null, initInteractionContext()],
-    prototypes: Iterable<ComponentDescription<Context>> = [],
-    lifecycle: ReductionLifecycleController             = defaultLifecycleController
+    seed: [StartType | null, Context]                  = [null, initInteractionContext()],
+    prototypes: Iterable<IConstructComponent<Context>> = [],
+    lifecycle: ReductionLifecycleController            = defaultLifecycleController
 ): [ReturnType, Context] {
     const reduceConstruct = getConstructReducerSync<Context>(config, lifecycle, prototypes);
     const begin           = runReductionBeginLifecycleSync(lifecycle, seed);

@@ -1,7 +1,7 @@
 import {
-  ComponentDescription,
+  IConstructComponent,
   ComponentSubjectEvaluatorObject,
-} from '@constructs/ast/_abstract/_types/componentDescription';
+} from '../../../_abstract/_types/IConstructComponent';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
@@ -23,7 +23,7 @@ export class PhraseExpression extends Expression<PhraseExpressionKind> {
       } as ComponentSubjectEvaluatorObject,
     }),
 
-    *[Symbol.iterator](): Generator<ComponentDescription> {
+    *[Symbol.iterator](): Generator<IConstructComponent> {
       yield this.items;
     },
   };

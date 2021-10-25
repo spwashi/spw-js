@@ -1,10 +1,10 @@
-import { ComponentDescription } from "@constructs/ast/_abstract/_types/componentDescription";
+import { IConstructComponent } from "../../../../../_types/IConstructComponent";
 import { InteractionContext } from "@constructs/ast/_abstract/_types/interaction/context/interactionContext";
 
 export type AsyncComponentProcessingScope<Context extends InteractionContext = InteractionContext> = {
     context: Context;
     subject: any;
-    component: ComponentDescription<Context>;
+    component: IConstructComponent<Context>;
 };
 export type ComponentValueGenerationProcessorAsync<Context extends InteractionContext = InteractionContext,
     Intermediate = any,

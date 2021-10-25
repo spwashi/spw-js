@@ -1,4 +1,4 @@
-import { ComponentDescription, ComponentSubjectEvaluatorObject } from "@constructs/ast/_abstract/_types/componentDescription";
+import { IConstructComponent, ComponentSubjectEvaluatorObject } from "../_types/IConstructComponent";
 import { AsyncLocationGenerator } from "@constructs/ast/_abstract/_types/interaction/async/asyncLocationGenerator";
 import { InteractionContext } from "@constructs/ast/_abstract/_types/interaction/context/interactionContext";
 import { ComponentLocationGenerator } from "@constructs/ast/_abstract/_types/interaction/sync/componentLocationGenerator";
@@ -17,7 +17,7 @@ const defaultEvaluator = {
 } as ComponentSubjectEvaluatorObject;
 
 function makeSelector(
-    override: Partial<ComponentDescription<any, any[], any, any>> & {
+    override: Partial<IConstructComponent<any, any[], any, any>> & {
         name: string;
     }
 ) {
@@ -30,7 +30,7 @@ function makeSelector(
     };
 }
 function makeEvaluators(
-    override: Partial<ComponentDescription<any, any[], any, any>> & {
+    override: Partial<IConstructComponent<any, any[], any, any>> & {
         name: string;
     }
 ) {
@@ -38,7 +38,7 @@ function makeEvaluators(
 }
 
 export type ConstructComponentProps =
-    Partial<ComponentDescription>
+    Partial<IConstructComponent>
     & {
         name: string;
     };
@@ -48,7 +48,7 @@ export class ConstructComponent<Context extends InteractionContext = Interaction
     SubComponentTupleOrList extends SubComponent[] = any[],
     Owner extends any = any,
     SubComponent extends any = any,
-    > implements ComponentDescription<Context, Component, SubComponentTupleOrList, Owner, SubComponent> {
+    > implements IConstructComponent<Context, Component, SubComponentTupleOrList, Owner, SubComponent> {
     subjectEvaluators = {};
 
     name = "";

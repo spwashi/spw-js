@@ -1,4 +1,4 @@
-import { ComponentSubjectEvaluatorObject } from '@constructs/ast/_abstract/_types/componentDescription';
+import { ComponentSubjectEvaluatorObject } from '../../../_types/IConstructComponent';
 
 export const invisibleEvaluators: ComponentSubjectEvaluatorObject = {
   stringify: (): string => '',

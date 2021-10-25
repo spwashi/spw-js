@@ -1,4 +1,4 @@
-import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
+import { IConstructComponent } from '../../../_abstract/_types/IConstructComponent';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { ConstructComponents } from '@constructs/ast/_abstract/construct';
 import { ConstructKind } from '@constructs/top/kinds';
@@ -27,7 +27,7 @@ export abstract class Operator<Kind extends ConstructKind = any> extends Node<Ki
       },
     }),
 
-    *[Symbol.iterator](): Generator<ComponentDescription> {
+    *[Symbol.iterator](): Generator<IConstructComponent> {
       yield this.token;
       yield this.label;
     },

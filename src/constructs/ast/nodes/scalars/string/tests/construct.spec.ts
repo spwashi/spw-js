@@ -10,12 +10,15 @@ import { spwParser } from "../../../../../../parser/generated";
 
 describe("String Nodes", () => {
     it("test", async (done) => {
-        const src      = `[_out {_in somethign;something } ]`;
-        const raw      = spwParser.parse(src, {}) as RawConstruct;
-        const context  = initHydrationContext(initRuntimeRegisters());
-        const hydrated = hydrateRecursively(raw, context) as Construct | null;
-        console.log(hydrated);
-        console.log(await Promise.all(context.top.promises));
+        const doLog       = false;
+        const src         = `[_out {_in somethign;something } ]`;
+        const raw         = spwParser.parse(src, {}) as RawConstruct;
+        const registers   = initRuntimeRegisters();
+        const context     = initHydrationContext(registers);
+        context.doPromise = true;
+        const hydrated    = hydrateRecursively(raw, context) as Construct | null;
+        doLog && console.log(hydrated);
+        doLog && console.log(await Promise.all(context.top.promises));
         done();
     });
     it("can be parsed", async (done) => {

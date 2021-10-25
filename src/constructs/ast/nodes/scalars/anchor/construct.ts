@@ -1,4 +1,4 @@
-import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
+import { IConstructComponent } from '../../../_abstract/_types/IConstructComponent';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { AnchorNodeKind } from '@constructs/ast/nodes/scalars/anchor/__types';
 import { IConstructClass } from '../../../_abstract/construct';
@@ -19,7 +19,7 @@ export class AnchorNode extends Node<AnchorNodeKind> {
       },
     }),
 
-    *[Symbol.iterator](): Generator<ComponentDescription> {
+    *[Symbol.iterator](): Generator<IConstructComponent> {
       yield this.label;
     },
   };

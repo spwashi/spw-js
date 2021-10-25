@@ -1,5 +1,5 @@
 import { CommonDelimiter } from '@constructs/ast';
-import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
+import { IConstructComponent } from '../../../_abstract/_types/IConstructComponent';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { IConstructClass } from '@constructs/ast/_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
@@ -45,7 +45,7 @@ export class CommonExpression extends Expression<CommonExpressionKind> {
       },
     }),
 
-    *[Symbol.iterator](): Generator<ComponentDescription> {
+    *[Symbol.iterator](): Generator<IConstructComponent> {
       yield this.items;
     },
   };

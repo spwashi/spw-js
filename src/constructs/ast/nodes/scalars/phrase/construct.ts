@@ -1,7 +1,7 @@
 import {
-  ComponentDescription,
+  IConstructComponent,
   ComponentSubjectEvaluatorObject,
-} from '@constructs/ast/_abstract/_types/componentDescription';
+} from '../../../_abstract/_types/IConstructComponent';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { PhraseNodeKind } from '@constructs/ast/nodes/scalars/phrase/__types';
 import { IConstructClass } from '../../../_abstract/construct';
@@ -26,7 +26,7 @@ export class PhraseNode extends Node<PhraseNodeKind> {
       } as ComponentSubjectEvaluatorObject,
     }),
 
-    *[Symbol.iterator](): Generator<ComponentDescription> {
+    *[Symbol.iterator](): Generator<IConstructComponent> {
       yield this.items;
     },
   };

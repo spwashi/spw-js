@@ -1,4 +1,4 @@
-import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
+import { IConstructComponent } from '../_types/IConstructComponent';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import * as faker from 'faker';
 import { Construct, ConstructComponents } from '../construct';
@@ -21,7 +21,7 @@ describe('Constructs', () => {
 
     const Example = class extends Construct {
       static components: ConstructComponents = {
-        *[Symbol.iterator](): Iterator<ComponentDescription> {
+        *[Symbol.iterator](): Iterator<IConstructComponent> {
           yield new ConstructComponent({
             name: randName_1,
           });

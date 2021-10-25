@@ -1,5 +1,5 @@
 import { ConstructReductionConfig } from '@constructs/ast/_abstract/_types';
-import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
+import { IConstructComponent } from '../../../_types/IConstructComponent';
 import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 import { defaultLifecycleController } from '@constructs/ast/_abstract/_util/reduce/_util/lifecycle/default';
 import { ReductionLifecycleController } from '@constructs/ast/_abstract/_util/reduce/_util/lifecycle/types';
@@ -24,9 +24,9 @@ export async function reduceConstructAsync<
 >(
   subject: Subject | null,
   reductionConfig: ConstructReductionConfig<Context>,
-  seed: [StartType | null, Context | null] = [null, null],
-  prototypes: Iterable<ComponentDescription<Context>> = [],
-  lifecycle: ReductionLifecycleController = defaultLifecycleController,
+  seed: [StartType | null, Context | null]           = [null, null],
+  prototypes: Iterable<IConstructComponent<Context>> = [],
+  lifecycle: ReductionLifecycleController            = defaultLifecycleController,
 ): Promise<[ReturnType, Context]> {
   await runReductionBeginLifecycleAsync(lifecycle, { seed, subject });
   const reduceConstruct = getConstructReducerAsync<Context>(reductionConfig, lifecycle, prototypes);

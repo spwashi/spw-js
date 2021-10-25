@@ -27,8 +27,9 @@ describe("Number", () => {
         };
 
         expect(node).toBeInstanceOf(NumberNode);
-        const out = await promise;
-        console.log(node, out);
+        const out   = await promise;
+        const doLog = false;
+        doLog && console.log(node, out);
         // expect(out.internal.value).toEqual(4000);
     });
 });

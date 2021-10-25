@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ComponentDescription } from "@constructs/ast/_abstract/_types/componentDescription";
 import { InteractionContext } from "@constructs/ast/_abstract/_types/interaction/context/interactionContext";
+import { IConstructComponent } from "./IConstructComponent";
 
 export type ConstructComponentKey =
     string
@@ -28,13 +28,14 @@ export type ConstructReductionConfig<//
      * @param context
      * @param isAsync
      */
-    deriveSubject: (
+    deriveSubjectValue: (
         /**
-         * This is a location
-         * @see {ComponentDescription.generator}
-         * @see {ComponentDescription.asyncGenerator}
+         * This function gives us the 
+         *
+         * @see {IConstructComponent.generator}
+         * @see {IConstructComponent.asyncGenerator}
          */
-        step: [location: any, context: Context | null],
+        step: [subject: any, context: Context | null],
         key: ComponentKey,
         isAsync: boolean
     ) => InternalComponent;
@@ -44,8 +45,8 @@ export type ConstructReductionConfig<//
      * @param intermediateReductionStep
      */
     normalizeStep: (
-        componentDescription: ComponentDescription<Context>,
-        intermediateReductionStep: [ReductionValue[], Context | null]
+        componentDescription: IConstructComponent<Context>,
+        denormalizedAggregateStep: [ReductionValue[], Context]
     ) => [ReductionOutput, Context];
     /**
      *

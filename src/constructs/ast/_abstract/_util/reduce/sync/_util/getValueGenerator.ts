@@ -1,8 +1,8 @@
-import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
+import { IConstructComponent } from '../../../../_types/IConstructComponent';
 import { InteractionContext } from '@constructs/ast/_abstract/_types/interaction/context/interactionContext';
 
 export default function getValueGenerator<Context extends InteractionContext, Subject>(
-  description: ComponentDescription<Context>,
+  description: IConstructComponent<Context>,
   subject: Subject | null,
   context: [any, Context][1],
 ): Generator<any, any, [any, Context]> {

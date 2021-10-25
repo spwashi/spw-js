@@ -1,4 +1,4 @@
-import { ComponentDescription } from "@constructs/ast/_abstract/_types/componentDescription";
+import { IConstructComponent } from "../../../_abstract/_types/IConstructComponent";
 import { ConstructComponent } from "@constructs/ast/_abstract/component/component";
 import { BlockExpression } from "@constructs/ast/expressions/groups/block/construct";
 import { ConstructKind } from "@constructs/top/kinds";
@@ -80,7 +80,7 @@ export abstract class ContainerNode<Kind extends ConstructKind = ConstructKind,
                                           }
                                       }),
 
-        * [Symbol.iterator](): Generator<ComponentDescription> {
+        * [Symbol.iterator](): Generator<IConstructComponent> {
             yield this.open;
             yield this.body;
             yield this.close;

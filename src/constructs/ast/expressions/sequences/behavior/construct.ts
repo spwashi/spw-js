@@ -1,4 +1,4 @@
-import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
+import { IConstructComponent } from '../../../_abstract/_types/IConstructComponent';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { IConstructClass } from '@constructs/ast/_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
@@ -14,7 +14,7 @@ export class BehaviorExpression extends Expression<BehaviorExpressionKind> {
     domain: new ConstructComponent({ name: 'domain' }),
     essence: new ConstructComponent({ name: 'essence' }),
 
-    *[Symbol.iterator](): Generator<ComponentDescription> {
+    *[Symbol.iterator](): Generator<IConstructComponent> {
       yield this.location;
       yield this.domain;
       yield this.essence;

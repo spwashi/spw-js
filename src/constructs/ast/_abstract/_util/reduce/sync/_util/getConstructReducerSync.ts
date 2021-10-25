@@ -1,5 +1,5 @@
 import { ConstructReductionConfig } from "@constructs/ast/_abstract/_types";
-import { ComponentDescription } from "@constructs/ast/_abstract/_types/componentDescription";
+import { IConstructComponent } from "../../../../_types/IConstructComponent";
 import { InteractionContext } from "@constructs/ast/_abstract/_types/interaction/context/interactionContext";
 import { ReductionLifecycleController } from "@constructs/ast/_abstract/_util/reduce/_util/lifecycle/types";
 import getValueGenerationProcessorSync from "@constructs/ast/_abstract/_util/reduce/sync/_util/getValueGenerationProcessorSync";
@@ -20,9 +20,9 @@ export function getConstructReducerSync<Context extends InteractionContext = Int
     >(
     reductionConfig: ConstructReductionConfig<Context>,
     lifecycle: ReductionLifecycleController,
-    prototypes: Iterable<ComponentDescription<Context>>
+    prototypes: Iterable<IConstructComponent<Context>>
 ): ConstructReducerSync<Context, Subject, StartType, ReturnType> {
-    type I_CD = Iterable<ComponentDescription<Context>>;
+    type I_CD = Iterable<IConstructComponent<Context>>;
 
     const allPrototypes    = [...getInternalComponents(), ...prototypes] as I_CD;
     const processComponent = getValueGenerationProcessorSync(reductionConfig, lifecycle);

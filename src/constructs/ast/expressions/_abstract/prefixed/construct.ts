@@ -1,4 +1,4 @@
-import { ComponentDescription } from '@constructs/ast/_abstract/_types/componentDescription';
+import { IConstructComponent } from '../../../_abstract/_types/IConstructComponent';
 import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { PrefixExpressionKind } from './__types';
@@ -16,7 +16,7 @@ export class PrefixedExpression extends Expression<PrefixExpressionKind> {
       },
     }),
 
-    *[Symbol.iterator](): Generator<ComponentDescription> {
+    *[Symbol.iterator](): Generator<IConstructComponent> {
       yield this.operator;
       yield this.operands;
     },

@@ -1,10 +1,10 @@
-import { ConstructReductionOptions } from "@constructs/ast/_abstract/_types";
-import { ComponentDescription } from "@constructs/ast/_abstract/_types/componentDescription";
+import { ConstructReductionConfig, ConstructReductionOptions } from "@constructs/ast/_abstract/_types";
 import { InteractionContext } from "@constructs/ast/_abstract/_types/interaction/context/interactionContext";
-import { completeConstructReductionConfig } from "@constructs/ast/_abstract/_util/reduce/_util/config/completeConfig";
+import { fillReductionConfig } from "@constructs/ast/_abstract/_util/reduce/_util/config/completeConfig";
 import { reduceConstructAsync } from "@constructs/ast/_abstract/_util/reduce/async/reduceConstructAsync";
 import { reduceConstructSync } from "@constructs/ast/_abstract/_util/reduce/sync/reduceConstructSync";
-import { getConstructClass } from "../../../../index";
+import { getConstructConstructor } from "../../../../index";
+import { IConstructComponent } from "../../_types/IConstructComponent";
 import { RawConstruct } from "../../_types/internal";
 import { Construct } from "../../construct";
 import { HydrationContext } from "./_util/util";
@@ -18,127 +18,173 @@ function promise<Context>(context: InteractionContext, promisedNode: Promise<[an
     (context.top.promises = context.top.promises ?? []).push(promisedNode);
 }
 
+const deriveSubjectValue: ConstructReductionConfig["deriveSubjectValue"] =
+          ([value], key: any, isAsync: boolean) => {
+              if (!isAsync) {
+                  return [key as string, value];
+              }
+              const resolveStep =
+                        () => (
+                            async function() {
+                                return [
+                                    key as string,
+                                    await value
+                                ];
+                            }
+                        )();
+
+              return Promise.resolve(resolveStep());
+          };
+
+const reduceStep: ConstructReductionConfig["reduceStep"] =
+          function(prevStep, currStep, isAsync) {
+              const [prevVals]               = prevStep;
+              const [currVal, activeContext] = currStep;
+
+              if (isAsync === null) {
+                  return [
+                      currVal,
+                      activeContext
+                  ];
+              }
+
+              const absorbConstruct =
+                        ([key, n]: [string, any]) => {
+                            const value =
+                                      Construct.isConstruct(n)
+                                      ? (<HydrationContext>activeContext).absorb?.(n)
+                                      : n;
+
+                            return [key, value];
+                        };
+
+              const absorbedNodes =
+                        currVal
+                            .map(absorbConstruct)
+                            .filter(nonNull);
+
+              const reducedElements =
+                        [
+                            ...prevVals ?? [],
+                            ...absorbedNodes
+                        ];
+
+              return [
+                  reducedElements,
+                  activeContext as HydrationContext
+              ];
+          };
+
+function getHydrationStepNormalizer<Context extends InteractionContext>() {
+    const stepNormalizer: ConstructReductionConfig<Context, any, any, string>["normalizeStep"] =
+              function(component, step) {
+                  const [entries, context] = step;
+
+                  // hydrate each value
+                  const hydratedEntries =
+                            entries
+                                .map(([key, value]) => {
+                                    const toHydrated = component.subjectEvaluators.hydrate;
+                                    const hydrated   = toHydrated ? toHydrated(value, context) : value;
+                                    return [key, hydrated];
+                                });
+
+                  return [hydratedEntries, context];
+              };
+    return stepNormalizer;
+}
+
+type ShallowHydrationOutput<Context extends HydrationContext = HydrationContext> = { node: Construct; promise: Promise<[any, Context]> };
+type ShallowHydrationInput<Unhydrated extends RawConstruct | any, Context extends HydrationContext = HydrationContext> = [node: Unhydrated, context: Context];
 
 /**
  * Hydrates a node without probing further.
  * Only takes the node's properties and
  *
- * @param node
+ * @param unhydrated
  * @param context
  */
-export function hydrateShallowInContext<Unhydrated extends RawConstruct | any, Context extends HydrationContext = HydrationContext>(
-    [node, context]: [node: Unhydrated, context: Context]
-): {
-    node: Construct;
-    promise: Promise<[any, Context]>
-} {
-    const reductionConfig =
-              completeConstructReductionConfig<Context>(
-                  {
-                      deriveSubject:
-                          ([value], key: any, isAsync: boolean) => {
-                              const resolveStep = (key: any, value: any) => (async () => [
-                                  key as string, await value
-                              ])();
-                              return !isAsync ? [
-                                  key as string, value
-                              ] : Promise.resolve(resolveStep(key, value));
-                          },
-                      reduceStep:
-                          function(prevStep, currStep, isAsync) {
-                              const [prevVals]               = prevStep;
-                              const [currVal, activeContext] = currStep;
+export function hydrateShallowInContext<Unhydrated extends RawConstruct | any, Context extends HydrationContext = HydrationContext>(input: ShallowHydrationInput<Unhydrated, Context>): ShallowHydrationOutput<Context> {
 
-                              if (isAsync === null) {
-                                  return [
-                                      currVal,
-                                      activeContext
-                                  ];
-                              }
+    const reductionConfig = fillReductionConfig<Context>(
+        {
+            deriveSubjectValue: deriveSubjectValue,
+            reduceStep:    reduceStep,
+            normalizeStep: getHydrationStepNormalizer()
+        } as ConstructReductionOptions<Context>
+    );
 
-                              const absorbConstruct =
-                                        ([key, n]: [string, any]) => {
-                                            const value =
-                                                      Construct.isConstruct(n)
-                                                      ? (<HydrationContext>activeContext).absorb?.(n)
-                                                      : n;
-
-                                            return [key, value];
-                                        };
-
-                              const absorbedNodes =
-                                        currVal
-                                            .map(absorbConstruct)
-                                            .filter(nonNull);
-
-                              const reducedElements =
-                                        [
-                                            ...prevVals ?? [],
-                                            ...absorbedNodes
-                                        ];
-
-                              return [
-                                  reducedElements,
-                                  activeContext as HydrationContext
-                              ];
-                          },
-                      normalizeStep:
-                          (
-                              prototype: ComponentDescription<Context>,
-                              [entries, context]
-                          ) => {
-                              return [
-                                  entries
-                                      .map(([key, value]) => {
-                                          const toHydrated = prototype.subjectEvaluators.hydrate;
-                                          const hydrated   = toHydrated ? toHydrated(value, context) : value;
-                                          return [
-                                              key, hydrated
-                                          ];
-                                      }),
-                                  context
-                              ];
-                          }
-                  } as ConstructReductionOptions<Context>
-              );
-
-    const doKey     = false;
-    const doPromise = false;
+    const doKey = false;
 
     try {
-        const Construct  = getConstructClass((node as RawConstruct)?.kind);
-        const components = Construct.components as ComponentDescription<Context>[];
+        const [unhydratedNode, context] = input;
 
-        const step =
-                  reduceConstructSync<Context>(
-                      node,
-                      reductionConfig,
-                      [[], context],
-                      components
-                  );
+        /**
+         * The constructor of the node kind
+         */
+        let Ctor: typeof Construct;
+        {
+            Ctor = getConstructConstructor((unhydratedNode as RawConstruct)?.kind);
+        }
 
-        const hydratedNode =
-                  new Construct(step[0]);
+        /**
+         * A node that's been initialized with its respective constructor
+         */
+        let hydratedNode: Construct;
+        {
+            /**
+             * A plain object with
+             */
+            let reducedNode;
+            {
+                const constructComponents = Ctor.components as IConstructComponent<Context>[];
+                const synchronousSeed     = [[], context] as [any[], Context];
+                (
+                    [reducedNode] =
+                        reduceConstructSync<Context>(
+                            unhydratedNode,
+                            reductionConfig,
+                            synchronousSeed,
+                            constructComponents
+                        )
+                );
+            }
+            hydratedNode = new Ctor(reducedNode);
+        }
 
-        const promisedNode =
-                  reduceConstructAsync<Context>(
-                      hydratedNode,
-                      reductionConfig,
-                      [null, context],
-                      components
-                  )
-                      .catch(
-                          e => {
-                              console.log(e);
-                              return [hydratedNode, context] as [Construct, Context];
-                          }
-                      );
+        /**
+         * The result of asynchronously processing a hydrated node
+         */
+        let promisedNode: any = null as any;
+        {
+            const _passiveCatch       = (e: any) => ((console.log(e), [hydratedNode, context] as [Construct, Context]));
+            const constructComponents = Ctor.components as IConstructComponent<Context>[];
+            const asynchronousSeed    = [null, context] as [null, Context];
+            if (context.doPromise) {
+                promisedNode =
+                    reduceConstructAsync<Context>(
+                        hydratedNode,
+                        reductionConfig,
+                        asynchronousSeed,
+                        constructComponents
+                    ).catch(_passiveCatch);
+            }
+        }
 
-        doKey && key(context, hydratedNode);
-        doPromise && promise(context, promisedNode);
+        /**
+         * The output from absorbing a node, if contextually applicable
+         */
+        let absorptionOutput: any;
+        {
+            doKey && key(context, hydratedNode);
+            context.doPromise && promise(context, promisedNode);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            absorptionOutput = context.absorb && context.absorb(hydratedNode);
+        }
 
-        context.absorb && context.absorb(hydratedNode);
-
+        /**
+         * Return the node and a promise to process the node some other way
+         */
         return {
             node:    hydratedNode,
             promise: promisedNode
