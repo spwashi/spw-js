@@ -1,7 +1,7 @@
 import { invisibleEvaluators } from '@constructs/ast/_abstract/component/_util/evaluators/invisible';
-import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { ConstructMetaComponent } from '@constructs/ast/_abstract/component/component';
 
-export const srcConstructComponent = new ConstructComponent({
+export const srcConstructComponent = new ConstructMetaComponent({
   name:              'src',
   subjectEvaluators: invisibleEvaluators,
 });

@@ -1,6 +1,6 @@
 import { BlockDelimiter } from '@constructs/ast';
 import { IConstructComponent } from '../../../_abstract/_types/IConstructComponent';
-import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { ConstructMetaComponent } from '@constructs/ast/_abstract/component/component';
 import { IConstructClass } from '@constructs/ast/_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
@@ -11,7 +11,7 @@ export class BlockExpression extends Expression<BlockExpressionKind> {
   static readonly kind: BlockExpressionKind = 'block';
 
   static components = {
-    items: new ConstructComponent({
+    items: new ConstructMetaComponent({
       name: 'items',
 
       valueSelector: (subject: any) => {
@@ -20,7 +20,7 @@ export class BlockExpression extends Expression<BlockExpressionKind> {
         return arr;
       },
 
-      locationGenerator: function* (items, ctxt) {
+      subjectGenerator: function* (items, ctxt) {
         const [head, ...tail] = Array.isArray(items) ? items : [items];
         yield [head, ctxt];
 

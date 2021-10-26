@@ -11,7 +11,7 @@ describe("Number", () => {
         context.doPromise       = true;
         const { node, promise } = hydrateNumber(raw, context);
 
-        NumberNode.components.value.asyncLocationGenerator = async function* (
+        NumberNode.components.value.asyncSubjectGenerator = async function* (
             _: any,
             context: InteractionContext | null
         ) {

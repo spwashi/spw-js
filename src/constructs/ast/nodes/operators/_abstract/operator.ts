@@ -1,5 +1,5 @@
 import { IConstructComponent } from '../../../_abstract/_types/IConstructComponent';
-import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { ConstructMetaComponent } from '@constructs/ast/_abstract/component/component';
 import { ConstructComponents } from '@constructs/ast/_abstract/construct';
 import { ConstructKind } from '@constructs/top/kinds';
 import { Node } from '@constructs/ast/nodes/_abstract/node';
@@ -11,13 +11,13 @@ import { Node } from '@constructs/ast/nodes/_abstract/node';
 export abstract class Operator<Kind extends ConstructKind = any> extends Node<Kind> {
   static components: ConstructComponents = {
     _fallback: null,
-    token: new ConstructComponent({
+    token: new ConstructMetaComponent({
       name: 'token',
       valueSelector: function (s) {
         return s?.token ?? this._fallback;
       },
     }),
-    label: new ConstructComponent({
+    label: new ConstructMetaComponent({
       name: 'label',
       subjectEvaluators: {
         stringify: function ([...l] = []) {

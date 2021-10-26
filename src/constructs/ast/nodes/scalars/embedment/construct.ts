@@ -2,7 +2,7 @@ import {
   IConstructComponent,
   ComponentSubjectEvaluatorObject,
 } from '../../../_abstract/_types/IConstructComponent';
-import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { ConstructMetaComponent } from '@constructs/ast/_abstract/component/component';
 import { EmbedmentNodeKind } from '@constructs/ast/nodes/scalars/embedment/__types';
 import { IConstructClass } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
@@ -15,13 +15,13 @@ export class EmbedmentNode extends Node<EmbedmentNodeKind> {
   static readonly kind: EmbedmentNodeKind = 'embedment';
 
   static components = {
-    open: new ConstructComponent({
+    open: new ConstructMetaComponent({
       name: 'open',
 
       valueSelector: () => '`',
     }),
 
-    body: new ConstructComponent({
+    body: new ConstructMetaComponent({
       name: 'body',
 
       subjectEvaluators: {
@@ -32,7 +32,7 @@ export class EmbedmentNode extends Node<EmbedmentNodeKind> {
       } as ComponentSubjectEvaluatorObject,
     }),
 
-    close: new ConstructComponent({
+    close: new ConstructMetaComponent({
       name: 'close',
 
       valueSelector: () => '`',

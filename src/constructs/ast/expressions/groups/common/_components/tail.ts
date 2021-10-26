@@ -1,5 +1,5 @@
 import { IConstructComponent } from '../../../../_abstract/_types/IConstructComponent';
-import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { ConstructMetaComponent } from '@constructs/ast/_abstract/component/component';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { CommonExpressionTailKind } from '@constructs/ast/expressions/groups/common/_components/__types';
@@ -12,8 +12,8 @@ export class CommonExpressionTail extends Expression<CommonExpressionTailKind> {
   static readonly kind: CommonExpressionTailKind = 'common_tail';
 
   static components = {
-    operator: new ConstructComponent({ name: 'operator' }),
-    item: new ConstructComponent({ name: 'item' }),
+    operator: new ConstructMetaComponent({ name: 'operator' }),
+    item: new ConstructMetaComponent({ name: 'item' }),
 
     *[Symbol.iterator](): Generator<IConstructComponent> {
       if (this.operator) yield this.operator;

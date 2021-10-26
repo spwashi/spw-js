@@ -1,5 +1,5 @@
 import { IConstructComponent } from '../../../_abstract/_types/IConstructComponent';
-import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { ConstructMetaComponent } from '@constructs/ast/_abstract/component/component';
 import { NumberNodeKind } from '@constructs/ast/nodes/scalars/number/__types';
 import { IConstructClass } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
@@ -12,7 +12,7 @@ export class NumberNode extends Node<NumberNodeKind> {
   static readonly kind: NumberNodeKind = 'number';
 
   static components = {
-    value: new ConstructComponent({
+    value: new ConstructMetaComponent({
       name: 'value',
       subjectEvaluators: {
         toHydrated: (s) => parseInt(s as any),

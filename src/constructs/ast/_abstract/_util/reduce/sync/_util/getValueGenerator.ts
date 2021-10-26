@@ -7,6 +7,6 @@ export default function getValueGenerator<Context extends InteractionContext, Su
   context: [any, Context][1],
 ): Generator<any, any, [any, Context]> {
   const component = description.valueSelector(subject);
-  const generator = description.locationGenerator(component, context);
+  const generator = description.subjectGenerator(component, context);
   return generator;
 }

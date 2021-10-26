@@ -1,9 +1,9 @@
 import { invisibleEvaluators } from '@constructs/ast/_abstract/component/_util/evaluators/invisible';
-import { ConstructComponent } from '../../component';
+import { ConstructMetaComponent } from '../../component';
 
-export const nodeScopeConstructComponent = new ConstructComponent({
+export const nodeScopeConstructComponent = new ConstructMetaComponent({
   name:              'nodeScope',
-  locationGenerator: function* (i, c) {
+  subjectGenerator: function* (i, c) {
     const outer = c?.parent?.nodeScope ?? null;
     if (!outer) return null;
 

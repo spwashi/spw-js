@@ -8,7 +8,7 @@ export default function getValueGeneratorAsync<Context extends InteractionContex
     context: Context
 ): AsyncGenerator {
     return (
-        component.asyncLocationGenerator?.(component.valueSelector(subject), context) ??
+        component.asyncSubjectGenerator?.(component.valueSelector(subject), context) ??
         (async function* () {
             yield;
         })()

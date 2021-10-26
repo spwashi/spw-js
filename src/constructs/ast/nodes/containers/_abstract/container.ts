@@ -1,5 +1,5 @@
 import { IConstructComponent } from "../../../_abstract/_types/IConstructComponent";
-import { ConstructComponent } from "@constructs/ast/_abstract/component/component";
+import { ConstructMetaComponent } from "@constructs/ast/_abstract/component/component";
 import { BlockExpression } from "@constructs/ast/expressions/groups/block/construct";
 import { ConstructKind } from "@constructs/top/kinds";
 import { Construct, ConstructComponents } from "../../../_abstract/construct";
@@ -34,13 +34,13 @@ export abstract class ContainerNode<Kind extends ConstructKind = ConstructKind,
     static readonly closeDelimiter: Delimiter = null;
 
     static components: ConstructComponents = {
-        open:  new ConstructComponent({
+        open:  new ConstructMetaComponent({
                                           name:              "open",
                                           _fallback:         null,
                                           valueSelector:     function(s) {
                                               return s?.open || this._fallback;
                                           },
-                                          locationGenerator: function* (component, ctxt) {
+                                          subjectGenerator: function* (component, ctxt) {
                                               if (!Array.isArray(component) && Construct.isConstruct(component)) {
                                                   yield [component, ctxt];
                                                   // if (component?.internal?.label) {
@@ -62,7 +62,7 @@ export abstract class ContainerNode<Kind extends ConstructKind = ConstructKind,
                                               }
                                           }
                                       }),
-        body:  new ConstructComponent({
+        body:  new ConstructMetaComponent({
                                           name:          "body",
                                           valueSelector: function(s) {
                                               let body = s?.body;
@@ -72,7 +72,7 @@ export abstract class ContainerNode<Kind extends ConstructKind = ConstructKind,
                                               return body || this._fallback;
                                           }
                                       }),
-        close: new ConstructComponent({
+        close: new ConstructMetaComponent({
                                           _fallback:     null,
                                           name:          "close",
                                           valueSelector: function(s) {

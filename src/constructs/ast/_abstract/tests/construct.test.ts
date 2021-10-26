@@ -1,5 +1,5 @@
 import { IConstructComponent } from '../_types/IConstructComponent';
-import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { ConstructMetaComponent } from '@constructs/ast/_abstract/component/component';
 import * as faker from 'faker';
 import { Construct, ConstructComponents } from '../construct';
 
@@ -22,10 +22,10 @@ describe('Constructs', () => {
     const Example = class extends Construct {
       static components: ConstructComponents = {
         *[Symbol.iterator](): Iterator<IConstructComponent> {
-          yield new ConstructComponent({
+          yield new ConstructMetaComponent({
             name: randName_1,
           });
-          yield new ConstructComponent({
+          yield new ConstructMetaComponent({
             name:          randName_2,
             valueSelector: () => '!!!',
           });

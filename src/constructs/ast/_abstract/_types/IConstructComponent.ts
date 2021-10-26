@@ -1,6 +1,6 @@
-import { AsyncLocationGenerator } from "@constructs/ast/_abstract/_types/interaction/async/asyncLocationGenerator";
+import { AsyncSubjectGenerator } from "@constructs/ast/_abstract/_types/interaction/async/asyncSubjectGenerator";
 import { InteractionContext } from "@constructs/ast/_abstract/_types/interaction/context/interactionContext";
-import { ComponentLocationGenerator } from "@constructs/ast/_abstract/_types/interaction/sync/componentLocationGenerator";
+import { ComponentSubjectGenerator } from "@constructs/ast/_abstract/_types/interaction/sync/componentSubjectGenerator";
 import { RawConstruct } from "@constructs/ast/_abstract/_types/internal";
 
 type SerializationReducer<Intermediate,
@@ -52,8 +52,8 @@ export type IConstructComponent<Context extends InteractionContext = Interaction
     // Function or identifier for a component
     valueSelector: (s: Owner) => Component | any;
     // Generator that produces elements of a component
-    locationGenerator: ComponentLocationGenerator<SubComponent | any, Context>;
-    asyncLocationGenerator: AsyncLocationGenerator<SubComponent | any, Context> | null;
+    subjectGenerator: ComponentSubjectGenerator<SubComponent | any, Context>;
+    asyncSubjectGenerator: AsyncSubjectGenerator<SubComponent | any, Context> | null;
     // Object that contains instructions for how to evaluate a component
     subjectEvaluators: ComponentSubjectEvaluatorObject<SubComponent, SubComponentTupleOrList>;
     _fallback?: any;

@@ -2,7 +2,7 @@ import {
   IConstructComponent,
   ComponentSubjectEvaluatorObject,
 } from '../../../_abstract/_types/IConstructComponent';
-import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { ConstructMetaComponent } from '@constructs/ast/_abstract/component/component';
 import { StringNodeKind } from '@constructs/ast/nodes/scalars/string/__types';
 import { IConstructClass } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
@@ -15,13 +15,13 @@ export class StringNode extends Node<StringNodeKind> {
   static readonly kind: StringNodeKind = 'string';
 
   static components = {
-    open: new ConstructComponent({
+    open: new ConstructMetaComponent({
       name: 'open',
 
       valueSelector: () => '"',
     }),
 
-    body: new ConstructComponent({
+    body: new ConstructMetaComponent({
       name: 'body',
 
       subjectEvaluators: {
@@ -32,7 +32,7 @@ export class StringNode extends Node<StringNodeKind> {
       } as ComponentSubjectEvaluatorObject,
     }),
 
-    close: new ConstructComponent({
+    close: new ConstructMetaComponent({
       name: 'close',
 
       valueSelector: () => '"',

@@ -1,7 +1,7 @@
-import { IConstructComponent, ComponentSubjectEvaluatorObject } from "../_types/IConstructComponent";
-import { AsyncLocationGenerator } from "@constructs/ast/_abstract/_types/interaction/async/asyncLocationGenerator";
+import { AsyncSubjectGenerator } from "@constructs/ast/_abstract/_types/interaction/async/asyncSubjectGenerator";
 import { InteractionContext } from "@constructs/ast/_abstract/_types/interaction/context/interactionContext";
-import { ComponentLocationGenerator } from "@constructs/ast/_abstract/_types/interaction/sync/componentLocationGenerator";
+import { ComponentSubjectGenerator } from "@constructs/ast/_abstract/_types/interaction/sync/componentSubjectGenerator";
+import { ComponentSubjectEvaluatorObject, IConstructComponent } from "../_types/IConstructComponent";
 import { RawConstruct } from "../_types/internal";
 
 const defaultEvaluator = {
@@ -43,7 +43,20 @@ export type ConstructComponentProps =
         name: string;
     };
 
-export class ConstructComponent<Context extends InteractionContext = InteractionContext,
+/**
+ * A Construct Component is something that composes a fragment of a construct.
+ *
+ * This is a Meta class for those components however they appear in the subject's deriving object
+ *
+ * ConstructMetaComponents are iterated over in the Reduction process,
+ *  where they generate Subjects based on the Construct under Reduction
+ *
+ * The "value" of the resultant ConstructComponent might be
+ *   - another Construct,
+ *   - a Raw Value,
+ *   - an array of Constructs or Raw Values.
+ */
+export class ConstructMetaComponent<Context extends InteractionContext = InteractionContext,
     Component extends any = any,
     SubComponentTupleOrList extends SubComponent[] = any[],
     Owner extends any = any,
@@ -53,21 +66,24 @@ export class ConstructComponent<Context extends InteractionContext = Interaction
 
     name = "";
 
-    asyncLocationGenerator: AsyncLocationGenerator<any, Context> | null = null;
+    asyncSubjectGenerator: AsyncSubjectGenerator<any, Context> | null = null;
 
     constructor(config: ConstructComponentProps) {
         const selector   = makeSelector(config);
         const evaluators = makeEvaluators(config) as ComponentSubjectEvaluatorObject;
 
-        Object.assign(this,
-                      {
-                          valueSelector: selector,
-                          ...config,
-                          subjectEvaluators: evaluators
-                      } as Partial<this>);
+        // todo: I hate this
+        Object.assign(
+            this,
+            {
+                valueSelector: selector,
+                ...config,
+                subjectEvaluators: evaluators
+            } as Partial<this>
+        );
     }
 
-    locationGenerator: ComponentLocationGenerator<any, Context> = function* (
+    subjectGenerator: ComponentSubjectGenerator<any, Context> = function* (
         component: SubComponent,
         ctxt: Context | null
     ) {

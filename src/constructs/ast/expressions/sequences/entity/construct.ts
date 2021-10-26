@@ -1,5 +1,5 @@
 import { IConstructComponent } from '../../../_abstract/_types/IConstructComponent';
-import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { ConstructMetaComponent } from '@constructs/ast/_abstract/component/component';
 import { IConstructClass } from '@constructs/ast/_abstract/construct';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
@@ -10,8 +10,8 @@ export class EntityExpression extends Expression<EntityExpressionKind> {
   static readonly kind: EntityExpressionKind = 'entity_expression';
 
   static components = {
-    concept: new ConstructComponent({ name: 'concept' }),
-    anchor: new ConstructComponent({ name: 'anchor' }),
+    concept: new ConstructMetaComponent({ name: 'concept' }),
+    anchor: new ConstructMetaComponent({ name: 'anchor' }),
 
     *[Symbol.iterator](): Generator<IConstructComponent> {
       yield this.concept;

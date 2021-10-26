@@ -2,7 +2,7 @@ import {
   IConstructComponent,
   ComponentSubjectEvaluatorObject,
 } from '../../../_abstract/_types/IConstructComponent';
-import { ConstructComponent } from '@constructs/ast/_abstract/component/component';
+import { ConstructMetaComponent } from '@constructs/ast/_abstract/component/component';
 import { staticImplements } from '@constructs/ast/_util/typescript/staticImplements';
 import { Expression } from '@constructs/ast/expressions/_abstract/expression';
 import { PhraseExpressionKind } from '@constructs/ast/expressions/groups/phrase/__types';
@@ -13,7 +13,7 @@ export class PhraseExpression extends Expression<PhraseExpressionKind> {
   static readonly kind = 'phrase_expression';
 
   static components = {
-    items: new ConstructComponent({
+    items: new ConstructMetaComponent({
       name: 'items',
       subjectEvaluators: {
         stringify: (s) =>
