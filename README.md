@@ -1,121 +1,89 @@
-# Spw!
-
-(it's pronounced "swoop")
-
-## What's that?
-
-Spw is a declarative, subject-oriented, informal logic programming language that evolved out of a need to eloquently describe & reference vast amounts of multi-modal data.
-
-### Requirements
-
-1. It should provide concise methods to describe the relationship between one concept and another
-
-   a. The output of execution should be specific and concise relative to the context of interpretation
-2. It should be flexible
-
-   a. One concept may be referenced by multiple labels
-    1. (e.g. "Sam" as shorthand for "Sam Washington")
-
-   b. Concepts have context-dependent features or behaviors
-    1. (e.g. an egg is not runny if it's been boiled)
-
-Turns out, improving what already exists in this space (e.g. [Prolog](https://www.swi-prolog.org/), Graph Databases like [Neo4j](https://neo4j.com/), and [Wikipedia](https://www.wikipedia.org/)) is a doozy of a project. Fun!
-
-### Go on...
-
-Nowadays, this is mostly an exploration of what it'd take to write a programming language (I'm pretty excited to dive more into set and graph theory with it, though).
-
-When it started, I was in college working on growing a student organization I started called Student Body for Meaningful Education (SBME).
-The main idea behind SBME was that **it'd be neat to crowdsource education in Uni**, and a lot of people want to contribute but don't have a centralized place to.
-
-As it turns out, the hard part isn't finding people who want to improve education strategies, it's coordinating an effort so broad.
-
-#### Enter Spw.
-
-Originally a content tagging scheme, Spw's syntax evolved to express nuances I felt were necessary to synchronize diverse learning opens or strategies.
+# Spw
 
 
-## How Spw works
+## About
 
-### Tentative:
-The runtime ended up getting a lot more complicated than I thought it would, and I think the "end" is some sort of graph database.
+Spw (pronounced "swoop") is a programming language. It can be used to compare ideas across dimensions
 
-Also, I've been playing around with SWI-Prolog and appreciate its style of querying. Worth looking into.
+### More info
+I originally meant for the language to make it easier to synchronize meaning between two people with different perspectives. I still think it can be very powerful towards that, but for very different reasons. 
 
-### Now:
-(todo)
+Ultimately, communication is more about style than language.
 
-## Atoms, Blocks, Transformations, and Operators
+So now Spw is more of a programming language, and for now my plan is to leave the runtime as an exercise for whomever is interested. 
 
-##### Atoms (similar to variable/primitive)
+I'll be working on making the constructs easy to navigate, and I'll come up with a few "canonical" rules to make the problem space a bit smaller.
 
-- Anchors
-    - purpose
-        - A label representing a concept
-    - examples
-        - `anchor`
-        - `label`
-        - `noun`
-        - `ball`
-        - `Sam`
-- Phrases
-    - purpose
-        - A collection of labels
-    - examples
-        - `this is a phrase`
-        - `phrases are labels composed of multiple anchors`
-- Strings
-    - definition
-        - A collection of labels
-            - words have no implicit connection to the semantic context of the string unless explicitly linked
-        - Strings are like phrases, but punctuation is permitted. Unlike phrases, words in strings have no implicit connection to the semantic context of the collection they're a part of.
-    - examples
-        - `"string"`,
-        - `"strings have punctuation? Sometimes! Perhaps formatting is what they'll be used for."`
-        - `"It's not assumed that each word represents an anchor (unless the {anchor} is interpolated)"`
-        -
-        ```
-        "{interpolated anchors} can be described or linked to a semantic context via {description}".
-              [
-                  <interpolated anchors> => 
-                      words or phrases that depend on the context assumed or presented by the string
-        
-                  <description> => 
-                      the square brackets following the period after the string
-              ]
-        ```
 
-##### Blocks (similar to object/array/set)
+## High Level Overview
 
-- Essences
-  - Description
-    - Represent a collection of concepts.
-    - If directly attached to an atom, they specify "which version" of that atom we're referencing. 
-    - If preceded with a dot (.), they describe an atom.
-    - The order of concepts in an essence is assumed to be based on salience relative to the essence's anchor and domain of attachment
-    
-- Domains
-    - purpose
-        - Specify context or describe implementation
-        - Describe behavior
-        - Similar to Essence but order is preserved
-    - examples
-        - `{_context concept implementation_}`
-        - ```
-          {_context
-              open => close 
-          instance_}
-          ```
-        - ```
-          {_paper
-              &[
-                    circle[yellow]          => sun 
-                    rectangle[blue]         => sky           
-                    { blob[white] plural_}  => clouds
-               ]
-              rectangle[green]          => grass 
-          <image.[sunny day]>_}
-          ```
-##### Evaluation (similar to function)
+The constructs fall into four main categories:
+- Scalars
+- Containers
+- Operators
+- Expressions
 
-##### Transport (similar to assignment/control flow statement)
+### Containers
+
+Containers are constructs that have three parts:
+- An opening Delimiter
+- A body (usually a Block Node)
+- A closing Delimiter
+
+### Scalars
+
+A scalar is a construct that is not composed of smaller parts.
+
+There are currently three Scalars:
+- Anchor Nodes
+- Number Nodes
+- Embedment Nodes
+
+### Near Scalars
+
+A near scalar is a construct that I just realized is (or will be) composed of smaller parts.
+
+There are currently two near-scalars:
+- Phrase Nodes
+- String Nodes
+
+### Operators
+
+Operators fall into two main categories:
+- Pragmatic Operators
+- Semantic Operators
+
+#### Pragmatic Operators
+
+Pragmatic Operators mutate the identity of the Subject Under Evaluation (SUE).
+
+##### Rules
+- The Subject Under Evaluation is the Active Expression, or a Node Under Reduction.
+- The Subject Under Evaluation is evaluated after Reducing each Semantic Operator in a Node or Expression.
+
+#### Semantic Operators
+
+Semantic Operators alter the Context of Evaluation (COE).
+
+The Context of Evaluation is a collection of identities available in processing the current Subject Under Evaluation.
+
+The semantic operators are:
+- the Block Delimiting Operator
+- the Common Delimiting Operator
+- the Node Delimiting Operator
+
+###### Rules
+- Block Delimiting Operators create a new Context of Evaluation that extends from its nearest parent.
+- The Context of Evaluation is preserved amongst items in the same Common Operation or the same Node.
+
+
+
+### Expressions
+
+Expressions are constructs whose constituent Nodes must be Reduced before Evaluation.
+
+##### Rules
+- When an Expression is Evaluated, it becomes the Active Expression.
+- When the Evaluation of an Expression is complete, it is no longer the Active Expression.
+- Active Expressions are represented as a stack.
+- Deactivation of an Active Expression results in the Reactivation of the previous Active Expression.
