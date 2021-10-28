@@ -9,7 +9,7 @@ import {
   StringCombinator,
   stringLike,
 } from '@spwashi/language/parsers/grammar/combinators';
-import { anchorNode } from '../../scalars/anchor/ref';
+import { identifierNode } from '../../scalars/identifier/ref';
 
 function init(token: StringCombinator, ruleName: string, nodeName: string, doLabel = true): Rule {
   const _labeledTokenAction =
@@ -23,7 +23,7 @@ function init(token: StringCombinator, ruleName: string, nodeName: string, doLab
 
   const labeledToken = !doLabel
     ? token
-    : sequenceOf([token.named('token'), stringLike('_'), anchorNode.named('label')]).withAction(
+    : sequenceOf([token.named('token'), stringLike('_'), identifierNode.named('label')]).withAction(
         _labeledTokenAction,
       );
 

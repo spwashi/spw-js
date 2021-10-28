@@ -10,9 +10,9 @@ const _concept = {
   name: components.concept.name,
   pattern: concept.named(components.concept.name),
 };
-const _anchor = {
-  name: components.anchor.name,
-  pattern: anyOf([scalar]).named(components.anchor.name),
+const _identifier = {
+  name: components.identifier.name,
+  pattern: anyOf([scalar]).named(components.identifier.name),
 };
 const __ = {
   name: 'space',
@@ -22,13 +22,13 @@ const __ = {
 const action = `
   const expression = {
     kind: '${EntityExpression.kind}',
-    ${_anchor.name}: typeof ${_anchor.name} !== 'undefined' ? ${_anchor.name} : undefined,
+    ${_identifier.name}: typeof ${_identifier.name} !== 'undefined' ? ${_identifier.name} : undefined,
     ${_concept.name}: typeof ${_concept.name} !== 'undefined' ? ${_concept.name} : undefined
   };
   return toConstruct(expression)
 `;
 export const pattern = anyOf([
-  sequenceOf([_concept, __, _anchor].map(flat)).withAction(action),
+  sequenceOf([_concept, __, _identifier].map(flat)).withAction(action),
   sequenceOf([_concept].map(flat)).withAction(action),
-  sequenceOf([_anchor].map(flat)).withAction(action),
+  sequenceOf([_identifier].map(flat)).withAction(action),
 ]);

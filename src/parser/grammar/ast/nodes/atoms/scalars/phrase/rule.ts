@@ -3,20 +3,20 @@ import { numberNode } from '@grammar/ast/nodes/atoms/scalars/number/ref';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import { anyOf, oneOrMoreOf, sequenceOf } from '@spwashi/language/parsers/grammar/combinators';
 import { spaceTab } from '../../../../../utility/space/whitespace.patterns';
-import { anchorNode } from '../anchor/ref';
+import { identifierNode } from '../identifier/ref';
 import { ruleName } from './ref';
 
-const head = anyOf([anchorNode, numberNode]);
+const head = anyOf([identifierNode, numberNode]);
 
 const separator = oneOrMoreOf(spaceTab);
 
 const _tailItemsAction =
   // language=JavaScript
-  ` return anchor `;
+  ` return identifier `;
 
 const tailItems = sequenceOf([
   separator,
-  anyOf([anchorNode, numberNode]).named('anchor'),
+  anyOf([identifierNode, numberNode]).named('identifier'),
 ]).withAction(_tailItemsAction);
 
 const tailSequence = oneOrMoreOf(tailItems);

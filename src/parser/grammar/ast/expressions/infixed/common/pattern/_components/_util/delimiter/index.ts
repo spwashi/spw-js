@@ -1,4 +1,4 @@
-import { commonDelimiter } from '@grammar/ast/nodes/atoms/operators/delimiters/common_delimiter/ref';
+import { commonDelimiter } from '@grammar/ast/nodes/atoms/operators/semantic/common_delimiter/ref';
 
 export const delimiterComponent = {
   name: 'delimiter',

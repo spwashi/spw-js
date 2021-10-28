@@ -1,15 +1,15 @@
 import { IConstructComponent } from '../../../_abstract/_types/IConstructComponent';
 import { ConstructMetaComponent } from '@constructs/ast/_abstract/component/component';
-import { AnchorNodeKind } from '@constructs/ast/nodes/scalars/anchor/__types';
+import { IdentifierNodeKind } from '@constructs/ast/nodes/scalars/identifier/__types';
 import { IConstructClass } from '../../../_abstract/construct';
 import { staticImplements } from '../../../_util/typescript/staticImplements';
 import { Node } from '../../_abstract/node';
 
-type StaticType = IConstructClass<AnchorNodeKind>;
+type StaticType = IConstructClass<IdentifierNodeKind>;
 
 @staticImplements<StaticType>()
-export class AnchorNode extends Node<AnchorNodeKind> {
-  static readonly kind: AnchorNodeKind = 'anchor';
+export class IdentifierNode extends Node<IdentifierNodeKind> {
+  static readonly kind: IdentifierNodeKind = 'identifier';
 
   static components = {
     label: new ConstructMetaComponent({
@@ -24,7 +24,7 @@ export class AnchorNode extends Node<AnchorNodeKind> {
     },
   };
 
-  static isAnchorNode(o: unknown): o is AnchorNode {
-    return (o as AnchorNode)?.kind === this.kind;
+  static isIdentifierNode(o: unknown): o is IdentifierNode {
+    return (o as IdentifierNode)?.kind === this.kind;
   }
 }

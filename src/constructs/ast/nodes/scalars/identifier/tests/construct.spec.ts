@@ -1,16 +1,16 @@
-import { AnchorNode } from '@constructs/ast';
+import { IdentifierNode } from '@constructs/ast';
 import {
   getAllNodes,
   getSalientNode,
 } from '@constructs/runtime/_util/initializers/runtime/initRuntimeWithSrc';
 
-describe('AnchorNodes', () => {
+describe('IdentifierNodes', () => {
   it('Can start with an character of the alphabet and consist of alphanumeric characters, underscores, and dashes', async () => {
     try {
       const src = 'step';
       const all = getAllNodes(src);
       const last = getSalientNode(src);
-      expect(AnchorNode.isAnchorNode(last)).toBeTruthy();
+      expect(IdentifierNode.isIdentifierNode(last)).toBeTruthy();
       expect(all.length).toEqual(1);
     } catch (e) {
       throw new Error('Parsing Error');
@@ -29,7 +29,7 @@ describe('AnchorNodes', () => {
       const cache = {};
       const all = getAllNodes(src, cache);
       const last = getSalientNode(src, cache);
-      expect(last?.kind).toEqual('anchor');
+      expect(last?.kind).toEqual('identifier');
       expect(last?.key).toEqual(src);
       expect(all.length).toEqual(l);
     };

@@ -4,7 +4,7 @@ import { Delimiter } from '@constructs/ast/nodes/operators/semantic/_abstract/de
 import {
   BlockDelimiterKind,
   BlockDelimiterToken,
-} from '@constructs/ast/nodes/operators/semantic/block/__types';
+} from '@constructs/ast/nodes/operators/semantic/block_delimiter/__types';
 import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
 
 @staticImplements<IConstructClass<BlockDelimiterKind>>()

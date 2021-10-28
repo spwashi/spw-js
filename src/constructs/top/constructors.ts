@@ -62,7 +62,7 @@ import {
 } from '../ast/expressions';
 import {
   AggregationOperator,
-  AnchorNode,
+  IdentifierNode,
   AscentOperator,
   BindingOperator,
   BlockDelimiter,
@@ -143,7 +143,7 @@ const containerConstructors = {
 } as { [K in ContainerKind]: typeof Construct & IConstructClass<K> };
 
 const scalarConstructors = {
-  anchor: AnchorNode,
+  identifier: IdentifierNode,
   number: NumberNode,
   phrase: PhraseNode,
   string: StringNode,

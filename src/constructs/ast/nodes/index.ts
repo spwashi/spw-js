@@ -1,4 +1,4 @@
-export { AnchorNode } from './scalars/anchor/construct';
+export { IdentifierNode } from './scalars/identifier/construct';
 export { NumberNode } from './scalars/number/construct';
 export { StringNode } from './scalars/string/construct';
 export { EmbedmentNode } from './scalars/embedment/construct';

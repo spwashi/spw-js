@@ -5,8 +5,8 @@ import { EntityExpression } from '../construct';
 
 describe('EntityExpression', () => {
   it('can be parsed', async (done) => {
-    const runtime = await initRuntimeWithSrc(`<conceptual_anchor>name`);
-    const last = getSalientNode(`<conceptual_anchor>name`);
+    const runtime = await initRuntimeWithSrc(`<conceptual_identifier>name`);
+    const last = getSalientNode(`<conceptual_identifier>name`);
     const all = selectAllNodesFromRuntime(runtime);
 
     if (!EntityExpression.isEntityExpression(last)) {
@@ -18,7 +18,7 @@ describe('EntityExpression', () => {
     }
 
     expect(last?.kind).toEqual(EntityExpression.kind);
-    expect(last?.key).toEqual('<conceptual_anchor>name');
+    expect(last?.key).toEqual('<conceptual_identifier>name');
     expect(all.length).toEqual(7);
 
     done();

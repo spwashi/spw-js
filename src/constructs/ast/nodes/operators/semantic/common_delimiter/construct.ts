@@ -4,7 +4,7 @@ import { Delimiter } from '@constructs/ast/nodes/operators/semantic/_abstract/de
 import {
   CommonDelimiterToken,
   CommonDelimiterKind,
-} from '@constructs/ast/nodes/operators/semantic/common/__types';
+} from '@constructs/ast/nodes/operators/semantic/common_delimiter/__types';
 import { ConstructComponents, IConstructClass } from '../../../../_abstract/construct';
 
 @staticImplements<IConstructClass<CommonDelimiterKind>>()

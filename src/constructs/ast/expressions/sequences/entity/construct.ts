@@ -11,11 +11,11 @@ export class EntityExpression extends Expression<EntityExpressionKind> {
 
   static components = {
     concept: new ConstructMetaComponent({ name: 'concept' }),
-    anchor: new ConstructMetaComponent({ name: 'anchor' }),
+    identifier: new ConstructMetaComponent({ name: 'identifier' }),
 
     *[Symbol.iterator](): Generator<IConstructComponent> {
       yield this.concept;
-      yield this.anchor;
+      yield this.identifier;
     },
   };
 

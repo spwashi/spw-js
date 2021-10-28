@@ -1,4 +1,4 @@
-import { AnchorNode } from '@constructs/ast';
+import { IdentifierNode } from '@constructs/ast';
 import { Rule } from '@spwashi/language/parsers/grammar';
 import {
   anyOf,
@@ -10,7 +10,7 @@ import {
 } from '@spwashi/language/parsers/grammar/combinators';
 import { ruleName } from './ref';
 
-const anchorPattern2 = sequenceOf([
+const identifierPattern2 = sequenceOf([
   oneOrMoreOf(regExpLike('a-zA-Z')).named('head'),
   zeroOrMoreOf(regExpLike('a-zA-Z\\d')).named('tail'),
 ])
@@ -26,29 +26,29 @@ const anchorPattern2 = sequenceOf([
   );
 
 // language=JavaScript
-const _anchorPattern1Action = `
+const _identifierPattern1Action = `
   return [
     // ...head, 
     ...tail
   ].join("");
 `;
-const anchorPattern1 = sequenceOf([
+const identifierPattern1 = sequenceOf([
   // oneOrMoreOf(regExpLike('_a-zA-Z')).named('head'),
   oneOrMoreOf(
     sequenceOf([oneOrMoreOf(anyOf([regExpLike('a-zA-Z\\d'), stringLike('_')])).named('chars')])
       // language=JavaScript
       .withAction(`return chars.join('')`),
   ).named('tail'),
-]).withAction(_anchorPattern1Action);
+]).withAction(_identifierPattern1Action);
 
-const anchorComponent = sequenceOf([anyOf([anchorPattern1, anchorPattern2]).named('anchor')]);
+const identifierComponent = sequenceOf([anyOf([identifierPattern1, identifierPattern2]).named('identifier')]);
 
 // language=JavaScript
 const _action = `
   return toConstruct({
-                       kind: "${AnchorNode.kind}",
-                       ${AnchorNode.components.label.name}: anchor,
+                       kind: "${IdentifierNode.kind}",
+                       ${IdentifierNode.components.label.name}: identifier,
                      });
 `;
 
-export const anchorNodeRule = new Rule(ruleName, anchorComponent, _action);
+export const identifierNodeRule = new Rule(ruleName, identifierComponent, _action);

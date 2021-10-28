@@ -1,4 +1,4 @@
-import { anchorNodeRule } from '../../anchor/rule';
+import { identifierNodeRule } from '../../identifier/rule';
 import { embedmentNodeRule } from '../../embedment/rule';
 import { numberRule } from '../../number/rule';
 import { phraseNodeRule } from '../../phrase/rule';
@@ -6,7 +6,7 @@ import { stringNodeRule } from '../../string/rule';
 import { scalarRule } from '../scalar.rule';
 
 export const scalarRules = [
-  anchorNodeRule,
+  identifierNodeRule,
   embedmentNodeRule,
   numberRule,
   phraseNodeRule,

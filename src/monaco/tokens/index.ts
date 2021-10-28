@@ -30,17 +30,17 @@ import { EssenceIdentityOperator } from '@constructs/ast/nodes/containers/essenc
 import { EssenceSchemeOperator } from '@constructs/ast/nodes/containers/essence/_components/scheme/construct';
 import { LocationIdentityOperator } from '@constructs/ast/nodes/containers/location/_components/identity/construct';
 import { LocationSchemeOperator } from '@constructs/ast/nodes/containers/location/_components/scheme/construct';
-import { BlockDelimiter } from '@constructs/ast/nodes/operators/semantic/block/construct';
-import { CommonDelimiter } from '@constructs/ast/nodes/operators/semantic/common/construct';
-import { NodeDelimiter } from '@constructs/ast/nodes/operators/semantic/node/construct';
+import { BlockDelimiter } from '@constructs/ast/nodes/operators/semantic/block_delimiter/construct';
+import { CommonDelimiter } from '@constructs/ast/nodes/operators/semantic/common_delimiter/construct';
+import { NodeDelimiter } from '@constructs/ast/nodes/operators/semantic/node_delimiter/construct';
 
 export const tok_whitespace = 'whitespace';
 
 export const rn_node = 'node' || Node.kind;
-export const rn_anchorNode = 'node_anchor';
+export const rn_identifierNode = 'node_identifier';
 export const rn_container = 'container' || ContainerNode.kind;
 
-export const tok_anchorNode = 'anchor';
+export const tok_identifierNode = 'identifier';
 
 // string
 

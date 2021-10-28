@@ -1,4 +1,4 @@
-import { blockDelimiter } from '@grammar/ast/nodes/atoms/operators/delimiters/block_delimiter/ref';
+import { blockDelimiter } from '@grammar/ast/nodes/atoms/operators/semantic/block_delimiter/ref';
 
 export const delimiterComponent = {
   name: 'delimiter',

@@ -70,17 +70,17 @@ import { ReductionOperatorKind } from '@constructs/ast/nodes/operators/pragmatic
 import { ReferenceOperatorKind } from '@constructs/ast/nodes/operators/pragmatic/single-token/reference/__types';
 import { RelationOperatorKind } from '@constructs/ast/nodes/operators/pragmatic/single-token/relation/__types';
 import { ValueOperatorKind } from '@constructs/ast/nodes/operators/pragmatic/single-token/value/__types';
-import { BlockDelimiterKind } from '@constructs/ast/nodes/operators/semantic/block/__types';
-import { CommonDelimiterKind } from '@constructs/ast/nodes/operators/semantic/common/__types';
-import { NodeDelimterKind } from '@constructs/ast/nodes/operators/semantic/node/__types';
-import { AnchorNodeKind } from '@constructs/ast/nodes/scalars/anchor/__types';
+import { BlockDelimiterKind } from '@constructs/ast/nodes/operators/semantic/block_delimiter/__types';
+import { CommonDelimiterKind } from '@constructs/ast/nodes/operators/semantic/common_delimiter/__types';
+import { NodeDelimterKind } from '@constructs/ast/nodes/operators/semantic/node_delimiter/__types';
+import { IdentifierNodeKind } from '@constructs/ast/nodes/scalars/identifier/__types';
 import { EmbedmentNodeKind } from '@constructs/ast/nodes/scalars/embedment/__types';
 import { NumberNodeKind } from '@constructs/ast/nodes/scalars/number/__types';
 import { PhraseNodeKind } from '@constructs/ast/nodes/scalars/phrase/__types';
 import { StringNodeKind } from '@constructs/ast/nodes/scalars/string/__types';
 
 export type ScalarKind =
-  | AnchorNodeKind
+  | IdentifierNodeKind
   | PhraseNodeKind
   | NumberNodeKind
   | StringNodeKind

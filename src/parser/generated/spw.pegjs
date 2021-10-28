@@ -117,14 +117,14 @@ InstanceExpression
 	/ EmbedmentNode
 	/ StringNode
 	/ NumberNode
-	/ AnchorNode
+	/ IdentifierNode
 	/ Concept
 	/ Location
 	/ Domain
 	/ Essence
 
-AnchorNode "AnchorNode"= 
-anchor:(
+IdentifierNode "IdentifierNode"=
+identifier:(
 	(tail:(chars:(
 						[a-zA-Z0-9]
 							/ "_"
@@ -138,8 +138,8 @@ anchor:(
 	)
 {
 	return toConstruct({
-	                     kind: "anchor",
-	                     label: anchor,
+	                     kind: "identifier",
+	                     label: identifier,
 	                   });
 }
 
@@ -177,17 +177,17 @@ num:(
 
 PhraseNode "PhraseNode"= 
 phrase:(head:(
-		AnchorNode
+		IdentifierNode
 			/ NumberNode
 		)
 		tail:((
 					" "
 						/ [\t]
 					)+
-				anchor:(
-				AnchorNode
+				identifier:(
+				IdentifierNode
 					/ NumberNode
-				) {return anchor;})+ {const items=[head,...tail];return items;})
+				) {return identifier;})+ {const items=[head,...tail];return items;})
 {
 	var makeArray = c => Array.isArray(c) ? c : [c];
 	/** @var {Array} phrase*/
@@ -204,7 +204,7 @@ PhraseNode
 	/ EmbedmentNode
 	/ StringNode
 	/ NumberNode
-	/ AnchorNode
+	/ IdentifierNode
 
 StringNode "StringNode"= 
 string:(
@@ -259,7 +259,7 @@ AggregationOperator "AggregationOperator"=
 _operatorComponents:(
 	(token:"+"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "+"
 	)
 {
@@ -273,7 +273,7 @@ AscentOperator "AscentOperator"=
 _operatorComponents:(
 	(token:"^"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "^"
 	)
 {
@@ -287,7 +287,7 @@ BindingOperator "BindingOperator"=
 _operatorComponents:(
 	(token:":"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ ":"
 	)
 {
@@ -301,7 +301,7 @@ BranchOperator "BranchOperator"=
 _operatorComponents:(
 	(token:"|"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "|"
 	)
 {
@@ -315,7 +315,7 @@ ChannelOperator "ChannelOperator"=
 _operatorComponents:(
 	(token:"#"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "#"
 	)
 {
@@ -329,7 +329,7 @@ DescentOperator "DescentOperator"=
 _operatorComponents:(
 	(token:"."
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "."
 	)
 {
@@ -343,7 +343,7 @@ DirectionOperator "DirectionOperator"=
 _operatorComponents:(
 	(token:".-"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ ".-"
 	)
 {
@@ -357,7 +357,7 @@ EvaluationOperator "EvaluationOperator"=
 _operatorComponents:(
 	(token:"?"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "?"
 	)
 {
@@ -371,7 +371,7 @@ InvocationOperator "InvocationOperator"=
 _operatorComponents:(
 	(token:"~"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "~"
 	)
 {
@@ -385,7 +385,7 @@ PerformanceOperator "PerformanceOperator"=
 _operatorComponents:(
 	(token:"!"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "!"
 	)
 {
@@ -399,7 +399,7 @@ PerspectiveOperator "PerspectiveOperator"=
 _operatorComponents:(
 	(token:"@"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "@"
 	)
 {
@@ -413,7 +413,7 @@ RangeOperator "RangeOperator"=
 _operatorComponents:(
 	(token:".."
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ ".."
 	)
 {
@@ -427,7 +427,7 @@ ReductionOperator "ReductionOperator"=
 _operatorComponents:(
 	(token:"-"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "-"
 	)
 {
@@ -441,7 +441,7 @@ ReferenceOperator "ReferenceOperator"=
 _operatorComponents:(
 	(token:"&"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "&"
 	)
 {
@@ -455,7 +455,7 @@ SpreadOperator "SpreadOperator"=
 _operatorComponents:(
 	(token:"..."
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "..."
 	)
 {
@@ -469,7 +469,7 @@ TransformationOperator "TransformationOperator"=
 _operatorComponents:(
 	(token:"=>"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "=>"
 	)
 {
@@ -483,7 +483,7 @@ ValueOperator "ValueOperator"=
 _operatorComponents:(
 	(token:"*"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ "*"
 	)
 {
@@ -497,7 +497,7 @@ BlockDelimiter "BlockDelimiter"=
 _operatorComponents:(
 	(token:";"
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ ";"
 	)
 {
@@ -511,7 +511,7 @@ CommonDelimiter "CommonDelimiter"=
 _operatorComponents:(
 	(token:","
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ ","
 	)
 {
@@ -525,7 +525,7 @@ NodeDelimiter "NodeDelimiter"=
 _operatorComponents:(
 	(token:" "
 			"_"
-			label:AnchorNode {return{token:token,label:label};})
+			label:IdentifierNode {return{token:token,label:label};})
 		/ " "
 	)
 {
@@ -544,11 +544,11 @@ Concept
 DomainOpen "DomainOpen"= 
 (token:"{"
 		"_"
-		node:(anchor:(
+		node:(identifier:(
 				EmbedmentNode
 					/ StringNode
 					/ NumberNode
-					/ AnchorNode
+					/ IdentifierNode
 					/ Concept
 					/ Location
 					/ Domain
@@ -559,16 +559,16 @@ DomainOpen "DomainOpen"=
 							/ Location
 							/ Domain
 							/ Essence
-						)? {return{anchor:anchor,description:description};})
-		(Space {return null;}) {return toConstruct({token:token,label:node.anchor,kind:"domain_scheme"});})
+						)? {return{identifier:identifier,description:description};})
+		(Space {return null;}) {return toConstruct({token:token,label:node.identifier,kind:"domain_scheme"});})
 	/ (tok:"{" {return toConstruct({token:tok,position:"open",kind:"domain_scheme"});})
 
 DomainClose "DomainClose"= 
 (
 	(token:"}"
 			"_"
-			node:AnchorNode {return toConstruct({token:token,position:"close",label:node,kind:"domain_identity"});})
-		/ (node:AnchorNode
+			node:IdentifierNode {return toConstruct({token:token,position:"close",label:node,kind:"domain_identity"});})
+		/ (node:IdentifierNode
 			"_"
 			token:"}" {return toConstruct({token:token,position:"close",label:node,kind:"domain_identity"});})
 	)
@@ -611,11 +611,11 @@ container:(
 EssenceOpen "EssenceOpen"= 
 (token:"["
 		"_"
-		node:(anchor:(
+		node:(identifier:(
 				EmbedmentNode
 					/ StringNode
 					/ NumberNode
-					/ AnchorNode
+					/ IdentifierNode
 					/ Concept
 					/ Location
 					/ Domain
@@ -626,16 +626,16 @@ EssenceOpen "EssenceOpen"=
 							/ Location
 							/ Domain
 							/ Essence
-						)? {return{anchor:anchor,description:description};})
-		(Space {return null;}) {return toConstruct({token:token,label:node.anchor,kind:"essence_scheme"});})
+						)? {return{identifier:identifier,description:description};})
+		(Space {return null;}) {return toConstruct({token:token,label:node.identifier,kind:"essence_scheme"});})
 	/ (tok:"[" {return toConstruct({token:tok,position:"open",kind:"essence_scheme"});})
 
 EssenceClose "EssenceClose"= 
 (
 	(token:"]"
 			"_"
-			node:AnchorNode {return toConstruct({token:token,position:"close",label:node,kind:"essence_identity"});})
-		/ (node:AnchorNode
+			node:IdentifierNode {return toConstruct({token:token,position:"close",label:node,kind:"essence_identity"});})
+		/ (node:IdentifierNode
 			"_"
 			token:"]" {return toConstruct({token:token,position:"close",label:node,kind:"essence_identity"});})
 	)
@@ -678,11 +678,11 @@ container:(
 ConceptOpen "ConceptOpen"= 
 (token:"<"
 		"_"
-		node:(anchor:(
+		node:(identifier:(
 				EmbedmentNode
 					/ StringNode
 					/ NumberNode
-					/ AnchorNode
+					/ IdentifierNode
 					/ Concept
 					/ Location
 					/ Domain
@@ -693,16 +693,16 @@ ConceptOpen "ConceptOpen"=
 							/ Location
 							/ Domain
 							/ Essence
-						)? {return{anchor:anchor,description:description};})
-		(Space {return null;}) {return toConstruct({token:token,label:node.anchor,kind:"concept_scheme"});})
+						)? {return{identifier:identifier,description:description};})
+		(Space {return null;}) {return toConstruct({token:token,label:node.identifier,kind:"concept_scheme"});})
 	/ (tok:"<" {return toConstruct({token:tok,position:"open",kind:"concept_scheme"});})
 
 ConceptClose "ConceptClose"= 
 (
 	(token:">"
 			"_"
-			node:AnchorNode {return toConstruct({token:token,position:"close",label:node,kind:"concept_identity"});})
-		/ (node:AnchorNode
+			node:IdentifierNode {return toConstruct({token:token,position:"close",label:node,kind:"concept_identity"});})
+		/ (node:IdentifierNode
 			"_"
 			token:">" {return toConstruct({token:token,position:"close",label:node,kind:"concept_identity"});})
 	)
@@ -745,11 +745,11 @@ container:(
 LocationOpen "LocationOpen"= 
 (token:"("
 		"_"
-		node:(anchor:(
+		node:(identifier:(
 				EmbedmentNode
 					/ StringNode
 					/ NumberNode
-					/ AnchorNode
+					/ IdentifierNode
 					/ Concept
 					/ Location
 					/ Domain
@@ -760,16 +760,16 @@ LocationOpen "LocationOpen"=
 							/ Location
 							/ Domain
 							/ Essence
-						)? {return{anchor:anchor,description:description};})
-		(Space {return null;}) {return toConstruct({token:token,label:node.anchor,kind:"location_scheme"});})
+						)? {return{identifier:identifier,description:description};})
+		(Space {return null;}) {return toConstruct({token:token,label:node.identifier,kind:"location_scheme"});})
 	/ (tok:"(" {return toConstruct({token:tok,position:"open",kind:"location_scheme"});})
 
 LocationClose "LocationClose"= 
 (
 	(token:")"
 			"_"
-			node:AnchorNode {return toConstruct({token:token,position:"close",label:node,kind:"location_identity"});})
-		/ (node:AnchorNode
+			node:IdentifierNode {return toConstruct({token:token,position:"close",label:node,kind:"location_identity"});})
+		/ (node:IdentifierNode
 			"_"
 			token:")" {return toConstruct({token:token,position:"close",label:node,kind:"location_identity"});})
 	)
@@ -984,9 +984,9 @@ EntityExpression "EntityExpression"=
 		space:(
 			" "
 			)*
-		anchor:Scalar {const expression={kind:"entity_expression",anchor:"undefined"!=typeof anchor?anchor:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
-	/ (concept:Concept {const expression={kind:"entity_expression",anchor:"undefined"!=typeof anchor?anchor:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
-	/ (anchor:Scalar {const expression={kind:"entity_expression",anchor:"undefined"!=typeof anchor?anchor:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
+		identifier:Scalar {const expression={kind:"entity_expression",identifier:"undefined"!=typeof identifier?identifier:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
+	/ (concept:Concept {const expression={kind:"entity_expression",identifier:"undefined"!=typeof identifier?identifier:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
+	/ (identifier:Scalar {const expression={kind:"entity_expression",identifier:"undefined"!=typeof identifier?identifier:void 0,concept:"undefined"!=typeof concept?concept:void 0};return toConstruct(expression);})
 
 InfixedAggregationExpression "InfixedAggregationExpression"= 
 head:Node

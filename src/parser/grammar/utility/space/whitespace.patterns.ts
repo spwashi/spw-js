@@ -1,4 +1,4 @@
-import { NodeDelimiter } from '@constructs/ast/nodes/operators/semantic/node/construct';
+import { NodeDelimiter } from '@constructs/ast/nodes/operators/semantic/node_delimiter/construct';
 import {
   anyOf,
   oneOrMoreOf,

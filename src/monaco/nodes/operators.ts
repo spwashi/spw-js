@@ -18,9 +18,9 @@ import {
   ValueOperator,
 } from '@constructs/ast';
 import { BindingOperator } from '@constructs/ast/nodes/operators/pragmatic/single-token/binding/construct';
-import { BlockDelimiter } from '@constructs/ast/nodes/operators/semantic/block/construct';
-import { CommonDelimiter } from '@constructs/ast/nodes/operators/semantic/common/construct';
-import { NodeDelimiter } from '@constructs/ast/nodes/operators/semantic/node/construct';
+import { BlockDelimiter } from '@constructs/ast/nodes/operators/semantic/block_delimiter/construct';
+import { CommonDelimiter } from '@constructs/ast/nodes/operators/semantic/common_delimiter/construct';
+import { NodeDelimiter } from '@constructs/ast/nodes/operators/semantic/node_delimiter/construct';
 import { build, escape } from 'xregexp';
 import { Tokenizer } from '../_types/types';
 import { rn_operator } from '../tokens';

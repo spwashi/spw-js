@@ -1,5 +1,5 @@
 import { scalars } from '@grammar/ast/nodes/atoms/scalars/_abstract/_list/refs';
-import { anchorNode } from '@grammar/ast/nodes/atoms/scalars/anchor/ref';
+import { identifierNode } from '@grammar/ast/nodes/atoms/scalars/identifier/ref';
 import { phraseNode } from '@grammar/ast/nodes/atoms/scalars/phrase/ref';
 import { containerNodes } from '@grammar/ast/nodes/containers/_abstract/_list/refs';
 import { spaceNode } from '@grammar/utility/space/space.ref';
@@ -18,19 +18,19 @@ function opener(delimiter: IDelimiter): SequenceCombinator {
 
   const underscore = stringLike('_');
 
-  const headAnchor = anyOf([...scalars.filter((n) => n !== phraseNode), ...containerNodes]);
+  const headIdentifier = anyOf([...scalars.filter((n) => n !== phraseNode), ...containerNodes]);
 
   const headDescription = optionally(sequenceOf([anyOf(containerNodes)]));
 
-  const describedAnchor = sequenceOf([
-    headAnchor.named('anchor'),
+  const describedIdentifier = sequenceOf([
+    headIdentifier.named('identifier'),
     headDescription.named('description'),
   ]);
 
   // language=JavaScript
-  const _describedAnchorAction = 'return {anchor, description}';
+  const _describedIdentifierAction = 'return {identifier, description}';
 
-  const node = sequenceOf([describedAnchor.withAction(_describedAnchorAction)]);
+  const node = sequenceOf([describedIdentifier.withAction(_describedIdentifierAction)]);
 
   const combinator = sequenceOf([
     token.named('token'),
@@ -43,7 +43,7 @@ function opener(delimiter: IDelimiter): SequenceCombinator {
     return toConstruct(
       {
         token: token,
-        label: node.anchor,
+        label: node.identifier,
         kind: '${delimiter.kind}'
       }
     )
@@ -55,7 +55,7 @@ function closer(delimiter: IDelimiter): SequenceCombinator {
 
   const underscore = stringLike('_');
 
-  const node = anyOf([anchorNode]);
+  const node = anyOf([identifierNode]);
 
   const pattern1 = sequenceOf([token.named('token'), underscore, node.named('node')]);
 

@@ -8,8 +8,8 @@ describe('Phrase Nodes', () => {
       src: 'boon',
       items: [
         { kind: 'string', key: '"boon"', src: '"boon"' },
-        { kind: 'anchor', key: 'boon', src: 'boon' },
-        { kind: 'anchor', key: 'boon', src: 'boon' },
+        { kind: 'identifier', key: 'boon', src: 'boon' },
+        { kind: 'identifier', key: 'boon', src: 'boon' },
       ],
     } as RawConstruct;
     const cut = new PhraseNode(raw);
