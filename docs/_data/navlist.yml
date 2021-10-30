@@ -1,0 +1,11 @@
+docs_list_title: Spw Docs
+docs:
+
+  - title: Introduction
+    url: introduction
+
+  - title: Constructs
+    url: constructs
+
+  - title: Expressions
+    url: expressions
