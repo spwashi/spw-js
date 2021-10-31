@@ -10,22 +10,22 @@
 
 When a `Scalar` is first `Evaluated`, an `Entity` is invoked. An `Entity` maintains a reference to the perceived identity of a `Scalar`, as well as its `Conceptual Basis`.
 
- - [`Anchor Nodes`]("/constructs/nodes/scalars/anchors")
- - [`Number Nodes`]("/constructs/nodes/scalars/number")
- - [`Embedment Nodes`]("/constructs/nodes/scalars/embedment")
+ - `anchor` [`Anchor Nodes`]("/constructs/nodes/scalars/anchors")
+ - `123456` [`Number Nodes`]("/constructs/nodes/scalars/number")
+ - ``` `#f00` ```  [`Embedment Nodes`]("/constructs/nodes/scalars/embedment")
 
 ### Near Scalars
 
 `Near Scalars` are `Nodes` that are used like `Scalars`, but are composed of smaller parts.
 
- - [`Phrase Nodes`]("/constructs/nodes/near-scalars/phrases")
- - [`String Nodes`]("/constructs/nodes/near-scalars/string")
+ - `spick and span` [`Phrase Nodes`]("/constructs/nodes/near-scalars/phrases")
+ - `"Near Hawai'i"` [`String Nodes`]("/constructs/nodes/near-scalars/string")
 
 ### Containers
-- [`Concept Container`]("/constructs/nodes/containers/concept")
-- [`Domain Container`]("/constructs/nodes/containers/domain")
-- [`Essence Container`]("/constructs/nodes/containers/essence")
-- [`Location Container`]("/constructs/nodes/containers/location")
+- `<>` [`Concept Container`]("/constructs/nodes/containers/concept")
+- `()` [`Location Container`]("/constructs/nodes/containers/location")
+- `{}` [`Domain Container`]("/constructs/nodes/containers/domain")
+- `[]` [`Essence Container`]("/constructs/nodes/containers/essence")
 
 
 ## Operators
@@ -36,9 +36,9 @@ When a `Scalar` is first `Evaluated`, an `Entity` is invoked. An `Entity` mainta
 
 Semantic Operators mutate the `Semantic Context`, which determines how the `Subject Under Evaluation` behaves in `Expressions`.
 
-- [`Block Delimiter`]("/constructs/operators/semantic/block")
-- [`Common Delimiter`]("/constructs/operators/semantic/common")
-- [`Node Delimiter`]("/constructs/operators/semantic/node")
+- `;` [`Block Delimiter`]("/constructs/operators/semantic/block")
+- `,` [`Common Delimiter`]("/constructs/operators/semantic/common")
+- ` ` [`Node Delimiter`]("/constructs/operators/semantic/node")
 
 
 ### Pragmatic Operators
