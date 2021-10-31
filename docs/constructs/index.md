@@ -38,7 +38,7 @@ Semantic Operators mutate the `Semantic Context`, which determines how the `Subj
 
 - `;` [`Block Delimiter`]("/constructs/operators/semantic/block")
 - `,` [`Common Delimiter`]("/constructs/operators/semantic/common")
-- ` ` [`Node Delimiter`]("/constructs/operators/semantic/node")
+- ` ` [`Node Delimiter`]("/constructs/operators/semantic/node")
 
 
 ### Pragmatic Operators
