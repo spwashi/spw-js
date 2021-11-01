@@ -95,7 +95,7 @@ When an `Operation` is in the same `Location` as its `Operands` (minding `Config
  - `^  ` [`Ascent Operator`]("/constructs/operators/pragmatic/ascent") - refers to a parent context
  - `:  ` [`Binding Operator`]("/constructs/operators/pragmatic/binding") - creates a link/association between its operands
  - `|  ` [`Branch Operator`]("/constructs/operators/pragmatic/branch") - introduces an exclusive factor between its operands
- - `#  ` [`Channel Operators`]("/constructs/operators/pragmatic/channel") - represents dimension or being
+ - `#  ` [`Channel Operators`]("/constructs/operators/pragmatic/channel") - represent dimension or being
  - `>  ` [`Convergence Operator`]("/constructs/operators/pragmatic/convergence") - describes direction
  - `.  ` [`Descent Operator`]("/constructs/operators/pragmatic/descent") - enters a `Compositional Container` of its operand
  - `<  ` [`Divergence Operators`]("/constructs/operators/pragmatic/divergence") - represent the source location of a set of `Entities` 
