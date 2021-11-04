@@ -2,10 +2,10 @@ docs_list_title: Spw Docs
 docs:
 
   - title: Introduction
-    url: introduction
+    url: intro
 
   - title: Constructs
     url: constructs
 
-  - title: Expressions
-    url: expressions
+  - title: Runtime
+    url: runtime
