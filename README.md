@@ -1,305 +1,178 @@
 # Spw
-swwoooopp
+*swwoooopp*
 
-## About (Lore)
+## Overview
 
-Spw (pronounced "swoop") is a programming language. It can be used to compare ideas across dimensions.
+**Spw** (pronounced "swoop") is a programming language designed to map, model, and compare complex ideas across multidimensional contexts. It integrates the precision of programming with the adaptability of linguistic structures, making it a unique tool for abstract representation and real-world application.
 
-### Intent
-I first meant for the language to aid communication between two people with inherently different perspectives. 
+### Purpose
+Spw was initially envisioned as a tool to bridge communication between individuals with differing perspectives. Over time, it matured into a structured programming language that empowers developers to represent complex systems and relationships efficiently.
 
-Ultimately, communication is more about style than language.
+This project is a platform for exploring innovative constructs in computational and theoretical models. The runtime implementation is left open for developers who wish to create their interpretations and extensions. As the creator, my goal is to build a robust framework that simplifies navigation through constructs and to establish a set of "canonical" guidelines that optimize the language's usability.
 
-Now Spw errs more towards programming than it does towards natural language, and my tentative plan is to leave the ultimate runtime as an exercise for those *interested fellows* out there. 
+### Background
+Spw originated as a merger between two projects:
+1. A content tagging system aimed at creating cross-referential and adaptive educational resources.
+2. A philosophical project exploring analogies and their role in meaning-making and contextual understanding.
 
-I'll work on making the constructs easier to navigate, then try to come up with a few sensible "canonical" rules/guidelines to make the problem space a bit smaller.
+Spw started during my time as a junior software engineer, focusing on the development of tools that foster deeper educational engagement. Today, Spw stands as a versatile language that not only tags and categorizes content but also serves as a powerful modeling tool for representing diverse systems.
 
-#### Background
-Spw is the merger of two projects: 
-1) a content tagging system, and 
-2) a philosophy project centered around analogies.
+## Design Principles
 
-When I started dabbling with it, I was a student in Learning and Education Studies founding an organization focused on discovering meaning in academia. In it, we explored how different people with disparate career goals could find meaning in the same content, despite having varied goals.
+### Core Philosophy
+In Spw, each "program" is conceptualized as a **noun** representing an entity. The outcome of processing that entity depends on the runtime context, which is adaptable and interpretable by those creating or extending Spw environments.
 
-I wanted to tag learning materials agnostically enough to be searchable across skill- or awareness- level, while remaining specific enough to meaningfully distinguish each feature tagged.
+### Key Constructs
+The essence of Spw lies in its **Five Top-Level Dimensional Constructs**, classified into two main categories:
 
+**Identity**:
+- **Basis**: The conceptual foundation or namespace.
+- **Identity**: The unique identifier or name.
 
-## Design
+**Being**:
+- **Conditions**: The situational parameters or arguments.
+- **Definition**: The logical core or domain.
+- **Meaning**: The evaluated essence or result.
 
-### In Brief
-Each "program" written in Spw is a noun. Depending on the runtime, certain things may happen when that noun is processed or realized.
+### Core Components
+- **Entities**: Consistent representations of identities.
+- **Behaviors**: States or processes that describe entity interactions.
+- **Instances**: Specific representations associating an entity with a behavior.
 
-The implementation of the runtime is left as an exercise for whomever is creating or using the runtime ;)
-### In More Detail
-
-The premise follows - 
-
-We write `Programs` to describe ideas. The goal of a `Program` is to communicate the relevant identities and relationships of a `System`.
-
-Each concept (symbol, entity, or anything) is a combination of five experiential forms. In these docs, they're referred to as the `Five Top-Level Dimensional Constructs`
-
-Those five forms can be placed in two categories:
-- Identity
-  - basis (Concept, or namespace)
-  - identity (Identifier, or name)
-- Being
-  - conditions (Location, or arguments)
-  - definition (Domain, or body)
-  - meaning (Essence, or value)
-  
-For definition's sake, an `Entity` is a symbol that consistently references the "same" identity. `Entities` can have `Behaviors`, which are data structures that point to different states of `Being`. An `Instance` is a data structure that associates an `Entity` with a `Behavior`. 
-
-A `Concept` (e.g. basis, namespace, also anything) is hard to describe. `Concepts` introduce identities which might contextualize the interpretation of other `Entities` in the `System`. 
-
-An `Identifier` (e.g. identity) is like a name. It's how a concept is consistently referenced, regardless of any other dimension, location, structure, or status. An Identifier is like an address in memory (or other positional structure). Identifiers are axiomatic with respect to their conceptual basis.
-
-`Locations` (e.g. function arguments) are like defining features that make something stand out, sometimes composed of multiple things. A Location is like an address in memory that exist as the result of combining multiple other identities. 
-
-`Domains` (e.g. block statements) are like the core "truth" of an Entity that uniquely distinguishes instances. A Domain may contain Nodes and Expressions to evaluate, either in Common or as a Block (i.e. in parallel **, or synchronously). Domains represent features that exist regardless of a Node's Context.
-
-`Essences` (e.g. property value) contain Nodes and Expressions to evaluate, either in Common or as a Block. Essences only occur as the result of evaluation.
+**Concepts** create the contextual framework within which other identities are interpreted. **Identifiers** provide a consistent reference, functioning as stable memory addresses. **Locations** map positions based on combined identities. **Domains** embody the defining truths of an entity, while **Essences** reveal the entity's evaluated value.
 
 ### Objective
+The primary objective of an Spw program is to produce a runtime environment that models these five constructs in detail. A **System** in Spw represents a cohesive entity that encompasses all identities defined within the program.
 
-The goal of each `Program` is to create a runtime that represents each of these five top-level dimensions for a single `System`, in as much detail as necessary. 
+## Grammar and Syntax Overview
 
-A `System` is an `Entity` that contains all identities mentioned in a program.  
-
-## Grammar Overview
-
-The constructs fall into four main categories:
-- `Scalars` (and `Near-Scalars`)
-- `Containers`
-- `Operators`
-- `Expressions`
+### Construct Categories
+Spw grammar is categorized into:
+- **Scalars and Near-Scalars**
+- **Containers**
+- **Operators**
+- **Expressions**
 
 ### Scalars
+**Scalars** are indivisible units within Spw that, when interpreted, influence the **Semantic Context** based on the current **Semantic Operation**.
 
-A `Scalar` is a construct that is not composed of smaller parts.
+**Types of Scalars**:
+- **Identifier Nodes**: Represent unique references to identities.
+- **Number Nodes**: Refer to numerical values, impacting interpretation based on context.
+- **Embedment Nodes**: Refer to external data not fully representable in the runtime.
 
-When a `Scalar` is interpreted, it either invokes or mutates a `Semantic Context` depending on the `Active` `Semantic Operation`. `Scalars` determine the identity of the subject, which is discerned by evaluating the `Active` `Semantic Context`.
+**Examples**:
+- **Identifier Node**:
+    ```spw
+    cat
+    ```
 
-There are currently three Scalars:
-- `Identifier Nodes`
-- `Number Nodes`
-- `Embedment Nodes`
+- **Number Node**:
+    ```spw
+    42
+    ```
 
-#### Identifier Nodes
-An `Identifier Node` is a pointer to a identity. It's existence in a `System` is axiomatic with respect to the `Conceptual Basis` of the current `Context of Evaluation`. In other words, its use "proves" its existence according to the nearest `Concept`.
+- **Embedment Node**:
+    ```spw
+    `0xEAB6DD`
+    ```
 
-An `Identifier Node` is composed of an Alpha character followed by any number of characters from a set of permitted unicode characters.
+### Near Scalars
+**Near Scalars** behave similarly to scalars but are composed of smaller parts, treated as a single entity for operational simplicity.
 
-Examples:
+**Types of Near Scalars**:
+- **Phrase Nodes**:
+    ```spw
+    once in a blue moon
+    ```
 
+- **String Nodes**:
+    ```spw
+    "The quick brown fox jumps over the lazy dog"
+    ```
 
-##### one concept 
-To refer to a concept, for example describing a cat:
-```spw
-cat
-```
+### Containers
+**Container Nodes** are used to cluster identities, highlighting how these identities interact within a system.
 
+**Types of Containers**:
+- **Concept Containers**: Modify the interpretation framework.
+    ```spw
+    <biology> dna: genetic_code;
+    ```
 
-##### multiple concepts
-To refer to a concept, for example describing a cat, dog, and horse:
+- **Location Containers**: Represent positions or contexts.
+    ```spw
+    <science> {
+        cell(): alive;
+    }
+    ```
+
+- **Domain Containers**: Define core attributes of entities.
+    ```spw
+    genome{ replication }: active;
+    ```
+
+- **Essence Containers**: Contain evaluated values.
+    ```spw
+    cell{ energy }: dynamic;
+    ```
+
+### Operators
+Operators in Spw are categorized into **Pragmatic** and **Semantic** types.
+
+**Pragmatic Operators**:
+- **+ (Aggregation Operator)**: Combines identities.
+- **@ (Perspective Operator)**: Modifies context.
+- **< (Divergence Operator)**: Introduces new concepts.
+- **~ (Invocation Operator)**: Brings new identities into the current frame.
+
+**Semantic Operators**:
+- **Block Delimiting Operator**: Creates a new evaluation context.
+- **Node Delimiting Operator**: Maintains evaluation consistency within nodes.
+
+### Expressions
+**Expressions** are constructs whose elements must be reduced before they can be fully evaluated.
+
+**Evaluation Rules**:
+- Expressions become active upon evaluation and are processed in a stack structure.
+- When an expression completes, it is deactivated, and the prior active expression is reactivated.
+
+## Advanced Examples and Use Cases
+
+**Referencing Multiple Concepts**:
 ```spw
 cat, dog, horse
 ```
 
-This should create three addresses in the Runtime's memory whose values are pointers to three respective data structures containing all `Behaviors` associated with each `Identifier`. 
-
-An `Identifier` references an `Entity`, which is a data structure holding references to an `Identifier` and `Conceptual Basis`. In this example, the `Conceptual Basis` is assumed to be the `Generalized Concept`, usually represented as `<>`. 
-
-##### other examples
+**Contextual Basis Demonstration**:
 ```spw
-cat1, cat-2, cat_in_hat
+<languages> python: programming_language;
+<animals> python: snake;
 ```
 
-#### Number Nodes
-A `Number Node` is a pointer to a number. Numbers invoke an `Interpretation Context` that may overload some operators, such as the `Aggregation` or `Reduction` operators. For the time being, only positive integers are representable. The `Max Number` depends on the runtime.
-
-Example:
-
-To refer to a number, for example four:
+**Container with Multiple Conditions**:
 ```spw
-4
-```
-
-This should create an address in the Runtime's memory whose value is a pointer to an address with this Number's `value`.
-
-#### Embedment Nodes
-An `Embedment Node` is a reference to an `Entity` that is not fully representable in the Runtime's `Environment`. The interpretation of an `Embedment Node` depends on the `Interpretation Context`, which in turn depends on the `Active Evaluator` and the `Active Evaluation Scheme`. 
-
-```spw
-`$this->getValue()`
- ```
-```spw
-`line 20, col 6` 
-```
-```spw
-`0xEAB6DD`
-```
-### Near Scalars
-
-A `Near Scalar` is a construct that ... I only recently realized is (or will be) composed of smaller parts. So they aren't quite scalars, but in my opinion, they can safely be treated as such.
-
-This needs more thought.
-
-There are currently two near-scalars:
-- `Phrase Nodes`
-- `String Nodes`
-
-#### Phrase Nodes
-
-A `Phrase Node` is a collection of Nodes whose individual `Semantic Implications` are processed in parallel and may depend on each other. The `Semantic Implications` of each `Scalar` present in the `Phrase Node`are not assumed to have any direct relationship to
-
-Examples:
-```spw
-spick and span
-```
-```spw
-once in a while
-```
-
-#### String Nodes
-
-A `String Node` is a collection of characters that create a string, which can then be used the same ways the other `Scalars` are.
-
-Examples:
-```spw
-"Hawai'i and Moloka'i"
-```
-
-```spw
-"stop!"
-```
-
-### Containers
-
-`Container Nodes` cluster identities such that their interactions give better insight as to how the `System` works.
-
-`Container Nodes` have three components:
-- A `Scheme` (context)
-- A `Body` (composition)`
-- An `Identity` (realization)
-
-A `Container Scheme` determines how the identities in the `Body` are presented. `Container Schemes` determine `Salience` of entries in a `Container Body`, as well as which `Identifiers` or `Channels` can be bound to. 
-
-`Container Schemes` introduce `Evaluation Schemes` that determine the meaning of each entry in the `Container Body`.
-`Channels` and `Identifiers` that are `Bound` as part of the definition of the `Container Scheme` determine how `Binding` works in the given `Container`.
-
-There are four `Container Nodes`. They represent four of the `Five Top-level Dimensional Constructs`, only excluding `Identifiers`.
-
-#### Concept Containers
-`Concept Containers` change the way things are interpreted.
-
-`Concept Containers` deterimine which identities can be referenced. 
-
-When `Evaluated`, they mutate the `Active` `Context of Evaluation` and replace the `Active` `Context of Interpretation`. 
-
-Examples:
-```spw
-<comics> garfield:     cat;
-<presidents> garfield: president;
-```
-#### Location Containers
-`Location Containers` describe the position of an `Entity`. 
-
-The `Identity` of each `Location Container` is dependent on the `Context of Evaluation`. 
-
-Examples:
-```spw
-<comics> {
-    garfield():         hungry;
-    garfield( monday ): grumpy;
+<science> {
+    reaction( catalyst ): faster;
+    reaction( inhibitor ): slower;
 }
 ```
 
-#### Domain Containers
-`Domain Containers` describe the definition of an `Entity`. 
+## Contributing to Spw
 
-An `Entity` should have the same `Domain` at a given `Location` to be considered part of the same `Instance`. 
+Contributions to Spw are encouraged, whether through runtime development, language extension, or new constructs. To contribute:
 
-The `Identity` of a `Domain Container` is dependent on the `Context of Interpretation`.
+1. Fork the repository and create a branch.
+2. Make your enhancements or changes.
+3. Submit a pull request with a detailed description.
 
-The definition of an `Entity`, as it relates to the `Behavior` containing this `Domain`, is not dependent on the `Context of Evaluation`.
+### Future Vision
+As GitHub evolves into a collaborative platform where READMEs serve as project seeds, Spw’s README aims to be a foundational document that guides contributors and inspires exploration into modeling complex systems.
 
-Examples:
-```spw
-garfield{ sleeping }: happy;
-garfield{ hungry }:   grumpy;
-```
+### Community and Support
+Join our discussions and stay updated with developments:
+- **Community Forum**: [Spw Discussions](#)
+- **Documentation and Wiki**: [Spw Wiki](#)
 
-#### Essence Containers
-`Essence Containers` describe the value of an `Entity`. 
-
-The `Identity` of an `Essence Container` is dependent on the `Context of Interpretation`.  
-
-The value of an `Entity`, as it relates to the `Behavior` containing this `Essence`, depends on the `Context of Evaluation`.
-
-### Operators
-
-Operators fall into two main categories:
-- `Pragmatic Operators`
-- `Semantic Operators`
-
-#### Pragmatic Operators
-
-`Pragmatic Operators` mutate the identity of the `Subject Under Evaluation` (`SUE`). Most `Pragmatic Operators` can create `Prefixed`, `Infixed`, or `Postfixed` `Operations`. Depending on the `Context of Evaluation`, an `Operator` may be processed as a `Node`.
-
-List:
- - `+` : Aggregation Operator 
-   - mutates the identity of the `Subject Under Evaluation` to represent an aggregation of the `Operands`
- - `:` : Binding Operator 
-   - associates `Nodes` with `Schemes` or other identities
- - `#` : Channel Operator 
-   - describes dimension, accesses contents of `Domain` or `Essence`
- - `>` : Convergence Operator 
-   - represents `Concepts` in a common form, describes direction  
- - `.` : Descent Operator
-   - `Primes` identities that are `Bound` to the `Domain` or `Essence`
- - `<` : Divergence Operator 
-   - introduces `Concepts` and related identities
- - `?` : Evaluation Operator 
-   - ascribes `Salience` and `Essence` to `Nodes`, may `Invoke` new identities by accessing `Channels` of a `Behavior`
- - `~` : Invocation Operator
-   - introduces a new identity to the current `Frame`
- - `!` : Performance Operator 
-   - introduces a new `Frame` with mutated, introduced, or excluded identities
- - `@` : Perspective Operator 
-   - modifies the `Conceptual Basis` of the `Context of Interpretation` and `Context of Evaluation`
- - `..`: Range Operator
-   - `Primes` identities that are ordinally or nominally related to the `Operand`
- - `&` : Reference Operator
-   - can match any identity so long as the `Runtime` permits the reference to exist cohesively
- - `-` : Reduction Operator
-   - mutates the identity of the `Subject Under Evaluation` to represent a reduction of the operands
- - `...`: Spread Operator
-   - `Primes` identities that are ordinal or nominal within the `Operand`. Cannot be infixed.
- - `=>`: Transformation Operator
-   - mutates one of the `Five Top-Level Dimensions` of the current `Subject Under Evaluation` upon the next `Frame`.
-
-#### Semantic Operators
-
-`Semantic Operators` create `Semantic Operations` by being `Bound` to a set of `Operands`.
-`Semantic Operators` alter the `Context of Evaluation` (`COE`).
-
-The `Context of Evaluation` is a collection of identities available in processing the current `Subject Under Evaluation`.
-
-The `Semantic Operators` are:
-- the `Block Delimiting Operator`
-- the `Common Delimiting Operator`
-- the `Node Delimiting Operator`
-
-##### Rules
-- Each `Block Delimiting Operator` creates a new `Context of Evaluation` that extends from its nearest parent. That `Context of Evaluation` replaces the previous one at the top of a stack.
-- The `Context of Evaluation` is preserved amongst items in the same `Common Operation` or the same `Node`.
-
-### Expressions
-
-`Expressions` are constructs whose constituent `Nodes` must be `Reduced` before `Evaluation`.
-
-##### Rules
-- When an `Expression` is `Evaluated`, it becomes the `Active Expression`.
-- When the `Evaluation` of an `Expression` is complete, it is no longer the `Active Expression`.
-- `Active Expressions` are represented as a stack.
-- `Deactivation` of an `Active Expression` results in the `Reactivation` of the previous `Active Expression`.
+## License
+Spw is released under the MIT License. See [LICENSE](LICENSE) for more details.
